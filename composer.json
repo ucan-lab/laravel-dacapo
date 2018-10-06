@@ -1,0 +1,13 @@
+{
+    "name": "ucan-lab/laravel-dacapo",
+    "require": {
+        "symfony/yaml": "^4.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ucan-lab",
+            "email": "35098175+ucan-lab@users.noreply.github.com"
+        }
+    ]
+}
