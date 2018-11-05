@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class _CLASS_NAME_ extends Migration
+{
+    protected $table = '_TABLE_NAME_';
+    protected $comment = '_TABLE_COMMENT_';
+
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create($this->table, function (Blueprint $table) {
+            _COLUMNS_INFO_
+        });
+
+        DB::statement("ALTER TABLE `$this->table` COMMENT '$this->comment'");
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists($this->table);
+    }
+}
