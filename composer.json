@@ -1,10 +1,16 @@
 {
     "name": "ucan-lab/laravel-dacapo",
+    "minimum-stability": "stable",
     "authors": [
         {
             "name": "ucan-lab",
             "email": "35098175+ucan-lab@users.noreply.github.com"
         }
+    ],
+    "keywords": [
+        "laravel",
+        "dacapo",
+        "migration"
     ],
     "require": {
         "php": "^7.0",
