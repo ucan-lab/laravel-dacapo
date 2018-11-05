@@ -1,13 +1,27 @@
 {
     "name": "ucan-lab/laravel-dacapo",
-    "require": {
-        "symfony/yaml": "^4.1"
-    },
-    "license": "MIT",
     "authors": [
         {
             "name": "ucan-lab",
             "email": "35098175+ucan-lab@users.noreply.github.com"
         }
-    ]
+    ],
+    "require": {
+        "php": "^7.0",
+        "laravel/framework": "^5.7.0",
+        "symfony/yaml": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "UcanLab\\LaravelDacapo\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "UcanLab\\LaravelDacapo\\ConsoleServiceProvider"
+            ]
+        }
+    },
+    "license": "MIT"
 }
