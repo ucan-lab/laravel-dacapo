@@ -4,16 +4,27 @@ namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Yaml\Yaml;
+use Illuminate\Console\ConfirmableTrait;
 
 /**
  * Class DacapoGenerate
  */
 class DacapoGenerate extends Command
 {
-    /** @var string */
-    protected $name = 'dacapo:generate';
+    use ConfirmableTrait;
 
-    /** @var string */
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'dacapo:generate {--f|force : Force the operation to run when in production}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
     protected $description = 'Generate migration files.';
 
     private $templateCreateText = '';
@@ -22,7 +33,9 @@ class DacapoGenerate extends Command
     private $indexes = [];
 
     /**
-     * Create a new command instance.
+     * Create a new console command instance.
+     *
+     * @return void
      */
     public function __construct()
     {
@@ -40,8 +53,11 @@ class DacapoGenerate extends Command
      */
     public function handle()
     {
-        $this->call('dacapo:clear');
+        if (! $this->confirmToProceed()) {
+            return;
+        }
 
+        $this->call('dacapo:clear', ['--force' => true]);
         $this->createMigration();
         $this->indexMigration();
         $this->foreignMigration();

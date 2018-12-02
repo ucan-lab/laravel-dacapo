@@ -4,20 +4,33 @@ namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Console\ConfirmableTrait;
 
 /**
  * Class DacapoClear
  */
 class DacapoClear extends Command
 {
-    /** @var string */
-    protected $name = 'dacapo:clear';
+    use ConfirmableTrait;
 
-    /** @var string */
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'dacapo:clear {--f|force : Force the operation to run when in production}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
     protected $description = 'Clear migration directory.';
 
     /**
-     * Create a new command instance.
+     * Create a new console command instance.
+     *
+     * @return void
      */
     public function __construct()
     {
@@ -29,6 +42,10 @@ class DacapoClear extends Command
      */
     public function handle()
     {
+        if (! $this->confirmToProceed()) {
+            return;
+        }
+
         $this->clearMigrationDirectory();
     }
 
