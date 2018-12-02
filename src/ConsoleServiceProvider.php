@@ -3,7 +3,7 @@
 namespace UcanLab\LaravelDacapo;
 
 use Illuminate\Support\ServiceProvider;
-use UcanLab\LaravelDacapo\Console\SchemaGenerate;
+use UcanLab\LaravelDacapo\Console\DacapoGenerate;
 
 /**
  * Class ConsoleServiceProvider
@@ -31,12 +31,12 @@ class ConsoleServiceProvider extends ServiceProvider
      */
     protected function registerCommands()
     {
-        $this->app->singleton('command.ucan.dacapo.schema.generate', function () {
-            return new SchemaGenerate();
+        $this->app->singleton('command.ucan.dacapo.generate', function () {
+            return new DacapoGenerate();
         });
 
         $this->commands([
-            'command.ucan.dacapo.schema.generate',
+            'command.ucan.dacapo.generate',
         ]);
     }
 
@@ -46,7 +46,7 @@ class ConsoleServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'command.ucan.dacapo.schema.generate',
+            'command.ucan.dacapo.generate',
         ];
     }
 }

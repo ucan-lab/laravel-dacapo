@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\File;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Class SchemaGenerate
+ * Class DacapoGenerate
  */
-class SchemaGenerate extends Command
+class DacapoGenerate extends Command
 {
     /** @var string */
-    protected $name = 'dacapo:schema:generate';
+    protected $name = 'dacapo:generate';
 
     /** @var string */
     protected $description = 'Generate migration files.';
