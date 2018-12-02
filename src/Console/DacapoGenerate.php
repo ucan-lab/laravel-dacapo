@@ -3,7 +3,6 @@
 namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -41,21 +40,11 @@ class DacapoGenerate extends Command
      */
     public function handle()
     {
-        $this->removeMigration();
+        $this->call('dacapo:clear');
+
         $this->createMigration();
         $this->indexMigration();
         $this->foreignMigration();
-    }
-
-    /**
-     * migrations directory remove all files.
-     *
-     * @return void
-     */
-    private function removeMigration()
-    {
-        File::deleteDirectory(database_path('migrations'));
-        File::makeDirectory(database_path('migrations'));
     }
 
     /**
