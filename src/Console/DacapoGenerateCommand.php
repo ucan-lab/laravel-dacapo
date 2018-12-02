@@ -7,9 +7,9 @@ use Symfony\Component\Yaml\Yaml;
 use Illuminate\Console\ConfirmableTrait;
 
 /**
- * Class DacapoGenerate
+ * Class DacapoGenerateCommand
  */
-class DacapoGenerate extends Command
+class DacapoGenerateCommand extends Command
 {
     use ConfirmableTrait;
 

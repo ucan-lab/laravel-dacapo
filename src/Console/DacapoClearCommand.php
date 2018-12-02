@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Console\ConfirmableTrait;
 
 /**
- * Class DacapoClear
+ * Class DacapoClearCommand
  */
-class DacapoClear extends Command
+class DacapoClearCommand extends Command
 {
     use ConfirmableTrait;
 
