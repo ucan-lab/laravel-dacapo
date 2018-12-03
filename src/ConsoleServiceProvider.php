@@ -16,6 +16,7 @@ class ConsoleServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->bootPublishes();
         $this->registerCommands();
     }
 
@@ -25,6 +26,20 @@ class ConsoleServiceProvider extends ServiceProvider
     public function register()
     {
         // register bindings
+    }
+
+    /**
+     * Bootstrap publishes
+     *
+     * @return void
+     */
+    protected function bootPublishes()
+    {
+        $schemaPath = __DIR__ . '/Storage';
+
+        $this->publishes([
+            $schemaPath . '/schema.yml' => database_path('schema.yml'),
+        ]);
     }
 
     /**
