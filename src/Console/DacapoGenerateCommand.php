@@ -140,6 +140,8 @@ class DacapoGenerateCommand extends Command
 
         if ($info === 'increments') {
             $line = "->increments('id')";
+        } elseif ($info === 'bigIncrements') {
+            $line = "->bigIncrements('id')";
         } else {
             foreach ($info as $key => $value) {
                 if ($key === 'type') {
