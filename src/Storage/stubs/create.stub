@@ -1,13 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class _CLASS_NAME_ extends Migration
+class DummyClass extends Migration
 {
-    protected $table = '_TABLE_NAME_';
-
     /**
      * Run the migrations.
      *
@@ -15,7 +14,11 @@ class _CLASS_NAME_ extends Migration
      */
     public function up()
     {
-        _UP_
+        Schema::create('DummyTableName', function (Blueprint $table) {
+            DummyColumn
+        });
+
+        DB::statement("ALTER TABLE DummyTableName COMMENT 'DummyTableComment'");
     }
 
     /**
@@ -25,6 +28,6 @@ class _CLASS_NAME_ extends Migration
      */
     public function down()
     {
-        _DROP_
+        Schema::dropIfExists('DummyTableName');
     }
 }

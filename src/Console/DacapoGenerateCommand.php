@@ -43,6 +43,8 @@ class DacapoGenerateCommand extends Command
 
         $this->call('dacapo:clear', ['--force' => true]);
 
+        (new DacapoGenerator())->run();
+
         if ($this->option('fresh') || $this->option('seed')) {
             $this->call('migrate:fresh', ['--force' => true]);
         }
