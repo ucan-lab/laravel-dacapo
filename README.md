@@ -9,7 +9,7 @@ $ composer require --dev ucan-lab/laravel-dacapo
 ## Publish the schema file
 
 ```
-$ php artisan vendor:publish --provider="UcanLab\LaravelDacapo\ConsoleServiceProvider"
+$ php artisan vendor:publish --provider="UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider"
 ```
 
 ## Generate migration files from schema.yml
