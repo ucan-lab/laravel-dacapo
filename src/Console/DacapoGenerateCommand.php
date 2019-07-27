@@ -22,6 +22,7 @@ class DacapoGenerateCommand extends Command
     protected $signature = 'dacapo:generate
         {--f|force : Force the operation to run when in production}
         {--fresh : Drop all tables and re-run all migrations}
+        {--refresh : Reset and re-run all migrations}
         {--seed : Seed the database with records}
     ';
 
@@ -45,8 +46,12 @@ class DacapoGenerateCommand extends Command
 
         (new DacapoGenerator())->run();
 
-        if ($this->option('fresh') || $this->option('seed')) {
+        if ($this->option('fresh')) {
             $this->call('migrate:fresh', ['--force' => true]);
+        }
+
+        if ($this->option('refresh')) {
+            $this->call('migrate:refresh', ['--force' => true]);
         }
 
         if ($this->option('seed')) {
