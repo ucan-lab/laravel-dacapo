@@ -55,8 +55,8 @@ class Table
             }
         }
 
-        if (isset($attributes['foreignKeys'])) {
-            foreach ($attributes['foreignKeys'] as $i => $foreignKeyAttributes) {
+        if (isset($attributes['relations'])) {
+            foreach ($attributes['relations'] as $i => $foreignKeyAttributes) {
                 $foreignKey = $this->makeForeignKey($foreignKeyAttributes);
                 $this->foreignKeys->add($foreignKey);
             }
