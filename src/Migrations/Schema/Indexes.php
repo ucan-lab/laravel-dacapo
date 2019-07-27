@@ -14,6 +14,10 @@ class Indexes implements IteratorAggregate
         $this->attributes = [];
     }
 
+    /**
+     * @param Index $index
+     * @return self
+     */
     public function add(Index $index): self
     {
         $this->attributes[] = $index;
@@ -21,6 +25,9 @@ class Indexes implements IteratorAggregate
         return $this;
     }
 
+    /**
+     * @return integer
+     */
     public function count(): int
     {
         if ($this->attributes) {
@@ -30,6 +37,9 @@ class Indexes implements IteratorAggregate
         return 0;
     }
 
+    /**
+     * @return ArrayIterator
+     */
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->attributes);

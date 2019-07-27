@@ -27,6 +27,10 @@ class Column
     private $index;
     private $spatialIndex;
 
+    /**
+     * @param string $name
+     * @param array $attributes
+     */
     public function __construct(string $name, array $attributes)
     {
         $this->name = $name;
@@ -51,6 +55,9 @@ class Column
         $this->spatialIndex = $attributes['spatialIndex'] ?? null;
     }
 
+    /**
+     * @return string
+     */
     public function getColumnLine(): string
     {
         $str = $this->getColumnType();
@@ -59,11 +66,17 @@ class Column
         return '$table' . $str . ';';
     }
 
+    /**
+     * @return bool
+     */
     public function hasIndex(): bool
     {
         return (bool)($this->primary || $this->unique || $this->index || $this->spatialIndex);
     }
 
+    /**
+     * @return Index
+     */
     public function getIndex(): Index
     {
         $attributes = ['name' => [$this->name]];
@@ -80,6 +93,9 @@ class Column
         return new Index($attributes);
     }
 
+    /**
+     * @return string|null
+     */
     public function getUpIndexLine(): ?string
     {
         if ($str = $this->getIndexType()) {
@@ -89,6 +105,9 @@ class Column
         return null;
     }
 
+    /**
+     * @return string|null
+     */
     public function getDownIndexLine(): ?string
     {
         if ($str = $this->getDropIndexType()) {
@@ -98,6 +117,9 @@ class Column
         return null;
     }
 
+    /**
+     * @return string
+     */
     protected function getColumnType(): string
     {
         preg_match('/\((.*)\)/', $this->type, $match);
@@ -113,6 +135,9 @@ class Column
         return '->' . $type . "($columnName)";
     }
 
+    /**
+     * @return string
+     */
     protected function getIndexType(): string
     {
         $str = '';
@@ -130,6 +155,9 @@ class Column
         return $str;
     }
 
+    /**
+     * @return string
+     */
     protected function getDropIndexType(): string
     {
         $str = '';
@@ -147,6 +175,9 @@ class Column
         return $str;
     }
 
+    /**
+     * @return string
+     */
     protected function getColumnModifier(): string
     {
         $str = '';
@@ -184,6 +215,11 @@ class Column
         return $str;
     }
 
+    /**
+     * @param array $attributes
+     * @param string $name
+     * @return string|null
+     */
     private function convertBoolType(array $attributes, string $name): ?string
     {
         if (isset($attributes[$name])) {

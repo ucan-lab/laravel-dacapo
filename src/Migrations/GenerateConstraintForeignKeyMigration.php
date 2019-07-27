@@ -14,6 +14,9 @@ class GenerateConstraintForeignKeyMigration
         $this->table = $table;
     }
 
+    /**
+     * @return void
+     */
     public function run(): void
     {
         if ($this->existsForeignKeys()) {
@@ -23,6 +26,9 @@ class GenerateConstraintForeignKeyMigration
         }
     }
 
+    /**
+     * @return string
+     */
     protected function getStub(): string
     {
         $stub = file_get_contents(__DIR__ . '/../Storage/stubs/update.stub');
@@ -45,6 +51,9 @@ class GenerateConstraintForeignKeyMigration
         return database_path('migrations') . '/' . $name;
     }
 
+    /**
+     * @return bool
+     */
     protected function existsForeignKeys(): bool
     {
         return $this->table->existsForeignKeys();

@@ -14,6 +14,10 @@ class Tables implements IteratorAggregate
         $this->attributes = [];
     }
 
+    /**
+     * @param Table $table
+     * @return self
+     */
     public function add(Table $table): self
     {
         $this->attributes[] = $table;
@@ -21,6 +25,9 @@ class Tables implements IteratorAggregate
         return $this;
     }
 
+    /**
+     * @return ArrayIterator
+     */
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->attributes);

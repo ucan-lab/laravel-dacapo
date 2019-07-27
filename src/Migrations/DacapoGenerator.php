@@ -2,11 +2,11 @@
 
 namespace UcanLab\LaravelDacapo\Migrations;
 
-/**
- * MigrationCreator class
- */
 class DacapoGenerator
 {
+    /**
+     * @return void
+     */
     public function run(): void
     {
         $tables = (new SchemaLoader())->run();

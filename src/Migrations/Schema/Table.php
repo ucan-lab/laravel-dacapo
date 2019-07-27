@@ -20,6 +20,10 @@ class Table
     private $indexes;
     private $foreignKeys;
 
+    /**
+     * @param string $name
+     * @param array $attributes
+     */
     public function __construct(string $name, array $attributes)
     {
         $this->name = $name;
@@ -59,46 +63,73 @@ class Table
         }
     }
 
+    /**
+     * @return string
+     */
     public function getTableName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function getTableComment(): string
     {
         return $this->comment;
     }
 
+    /**
+     * @return string
+     */
     public function getCreateTableMigrationClassName(): string
     {
         return Str::studly('create_' . $this->name . '_table');
     }
 
+    /**
+     * @return string
+     */
     public function getCreateTableMigrationFileName(): string
     {
         return $this->getDatePrefix() . '_create_' . $this->name . '_table.php';
     }
 
+    /**
+     * @return string
+     */
     public function getCreateIndexMigrationClassName(): string
     {
         return Str::studly('create_' . $this->name . '_index');
     }
 
+    /**
+     * @return string
+     */
     public function getCreateIndexMigrationFileName(): string
     {
         return $this->getDatePrefix(self::PREFIX_CREATE_INDEX) . '_create_' . $this->name . '_index.php';
     }
 
+    /**
+     * @return string
+     */
     public function getConstraintForeignKeyMigrationClassName(): string
     {
         return Str::studly('constraint_' . $this->name . '_foreign_key');
     }
 
+    /**
+     * @return string
+     */
     public function getConstraintForeignKeyMigrationFileName(): string
     {
         return $this->getDatePrefix(self::PREFIX_CONSTRAINT_FOREIGN_KEY) . '_constraint_' . $this->name . '_foreign_key.php';
     }
 
+    /**
+     * @return string
+     */
     public function getColumnList(): string
     {
         $list = [];
@@ -111,6 +142,9 @@ class Table
         return implode($spacer, $list);
     }
 
+    /**
+     * @return string
+     */
     public function getUpIndexList(): string
     {
         $list = [];
@@ -125,6 +159,9 @@ class Table
         return implode($spacer, $list);
     }
 
+    /**
+     * @return string
+     */
     public function getDownIndexList(): string
     {
         $list = [];
@@ -139,6 +176,9 @@ class Table
         return implode($spacer, $list);
     }
 
+    /**
+     * @return string
+     */
     public function getUpForeignKeyList(): string
     {
         $list = [];
@@ -153,6 +193,9 @@ class Table
         return implode($spacer, $list);
     }
 
+    /**
+     * @return string
+     */
     public function getDownForeignKeyList(): string
     {
         $list = [];
@@ -167,16 +210,27 @@ class Table
         return implode($spacer, $list);
     }
 
+    /**
+     * @return bool
+     */
     public function existsIndexModifiers(): bool
     {
         return $this->indexes->count() > 0;
     }
 
+    /**
+     * @return bool
+     */
     public function existsForeignKeys(): bool
     {
         return $this->foreignKeys->count() > 0;
     }
 
+    /**
+     * @param string $name
+     * @param string|array $attributes
+     * @return Column
+     */
     protected function makeColumn(string $name, $attributes): Column
     {
         if ($attributes === 'increments') {
@@ -188,6 +242,10 @@ class Table
         return new Column($name, $attributes);
     }
 
+    /**
+     * @param array $attributes
+     * @return ForeignKey
+     */
     protected function makeForeignKey(array $attributes): ForeignKey
     {
         return new ForeignKey($attributes);

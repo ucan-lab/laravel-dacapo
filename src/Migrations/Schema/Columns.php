@@ -14,6 +14,10 @@ class Columns implements IteratorAggregate
         $this->attributes = [];
     }
 
+    /**
+     * @param Column $column
+     * @return self
+     */
     public function add(Column $column): self
     {
         $this->attributes[] = $column;
@@ -21,6 +25,9 @@ class Columns implements IteratorAggregate
         return $this;
     }
 
+    /**
+     * @return ArrayIterator
+     */
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->attributes);

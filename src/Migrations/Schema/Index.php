@@ -10,6 +10,9 @@ class Index
     private $index;
     private $spatialIndex;
 
+    /**
+     * @param array $attributes
+     */
     public function __construct(array $attributes)
     {
         $this->name = $attributes['name'];

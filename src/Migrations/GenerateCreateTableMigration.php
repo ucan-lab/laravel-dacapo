@@ -14,6 +14,9 @@ class GenerateCreateTableMigration
         $this->table = $table;
     }
 
+    /**
+     * @return void
+     */
     public function run(): void
     {
         $stub = $this->getStub();
@@ -21,6 +24,9 @@ class GenerateCreateTableMigration
         file_put_contents($path, $stub);
     }
 
+    /**
+     * @return string
+     */
     protected function getStub(): string
     {
         $stub = file_get_contents(__DIR__ . '/../Storage/stubs/create.stub');

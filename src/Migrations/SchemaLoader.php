@@ -15,6 +15,9 @@ class SchemaLoader
         $this->tables = new Tables();
     }
 
+    /**
+     * @return Tables
+     */
     public function run(): Tables
     {
         $path = $this->getSchemaPath();
@@ -28,16 +31,28 @@ class SchemaLoader
         return $this->tables;
     }
 
+    /**
+     * @return string
+     */
     private function getSchemaPath(): string
     {
         return database_path('schema.yml');
     }
 
+    /**
+     * @param string $path
+     * @return array
+     */
     private function getYamlContents(string $path): array
     {
         return Yaml::parse(file_get_contents($path));
     }
 
+    /**
+     * @param string $name
+     * @param array $attributes
+     * @return Table
+     */
     private function makeTable(string $name, array $attributes): Table
     {
         return new Table($name, $attributes);

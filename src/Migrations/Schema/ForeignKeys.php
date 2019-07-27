@@ -14,6 +14,10 @@ class ForeignKeys implements IteratorAggregate
         $this->attributes = [];
     }
 
+    /**
+     * @param ForeignKey $foreignKey
+     * @return self
+     */
     public function add(ForeignKey $foreignKey): self
     {
         $this->attributes[] = $foreignKey;
@@ -21,6 +25,9 @@ class ForeignKeys implements IteratorAggregate
         return $this;
     }
 
+    /**
+     * @return integer
+     */
     public function count(): int
     {
         if ($this->attributes) {
@@ -30,6 +37,9 @@ class ForeignKeys implements IteratorAggregate
         return 0;
     }
 
+    /**
+     * @return ArrayIterator
+     */
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->attributes);

@@ -21,6 +21,9 @@ class ForeignKey
         $this->onDelete = $attributes['onDelete'] ?? null;
     }
 
+    /**
+     * @return string
+     */
     public function getUpForeignKeyLine(): string
     {
         $str = $this->getForeignKey();
@@ -29,6 +32,9 @@ class ForeignKey
         return '$table' . $str . ';';
     }
 
+    /**
+     * @return string
+     */
     public function getDownForeignKeyLine(): string
     {
         $str = "->dropForeign(['$this->foreign'])";
@@ -36,6 +42,9 @@ class ForeignKey
         return '$table' . $str . ';';
     }
 
+    /**
+     * @return string
+     */
     private function getForeignKey(): string
     {
         return sprintf(
@@ -46,6 +55,9 @@ class ForeignKey
         );
     }
 
+    /**
+     * @return string
+     */
     private function getForeignKeyModifier(): string
     {
         $str = '';
