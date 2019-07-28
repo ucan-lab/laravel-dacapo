@@ -46,16 +46,12 @@ class DacapoGenerateCommand extends Command
 
         (new DacapoGenerator())->run();
 
-        if ($this->option('fresh')) {
-            $this->call('migrate:fresh', ['--force' => true]);
-        }
-
-        if ($this->option('refresh')) {
-            $this->call('migrate:refresh', ['--force' => true]);
-        }
-
         if ($this->option('seed')) {
-            $this->call('db:seed', ['--force' => true]);
+            $this->call('migrate:fresh', ['--force' => true, '--seed' => true]);
+        } elseif ($this->option('fresh')) {
+            $this->call('migrate:fresh', ['--force' => true]);
+        } elseif ($this->option('refresh')) {
+            $this->call('migrate:refresh', ['--force' => true]);
         }
     }
 }
