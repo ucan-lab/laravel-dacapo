@@ -163,13 +163,13 @@ class Column
         $str = '';
 
         if ($this->primary) {
-            $str = "->dropPrimary('$this->name')";
+            $str = "->dropPrimary(['$this->name'])";
         } elseif ($this->unique) {
-            $str = "->dropUnique('$this->name')";
+            $str = "->dropUnique(['$this->name'])";
         } elseif ($this->index) {
-            $str = "->dropIndex('$this->name')";
+            $str = "->dropIndex(['$this->name'])";
         } elseif ($this->spatialIndex) {
-            $str = "->dropSpatialIndex('$this->name')";
+            $str = "->dropSpatialIndex(['$this->name'])";
         }
 
         return $str;
