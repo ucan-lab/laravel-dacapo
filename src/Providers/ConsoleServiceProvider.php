@@ -1,6 +1,6 @@
 <?php
 
-namespace UcanLab\LaravelDacapo;
+namespace UcanLab\LaravelDacapo\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use UcanLab\LaravelDacapo\Console\DacapoGenerateCommand;
@@ -35,7 +35,7 @@ class ConsoleServiceProvider extends ServiceProvider
      */
     protected function bootPublishes()
     {
-        $schemaPath = __DIR__ . '/Storage';
+        $schemaPath = __DIR__ . '/../Storage';
 
         $this->publishes([
             $schemaPath . '/schema.yml' => database_path('schema.yml'),

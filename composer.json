@@ -25,7 +25,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "UcanLab\\LaravelDacapo\\ConsoleServiceProvider"
+                "UcanLab\\LaravelDacapo\\Providers\\ConsoleServiceProvider"
             ]
         }
     },
