@@ -25,9 +25,18 @@
     "extra": {
         "laravel": {
             "providers": [
-                "UcanLab\\LaravelDacapo\\ConsoleServiceProvider"
+                "UcanLab\\LaravelDacapo\\Providers\\ConsoleServiceProvider"
             ]
         }
     },
-    "license": "MIT"
+    "license": "MIT",
+    "require-dev": {
+        "phpunit/phpunit": "^8.3",
+        "orchestra/testbench": "^3.8"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "UcanLab\\LaravelDacapo\\Test\\": "tests/"
+        }
+    }
 }

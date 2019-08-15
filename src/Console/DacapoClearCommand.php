@@ -58,6 +58,6 @@ class DacapoClearCommand extends Command
     {
         File::deleteDirectory(database_path('migrations'));
         File::makeDirectory(database_path('migrations'));
-        $this->info('Cleard Migration Directory');
+        $this->info('Cleared migration directory.');
     }
 }
