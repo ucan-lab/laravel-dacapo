@@ -3,6 +3,7 @@
 namespace UcanLab\LaravelDacapo\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
 use UcanLab\LaravelDacapo\Console\DacapoGenerateCommand;
 use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
 
@@ -47,6 +48,10 @@ class ConsoleServiceProvider extends ServiceProvider
      */
     protected function registerCommands()
     {
+        $this->app->singleton('command.ucan.dacapo.init', function () {
+            return new DacapoInitCommand();
+        });
+
         $this->app->singleton('command.ucan.dacapo.generate', function () {
             return new DacapoGenerateCommand();
         });
@@ -56,6 +61,7 @@ class ConsoleServiceProvider extends ServiceProvider
         });
 
         $this->commands([
+            'command.ucan.dacapo.init',
             'command.ucan.dacapo.generate',
             'command.ucan.dacapo.clear',
         ]);

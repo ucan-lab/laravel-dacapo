@@ -4,7 +4,6 @@ namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\Migrations\DacapoGenerator;
 
 /**
@@ -45,6 +44,7 @@ class DacapoGenerateCommand extends Command
         $this->call('dacapo:clear', ['--force' => true]);
 
         (new DacapoGenerator())->run();
+        $this->info('Generated migration files.');
 
         if ($this->option('seed')) {
             $this->call('migrate:fresh', ['--force' => true, '--seed' => true]);
