@@ -35,7 +35,7 @@ class DacapoGenerateCommand extends Command
     /**
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         if (! $this->confirmToProceed()) {
             return;

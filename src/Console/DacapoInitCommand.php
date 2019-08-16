@@ -51,7 +51,7 @@ class DacapoInitCommand extends Command
      *
      * @return void
      */
-    private function initSchema()
+    private function initSchema(): void
     {
         if ($this->option('legacy')) {
             File::copy($this->getStoragePath() . '/default.legacy.yml', database_path('schemas/default.yml'));
