@@ -31,6 +31,18 @@ class DacapoInitCommand extends Command
      */
     public function handle()
     {
+        if ($this->existsSchemasDirectory()) {
+            if ($this->ask('The database/schemas directory already exists. Initialize ? [y/N]')) {
+                $this->deleteSchemasDirectory();
+                $this->makeSchemasDirectory();
+            } else {
+                $this->comment('Command Cancelled!');
+                return;
+            }
+        } else {
+            $this->makeSchemasDirectory();
+        }
+
         $this->initSchema();
     }
 
@@ -41,14 +53,52 @@ class DacapoInitCommand extends Command
      */
     private function initSchema()
     {
-        File::makeDirectory(database_path('schemas'));
-
         if ($this->option('legacy')) {
-            File::copy(__DIR__ . '/../Storage/schemas/default.legacy.yml', database_path('schemas/default.yml'));
+            File::copy($this->getStoragePath() . '/default.legacy.yml', database_path('schemas/default.yml'));
         } else {
-            File::copy(__DIR__ . '/../Storage/schemas/default.yml', database_path('schemas/default.yml'));
+            File::copy($this->getStoragePath() . '/default.yml', database_path('schemas/default.yml'));
         }
 
         $this->info('Init dacapo default schema yaml.');
+    }
+
+    /**
+     * @return bool
+     */
+    private function existsSchemasDirectory(): bool
+    {
+        return File::exists($this->getSchemasPath());
+    }
+
+    /**
+     * @return bool
+     */
+    private function makeSchemasDirectory(): bool
+    {
+        return File::makeDirectory($this->getSchemasPath());
+    }
+
+    /**
+     * @return bool
+     */
+    private function deleteSchemasDirectory(): bool
+    {
+        return File::deleteDirectory($this->getSchemasPath());
+    }
+
+    /**
+     * @return string
+     */
+    private function getSchemasPath(): string
+    {
+        return database_path('schemas');
+    }
+
+    /**
+     * @return string
+     */
+    private function getStoragePath(): string
+    {
+        return __DIR__ . '/../Storage/schemas';
     }
 }
