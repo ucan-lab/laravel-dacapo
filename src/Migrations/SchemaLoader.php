@@ -2,9 +2,10 @@
 
 namespace UcanLab\LaravelDacapo\Migrations;
 
+use Illuminate\Support\Facades\File;
 use Symfony\Component\Yaml\Yaml;
-use UcanLab\LaravelDacapo\Migrations\Schema\Tables;
 use UcanLab\LaravelDacapo\Migrations\Schema\Table;
+use UcanLab\LaravelDacapo\Migrations\Schema\Tables;
 
 class SchemaLoader
 {
@@ -20,10 +21,9 @@ class SchemaLoader
      */
     public function run(): Tables
     {
-        $path = $this->getSchemaPath();
-        $yaml = $this->getYamlContents($path);
+        $schemas = $this->getSchemas();
 
-        foreach ($yaml as $tableName => $tableAttributes) {
+        foreach ($schemas as $tableName => $tableAttributes) {
             $table = $this->makeTable($tableName, $tableAttributes);
             $this->tables->add($table);
         }
@@ -31,12 +31,39 @@ class SchemaLoader
         return $this->tables;
     }
 
+    private function getSchemas(): array
+    {
+        $files = $this->getYamlFiles($this->getSchemaPath());
+        $schemas = [];
+        foreach ($files as $file) {
+            $schemas += $this->getYamlContents($file->getRealPath());
+        }
+
+        return $schemas;
+    }
+
     /**
      * @return string
      */
     private function getSchemaPath(): string
     {
-        return database_path('schema.yml');
+        return database_path('schemas');
+    }
+
+    /**
+     * @param string $path
+     * @return array
+     */
+    private function getYamlFiles(string $path): array
+    {
+        $files = [];
+        foreach (File::files($path) as $file) {
+            if ($file->getExtension() === 'yml') {
+                $files[] = $file;
+            }
+        }
+
+        return $files;
     }
 
     /**
