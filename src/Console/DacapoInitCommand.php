@@ -41,10 +41,12 @@ class DacapoInitCommand extends Command
      */
     private function initSchema()
     {
+        File::makeDirectory(database_path('schemas'));
+
         if ($this->option('legacy')) {
-            File::copy(__DIR__ . '/../Storage/schemas/schema.legacy.yml', database_path('schema.yml'));
+            File::copy(__DIR__ . '/../Storage/schemas/schema.legacy.yml', database_path('schemas/schema.yml'));
         } else {
-            File::copy(__DIR__ . '/../Storage/schemas/schema.yml', database_path('schema.yml'));
+            File::copy(__DIR__ . '/../Storage/schemas/schema.yml', database_path('schemas/schema.yml'));
         }
 
         $this->info('Init dacapo default schema yaml.');
