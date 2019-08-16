@@ -3,9 +3,9 @@
 namespace UcanLab\LaravelDacapo\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
-use UcanLab\LaravelDacapo\Console\DacapoGenerateCommand;
 use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
+use UcanLab\LaravelDacapo\Console\DacapoGenerateCommand;
+use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
 use UcanLab\LaravelDacapo\Console\DacapoUninstallCommand;
 
 /**
