@@ -6,11 +6,13 @@
 $ composer require --dev ucan-lab/laravel-dacapo
 ```
 
-## Publish the schema file
+## Generate default schema.yml
 
 ```
-$ php artisan vendor:publish --provider="UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider"
+$ php artisan dacapo:init
 ```
+
+`database/schemas/default.yml`
 
 ## Generate migration files from schema.yml
 
