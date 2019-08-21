@@ -177,39 +177,66 @@ class Column
 
     /**
      * @return string
+     * @todo refactor later
      */
     protected function getColumnModifier(): string
     {
         $str = '';
 
-        if ($this->after) {
-            //
-        } elseif ($this->autoIncrement) {
-            //
-        } elseif ($this->charset) {
-            //
-        } elseif ($this->collation) {
-            //
-        } elseif ($this->comment) {
+//        if ($this->after) {
+//            $str .= "->after('$this->after')";
+//        }
+
+        if ($this->autoIncrement) {
+            $str .= "->autoIncrement()";
+        }
+
+        if ($this->charset) {
+            $str .= "->charset('$this->charset')";
+        }
+
+        if ($this->collation) {
+            $str .= "->collation('$this->collation')";
+        }
+
+        if ($this->comment) {
             $str .= "->comment('$this->comment')";
-        } elseif ($this->default) {
+        }
+
+        if ($this->default) {
             $str .= "->comment('$this->default')";
-        } elseif ($this->first) {
-            //
-        } elseif ($this->nullable !== null) {
+        }
+
+//        if ($this->first) {
+//            $str .= "->first()";
+//        }
+
+        if ($this->nullable !== null) {
             $str .= "->nullable($this->nullable)";
-        } elseif ($this->storedAs) {
-            //
-        } elseif ($this->unsigned) {
+        }
+
+        if ($this->storedAs) {
+            $str .= "->storedAs('$this->storedAs')";
+        }
+
+        if ($this->unsigned) {
             $str .= "->unsigned()";
-        } elseif ($this->useCurrent) {
-            //
-        } elseif ($this->virtualAs) {
-            //
-        } elseif ($this->generatedAs) {
-            //
-        } elseif ($this->always) {
-            //
+        }
+
+        if ($this->useCurrent) {
+            $str .= "->useCurrent()";
+        }
+
+        if ($this->virtualAs) {
+            $str .= "->virtualAs('$this->virtualAs')";
+        }
+
+        if ($this->generatedAs) {
+            $str .= "->generatedAs('$this->generatedAs')";
+        }
+
+        if ($this->always) {
+            $str .= "->always()";
         }
 
         return $str;
