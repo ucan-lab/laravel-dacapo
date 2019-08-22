@@ -3,9 +3,10 @@
 namespace UcanLab\LaravelDacapo\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
-use UcanLab\LaravelDacapo\Console\DacapoGenerateCommand;
 use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
+use UcanLab\LaravelDacapo\Console\DacapoGenerateCommand;
+use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
+use UcanLab\LaravelDacapo\Console\DacapoUninstallCommand;
 
 /**
  * Class ConsoleServiceProvider
@@ -17,7 +18,6 @@ class ConsoleServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->bootPublishes();
         $this->registerCommands();
     }
 
@@ -27,20 +27,6 @@ class ConsoleServiceProvider extends ServiceProvider
     public function register()
     {
         // register bindings
-    }
-
-    /**
-     * Bootstrap publishes
-     *
-     * @return void
-     */
-    protected function bootPublishes()
-    {
-        $schemaPath = __DIR__ . '/../Storage';
-
-        $this->publishes([
-            $schemaPath . '/schema.yml' => database_path('schema.yml'),
-        ]);
     }
 
     /**
@@ -60,10 +46,15 @@ class ConsoleServiceProvider extends ServiceProvider
             return new DacapoClearCommand();
         });
 
+        $this->app->singleton('command.ucan.dacapo.uninstall', function () {
+            return new DacapoUninstallCommand();
+        });
+
         $this->commands([
             'command.ucan.dacapo.init',
             'command.ucan.dacapo.generate',
             'command.ucan.dacapo.clear',
+            'command.ucan.dacapo.uninstall',
         ]);
     }
 
@@ -73,8 +64,10 @@ class ConsoleServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
+            'command.ucan.dacapo.init',
             'command.ucan.dacapo.generate',
             'command.ucan.dacapo.clear',
+            'command.ucan.dacapo.uninstall',
         ];
     }
 }

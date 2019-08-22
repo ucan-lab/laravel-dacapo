@@ -40,7 +40,7 @@ class DacapoClearCommand extends Command
     /**
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         if (! $this->confirmToProceed()) {
             return;
@@ -54,7 +54,7 @@ class DacapoClearCommand extends Command
      *
      * @return void
      */
-    private function clearMigrationDirectory()
+    private function clearMigrationDirectory(): void
     {
         File::deleteDirectory(database_path('migrations'));
         File::makeDirectory(database_path('migrations'));

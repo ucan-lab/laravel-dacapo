@@ -74,6 +74,14 @@ class Table
     /**
      * @return string
      */
+    public function getModelName(): string
+    {
+        return Str::studly(Str::singular($this->name));
+    }
+
+    /**
+     * @return string
+     */
     public function getTableComment(): string
     {
         return $this->comment;
