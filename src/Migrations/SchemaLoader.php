@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Migrations;
 
+use Exception;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\Migrations\Schema\Table;
@@ -18,6 +19,7 @@ class SchemaLoader
 
     /**
      * @return Tables
+     * @throws
      */
     public function run(): Tables
     {
@@ -31,12 +33,21 @@ class SchemaLoader
         return $this->tables;
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
     private function getSchemas(): array
     {
         $files = $this->getYamlFiles($this->getSchemaPath());
         $schemas = [];
         foreach ($files as $file) {
-            $schemas += $this->getYamlContents($file->getRealPath());
+            $yamlContents = $this->getYamlContents($file->getRealPath());
+            if ($intersectKey = $this->getDuplicateKey($schemas, $yamlContents)) {
+                throw new Exception(sprintf('%s duplicate table name. [%s]', $file->getFilename(), implode(', ', $intersectKey)));
+            }
+
+            $schemas += $yamlContents;
         }
 
         return $schemas;
@@ -83,5 +94,17 @@ class SchemaLoader
     private function makeTable(string $name, array $attributes): Table
     {
         return new Table($name, $attributes);
+    }
+
+    /**
+     * Compare array key values and return duplicate keys
+     *
+     * @param array $originArray
+     * @param array $targetArray
+     * @return array
+     */
+    private function getDuplicateKey(array $originArray, array $targetArray): array
+    {
+        return array_keys(array_intersect_key($originArray, $targetArray));
     }
 }
