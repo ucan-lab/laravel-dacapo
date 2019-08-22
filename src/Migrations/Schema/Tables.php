@@ -9,7 +9,7 @@ class Tables implements IteratorAggregate
 {
     private $attributes;
 
-    public function __construnct()
+    public function __construct()
     {
         $this->attributes = [];
     }

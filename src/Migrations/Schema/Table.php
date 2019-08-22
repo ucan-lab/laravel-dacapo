@@ -11,6 +11,7 @@ class Table
     const PREFIX_CONSTRAINT_FOREIGN_KEY = 2;
 
     private $name;
+    private $attributes;
     private $comment;
     private $engine;
     private $charset;
