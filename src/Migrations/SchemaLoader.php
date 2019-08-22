@@ -97,6 +97,8 @@ class SchemaLoader
     }
 
     /**
+     * Compare array key values and return duplicate keys
+     *
      * @param array $originArray
      * @param array $targetArray
      * @return array
