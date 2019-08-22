@@ -241,10 +241,8 @@ class Table
      */
     protected function makeColumn(string $name, $attributes): Column
     {
-        if ($attributes === 'increments') {
-            return new Column($name, ['type' => 'increments']);
-        } elseif ($attributes === 'bigIncrements') {
-            return new Column($name, ['type' => 'bigIncrements']);
+        if (is_string($attributes)) {
+            return new Column($name, ['type' => $attributes]);
         }
 
         return new Column($name, $attributes);
