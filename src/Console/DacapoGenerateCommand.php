@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Console;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use UcanLab\LaravelDacapo\Migrations\DacapoGenerator;
@@ -44,8 +45,12 @@ class DacapoGenerateCommand extends Command
 
         $this->call('dacapo:clear', ['--force' => true]);
 
-        (new DacapoGenerator($this->option('model')))->run();
-        $this->info('Generated migration files.');
+        try {
+            (new DacapoGenerator($this->option('model')))->run();
+            $this->info('Generated migration files.');
+        } catch (Exception $e) {
+            $this->alert('Error: ' . $e->getMessage());
+        }
 
         if ($this->option('seed')) {
             $this->call('migrate:fresh', ['--force' => true, '--seed' => true]);
