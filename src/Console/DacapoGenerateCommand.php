@@ -24,7 +24,6 @@ class DacapoGenerateCommand extends Command
         {--fresh : Drop all tables and re-run all migrations}
         {--refresh : Reset and re-run all migrations}
         {--seed : Seed the database with records}
-        {--m|model : Run make model command}
     ';
 
     /**
@@ -46,7 +45,7 @@ class DacapoGenerateCommand extends Command
         $this->call('dacapo:clear', ['--force' => true]);
 
         try {
-            (new DacapoGenerator($this->option('model')))->run();
+            (new DacapoGenerator())->run();
             $this->info('Generated migration files.');
         } catch (Exception $e) {
             $this->alert('Error: ' . $e->getMessage());

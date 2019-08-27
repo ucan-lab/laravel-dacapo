@@ -3,39 +3,37 @@
 namespace UcanLab\LaravelDacapo\Generator;
 
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\File;
 use UcanLab\LaravelDacapo\Migrations\Schema\Tables;
+use UcanLab\LaravelDacapo\Storage\Storage;
 
 class ModelTemplateGenerator
 {
     private $tables;
+    private $modelsStorage;
+    private $dir;
 
-    public function __construct(Tables $tables)
+    /**
+     * ModelTemplateGenerator constructor.
+     * @param Tables $tables
+     * @param Storage $modelsStorage
+     * @param string|null $dir
+     */
+    public function __construct(Tables $tables, Storage $modelsStorage, ?string $dir = null)
     {
         $this->tables = $tables;
+        $this->modelsStorage = $modelsStorage;
+        $this->dir = $dir;
     }
 
     public function run(): void
     {
         foreach ($this->tables as $table) {
-            if (! $this->existsModel($table->getModelName())) {
+            $modelName = ($this->dir ? "$this->dir/" : '') . $table->getModelName();
+            if (! $this->modelsStorage->exists($modelName . '.php')) {
                 Artisan::call('make:model', [
-                    'name' => $table->getModelName(),
+                    'name' => $modelName,
                 ]);
             }
         }
-    }
-
-    /**
-     * @return string
-     */
-    private function getModelPath(): string
-    {
-        return app_path();
-    }
-
-    private function existsModel(string $modelName): bool
-    {
-        return File::exists($this->getModelPath() . '/' . $modelName . '.php');
     }
 }

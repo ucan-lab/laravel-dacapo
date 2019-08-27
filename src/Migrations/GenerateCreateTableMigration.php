@@ -4,14 +4,17 @@ namespace UcanLab\LaravelDacapo\Migrations;
 
 use UcanLab\LaravelDacapo\Migrations\Schema\SchemaLoader;
 use UcanLab\LaravelDacapo\Migrations\Schema\Table;
+use UcanLab\LaravelDacapo\Storage\Storage;
 
 class GenerateCreateTableMigration
 {
     private $table;
+    private $migrationsStorage;
 
-    public function __construct(Table $table)
+    public function __construct(Table $table, Storage $migrationsStorage)
     {
         $this->table = $table;
+        $this->migrationsStorage = $migrationsStorage;
     }
 
     /**
@@ -20,7 +23,7 @@ class GenerateCreateTableMigration
     public function run(): void
     {
         $stub = $this->getStub();
-        $path = $this->getPath($this->table->getCreateTableMigrationFileName());
+        $path = $this->migrationsStorage->getPath($this->table->getCreateTableMigrationFileName());
         file_put_contents($path, $stub);
     }
 
@@ -36,16 +39,5 @@ class GenerateCreateTableMigration
         $stub = str_replace('DummyColumn', $this->table->getColumnList(), $stub);
 
         return $stub;
-    }
-
-    /**
-     * Get the full path to the migration.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function getPath($name): string
-    {
-        return database_path('migrations') . '/' . $name;
     }
 }

@@ -32,3 +32,9 @@ $ php artisan dacapo:init --legacy
 ```
 $ php artisan dacapo:generate
 ```
+
+## Generate template models from schema.yml
+
+```
+$ php artisan dacapo:generate:models
+```
