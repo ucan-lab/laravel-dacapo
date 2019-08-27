@@ -2,9 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Migrations;
 
-use UcanLab\LaravelDacapo\Generator\ModelTemplateGenerator;
-use UcanLab\LaravelDacapo\Storage\MigrationsStorage;
-use UcanLab\LaravelDacapo\Storage\SchemasStorage;
+use UcanLab\LaravelDacapo\Storage\Storage;
 
 /**
  * Class DacapoGenerator
@@ -16,11 +14,13 @@ class DacapoGenerator
 
     /**
      * DacapoGenerator constructor.
+     * @param Storage $schemasStorage
+     * @param Storage $migrationsStorage
      */
-    public function __construct()
+    public function __construct(Storage $schemasStorage, Storage $migrationsStorage)
     {
-        $this->schemasStorage = new SchemasStorage();
-        $this->migrationsStorage = new MigrationsStorage();
+        $this->schemasStorage = $schemasStorage;
+        $this->migrationsStorage = $migrationsStorage;
     }
 
     /**
