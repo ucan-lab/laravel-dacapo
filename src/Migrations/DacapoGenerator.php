@@ -11,17 +11,14 @@ use UcanLab\LaravelDacapo\Storage\SchemasStorage;
  */
 class DacapoGenerator
 {
-    private $enabledMakeModel;
     private $schemasStorage;
     private $migrationsStorage;
 
     /**
      * DacapoGenerator constructor.
-     * @param bool $enabledMakeModel
      */
-    public function __construct(bool $enabledMakeModel)
+    public function __construct()
     {
-        $this->enabledMakeModel = $enabledMakeModel;
         $this->schemasStorage = new SchemasStorage();
         $this->migrationsStorage = new MigrationsStorage();
     }
@@ -37,10 +34,6 @@ class DacapoGenerator
             (new GenerateCreateTableMigration($table, $this->migrationsStorage))->run();
             (new GenerateCreateIndexMigration($table, $this->migrationsStorage))->run();
             (new GenerateConstraintForeignKeyMigration($table, $this->migrationsStorage))->run();
-        }
-
-        if ($this->enabledMakeModel) {
-            (new ModelTemplateGenerator($tables))->run();
         }
     }
 }

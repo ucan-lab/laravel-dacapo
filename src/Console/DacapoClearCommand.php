@@ -42,10 +42,6 @@ class DacapoClearCommand extends Command
      */
     public function handle(): void
     {
-        if (! $this->confirmToProceed()) {
-            return;
-        }
-
         $this->clearMigrationDirectory();
     }
 
