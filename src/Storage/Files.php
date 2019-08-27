@@ -2,8 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Storage;
 
-use IteratorAggregate;
 use ArrayIterator;
+use IteratorAggregate;
 use SplFileInfo;
 
 class Files implements IteratorAggregate
