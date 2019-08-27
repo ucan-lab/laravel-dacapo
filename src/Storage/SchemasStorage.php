@@ -51,6 +51,6 @@ class SchemasStorage implements Storage
      */
     public function getPath(?string $path = null): string
     {
-        return database_path('schemas') . $path ? "/$path" : '';
+        return database_path('schemas') . ($path ? "/$path" : '');
     }
 }

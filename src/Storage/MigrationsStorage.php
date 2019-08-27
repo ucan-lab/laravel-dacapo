@@ -51,6 +51,6 @@ class MigrationsStorage implements Storage
      */
     public function getPath(?string $path = null): string
     {
-        return database_path('migrations') . $path ? "/$path" : '';
+        return database_path('migrations') . ($path ? "/$path" : '');
     }
 }
