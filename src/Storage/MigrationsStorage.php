@@ -22,11 +22,12 @@ class MigrationsStorage implements Storage
     }
 
     /**
+     * @param string|null $path
      * @return bool
      */
-    public function exists(): bool
+    public function exists(?string $path = null): bool
     {
-        return File::exists($this->getPath());
+        return File::exists($this->getPath($path));
     }
 
     /**

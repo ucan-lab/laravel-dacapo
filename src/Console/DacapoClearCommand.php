@@ -3,7 +3,6 @@
 namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use Illuminate\Console\ConfirmableTrait;
 use UcanLab\LaravelDacapo\Storage\MigrationsStorage;
 
