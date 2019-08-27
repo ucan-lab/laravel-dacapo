@@ -37,8 +37,8 @@ class GenerateCreateIndexMigration
         $stub = file_get_contents(__DIR__ . '/../Storage/stubs/update.stub');
         $stub = str_replace('DummyClass', $this->table->getCreateIndexMigrationClassName(), $stub);
         $stub = str_replace('DummyTableName', $this->table->getTableName(), $stub);
-        $stub = str_replace('DummyTableUpCulumn', $this->table->getUpIndexList(), $stub);
-        $stub = str_replace('DummyTableDownCulumn', $this->table->getDownIndexList(), $stub);
+        $stub = str_replace('DummyTableUpColumn', $this->table->getUpIndexList(), $stub);
+        $stub = str_replace('DummyTableDownColumn', $this->table->getDownIndexList(), $stub);
 
         return $stub;
     }

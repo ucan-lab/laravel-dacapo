@@ -37,8 +37,8 @@ class GenerateConstraintForeignKeyMigration
         $stub = file_get_contents(__DIR__ . '/../Storage/stubs/update.stub');
         $stub = str_replace('DummyClass', $this->table->getConstraintForeignKeyMigrationClassName(), $stub);
         $stub = str_replace('DummyTableName', $this->table->getTableName(), $stub);
-        $stub = str_replace('DummyTableUpCulumn', $this->table->getUpForeignKeyList(), $stub);
-        $stub = str_replace('DummyTableDownCulumn', $this->table->getDownForeignKeyList(), $stub);
+        $stub = str_replace('DummyTableUpColumn', $this->table->getUpForeignKeyList(), $stub);
+        $stub = str_replace('DummyTableDownColumn', $this->table->getDownForeignKeyList(), $stub);
 
         return $stub;
     }
