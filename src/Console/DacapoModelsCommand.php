@@ -21,7 +21,9 @@ class DacapoModelsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'dacapo:models';
+    protected $signature = 'dacapo:generate:models
+        {--d|dir= : Generate directory.}
+    ';
 
     /**
      * The console command description.
@@ -48,7 +50,7 @@ class DacapoModelsCommand extends Command
         $tables = (new SchemaLoader(new SchemasStorage()))->run();
         $modelStorage = new ModelsStorage();
 
-        (new ModelTemplateGenerator($tables, $modelStorage))->run();
-        $this->info('Cleared migration directory.');
+        (new ModelTemplateGenerator($tables, $modelStorage, $this->option('dir')))->run();
+        $this->info('Generate template models.');
     }
 }
