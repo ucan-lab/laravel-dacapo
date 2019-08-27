@@ -4,14 +4,17 @@ namespace UcanLab\LaravelDacapo\Migrations;
 
 use UcanLab\LaravelDacapo\Migrations\Schema\SchemaLoader;
 use UcanLab\LaravelDacapo\Migrations\Schema\Table;
+use UcanLab\LaravelDacapo\Storage\Storage;
 
 class GenerateCreateIndexMigration
 {
     private $table;
+    private $migrationsStorage;
 
-    public function __construct(Table $table)
+    public function __construct(Table $table, Storage $migrationsStorage)
     {
         $this->table = $table;
+        $this->migrationsStorage = $migrationsStorage;
     }
 
     /**
@@ -21,7 +24,7 @@ class GenerateCreateIndexMigration
     {
         if ($this->existsIndexModifiers()) {
             $stub = $this->getStub();
-            $path = $this->getPath($this->table->getCreateIndexMigrationFileName());
+            $path = $this->migrationsStorage->getPath($this->table->getCreateIndexMigrationFileName());
             file_put_contents($path, $stub);
         }
     }

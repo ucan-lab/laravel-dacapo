@@ -4,14 +4,17 @@ namespace UcanLab\LaravelDacapo\Migrations;
 
 use UcanLab\LaravelDacapo\Migrations\Schema\SchemaLoader;
 use UcanLab\LaravelDacapo\Migrations\Schema\Table;
+use UcanLab\LaravelDacapo\Storage\Storage;
 
 class GenerateConstraintForeignKeyMigration
 {
     private $table;
+    private $migrationsStorage;
 
-    public function __construct(Table $table)
+    public function __construct(Table $table, Storage $migrationsStorage)
     {
         $this->table = $table;
+        $this->migrationsStorage = $migrationsStorage;
     }
 
     /**

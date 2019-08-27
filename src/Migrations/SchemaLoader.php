@@ -7,14 +7,18 @@ use Illuminate\Support\Facades\File;
 use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\Migrations\Schema\Table;
 use UcanLab\LaravelDacapo\Migrations\Schema\Tables;
+use UcanLab\LaravelDacapo\Storage\Storage;
+use SplFileInfo;
 
 class SchemaLoader
 {
     private $tables;
+    private $schemasStorage;
 
-    public function __construct()
+    public function __construct(Storage $schemasStorage)
     {
         $this->tables = new Tables();
+        $this->schemasStorage = $schemasStorage;
     }
 
     /**
@@ -39,10 +43,10 @@ class SchemaLoader
      */
     private function getSchemas(): array
     {
-        $files = $this->getYamlFiles($this->getSchemaPath());
+        $files = $this->schemasStorage->getFiles();
         $schemas = [];
         foreach ($files as $file) {
-            $yamlContents = $this->getYamlContents($file->getRealPath());
+            $yamlContents = $this->getYamlContents($file);
             if ($intersectKey = $this->getDuplicateKey($schemas, $yamlContents)) {
                 throw new Exception(sprintf('%s duplicate table name. [%s]', $file->getFilename(), implode(', ', $intersectKey)));
             }
@@ -54,36 +58,12 @@ class SchemaLoader
     }
 
     /**
-     * @return string
-     */
-    private function getSchemaPath(): string
-    {
-        return database_path('schemas');
-    }
-
-    /**
-     * @param string $path
+     * @param SplFileInfo $file
      * @return array
      */
-    private function getYamlFiles(string $path): array
+    private function getYamlContents(SplFileInfo $file): array
     {
-        $files = [];
-        foreach (File::files($path) as $file) {
-            if ($file->getExtension() === 'yml') {
-                $files[] = $file;
-            }
-        }
-
-        return $files;
-    }
-
-    /**
-     * @param string $path
-     * @return array
-     */
-    private function getYamlContents(string $path): array
-    {
-        return Yaml::parse(file_get_contents($path));
+        return Yaml::parse(file_get_contents($file->getRealPath()));
     }
 
     /**
