@@ -261,6 +261,7 @@ class Table
     /**
      * Get the date prefix for the migration.
      *
+     * @param int $time
      * @return string
      */
     protected function getDatePrefix(int $time = self::PREFIX_CREATE_TABLE): string
