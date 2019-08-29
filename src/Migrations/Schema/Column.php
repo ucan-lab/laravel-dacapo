@@ -67,57 +67,6 @@ class Column
     }
 
     /**
-     * @return bool
-     */
-    public function hasIndex(): bool
-    {
-        return (bool)($this->primary || $this->unique || $this->index || $this->spatialIndex);
-    }
-
-    /**
-     * @return Index
-     */
-    public function getIndex(): Index
-    {
-        $attributes = ['name' => [$this->name]];
-        if ($this->primary) {
-            $attributes['primary'] = true;
-        } elseif ($this->unique) {
-            $attributes['unique'] = true;
-        } elseif ($this->index) {
-            $attributes['index'] = true;
-        } elseif ($this->spatialIndex) {
-            $attributes['spatialIndex'] = true;
-        }
-
-        return new Index($attributes);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUpIndexLine(): ?string
-    {
-        if ($str = $this->getIndexType()) {
-            return '$table' . $str . ';';
-        }
-
-        return null;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDownIndexLine(): ?string
-    {
-        if ($str = $this->getDropIndexType()) {
-            return '$table' . $str . ';';
-        }
-
-        return null;
-    }
-
-    /**
      * @return string
      */
     protected function getColumnType(): string

@@ -40,7 +40,7 @@ class Table
 
         if (isset($attributes['indexes'])) {
             foreach ($attributes['indexes'] as $indexAttributes) {
-                $indexes = $this->makeColumn($indexAttributes);
+                $index = $this->makeIndex($indexAttributes);
                 $this->indexes->add($index);
             }
         }
@@ -49,10 +49,6 @@ class Table
             foreach ($attributes['columns'] as $columnName => $columnAttributes) {
                 $column = $this->makeColumn($columnName, $columnAttributes);
                 $this->columns->add($column);
-
-                if ($column->hasIndex()) {
-                    $this->indexes->add($column->getIndex());
-                }
             }
         }
 
@@ -157,8 +153,8 @@ class Table
     public function getUpIndexList(): string
     {
         $list = [];
-        foreach ($this->columns as $column) {
-            if ($line = $column->getUpIndexLine()) {
+        foreach ($this->indexes as $index) {
+            if ($line = $index->getUpLine()) {
                 $list[] = $line;
             }
         }
@@ -174,8 +170,8 @@ class Table
     public function getDownIndexList(): string
     {
         $list = [];
-        foreach ($this->columns as $column) {
-            if ($line = $column->getDownIndexLine()) {
+        foreach ($this->indexes as $index) {
+            if ($line = $index->getDownLine()) {
                 $list[] = $line;
             }
         }
@@ -259,8 +255,18 @@ class Table
     }
 
     /**
+     * @param array $attributes
+     * @return Index
+     */
+    protected function makeIndex(array $attributes): Index
+    {
+        return new Index($this, $attributes);
+    }
+
+    /**
      * Get the date prefix for the migration.
      *
+     * @param int $time
      * @return string
      */
     protected function getDatePrefix(int $time = self::PREFIX_CREATE_TABLE): string
