@@ -41,6 +41,13 @@ class DacapoGenerateTest extends TestCase
                     '1970_01_01_000000_create_users_table.php',
                 ],
             ],
+            'Laravel Legacy Default Migration' => [
+                'dir' => 'laravel_legacy_default',
+                'files' => [
+                    '1970_01_01_000000_create_password_resets_table.php',
+                    '1970_01_01_000000_create_users_table.php',
+                ],
+            ],
         ];
     }
 }
