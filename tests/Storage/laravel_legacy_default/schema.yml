@@ -1,5 +1,4 @@
 users:
-  timestamps: true
   columns:
     id: increments
     name:
@@ -7,13 +6,13 @@ users:
     email:
       type: string
       unique: true
-      nullable: true
     email_verified_at:
       type: timestamp
       nullable: true
     password:
       type: string
-  rememberToken: true
+    rememberToken: true
+    timestamps: true
 
 password_resets:
   columns:

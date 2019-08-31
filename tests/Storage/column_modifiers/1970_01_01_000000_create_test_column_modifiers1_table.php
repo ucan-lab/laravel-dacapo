@@ -16,7 +16,7 @@ class CreateTestColumnModifiers1Table extends Migration
     {
         Schema::create('test_column_modifiers1', function (Blueprint $table) {
             $table->integer('id')->autoIncrement();
-            $table->string('name')->charset('utf8')->collation('utf8_unicode_ci')->comment('my comment')->comment('test value')->nullable(true);
+            $table->string('name')->charset('utf8')->collation('utf8_unicode_ci')->comment('my comment')->comment('test value')->nullable();
             $table->integer('price')->unsigned();
             $table->integer('count')->unsigned();
             $table->integer('total_stored')->storedAs('price * count');

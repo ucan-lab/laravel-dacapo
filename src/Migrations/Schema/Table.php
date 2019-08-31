@@ -16,7 +16,6 @@ class Table
     private $engine;
     private $charset;
     private $collation;
-    private $timestamps;
     private $columns;
     private $indexes;
     private $foreignKeys;
@@ -33,7 +32,6 @@ class Table
         $this->engine = $attributes['engine'] ?? '';
         $this->charset = $attributes['charset'] ?? '';
         $this->collation = $attributes['collation'] ?? '';
-        $this->timestamps = $attributes['timestamps'] ?? '';
         $this->columns = new Columns($attributes['columns'] ?? []);
         $this->indexes = new Indexes($this->name, $attributes['indexes'] ?? []);
         $this->foreignKeys = new ForeignKeys($attributes['relations'] ?? []);
