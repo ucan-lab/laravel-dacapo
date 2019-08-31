@@ -21,7 +21,7 @@ class GenerateConstraintForeignKeyMigration
      */
     public function run(): void
     {
-        if ($this->existsForeignKeys()) {
+        if ($this->table->existsForeignKeys()) {
             $stub = $this->getStub();
             $path = $this->migrationsStorage->getPath($this->table->getConstraintForeignKeyMigrationFileName());
             file_put_contents($path, $stub);
@@ -40,13 +40,5 @@ class GenerateConstraintForeignKeyMigration
         $stub = str_replace('DummyTableDownColumn', $this->table->getDownForeignKeyList(), $stub);
 
         return $stub;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function existsForeignKeys(): bool
-    {
-        return $this->table->existsForeignKeys();
     }
 }

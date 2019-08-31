@@ -21,7 +21,7 @@ class GenerateCreateIndexMigration
      */
     public function run(): void
     {
-        if ($this->existsIndexModifiers()) {
+        if ($this->table->existsIndexModifiers()) {
             $stub = $this->getStub();
             $path = $this->migrationsStorage->getPath($this->table->getCreateIndexMigrationFileName());
             file_put_contents($path, $stub);
@@ -40,13 +40,5 @@ class GenerateCreateIndexMigration
         $stub = str_replace('DummyTableDownColumn', $this->table->getDownIndexList(), $stub);
 
         return $stub;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function existsIndexModifiers(): bool
-    {
-        return $this->table->existsIndexModifiers();
     }
 }
