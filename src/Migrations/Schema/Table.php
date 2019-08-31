@@ -36,14 +36,7 @@ class Table
         $this->timestamps = $attributes['timestamps'] ?? '';
         $this->columns = new Columns($attributes['columns'] ?? []);
         $this->indexes = new Indexes($this->name, $attributes['indexes'] ?? []);
-        $this->foreignKeys = new ForeignKeys();
-
-        if (isset($attributes['relations'])) {
-            foreach ($attributes['relations'] as $i => $foreignKeyAttributes) {
-                $foreignKey = $this->makeForeignKey($foreignKeyAttributes);
-                $this->foreignKeys->add($foreignKey);
-            }
-        }
+        $this->foreignKeys = new ForeignKeys($attributes['relations'] ?? []);
     }
 
     /**
@@ -215,15 +208,6 @@ class Table
     public function existsForeignKeys(): bool
     {
         return $this->foreignKeys->count() > 0;
-    }
-
-    /**
-     * @param array $attributes
-     * @return ForeignKey
-     */
-    protected function makeForeignKey(array $attributes): ForeignKey
-    {
-        return new ForeignKey($attributes);
     }
 
     /**
