@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Test;
 
+use Illuminate\Support\Facades\File;
 use UcanLab\LaravelDacapo\Migrations\DacapoGenerator;
 use UcanLab\LaravelDacapo\Test\Storage\MigrationsMockStorage;
 use UcanLab\LaravelDacapo\Test\Storage\SchemasMockStorage;
@@ -33,32 +34,50 @@ class DacapoGenerateTest extends TestCase
      */
     public function dataProvider(): array
     {
-        return [
-            'Laravel Default Migration' => [
-                'dir' => 'laravel_default',
-                'files' => [
-                    '1970_01_01_000000_create_password_resets_table.php',
-                    '1970_01_01_000000_create_users_table.php',
-                ],
-            ],
-            'Laravel Legacy Default Migration' => [
-                'dir' => 'laravel_legacy_default',
-                'files' => [
-                    '1970_01_01_000000_create_password_resets_table.php',
-                    '1970_01_01_000000_create_users_table.php',
-                ],
-            ],
-            'Index Migration' => [
-                'dir' => 'index',
-                'files' => [
-                    '1970_01_01_000000_create_users1_table.php',
-                    '1970_01_01_000000_create_users2_table.php',
-                    '1970_01_01_000000_create_users3_table.php',
-                    '1970_01_01_000001_create_users1_index.php',
-                    '1970_01_01_000001_create_users2_index.php',
-                    '1970_01_01_000001_create_users3_index.php',
-                ],
-            ],
-        ];
+        $this->createApplication();
+
+        $data = [];
+        foreach ($this->getDirectories() as $directoryPath) {
+            $dir = basename($directoryPath);
+            $data[$dir] = [
+                'dir' => $dir,
+                'files' => $this->getMigrationFileNames($dir),
+            ];
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return array
+     */
+    private function getDirectories(): array
+    {
+        return File::directories($this->getStoragePath());
+    }
+
+    /**
+     * @param string $dir
+     * @return array
+     */
+    private function getMigrationFileNames(string $dir): array
+    {
+        $files = [];
+        foreach (File::files($this->getStoragePath($dir)) as $file) {
+            if ($file->getExtension() === 'php') {
+                $files[] = $file->getFilename();
+            }
+        }
+
+        return $files;
+    }
+
+    /**
+     * @param string|null $path
+     * @return string
+     */
+    private function getStoragePath(?string $path = null): string
+    {
+        return __DIR__ . '/Storage' . ($path ? "/$path" : '');
     }
 }
