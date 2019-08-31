@@ -48,6 +48,17 @@ class DacapoGenerateTest extends TestCase
                     '1970_01_01_000000_create_users_table.php',
                 ],
             ],
+            'Index Migration' => [
+                'dir' => 'index',
+                'files' => [
+                    '1970_01_01_000000_create_users1_table.php',
+                    '1970_01_01_000000_create_users2_table.php',
+                    '1970_01_01_000000_create_users3_table.php',
+                    '1970_01_01_000001_create_users1_index.php',
+                    '1970_01_01_000001_create_users2_index.php',
+                    '1970_01_01_000001_create_users3_index.php',
+                ],
+            ],
         ];
     }
 }
