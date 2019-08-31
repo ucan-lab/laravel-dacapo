@@ -1,0 +1,14 @@
+users:
+  columns:
+    id: bigIncrements
+    name: string
+
+tasks:
+  relations:
+    - foreign: user_id
+      references: id
+      on: users
+  columns:
+    id: bigIncrements
+    user_id: unsignedBigInteger
+    content: string
