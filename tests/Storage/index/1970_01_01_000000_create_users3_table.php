@@ -17,7 +17,7 @@ class CreateUsers3Table extends Migration
         Schema::create('users3', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('email')->nullable(true);
+            $table->string('email');
         });
 
         DB::statement("ALTER TABLE users3 COMMENT ''");

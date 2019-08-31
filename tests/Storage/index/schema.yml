@@ -9,7 +9,6 @@ users1:
       type: string
     email:
       type: string
-      nullable: true
 
 users2:
   indexes:
@@ -25,7 +24,6 @@ users2:
       type: string
     email:
       type: string
-      nullable: true
 
 users3:
   indexes:
@@ -41,4 +39,3 @@ users3:
       type: string
     email:
       type: string
-      nullable: true
