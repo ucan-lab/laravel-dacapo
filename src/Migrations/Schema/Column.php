@@ -204,7 +204,7 @@ class Column
     {
         if (isset($attributes[$name])) {
             if ($attributes[$name]) {
-                return 'true';
+                return '';
             }
             return 'false';
         }
