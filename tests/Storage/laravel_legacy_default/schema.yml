@@ -6,7 +6,6 @@ users:
     email:
       type: string
       unique: true
-      nullable: true
     email_verified_at:
       type: timestamp
       nullable: true
