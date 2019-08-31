@@ -1,5 +1,4 @@
 users:
-  timestamps: true
   columns:
     id: increments
     name:
@@ -12,7 +11,8 @@ users:
       nullable: true
     password:
       type: string
-  rememberToken: true
+    rememberToken: true
+    timestamps: true
 
 password_resets:
   columns:
