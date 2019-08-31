@@ -35,15 +35,8 @@ class Table
         $this->collation = $attributes['collation'] ?? '';
         $this->timestamps = $attributes['timestamps'] ?? '';
         $this->columns = new Columns($attributes['columns'] ?? []);
-        $this->indexes = new Indexes();
+        $this->indexes = new Indexes($this->name, $attributes['indexes'] ?? []);
         $this->foreignKeys = new ForeignKeys();
-
-        if (isset($attributes['indexes'])) {
-            foreach ($attributes['indexes'] as $indexAttributes) {
-                $index = $this->makeIndex($indexAttributes);
-                $this->indexes->add($index);
-            }
-        }
 
         if (isset($attributes['relations'])) {
             foreach ($attributes['relations'] as $i => $foreignKeyAttributes) {
@@ -231,15 +224,6 @@ class Table
     protected function makeForeignKey(array $attributes): ForeignKey
     {
         return new ForeignKey($attributes);
-    }
-
-    /**
-     * @param array $attributes
-     * @return Index
-     */
-    protected function makeIndex(array $attributes): Index
-    {
-        return new Index($this, $attributes);
     }
 
     /**

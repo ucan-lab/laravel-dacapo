@@ -6,18 +6,18 @@ use Exception;
 
 class Index
 {
-    private $table;
+    private $tableName;
     private $columns;
     private $alias;
     private $type;
 
     /**
-     * @param Table $table
+     * @param string $tableName
      * @param array $attributes
      */
-    public function __construct(Table $table, array $attributes)
+    public function __construct(string $tableName, array $attributes)
     {
-        $this->table = $table;
+        $this->tableName = $tableName;
         $this->columns = $attributes['columns'];
         $this->alias = $attributes['alias'] ?? null;
         $this->type = $attributes['type'];
@@ -108,7 +108,7 @@ class Index
     private function makeIndexName(): string
     {
         return sprintf('%s_%s_%s',
-            $this->table->getTableName(),
+            $this->tableName,
             is_array($this->columns) ? implode('_', $this->columns) : $this->columns,
             $this->type
         );
