@@ -73,6 +73,7 @@ class Column
     {
         $str = $this->getColumnType();
         $str .= $this->getColumnModifier();
+        $str .= $this->getIndexType();
 
         return '$table' . $str . ';';
     }
@@ -99,46 +100,6 @@ class Column
 
         $type = substr($this->type, 0, strcspn($this->type, '('));
         return '->' . $type . "($columnName)";
-    }
-
-    /**
-     * @return string
-     */
-    protected function getIndexType(): string
-    {
-        $str = '';
-
-        if ($this->primary) {
-            $str = "->primary('$this->name')";
-        } elseif ($this->unique) {
-            $str = "->unique('$this->name')";
-        } elseif ($this->index) {
-            $str = "->index('$this->name')";
-        } elseif ($this->spatialIndex) {
-            $str = "->spatialIndex('$this->name')";
-        }
-
-        return $str;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getDropIndexType(): string
-    {
-        $str = '';
-
-        if ($this->primary) {
-            $str = "->dropPrimary(['$this->name'])";
-        } elseif ($this->unique) {
-            $str = "->dropUnique(['$this->name'])";
-        } elseif ($this->index) {
-            $str = "->dropIndex(['$this->name'])";
-        } elseif ($this->spatialIndex) {
-            $str = "->dropSpatialIndex(['$this->name'])";
-        }
-
-        return $str;
     }
 
     /**
@@ -203,6 +164,32 @@ class Column
 
         if ($this->always) {
             $str .= "->always()";
+        }
+
+        return $str;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getIndexType(): string
+    {
+        $str = '';
+
+        if ($this->primary) {
+            $str .= '->primary()';
+        }
+
+        if ($this->unique) {
+            $str .= '->unique()';
+        }
+
+        if ($this->index) {
+            $str .= '->index()';
+        }
+
+        if ($this->spatialIndex) {
+            $str .= '->spatialIndex()';
         }
 
         return $str;
