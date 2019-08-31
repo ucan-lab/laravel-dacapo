@@ -34,7 +34,7 @@ class Table
         $this->charset = $attributes['charset'] ?? '';
         $this->collation = $attributes['collation'] ?? '';
         $this->timestamps = $attributes['timestamps'] ?? '';
-        $this->columns = new Columns();
+        $this->columns = new Columns($attributes['columns'] ?? []);
         $this->indexes = new Indexes();
         $this->foreignKeys = new ForeignKeys();
 
@@ -42,13 +42,6 @@ class Table
             foreach ($attributes['indexes'] as $indexAttributes) {
                 $index = $this->makeIndex($indexAttributes);
                 $this->indexes->add($index);
-            }
-        }
-
-        if (isset($attributes['columns'])) {
-            foreach ($attributes['columns'] as $columnName => $columnAttributes) {
-                $column = $this->makeColumn($columnName, $columnAttributes);
-                $this->columns->add($column);
             }
         }
 
@@ -229,20 +222,6 @@ class Table
     public function existsForeignKeys(): bool
     {
         return $this->foreignKeys->count() > 0;
-    }
-
-    /**
-     * @param string $name
-     * @param string|array $attributes
-     * @return Column
-     */
-    protected function makeColumn(string $name, $attributes): Column
-    {
-        if (is_string($attributes)) {
-            return new Column($name, ['type' => $attributes]);
-        }
-
-        return new Column($name, $attributes);
     }
 
     /**
