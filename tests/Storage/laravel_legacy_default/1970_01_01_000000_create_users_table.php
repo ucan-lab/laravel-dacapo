@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable(true);
             $table->timestamp('email_verified_at')->nullable(true);
             $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
         });
 
         DB::statement("ALTER TABLE users COMMENT ''");
