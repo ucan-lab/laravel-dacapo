@@ -34,30 +34,9 @@ class Table
         $this->charset = $attributes['charset'] ?? '';
         $this->collation = $attributes['collation'] ?? '';
         $this->timestamps = $attributes['timestamps'] ?? '';
-        $this->columns = new Columns();
-        $this->indexes = new Indexes();
-        $this->foreignKeys = new ForeignKeys();
-
-        if (isset($attributes['indexes'])) {
-            foreach ($attributes['indexes'] as $indexAttributes) {
-                $index = $this->makeIndex($indexAttributes);
-                $this->indexes->add($index);
-            }
-        }
-
-        if (isset($attributes['columns'])) {
-            foreach ($attributes['columns'] as $columnName => $columnAttributes) {
-                $column = $this->makeColumn($columnName, $columnAttributes);
-                $this->columns->add($column);
-            }
-        }
-
-        if (isset($attributes['relations'])) {
-            foreach ($attributes['relations'] as $i => $foreignKeyAttributes) {
-                $foreignKey = $this->makeForeignKey($foreignKeyAttributes);
-                $this->foreignKeys->add($foreignKey);
-            }
-        }
+        $this->columns = new Columns($attributes['columns'] ?? []);
+        $this->indexes = new Indexes($this->name, $attributes['indexes'] ?? []);
+        $this->foreignKeys = new ForeignKeys($attributes['relations'] ?? []);
     }
 
     /**
@@ -229,38 +208,6 @@ class Table
     public function existsForeignKeys(): bool
     {
         return $this->foreignKeys->count() > 0;
-    }
-
-    /**
-     * @param string $name
-     * @param string|array $attributes
-     * @return Column
-     */
-    protected function makeColumn(string $name, $attributes): Column
-    {
-        if (is_string($attributes)) {
-            return new Column($name, ['type' => $attributes]);
-        }
-
-        return new Column($name, $attributes);
-    }
-
-    /**
-     * @param array $attributes
-     * @return ForeignKey
-     */
-    protected function makeForeignKey(array $attributes): ForeignKey
-    {
-        return new ForeignKey($attributes);
-    }
-
-    /**
-     * @param array $attributes
-     * @return Index
-     */
-    protected function makeIndex(array $attributes): Index
-    {
-        return new Index($this, $attributes);
     }
 
     /**

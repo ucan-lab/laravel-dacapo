@@ -2,7 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Migrations;
 
-use UcanLab\LaravelDacapo\Migrations\Schema\SchemaLoader;
 use UcanLab\LaravelDacapo\Migrations\Schema\Table;
 use UcanLab\LaravelDacapo\Storage\Storage;
 
@@ -22,9 +21,9 @@ class GenerateConstraintForeignKeyMigration
      */
     public function run(): void
     {
-        if ($this->existsForeignKeys()) {
+        if ($this->table->existsForeignKeys()) {
             $stub = $this->getStub();
-            $path = $this->getPath($this->table->getConstraintForeignKeyMigrationFileName());
+            $path = $this->migrationsStorage->getPath($this->table->getConstraintForeignKeyMigrationFileName());
             file_put_contents($path, $stub);
         }
     }
@@ -41,24 +40,5 @@ class GenerateConstraintForeignKeyMigration
         $stub = str_replace('DummyTableDownColumn', $this->table->getDownForeignKeyList(), $stub);
 
         return $stub;
-    }
-
-    /**
-     * Get the full path to the migration.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function getPath($name): string
-    {
-        return database_path('migrations') . '/' . $name;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function existsForeignKeys(): bool
-    {
-        return $this->table->existsForeignKeys();
     }
 }

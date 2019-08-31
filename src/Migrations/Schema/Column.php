@@ -29,30 +29,35 @@ class Column
 
     /**
      * @param string $name
-     * @param array $attributes
+     * @param array|string $attributes
      */
-    public function __construct(string $name, array $attributes)
+    public function __construct(string $name, $attributes)
     {
         $this->name = $name;
-        $this->type = $attributes['type'];
-        $this->after = $attributes['after'] ?? null;
-        $this->autoIncrement = $attributes['autoIncrement'] ?? null;
-        $this->charset = $attributes['charset'] ?? null;
-        $this->collation = $attributes['collation'] ?? null;
-        $this->comment = $attributes['comment'] ?? null;
-        $this->default = $attributes['default'] ?? null;
-        $this->first = $attributes['first'] ?? null;
-        $this->nullable = $this->convertBoolType($attributes, 'nullable');
-        $this->storedAs = $attributes['storedAs'] ?? null;
-        $this->unsigned = $attributes['unsigned'] ?? null;
-        $this->useCurrent = $attributes['useCurrent'] ?? null;
-        $this->virtualAs = $attributes['virtualAs'] ?? null;
-        $this->generatedAs = $attributes['generatedAs'] ?? null;
-        $this->always = $attributes['always'] ?? null;
-        $this->primary = $attributes['primary'] ?? null;
-        $this->unique = $attributes['unique'] ?? null;
-        $this->index = $attributes['index'] ?? null;
-        $this->spatialIndex = $attributes['spatialIndex'] ?? null;
+
+        if (is_string($attributes)) {
+            $this->type = $attributes;
+        } elseif (is_array($attributes)) {
+            $this->type = $attributes['type'];
+            $this->after = $attributes['after'] ?? null;
+            $this->autoIncrement = $attributes['autoIncrement'] ?? null;
+            $this->charset = $attributes['charset'] ?? null;
+            $this->collation = $attributes['collation'] ?? null;
+            $this->comment = $attributes['comment'] ?? null;
+            $this->default = $attributes['default'] ?? null;
+            $this->first = $attributes['first'] ?? null;
+            $this->nullable = $this->convertBoolType($attributes, 'nullable');
+            $this->storedAs = $attributes['storedAs'] ?? null;
+            $this->unsigned = $attributes['unsigned'] ?? null;
+            $this->useCurrent = $attributes['useCurrent'] ?? null;
+            $this->virtualAs = $attributes['virtualAs'] ?? null;
+            $this->generatedAs = $attributes['generatedAs'] ?? null;
+            $this->always = $attributes['always'] ?? null;
+            $this->primary = $attributes['primary'] ?? null;
+            $this->unique = $attributes['unique'] ?? null;
+            $this->index = $attributes['index'] ?? null;
+            $this->spatialIndex = $attributes['spatialIndex'] ?? null;
+        }
     }
 
     /**

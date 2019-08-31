@@ -3,12 +3,11 @@
 namespace UcanLab\LaravelDacapo\Migrations;
 
 use Exception;
-use Illuminate\Support\Facades\File;
+use SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\Migrations\Schema\Table;
 use UcanLab\LaravelDacapo\Migrations\Schema\Tables;
 use UcanLab\LaravelDacapo\Storage\Storage;
-use SplFileInfo;
 
 class SchemaLoader
 {

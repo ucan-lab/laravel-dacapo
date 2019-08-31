@@ -2,7 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Migrations;
 
-use UcanLab\LaravelDacapo\Migrations\Schema\SchemaLoader;
 use UcanLab\LaravelDacapo\Migrations\Schema\Table;
 use UcanLab\LaravelDacapo\Storage\Storage;
 
@@ -22,7 +21,7 @@ class GenerateCreateIndexMigration
      */
     public function run(): void
     {
-        if ($this->existsIndexModifiers()) {
+        if ($this->table->existsIndexModifiers()) {
             $stub = $this->getStub();
             $path = $this->migrationsStorage->getPath($this->table->getCreateIndexMigrationFileName());
             file_put_contents($path, $stub);
@@ -41,24 +40,5 @@ class GenerateCreateIndexMigration
         $stub = str_replace('DummyTableDownColumn', $this->table->getDownIndexList(), $stub);
 
         return $stub;
-    }
-
-    /**
-     * Get the full path to the migration.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function getPath($name): string
-    {
-        return database_path('migrations') . '/' . $name;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function existsIndexModifiers(): bool
-    {
-        return $this->table->existsIndexModifiers();
     }
 }
