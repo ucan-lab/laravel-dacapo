@@ -43,17 +43,6 @@ class GenerateCreateIndexMigration
     }
 
     /**
-     * Get the full path to the migration.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function getPath($name): string
-    {
-        return database_path('migrations') . '/' . $name;
-    }
-
-    /**
      * @return bool
      */
     protected function existsIndexModifiers(): bool

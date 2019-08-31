@@ -23,7 +23,7 @@ class GenerateConstraintForeignKeyMigration
     {
         if ($this->existsForeignKeys()) {
             $stub = $this->getStub();
-            $path = $this->getPath($this->table->getConstraintForeignKeyMigrationFileName());
+            $path = $this->migrationsStorage->getPath($this->table->getConstraintForeignKeyMigrationFileName());
             file_put_contents($path, $stub);
         }
     }
@@ -40,17 +40,6 @@ class GenerateConstraintForeignKeyMigration
         $stub = str_replace('DummyTableDownColumn', $this->table->getDownForeignKeyList(), $stub);
 
         return $stub;
-    }
-
-    /**
-     * Get the full path to the migration.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function getPath($name): string
-    {
-        return database_path('migrations') . '/' . $name;
     }
 
     /**
