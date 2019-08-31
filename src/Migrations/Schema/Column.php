@@ -35,7 +35,13 @@ class Column
     {
         $this->name = $name;
 
-        if (is_string($attributes)) {
+        if ($name === 'rememberToken') {
+            $this->name = null;
+            $this->type = 'rememberToken';
+        } elseif ($name === 'timestamps') {
+            $this->name = is_int($attributes) ? $attributes : null;
+            $this->type = 'timestamps';
+        } elseif (is_string($attributes)) {
             $this->type = $attributes;
         } elseif (is_array($attributes)) {
             $this->type = $attributes['type'];
@@ -76,6 +82,12 @@ class Column
      */
     protected function getColumnType(): string
     {
+        if ($this->type === 'rememberToken') {
+            return '->rememberToken()';
+        } elseif ($this->type === 'timestamps') {
+            return '->timestamps(' . ($this->name ?: '') . ')';
+        }
+
         preg_match('/\((.*)\)/', $this->type, $match);
         $digits = isset($match[1]) ? $match[1] : 0;
 
