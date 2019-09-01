@@ -1,9 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+DummyNamespace
 
 class DummyClass extends Migration
 {
@@ -16,9 +13,7 @@ class DummyClass extends Migration
     {
         Schema::create('DummyTableName', function (Blueprint $table) {
             DummyColumn
-        });
-
-        DB::statement("ALTER TABLE DummyTableName COMMENT 'DummyTableComment'");
+        });DummyTableComment
     }
 
     /**
