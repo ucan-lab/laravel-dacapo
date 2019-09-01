@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateTestColumnType1Table extends Migration
+class CreateColumnType1Table extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +13,7 @@ class CreateTestColumnType1Table extends Migration
      */
     public function up()
     {
-        Schema::create('test_column_type1', function (Blueprint $table) {
+        Schema::create('column_type1', function (Blueprint $table) {
             $table->bigInteger('id');
             $table->bigInteger('votes');
             $table->binary('data');
@@ -30,8 +29,6 @@ class CreateTestColumnType1Table extends Migration
             $table->geometry('positions');
             $table->geometryCollection('positions_collection');
         });
-
-        DB::statement("ALTER TABLE test_column_type1 COMMENT ''");
     }
 
     /**
@@ -41,6 +38,6 @@ class CreateTestColumnType1Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_column_type1');
+        Schema::dropIfExists('column_type1');
     }
 }

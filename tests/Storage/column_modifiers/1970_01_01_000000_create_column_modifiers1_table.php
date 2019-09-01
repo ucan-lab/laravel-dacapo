@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateTestColumnModifiers1Table extends Migration
+class CreateColumnModifiers1Table extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +13,7 @@ class CreateTestColumnModifiers1Table extends Migration
      */
     public function up()
     {
-        Schema::create('test_column_modifiers1', function (Blueprint $table) {
+        Schema::create('column_modifiers1', function (Blueprint $table) {
             $table->integer('id')->autoIncrement();
             $table->string('name')->charset('utf8')->collation('utf8_unicode_ci')->comment('my comment')->comment('test value')->nullable();
             $table->integer('price')->unsigned();
@@ -25,8 +24,6 @@ class CreateTestColumnModifiers1Table extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->integer('seq')->always();
         });
-
-        DB::statement("ALTER TABLE test_column_modifiers1 COMMENT ''");
     }
 
     /**
@@ -36,6 +33,6 @@ class CreateTestColumnModifiers1Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_column_modifiers1');
+        Schema::dropIfExists('column_modifiers1');
     }
 }

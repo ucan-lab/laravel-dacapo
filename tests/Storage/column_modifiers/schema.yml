@@ -1,4 +1,4 @@
-test_column_modifiers1:
+column_modifiers1:
   columns:
     id:
       type: integer

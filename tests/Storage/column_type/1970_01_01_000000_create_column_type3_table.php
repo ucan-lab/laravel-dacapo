@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateTestColumnType3Table extends Migration
+class CreateColumnType3Table extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +13,7 @@ class CreateTestColumnType3Table extends Migration
      */
     public function up()
     {
-        Schema::create('test_column_type3', function (Blueprint $table) {
+        Schema::create('column_type3', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->mediumInteger('votes');
             $table->mediumText('description');
@@ -29,8 +28,6 @@ class CreateTestColumnType3Table extends Migration
             $table->polygon('positions_polygon');
             $table->set('flavors', ['strawberry', 'vanilla']);
         });
-
-        DB::statement("ALTER TABLE test_column_type3 COMMENT ''");
     }
 
     /**
@@ -40,6 +37,6 @@ class CreateTestColumnType3Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_column_type3');
+        Schema::dropIfExists('column_type3');
     }
 }

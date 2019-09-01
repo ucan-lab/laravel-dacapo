@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateTestColumnType5Table extends Migration
+class CreateColumnType5Table extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +13,7 @@ class CreateTestColumnType5Table extends Migration
      */
     public function up()
     {
-        Schema::create('test_column_type5', function (Blueprint $table) {
+        Schema::create('column_type5', function (Blueprint $table) {
             $table->tinyIncrements('id');
             $table->tinyInteger('votes');
             $table->unsignedBigInteger('votes_ubi');
@@ -26,8 +25,6 @@ class CreateTestColumnType5Table extends Migration
             $table->uuid('uuid');
             $table->year('birth_year');
         });
-
-        DB::statement("ALTER TABLE test_column_type5 COMMENT ''");
     }
 
     /**
@@ -37,6 +34,6 @@ class CreateTestColumnType5Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_column_type5');
+        Schema::dropIfExists('column_type5');
     }
 }
