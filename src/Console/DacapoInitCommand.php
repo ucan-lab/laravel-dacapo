@@ -4,6 +4,7 @@ namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use UcanLab\LaravelDacapo\Storage\SchemasStorage;
 
 /**
  * Class DacapoInitCommand
@@ -26,21 +27,29 @@ class DacapoInitCommand extends Command
      */
     protected $description = 'Init dacapo default schema. Laravel 5.6 or lower.';
 
+    private $schemasStorage;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->schemasStorage = new SchemasStorage();
+    }
+
     /**
      * @return void
      */
     public function handle()
     {
-        if ($this->existsSchemasDirectory()) {
+        if ($this->schemasStorage->exists()) {
             if ($this->ask('The database/schemas directory already exists. Initialize ? [y/N]')) {
-                $this->deleteSchemasDirectory();
-                $this->makeSchemasDirectory();
+                $this->schemasStorage->deleteDirectory();
+                $this->schemasStorage->makeDirectory();
             } else {
                 $this->comment('Command Cancelled!');
                 return;
             }
         } else {
-            $this->makeSchemasDirectory();
+            $this->schemasStorage->makeDirectory();
         }
 
         $this->initSchema();
@@ -54,51 +63,20 @@ class DacapoInitCommand extends Command
     private function initSchema(): void
     {
         if ($this->option('legacy')) {
-            File::copy($this->getStoragePath() . '/default.legacy.yml', database_path('schemas/default.yml'));
+            File::copy($this->getDefaultSchemasPath('default.legacy.yml'), $this->schemasStorage->getPath('default.yml'));
         } else {
-            File::copy($this->getStoragePath() . '/default.yml', database_path('schemas/default.yml'));
+            File::copy($this->getDefaultSchemasPath('default.yml'), $this->schemasStorage->getPath('default.yml'));
         }
 
         $this->info('Init dacapo default schema yaml.');
     }
 
     /**
-     * @return bool
-     */
-    private function existsSchemasDirectory(): bool
-    {
-        return File::exists($this->getSchemasPath());
-    }
-
-    /**
-     * @return bool
-     */
-    private function makeSchemasDirectory(): bool
-    {
-        return File::makeDirectory($this->getSchemasPath());
-    }
-
-    /**
-     * @return bool
-     */
-    private function deleteSchemasDirectory(): bool
-    {
-        return File::deleteDirectory($this->getSchemasPath());
-    }
-
-    /**
+     * @param string $path
      * @return string
      */
-    private function getSchemasPath(): string
+    private function getDefaultSchemasPath(string $path): string
     {
-        return database_path('schemas');
-    }
-
-    /**
-     * @return string
-     */
-    private function getStoragePath(): string
-    {
-        return __DIR__ . '/../Storage/schemas';
+        return __DIR__ . '/../Storage/schemas/' . $path;
     }
 }

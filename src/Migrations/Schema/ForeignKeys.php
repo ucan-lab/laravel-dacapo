@@ -9,9 +9,16 @@ class ForeignKeys implements IteratorAggregate
 {
     private $attributes;
 
-    public function __construnct()
+    /**
+     * @param array $relationsAttributes
+     */
+    public function __construct(array $relationsAttributes)
     {
         $this->attributes = [];
+
+        foreach ($relationsAttributes as $relationAttributes) {
+            $this->add(new ForeignKey($relationAttributes));
+        }
     }
 
     /**

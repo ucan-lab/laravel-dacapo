@@ -2,9 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Console;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use UcanLab\LaravelDacapo\Migrations\DacapoGenerator;
+use UcanLab\LaravelDacapo\Storage\MigrationsMockStorage;
+use UcanLab\LaravelDacapo\Storage\MigrationsStorage;
+use UcanLab\LaravelDacapo\Storage\SchemasStorage;
 
 /**
  * Class DacapoGenerateCommand
@@ -23,7 +27,7 @@ class DacapoGenerateCommand extends Command
         {--fresh : Drop all tables and re-run all migrations}
         {--refresh : Reset and re-run all migrations}
         {--seed : Seed the database with records}
-        {--m|model : Run make model command}
+        {--dry-run : Outputs the operations but will not execute anything}
     ';
 
     /**
@@ -44,8 +48,18 @@ class DacapoGenerateCommand extends Command
 
         $this->call('dacapo:clear', ['--force' => true]);
 
-        (new DacapoGenerator($this->option('model')))->run();
+        if ($this->option('dry-run')) {
+            $migrationsStorage = new MigrationsMockStorage();
+        } else {
+            $migrationsStorage = new MigrationsStorage();
+        }
+
+        (new DacapoGenerator(new SchemasStorage(), $migrationsStorage))->run();
         $this->info('Generated migration files.');
+
+        if ($this->option('dry-run')) {
+            return;
+        }
 
         if ($this->option('seed')) {
             $this->call('migrate:fresh', ['--force' => true, '--seed' => true]);

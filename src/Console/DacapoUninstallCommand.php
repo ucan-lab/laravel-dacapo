@@ -3,7 +3,7 @@
 namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
+use UcanLab\LaravelDacapo\Storage\SchemasStorage;
 
 /**
  * Class DacapoUninstallCommand
@@ -24,6 +24,14 @@ class DacapoUninstallCommand extends Command
      */
     protected $description = 'Uninstall dacapo.';
 
+    private $schemasStorage;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->schemasStorage = new SchemasStorage();
+    }
+
     /**
      * @return void
      */
@@ -39,25 +47,9 @@ class DacapoUninstallCommand extends Command
      */
     private function uninstallDacapo(): void
     {
-        $this->deleteSchemasDirectory();
+        $this->schemasStorage->deleteDirectory();
         $this->info('Deleted schemas directory.');
         $this->info('Please delete dacapo composer package.');
         $this->comment('composer remove --dev ucan-lab/laravel-dacapo');
-    }
-
-    /**
-     * @return bool
-     */
-    private function deleteSchemasDirectory(): bool
-    {
-        return File::deleteDirectory($this->getSchemasPath());
-    }
-
-    /**
-     * @return string
-     */
-    private function getSchemasPath(): string
-    {
-        return database_path('schemas');
     }
 }

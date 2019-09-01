@@ -1,0 +1,125 @@
+column_type1:
+  columns:
+    id:
+      type: bigInteger
+    votes:
+      type: bigInteger
+    data:
+      type: binary
+    confirmed:
+      type: boolean
+    name:
+      type: char(100)
+    created_date:
+      type: date
+    created_at:
+      type: dateTime
+    created_tz:
+      type: dateTimeTz
+    amount:
+      type: decimal(8, 2)
+    total:
+      type: double(8, 2)
+    level:
+      type: enum(['easy', 'hard'])
+    subtotal:
+      type: float(8, 2)
+    positions:
+      type: geometry
+    positions_collection:
+      type: geometryCollection
+
+column_type2:
+  columns:
+    id:
+      type: increments
+    votes:
+      type: integer
+    visitor:
+      type: ipAddress
+    options:
+      type: json
+    options_b:
+      type: jsonb
+    positions:
+      type: lineString
+    description:
+      type: longText
+    device:
+      type: macAddress
+
+column_type3:
+  columns:
+    id:
+      type: mediumIncrements
+    votes:
+      type: mediumInteger
+    description:
+      type: mediumText
+    taggable:
+      type: morphs
+    taggable_uuid:
+      type: uuidMorphs
+    positions_multi_line:
+      type: multiLineString
+    positions_multi_point:
+      type: multiPoint
+    positions_multi_polygon:
+      type: multiPolygon
+    taggable_nullable:
+      type: nullableMorphs('custom_taggable_nullable_index')
+    taggable_nullable_uuid:
+      type: nullableMorphs('custom_taggable_nullable_nullable_morphs_index')
+    position_point:
+      type: point
+    positions_polygon:
+      type: polygon
+    flavors:
+      type: set(['strawberry', 'vanilla'])
+  rememberToken: true
+  softDeletes: true
+  timestamps: true
+
+column_type4:
+  columns:
+    id:
+      type: smallIncrements
+    votes:
+      type: smallInteger
+    name:
+      type: string(100)
+    description:
+      type: text
+    sunrise:
+      type: time
+    sunrise_tz:
+      type: timeTz
+    added_on:
+      type: timestamp
+    added_on_tz:
+      type: timestampTz
+  softDeletesTz: true
+  timestampsTz: true
+
+column_type5:
+  columns:
+    id:
+      type: tinyIncrements
+    votes:
+      type: tinyInteger
+    votes_ubi:
+      type: unsignedBigInteger
+    votes_ui:
+      type: unsignedInteger
+    votes_umi:
+      type: unsignedMediumInteger
+    votes_usi:
+      type: unsignedSmallInteger
+    votes_uti:
+      type: unsignedTinyInteger
+    amount:
+      type: unsignedDecimal(8, 2)
+    uuid:
+      type: uuid
+    birth_year:
+      type: year

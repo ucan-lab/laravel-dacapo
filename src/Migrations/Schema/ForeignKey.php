@@ -11,6 +11,9 @@ class ForeignKey
     private $onUpdate;
     private $onDelete;
 
+    /**
+     * @param array $attributes
+     */
     public function __construct(array $attributes)
     {
         $this->name = $attributes['name'] ?? null;

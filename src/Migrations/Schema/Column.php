@@ -29,30 +29,41 @@ class Column
 
     /**
      * @param string $name
-     * @param array $attributes
+     * @param array|string $attributes
      */
-    public function __construct(string $name, array $attributes)
+    public function __construct(string $name, $attributes)
     {
         $this->name = $name;
-        $this->type = $attributes['type'];
-        $this->after = $attributes['after'] ?? null;
-        $this->autoIncrement = $attributes['autoIncrement'] ?? null;
-        $this->charset = $attributes['charset'] ?? null;
-        $this->collation = $attributes['collation'] ?? null;
-        $this->comment = $attributes['comment'] ?? null;
-        $this->default = $attributes['default'] ?? null;
-        $this->first = $attributes['first'] ?? null;
-        $this->nullable = $this->convertBoolType($attributes, 'nullable');
-        $this->storedAs = $attributes['storedAs'] ?? null;
-        $this->unsigned = $attributes['unsigned'] ?? null;
-        $this->useCurrent = $attributes['useCurrent'] ?? null;
-        $this->virtualAs = $attributes['virtualAs'] ?? null;
-        $this->generatedAs = $attributes['generatedAs'] ?? null;
-        $this->always = $attributes['always'] ?? null;
-        $this->primary = $attributes['primary'] ?? null;
-        $this->unique = $attributes['unique'] ?? null;
-        $this->index = $attributes['index'] ?? null;
-        $this->spatialIndex = $attributes['spatialIndex'] ?? null;
+
+        if ($name === 'rememberToken') {
+            $this->name = null;
+            $this->type = 'rememberToken';
+        } elseif ($name === 'timestamps') {
+            $this->name = is_int($attributes) ? $attributes : null;
+            $this->type = 'timestamps';
+        } elseif (is_string($attributes)) {
+            $this->type = $attributes;
+        } elseif (is_array($attributes)) {
+            $this->type = $attributes['type'];
+            $this->after = $attributes['after'] ?? null;
+            $this->autoIncrement = $attributes['autoIncrement'] ?? null;
+            $this->charset = $attributes['charset'] ?? null;
+            $this->collation = $attributes['collation'] ?? null;
+            $this->comment = $attributes['comment'] ?? null;
+            $this->default = $attributes['default'] ?? null;
+            $this->first = $attributes['first'] ?? null;
+            $this->nullable = $this->convertBoolType($attributes, 'nullable');
+            $this->storedAs = $attributes['storedAs'] ?? null;
+            $this->unsigned = $attributes['unsigned'] ?? null;
+            $this->useCurrent = $attributes['useCurrent'] ?? null;
+            $this->virtualAs = $attributes['virtualAs'] ?? null;
+            $this->generatedAs = $attributes['generatedAs'] ?? null;
+            $this->always = $attributes['always'] ?? null;
+            $this->primary = $attributes['primary'] ?? null;
+            $this->unique = $attributes['unique'] ?? null;
+            $this->index = $attributes['index'] ?? null;
+            $this->spatialIndex = $attributes['spatialIndex'] ?? null;
+        }
     }
 
     /**
@@ -62,59 +73,9 @@ class Column
     {
         $str = $this->getColumnType();
         $str .= $this->getColumnModifier();
+        $str .= $this->getIndexType();
 
         return '$table' . $str . ';';
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasIndex(): bool
-    {
-        return (bool)($this->primary || $this->unique || $this->index || $this->spatialIndex);
-    }
-
-    /**
-     * @return Index
-     */
-    public function getIndex(): Index
-    {
-        $attributes = ['name' => [$this->name]];
-        if ($this->primary) {
-            $attributes['primary'] = true;
-        } elseif ($this->unique) {
-            $attributes['unique'] = true;
-        } elseif ($this->index) {
-            $attributes['index'] = true;
-        } elseif ($this->spatialIndex) {
-            $attributes['spatialIndex'] = true;
-        }
-
-        return new Index($attributes);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUpIndexLine(): ?string
-    {
-        if ($str = $this->getIndexType()) {
-            return '$table' . $str . ';';
-        }
-
-        return null;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDownIndexLine(): ?string
-    {
-        if ($str = $this->getDropIndexType()) {
-            return '$table' . $str . ';';
-        }
-
-        return null;
     }
 
     /**
@@ -122,6 +83,12 @@ class Column
      */
     protected function getColumnType(): string
     {
+        if ($this->type === 'rememberToken') {
+            return '->rememberToken()';
+        } elseif ($this->type === 'timestamps') {
+            return '->timestamps(' . ($this->name ?: '') . ')';
+        }
+
         preg_match('/\((.*)\)/', $this->type, $match);
         $digits = isset($match[1]) ? $match[1] : 0;
 
@@ -133,46 +100,6 @@ class Column
 
         $type = substr($this->type, 0, strcspn($this->type, '('));
         return '->' . $type . "($columnName)";
-    }
-
-    /**
-     * @return string
-     */
-    protected function getIndexType(): string
-    {
-        $str = '';
-
-        if ($this->primary) {
-            $str = "->primary('$this->name')";
-        } elseif ($this->unique) {
-            $str = "->unique('$this->name')";
-        } elseif ($this->index) {
-            $str = "->index('$this->name')";
-        } elseif ($this->spatialIndex) {
-            $str = "->spatialIndex('$this->name')";
-        }
-
-        return $str;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getDropIndexType(): string
-    {
-        $str = '';
-
-        if ($this->primary) {
-            $str = "->dropPrimary(['$this->name'])";
-        } elseif ($this->unique) {
-            $str = "->dropUnique(['$this->name'])";
-        } elseif ($this->index) {
-            $str = "->dropIndex(['$this->name'])";
-        } elseif ($this->spatialIndex) {
-            $str = "->dropSpatialIndex(['$this->name'])";
-        }
-
-        return $str;
     }
 
     /**
@@ -243,6 +170,32 @@ class Column
     }
 
     /**
+     * @return string
+     */
+    protected function getIndexType(): string
+    {
+        $str = '';
+
+        if ($this->primary) {
+            $str .= '->primary()';
+        }
+
+        if ($this->unique) {
+            $str .= '->unique()';
+        }
+
+        if ($this->index) {
+            $str .= '->index()';
+        }
+
+        if ($this->spatialIndex) {
+            $str .= '->spatialIndex()';
+        }
+
+        return $str;
+    }
+
+    /**
      * @param array $attributes
      * @param string $name
      * @return string|null
@@ -251,7 +204,7 @@ class Column
     {
         if (isset($attributes[$name])) {
             if ($attributes[$name]) {
-                return 'true';
+                return '';
             }
             return 'false';
         }

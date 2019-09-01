@@ -2,22 +2,25 @@
 
 namespace UcanLab\LaravelDacapo\Migrations;
 
-use UcanLab\LaravelDacapo\Generator\ModelTemplateGenerator;
+use UcanLab\LaravelDacapo\Storage\Storage;
 
 /**
  * Class DacapoGenerator
  */
 class DacapoGenerator
 {
-    private $enabledMakeModel;
+    private $schemasStorage;
+    private $migrationsStorage;
 
     /**
      * DacapoGenerator constructor.
-     * @param bool $enabledMakeModel
+     * @param Storage $schemasStorage
+     * @param Storage $migrationsStorage
      */
-    public function __construct(bool $enabledMakeModel)
+    public function __construct(Storage $schemasStorage, Storage $migrationsStorage)
     {
-        $this->enabledMakeModel = $enabledMakeModel;
+        $this->schemasStorage = $schemasStorage;
+        $this->migrationsStorage = $migrationsStorage;
     }
 
     /**
@@ -25,16 +28,12 @@ class DacapoGenerator
      */
     public function run(): void
     {
-        $tables = (new SchemaLoader())->run();
+        $tables = (new SchemaLoader($this->schemasStorage))->run();
 
         foreach ($tables as $table) {
-            (new GenerateCreateTableMigration($table))->run();
-            (new GenerateCreateIndexMigration($table))->run();
-            (new GenerateConstraintForeignKeyMigration($table))->run();
-        }
-
-        if ($this->enabledMakeModel) {
-            (new ModelTemplateGenerator($tables))->run();
+            (new GenerateCreateTableMigration($table, $this->migrationsStorage))->run();
+            (new GenerateCreateIndexMigration($table, $this->migrationsStorage))->run();
+            (new GenerateConstraintForeignKeyMigration($table, $this->migrationsStorage))->run();
         }
     }
 }

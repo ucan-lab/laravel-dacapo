@@ -1,0 +1,41 @@
+users1:
+  indexes:
+    email_index:
+      columns: name
+      type: unique
+  columns:
+    id: bigIncrements
+    name:
+      type: string
+    email:
+      type: string
+
+users2:
+  indexes:
+    email_index:
+      columns:
+        - name
+        - email
+      type: unique
+      alias: users_name_unique_index
+  columns:
+    id: bigIncrements
+    name:
+      type: string
+    email:
+      type: string
+
+users3:
+  indexes:
+    email_index:
+      columns:
+        - name
+        - email
+      type: unique
+      alias: custom_index
+  columns:
+    id: bigIncrements
+    name:
+      type: string
+    email:
+      type: string

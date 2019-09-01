@@ -9,9 +9,16 @@ class Columns implements IteratorAggregate
 {
     private $attributes;
 
-    public function __construnct()
+    /**
+     * @param array $columnsAttributes
+     */
+    public function __construct(array $columnsAttributes)
     {
         $this->attributes = [];
+
+        foreach ($columnsAttributes as $columnName => $columnAttributes) {
+            $this->add(new Column($columnName, $columnAttributes));
+        }
     }
 
     /**

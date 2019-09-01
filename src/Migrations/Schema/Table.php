@@ -11,11 +11,11 @@ class Table
     const PREFIX_CONSTRAINT_FOREIGN_KEY = 2;
 
     private $name;
+    private $attributes;
     private $comment;
     private $engine;
     private $charset;
     private $collation;
-    private $timestamps;
     private $columns;
     private $indexes;
     private $foreignKeys;
@@ -32,35 +32,9 @@ class Table
         $this->engine = $attributes['engine'] ?? '';
         $this->charset = $attributes['charset'] ?? '';
         $this->collation = $attributes['collation'] ?? '';
-        $this->timestamps = $attributes['timestamps'] ?? '';
-        $this->columns = new Columns();
-        $this->indexes = new Indexes();
-        $this->foreignKeys = new ForeignKeys();
-
-        if (isset($attributes['indexes'])) {
-            foreach ($attributes['indexes'] as $indexAttributes) {
-                $indexes = $this->makeColumn($indexAttributes);
-                $this->indexes->add($index);
-            }
-        }
-
-        if (isset($attributes['columns'])) {
-            foreach ($attributes['columns'] as $columnName => $columnAttributes) {
-                $column = $this->makeColumn($columnName, $columnAttributes);
-                $this->columns->add($column);
-
-                if ($column->hasIndex()) {
-                    $this->indexes->add($column->getIndex());
-                }
-            }
-        }
-
-        if (isset($attributes['relations'])) {
-            foreach ($attributes['relations'] as $i => $foreignKeyAttributes) {
-                $foreignKey = $this->makeForeignKey($foreignKeyAttributes);
-                $this->foreignKeys->add($foreignKey);
-            }
-        }
+        $this->columns = new Columns($attributes['columns'] ?? []);
+        $this->indexes = new Indexes($this->name, $attributes['indexes'] ?? []);
+        $this->foreignKeys = new ForeignKeys($attributes['relations'] ?? []);
     }
 
     /**
@@ -82,9 +56,37 @@ class Table
     /**
      * @return string
      */
+    public function getCreateTableMigrationNamespace(): string
+    {
+        $namespace = 'use Illuminate\Database\Migrations\Migration;';
+        $namespace .= PHP_EOL . 'use Illuminate\Database\Schema\Blueprint;';
+
+        if ($this->comment) {
+            if (in_array(config('database.default'), ['mysql', 'pgsql'], true)) {
+                $namespace .= PHP_EOL . 'use Illuminate\Support\Facades\DB;';
+            }
+        }
+
+        $namespace .= PHP_EOL . 'use Illuminate\Support\Facades\Schema;';
+
+        return $namespace;
+    }
+
+    /**
+     * @return string
+     */
     public function getTableComment(): string
     {
-        return $this->comment;
+        if ($this->comment) {
+            $prefix = PHP_EOL . PHP_EOL . '        ';
+            if (config('database.default') === 'mysql') {
+                return $prefix . sprintf('DB::statement("ALTER TABLE %s COMMENT \'%s\'");', $this->name, $this->comment);
+            } elseif (config('database.default') === 'pgsql') {
+                return $prefix . sprintf('DB::statement("COMMENT ON TABLE %s IS \'%s\';");', $this->name, $this->comment);
+            }
+        }
+
+        return '';
     }
 
     /**
@@ -156,8 +158,8 @@ class Table
     public function getUpIndexList(): string
     {
         $list = [];
-        foreach ($this->columns as $column) {
-            if ($line = $column->getUpIndexLine()) {
+        foreach ($this->indexes as $index) {
+            if ($line = $index->getUpLine()) {
                 $list[] = $line;
             }
         }
@@ -173,8 +175,8 @@ class Table
     public function getDownIndexList(): string
     {
         $list = [];
-        foreach ($this->columns as $column) {
-            if ($line = $column->getDownIndexLine()) {
+        foreach ($this->indexes as $index) {
+            if ($line = $index->getDownLine()) {
                 $list[] = $line;
             }
         }
@@ -235,33 +237,9 @@ class Table
     }
 
     /**
-     * @param string $name
-     * @param string|array $attributes
-     * @return Column
-     */
-    protected function makeColumn(string $name, $attributes): Column
-    {
-        if ($attributes === 'increments') {
-            return new Column($name, ['type' => 'increments']);
-        } elseif ($attributes === 'bigIncrements') {
-            return new Column($name, ['type' => 'bigIncrements']);
-        }
-
-        return new Column($name, $attributes);
-    }
-
-    /**
-     * @param array $attributes
-     * @return ForeignKey
-     */
-    protected function makeForeignKey(array $attributes): ForeignKey
-    {
-        return new ForeignKey($attributes);
-    }
-
-    /**
      * Get the date prefix for the migration.
      *
+     * @param int $time
      * @return string
      */
     protected function getDatePrefix(int $time = self::PREFIX_CREATE_TABLE): string

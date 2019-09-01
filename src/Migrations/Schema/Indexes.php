@@ -9,9 +9,17 @@ class Indexes implements IteratorAggregate
 {
     private $attributes;
 
-    public function __construnct()
+    /**
+     * @param string $tableName
+     * @param array $indexesAttributes
+     */
+    public function __construct(string $tableName, array $indexesAttributes)
     {
         $this->attributes = [];
+
+        foreach ($indexesAttributes as $indexAttributes) {
+            $this->add(new Index($tableName, $indexAttributes));
+        }
     }
 
     /**
