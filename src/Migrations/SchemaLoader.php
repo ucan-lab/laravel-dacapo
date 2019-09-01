@@ -29,8 +29,7 @@ class SchemaLoader
         $schemas = $this->getSchemas();
 
         foreach ($schemas as $tableName => $tableAttributes) {
-            $table = $this->makeTable($tableName, $tableAttributes);
-            $this->tables->add($table);
+            $this->tables->add(new Table($tableName, $tableAttributes));
         }
 
         return $this->tables;
@@ -63,16 +62,6 @@ class SchemaLoader
     private function getYamlContents(SplFileInfo $file): array
     {
         return Yaml::parse(file_get_contents($file->getRealPath()));
-    }
-
-    /**
-     * @param string $name
-     * @param array $attributes
-     * @return Table
-     */
-    private function makeTable(string $name, array $attributes): Table
-    {
-        return new Table($name, $attributes);
     }
 
     /**
