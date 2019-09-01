@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTestColumnModifiers1Table extends Migration
 {
@@ -25,8 +24,6 @@ class CreateTestColumnModifiers1Table extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->integer('seq')->always();
         });
-
-        DB::statement("ALTER TABLE test_column_modifiers1 COMMENT ''");
     }
 
     /**

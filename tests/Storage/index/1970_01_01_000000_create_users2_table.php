@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateUsers2Table extends Migration
 {
@@ -19,8 +18,6 @@ class CreateUsers2Table extends Migration
             $table->string('name');
             $table->string('email');
         });
-
-        DB::statement("ALTER TABLE users2 COMMENT ''");
     }
 
     /**

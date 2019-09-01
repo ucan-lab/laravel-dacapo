@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTestColumnType2Table extends Migration
 {
@@ -24,8 +23,6 @@ class CreateTestColumnType2Table extends Migration
             $table->longText('description');
             $table->macAddress('device');
         });
-
-        DB::statement("ALTER TABLE test_column_type2 COMMENT ''");
     }
 
     /**

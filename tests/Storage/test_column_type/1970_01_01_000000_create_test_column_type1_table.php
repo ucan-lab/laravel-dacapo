@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTestColumnType1Table extends Migration
 {
@@ -30,8 +29,6 @@ class CreateTestColumnType1Table extends Migration
             $table->geometry('positions');
             $table->geometryCollection('positions_collection');
         });
-
-        DB::statement("ALTER TABLE test_column_type1 COMMENT ''");
     }
 
     /**

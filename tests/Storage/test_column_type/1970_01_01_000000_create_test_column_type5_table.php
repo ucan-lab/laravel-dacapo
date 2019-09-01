@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTestColumnType5Table extends Migration
 {
@@ -26,8 +25,6 @@ class CreateTestColumnType5Table extends Migration
             $table->uuid('uuid');
             $table->year('birth_year');
         });
-
-        DB::statement("ALTER TABLE test_column_type5 COMMENT ''");
     }
 
     /**
