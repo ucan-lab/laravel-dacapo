@@ -1,4 +1,4 @@
-test_column_type1:
+column_type1:
   columns:
     id:
       type: bigInteger
@@ -29,7 +29,7 @@ test_column_type1:
     positions_collection:
       type: geometryCollection
 
-test_column_type2:
+column_type2:
   columns:
     id:
       type: increments
@@ -48,7 +48,7 @@ test_column_type2:
     device:
       type: macAddress
 
-test_column_type3:
+column_type3:
   columns:
     id:
       type: mediumIncrements
@@ -80,7 +80,7 @@ test_column_type3:
   softDeletes: true
   timestamps: true
 
-test_column_type4:
+column_type4:
   columns:
     id:
       type: smallIncrements
@@ -101,7 +101,7 @@ test_column_type4:
   softDeletesTz: true
   timestampsTz: true
 
-test_column_type5:
+column_type5:
   columns:
     id:
       type: tinyIncrements

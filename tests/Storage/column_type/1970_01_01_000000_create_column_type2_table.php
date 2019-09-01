@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTestColumnType2Table extends Migration
+class CreateColumnType2Table extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTestColumnType2Table extends Migration
      */
     public function up()
     {
-        Schema::create('test_column_type2', function (Blueprint $table) {
+        Schema::create('column_type2', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('votes');
             $table->ipAddress('visitor');
@@ -32,6 +32,6 @@ class CreateTestColumnType2Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_column_type2');
+        Schema::dropIfExists('column_type2');
     }
 }
