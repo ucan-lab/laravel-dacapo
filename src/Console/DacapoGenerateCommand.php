@@ -54,12 +54,8 @@ class DacapoGenerateCommand extends Command
             $migrationsStorage = new MigrationsStorage();
         }
 
-        try {
-            (new DacapoGenerator(new SchemasStorage(), $migrationsStorage))->run();
-            $this->info('Generated migration files.');
-        } catch (Exception $e) {
-            $this->alert('Error: ' . $e->getMessage());
-        }
+        (new DacapoGenerator(new SchemasStorage(), $migrationsStorage))->run();
+        $this->info('Generated migration files.');
 
         if ($this->option('dry-run')) {
             return;
