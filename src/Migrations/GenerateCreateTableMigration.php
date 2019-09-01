@@ -32,6 +32,7 @@ class GenerateCreateTableMigration
     protected function getStub(): string
     {
         $stub = file_get_contents(__DIR__ . '/../Storage/stubs/create.stub');
+        $stub = str_replace('DummyNamespace', $this->table->getCreateTableMigrationNamespace(), $stub);
         $stub = str_replace('DummyClass', $this->table->getCreateTableMigrationClassName(), $stub);
         $stub = str_replace('DummyTableName', $this->table->getTableName(), $stub);
         $stub = str_replace('DummyTableComment', $this->table->getTableComment(), $stub);
