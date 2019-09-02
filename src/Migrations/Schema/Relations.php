@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Migrations\Schema;
 use IteratorAggregate;
 use ArrayIterator;
 
-class ForeignKeys implements IteratorAggregate
+class Relations implements IteratorAggregate
 {
     private $attributes;
 
@@ -17,15 +17,15 @@ class ForeignKeys implements IteratorAggregate
         $this->attributes = [];
 
         foreach ($relationsAttributes as $relationAttributes) {
-            $this->add(new ForeignKey($relationAttributes));
+            $this->add(new Relation($relationAttributes));
         }
     }
 
     /**
-     * @param ForeignKey $foreignKey
+     * @param Relation $foreignKey
      * @return self
      */
-    public function add(ForeignKey $foreignKey): self
+    public function add(Relation $foreignKey): self
     {
         $this->attributes[] = $foreignKey;
 

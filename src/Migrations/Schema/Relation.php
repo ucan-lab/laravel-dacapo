@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Migrations\Schema;
 
-class ForeignKey
+class Relation
 {
     private $name;
     private $foreign;
