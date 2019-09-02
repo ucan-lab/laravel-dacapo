@@ -126,7 +126,7 @@ class Table
      */
     public function getConstraintRelationMigrationClassName(): string
     {
-        return Str::studly('constraint_' . $this->name . '_foreign_key');
+        return Str::studly('constraint_' . $this->name . '_relation');
     }
 
     /**
@@ -134,7 +134,7 @@ class Table
      */
     public function getConstraintRelationMigrationFileName(): string
     {
-        return $this->getDatePrefix(self::PREFIX_CONSTRAINT_RELATION) . '_constraint_' . $this->name . '_foreign_key.php';
+        return $this->getDatePrefix(self::PREFIX_CONSTRAINT_RELATION) . '_constraint_' . $this->name . '_relation.php';
     }
 
     /**
