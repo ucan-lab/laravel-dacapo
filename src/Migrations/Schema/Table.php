@@ -8,7 +8,7 @@ class Table
 {
     const PREFIX_CREATE_TABLE = 0;
     const PREFIX_CREATE_INDEX = 1;
-    const PREFIX_CONSTRAINT_FOREIGN_KEY = 2;
+    const PREFIX_CONSTRAINT_RELATION = 2;
 
     private $name;
     private $attributes;
@@ -18,7 +18,7 @@ class Table
     private $collation;
     private $columns;
     private $indexes;
-    private $foreignKeys;
+    private $relations;
 
     /**
      * @param string $name
@@ -34,7 +34,7 @@ class Table
         $this->collation = $attributes['collation'] ?? '';
         $this->columns = new Columns($attributes['columns'] ?? []);
         $this->indexes = new Indexes($this->name, $attributes['indexes'] ?? []);
-        $this->foreignKeys = new ForeignKeys($attributes['relations'] ?? []);
+        $this->relations = new Relations($attributes['relations'] ?? []);
     }
 
     /**
@@ -124,17 +124,17 @@ class Table
     /**
      * @return string
      */
-    public function getConstraintForeignKeyMigrationClassName(): string
+    public function getConstraintRelationMigrationClassName(): string
     {
-        return Str::studly('constraint_' . $this->name . '_foreign_key');
+        return Str::studly('constraint_' . $this->name . '_relation');
     }
 
     /**
      * @return string
      */
-    public function getConstraintForeignKeyMigrationFileName(): string
+    public function getConstraintRelationMigrationFileName(): string
     {
-        return $this->getDatePrefix(self::PREFIX_CONSTRAINT_FOREIGN_KEY) . '_constraint_' . $this->name . '_foreign_key.php';
+        return $this->getDatePrefix(self::PREFIX_CONSTRAINT_RELATION) . '_constraint_' . $this->name . '_relation.php';
     }
 
     /**
@@ -192,7 +192,7 @@ class Table
     public function getUpForeignKeyList(): string
     {
         $list = [];
-        foreach ($this->foreignKeys as $foreignKey) {
+        foreach ($this->relations as $foreignKey) {
             if ($line = $foreignKey->getUpForeignKeyLine()) {
                 $list[] = $line;
             }
@@ -209,8 +209,8 @@ class Table
     public function getDownForeignKeyList(): string
     {
         $list = [];
-        foreach ($this->foreignKeys as $foreignKey) {
-            if ($line = $foreignKey->getDownForeignKeyLine()) {
+        foreach ($this->relations as $relation) {
+            if ($line = $relation->getDownForeignKeyLine()) {
                 $list[] = $line;
             }
         }
@@ -231,9 +231,9 @@ class Table
     /**
      * @return bool
      */
-    public function existsForeignKeys(): bool
+    public function existsRelations(): bool
     {
-        return $this->foreignKeys->count() > 0;
+        return $this->relations->count() > 0;
     }
 
     /**
