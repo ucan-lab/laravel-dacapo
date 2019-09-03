@@ -11,21 +11,19 @@ class DacapoGenerateTest extends TestCase
 {
     /**
      * @dataProvider dataProvider
-     * @param string $dirName
      * @param SchemasMockStorage $schemasStorage
-     * @param MigrationsMockStorage $migrationsStorage
+     * @param MigrationsMockStorage $originStorage
      */
-    public function testResolve(string $dirName, SchemasMockStorage $schemasStorage, MigrationsMockStorage $migrationsStorage): void
+    public function testResolve(SchemasMockStorage $schemasStorage, MigrationsMockStorage $originStorage): void
     {
-        $migrationsStorage->deleteDirectory();
-        (new DacapoGenerator($schemasStorage, $migrationsStorage))->run();
+        $tempStorage = $this->makeTempMigrationStorage();
+        (new DacapoGenerator($schemasStorage, $tempStorage))->run();
 
-        $originStorage = new MigrationsMockStorage($this->getStoragePath());
-        foreach ($migrationsStorage->getFiles() as $file) {
-            $this->assertFileEquals($file->getPath(), $originStorage->getPath($file));
+        foreach ($tempStorage->getFiles() as $file) {
+            $this->assertFileEquals($file->getPathname(), $originStorage->getPath($file->getFilename()));
         }
 
-        $this->assertSame($migrationsStorage->getFiles()->count(), $originStorage->getFiles()->count());
+        $this->assertSame($tempStorage->getFiles()->count(), $originStorage->getFiles()->count());
     }
 
     /**
@@ -36,12 +34,11 @@ class DacapoGenerateTest extends TestCase
         $this->createApplication();
 
         $data = [];
-        foreach ($this->getDirectories() as $directoryPath) {
+        foreach ($this->getTestDirectories() as $directoryPath) {
             $dirName = basename($directoryPath);
             $data[$dirName] = [
-                'dirName' => $dirName,
-                'schemasStorage' => new SchemasMockStorage($directoryPath),
-                'migrationsStorage' => new MigrationsMockStorage($directoryPath),
+                'schemasStorage' => new SchemasMockStorage($directoryPath . '/schemas'),
+                'migrationsStorage' => new MigrationsMockStorage($directoryPath . '/migrations'),
             ];
         }
 
@@ -51,33 +48,33 @@ class DacapoGenerateTest extends TestCase
     /**
      * @return array
      */
-    private function getDirectories(): array
+    private function getTestDirectories(): array
     {
-        return File::directories($this->getStoragePath());
+        return File::directories(__DIR__ . '/Storage');
     }
 
     /**
-     * @param string $dir
-     * @return array
+     * @return MigrationsMockStorage
      */
-    private function getMigrationFileNames(string $dir): array
+    private function makeTempMigrationStorage(): MigrationsMockStorage
     {
-        $files = [];
-        foreach (File::files($this->getStoragePath($dir)) as $file) {
-            if ($file->getExtension() === 'php') {
-                $files[] = $file->getFilename();
-            }
+        $storage = new MigrationsMockStorage($this->getTempMigrationPath());
+
+        if ($storage->exists()) {
+            $storage->deleteDirectory();
         }
 
-        return $files;
+        $storage->makeDirectory();
+
+        return $storage;
     }
 
     /**
      * @param string|null $path
      * @return string
      */
-    private function getStoragePath(?string $path = null): string
+    private function getTempMigrationPath(?string $path = null): string
     {
-        return __DIR__ . '/Storage' . ($path ? "/$path" : '');
+        return sys_get_temp_dir() . '/migrations' . ($path ? "/$path" : '');
     }
 }

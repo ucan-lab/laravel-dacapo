@@ -61,6 +61,6 @@ class MigrationsMockStorage implements Storage
      */
     public function getPath(?string $path = null): string
     {
-        return $this->dir . '/migrations' . ($path ? "/$path" : '');
+        return $this->dir . ($path ? "/$path" : '');
     }
 }
