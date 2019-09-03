@@ -8,13 +8,11 @@ use UcanLab\LaravelDacapo\Storage\Files;
 
 class MigrationsMockStorage implements Storage
 {
-    public function __construct()
-    {
-        if ($this->exists()) {
-            $this->deleteDirectory();
-        }
+    private $dir;
 
-        $this->makeDirectory();
+    public function __construct(string $dir)
+    {
+        $this->dir = $dir;
     }
 
     /**
@@ -63,6 +61,6 @@ class MigrationsMockStorage implements Storage
      */
     public function getPath(?string $path = null): string
     {
-        return sys_get_temp_dir() . '/migrations' . ($path ? "/$path" : '');
+        return $this->dir . '/migrations' . ($path ? "/$path" : '');
     }
 }

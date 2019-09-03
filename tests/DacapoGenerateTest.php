@@ -11,22 +11,21 @@ class DacapoGenerateTest extends TestCase
 {
     /**
      * @dataProvider dataProvider
-     * @param string $dir
-     * @param array $files
+     * @param string $dirName
+     * @param SchemasMockStorage $schemasStorage
+     * @param MigrationsMockStorage $migrationsStorage
      */
-    public function testResolve(string $dir, array $files): void
+    public function testResolve(string $dirName, SchemasMockStorage $schemasStorage, MigrationsMockStorage $migrationsStorage): void
     {
-        $schemasStorage = new SchemasMockStorage($dir);
-        $migrationsStorage = new MigrationsMockStorage();
-
+        $migrationsStorage->deleteDirectory();
         (new DacapoGenerator($schemasStorage, $migrationsStorage))->run();
 
-        foreach ($files as $file) {
-            $this->assertFileExists($migrationsStorage->getPath($file));
-            $this->assertFileEquals($migrationsStorage->getPath($file), $schemasStorage->getPath($file));
+        $originStorage = new MigrationsMockStorage($this->getStoragePath());
+        foreach ($migrationsStorage->getFiles() as $file) {
+            $this->assertFileEquals($file->getPath(), $originStorage->getPath($file));
         }
 
-        $this->assertSame($migrationsStorage->getFiles()->count(), count($files));
+        $this->assertSame($migrationsStorage->getFiles()->count(), $originStorage->getFiles()->count());
     }
 
     /**
@@ -38,10 +37,11 @@ class DacapoGenerateTest extends TestCase
 
         $data = [];
         foreach ($this->getDirectories() as $directoryPath) {
-            $dir = basename($directoryPath);
-            $data[$dir] = [
-                'dir' => $dir,
-                'files' => $this->getMigrationFileNames($dir),
+            $dirName = basename($directoryPath);
+            $data[$dirName] = [
+                'dirName' => $dirName,
+                'schemasStorage' => new SchemasMockStorage($directoryPath),
+                'migrationsStorage' => new MigrationsMockStorage($directoryPath),
             ];
         }
 
