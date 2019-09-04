@@ -16,17 +16,23 @@ $ composer require --dev ucan-lab/laravel-dacapo
 
 ## Generate default schema.yml
 
+`database/schemas/default.yml`
+
 ```
 $ php artisan dacapo:init
 ```
 
-### Laravel <= 5.6
+### Laravel 5.0 〜 5.6
 
 ```
-$ php artisan dacapo:init --legacy
+$ php artisan dacapo:init --laravel50
 ```
 
-`database/schemas/default.yml`
+### Laravel 5.7 〜 5.8
+
+```
+$ php artisan dacapo:init --laravel57
+```
 
 ## Generate migration files from schema.yml
 
