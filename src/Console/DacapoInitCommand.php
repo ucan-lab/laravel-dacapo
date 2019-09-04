@@ -17,7 +17,8 @@ class DacapoInitCommand extends Command
      * @var string
      */
     protected $signature = 'dacapo:init
-        {--legacy : legacy default schema}
+        {--laravel50 : Laravel 5.0 default schema}
+        {--laravel57 : Laravel 5.7 default schema}
     ';
 
     /**
@@ -62,10 +63,12 @@ class DacapoInitCommand extends Command
      */
     private function initSchema(): void
     {
-        if ($this->option('legacy')) {
-            File::copy($this->getDefaultSchemasPath('default.legacy.yml'), $this->schemasStorage->getPath('default.yml'));
+        if ($this->option('laravel50')) {
+            File::copy($this->getDefaultSchemasPath('laravel50_default.yml'), $this->schemasStorage->getPath('default.yml'));
+        } elseif ($this->option('laravel57')) {
+            File::copy($this->getDefaultSchemasPath('laravel57_default.yml'), $this->schemasStorage->getPath('default.yml'));
         } else {
-            File::copy($this->getDefaultSchemasPath('default.yml'), $this->schemasStorage->getPath('default.yml'));
+            File::copy($this->getDefaultSchemasPath('laravel60_default.yml'), $this->schemasStorage->getPath('default.yml'));
         }
 
         $this->info('Init dacapo default schema yaml.');
