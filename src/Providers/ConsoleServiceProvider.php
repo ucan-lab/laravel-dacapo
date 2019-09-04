@@ -43,7 +43,7 @@ class ConsoleServiceProvider extends ServiceProvider
             return new DacapoGenerateCommand();
         });
 
-        $this->app->singleton('command.ucan.dacapo.generate.models', function () {
+        $this->app->singleton('command.ucan.dacapo.models', function () {
             return new DacapoModelsCommand();
         });
 
@@ -58,7 +58,7 @@ class ConsoleServiceProvider extends ServiceProvider
         $this->commands([
             'command.ucan.dacapo.init',
             'command.ucan.dacapo.generate',
-            'command.ucan.dacapo.generate.models',
+            'command.ucan.dacapo.models',
             'command.ucan.dacapo.clear',
             'command.ucan.dacapo.uninstall',
         ]);
@@ -72,7 +72,7 @@ class ConsoleServiceProvider extends ServiceProvider
         return [
             'command.ucan.dacapo.init',
             'command.ucan.dacapo.generate',
-            'command.ucan.dacapo.generate.models',
+            'command.ucan.dacapo.models',
             'command.ucan.dacapo.clear',
             'command.ucan.dacapo.uninstall',
         ];
