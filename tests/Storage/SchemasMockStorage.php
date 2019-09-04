@@ -61,6 +61,6 @@ class SchemasMockStorage implements Storage
      */
     public function getPath(?string $path = null): string
     {
-        return __DIR__ . '/' . $this->dir . ($path ? "/$path" : '');
+        return $this->dir . ($path ? "/$path" : '');
     }
 }
