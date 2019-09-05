@@ -5,9 +5,9 @@ namespace UcanLab\LaravelDacapo\Migrations;
 use Exception;
 use SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
+use UcanLab\LaravelDacapo\Storage\Storage;
 use UcanLab\LaravelDacapo\Migrations\Schema\Table;
 use UcanLab\LaravelDacapo\Migrations\Schema\Tables;
-use UcanLab\LaravelDacapo\Storage\Storage;
 
 class SchemaLoader
 {
@@ -65,7 +65,7 @@ class SchemaLoader
     }
 
     /**
-     * Compare array key values and return duplicate keys
+     * Compare array key values and return duplicate keys.
      *
      * @param array $originArray
      * @param array $targetArray
