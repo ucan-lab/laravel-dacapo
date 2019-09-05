@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use UcanLab\LaravelDacapo\Storage\SchemasStorage;
 
 /**
- * Class DacapoUninstallCommand
+ * Class DacapoUninstallCommand.
  */
 class DacapoUninstallCommand extends Command
 {
@@ -41,7 +41,7 @@ class DacapoUninstallCommand extends Command
     }
 
     /**
-     * Uninstall dacapo
+     * Uninstall dacapo.
      *
      * @return void
      */

@@ -3,8 +3,8 @@
 namespace UcanLab\LaravelDacapo\Generator;
 
 use Illuminate\Support\Facades\Artisan;
-use UcanLab\LaravelDacapo\Migrations\Schema\Tables;
 use UcanLab\LaravelDacapo\Storage\Storage;
+use UcanLab\LaravelDacapo\Migrations\Schema\Tables;
 
 class ModelTemplateGenerator
 {

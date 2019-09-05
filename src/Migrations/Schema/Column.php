@@ -99,6 +99,7 @@ class Column
         }
 
         $type = substr($this->type, 0, strcspn($this->type, '('));
+
         return '->' . $type . "($columnName)";
     }
 
@@ -115,7 +116,7 @@ class Column
 //        }
 
         if ($this->autoIncrement) {
-            $str .= "->autoIncrement()";
+            $str .= '->autoIncrement()';
         }
 
         if ($this->charset) {
@@ -147,11 +148,11 @@ class Column
         }
 
         if ($this->unsigned) {
-            $str .= "->unsigned()";
+            $str .= '->unsigned()';
         }
 
         if ($this->useCurrent) {
-            $str .= "->useCurrent()";
+            $str .= '->useCurrent()';
         }
 
         if ($this->virtualAs) {
@@ -163,7 +164,7 @@ class Column
         }
 
         if ($this->always) {
-            $str .= "->always()";
+            $str .= '->always()';
         }
 
         return $str;
@@ -206,6 +207,7 @@ class Column
             if ($attributes[$name]) {
                 return '';
             }
+
             return 'false';
         }
 

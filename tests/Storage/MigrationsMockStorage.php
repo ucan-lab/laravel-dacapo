@@ -3,8 +3,8 @@
 namespace UcanLab\LaravelDacapo\Test\Storage;
 
 use Illuminate\Support\Facades\File;
-use UcanLab\LaravelDacapo\Storage\Storage;
 use UcanLab\LaravelDacapo\Storage\Files;
+use UcanLab\LaravelDacapo\Storage\Storage;
 
 class MigrationsMockStorage implements Storage
 {

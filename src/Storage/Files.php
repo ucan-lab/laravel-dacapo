@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Storage;
 
+use SplFileInfo;
 use ArrayIterator;
 use IteratorAggregate;
-use SplFileInfo;
 
 class Files implements IteratorAggregate
 {
@@ -22,6 +22,7 @@ class Files implements IteratorAggregate
     public function add(SplFileInfo $file): self
     {
         $this->attributes[] = $file;
+
         return $this;
     }
 
@@ -34,7 +35,7 @@ class Files implements IteratorAggregate
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function count(): int
     {

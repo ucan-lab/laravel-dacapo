@@ -4,8 +4,8 @@ namespace UcanLab\LaravelDacapo\Test;
 
 use Illuminate\Support\Facades\File;
 use UcanLab\LaravelDacapo\Migrations\DacapoGenerator;
-use UcanLab\LaravelDacapo\Test\Storage\MigrationsMockStorage;
 use UcanLab\LaravelDacapo\Test\Storage\SchemasMockStorage;
+use UcanLab\LaravelDacapo\Test\Storage\MigrationsMockStorage;
 
 class DacapoGenerateTest extends TestCase
 {
@@ -27,7 +27,7 @@ class DacapoGenerateTest extends TestCase
     }
 
     /**
-     * dataProvider
+     * dataProvider.
      */
     public function dataProvider(): array
     {
