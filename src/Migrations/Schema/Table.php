@@ -58,16 +58,16 @@ class Table
      */
     public function getCreateTableMigrationNamespace(): string
     {
-        $namespace = 'use Illuminate\Database\Migrations\Migration;';
-        $namespace .= PHP_EOL . 'use Illuminate\Database\Schema\Blueprint;';
-
+        $namespace = '';
         if ($this->comment) {
             if (in_array(config('database.default'), ['mysql', 'pgsql'], true)) {
-                $namespace .= PHP_EOL . 'use Illuminate\Support\Facades\DB;';
+                $namespace = 'use Illuminate\Support\Facades\DB;' . PHP_EOL;
             }
         }
 
-        $namespace .= PHP_EOL . 'use Illuminate\Support\Facades\Schema;';
+        $namespace .= 'use Illuminate\Support\Facades\Schema;';
+        $namespace .= PHP_EOL . 'use Illuminate\Database\Schema\Blueprint;';
+        $namespace .= PHP_EOL . 'use Illuminate\Database\Migrations\Migration;';
 
         return $namespace;
     }
