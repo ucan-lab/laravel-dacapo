@@ -4,13 +4,13 @@ namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use UcanLab\LaravelDacapo\Migrations\SchemaLoader;
-use UcanLab\LaravelDacapo\Generator\ModelTemplateGenerator;
 use UcanLab\LaravelDacapo\Storage\ModelsStorage;
 use UcanLab\LaravelDacapo\Storage\SchemasStorage;
+use UcanLab\LaravelDacapo\Migrations\SchemaLoader;
+use UcanLab\LaravelDacapo\Generator\ModelTemplateGenerator;
 
 /**
- * Class DacapoModelsCommand
+ * Class DacapoModelsCommand.
  */
 class DacapoModelsCommand extends Command
 {
@@ -41,7 +41,7 @@ class DacapoModelsCommand extends Command
     }
 
     /**
-     * clear migrations directory
+     * clear migrations directory.
      *
      * @return void
      */

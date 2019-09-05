@@ -4,13 +4,13 @@ namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
+use UcanLab\LaravelDacapo\Storage\SchemasStorage;
+use UcanLab\LaravelDacapo\Storage\MigrationsStorage;
 use UcanLab\LaravelDacapo\Migrations\DacapoGenerator;
 use UcanLab\LaravelDacapo\Storage\MigrationsMockStorage;
-use UcanLab\LaravelDacapo\Storage\MigrationsStorage;
-use UcanLab\LaravelDacapo\Storage\SchemasStorage;
 
 /**
- * Class DacapoGenerateCommand
+ * Class DacapoGenerateCommand.
  */
 class DacapoGenerateCommand extends Command
 {

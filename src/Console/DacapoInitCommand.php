@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 use UcanLab\LaravelDacapo\Storage\SchemasStorage;
 
 /**
- * Class DacapoInitCommand
+ * Class DacapoInitCommand.
  */
 class DacapoInitCommand extends Command
 {
@@ -47,6 +47,7 @@ class DacapoInitCommand extends Command
                 $this->schemasStorage->makeDirectory();
             } else {
                 $this->comment('Command Cancelled!');
+
                 return;
             }
         } else {
@@ -57,7 +58,7 @@ class DacapoInitCommand extends Command
     }
 
     /**
-     * init dacapo default schema
+     * init dacapo default schema.
      *
      * @return void
      */

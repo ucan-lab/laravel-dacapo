@@ -2,8 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Migrations;
 
-use UcanLab\LaravelDacapo\Migrations\Schema\Table;
 use UcanLab\LaravelDacapo\Storage\Storage;
+use UcanLab\LaravelDacapo\Migrations\Schema\Table;
 
 class GenerateCreateIndexMigration
 {

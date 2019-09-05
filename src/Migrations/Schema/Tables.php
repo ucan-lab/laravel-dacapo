@@ -2,8 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Migrations\Schema;
 
-use IteratorAggregate;
 use ArrayIterator;
+use IteratorAggregate;
 
 class Tables implements IteratorAggregate
 {

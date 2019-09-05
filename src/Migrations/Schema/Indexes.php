@@ -2,8 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Migrations\Schema;
 
-use IteratorAggregate;
 use ArrayIterator;
+use IteratorAggregate;
 
 class Indexes implements IteratorAggregate
 {
@@ -34,7 +34,7 @@ class Indexes implements IteratorAggregate
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function count(): int
     {
