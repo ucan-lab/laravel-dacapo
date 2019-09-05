@@ -21,7 +21,7 @@ class DacapoModelsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'dacapo:generate:models
+    protected $signature = 'dacapo:models
         {--d|dir= : Generate directory.}
     ';
 

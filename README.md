@@ -43,5 +43,5 @@ $ php artisan dacapo:generate
 ## Generate template models from schema.yml
 
 ```
-$ php artisan dacapo:generate:models
+$ php artisan dacapo:models
 ```
