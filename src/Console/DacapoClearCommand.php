@@ -7,7 +7,7 @@ use Illuminate\Console\ConfirmableTrait;
 use UcanLab\LaravelDacapo\Storage\MigrationsStorage;
 
 /**
- * Class DacapoClearCommand
+ * Class DacapoClearCommand.
  */
 class DacapoClearCommand extends Command
 {
@@ -46,7 +46,7 @@ class DacapoClearCommand extends Command
     }
 
     /**
-     * clear migrations directory
+     * clear migrations directory.
      *
      * @return void
      */

@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Migrations;
 use UcanLab\LaravelDacapo\Storage\Storage;
 
 /**
- * Class DacapoGenerator
+ * Class DacapoGenerator.
  */
 class DacapoGenerator
 {

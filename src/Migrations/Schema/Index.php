@@ -59,7 +59,7 @@ class Index
         }
 
         return sprintf(
-            "->%s(%s)",
+            '->%s(%s)',
             $this->type,
             $this->makeColumns()
         );

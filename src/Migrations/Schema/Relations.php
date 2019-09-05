@@ -2,8 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Migrations\Schema;
 
-use IteratorAggregate;
 use ArrayIterator;
+use IteratorAggregate;
 
 class Relations implements IteratorAggregate
 {
@@ -33,7 +33,7 @@ class Relations implements IteratorAggregate
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function count(): int
     {
