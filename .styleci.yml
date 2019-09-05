@@ -1,0 +1,10 @@
+preset: laravel
+risky: true
+finder:
+  exclude:
+    - vendor
+  name: "*.php"
+enabled:
+  - concat_with_spaces
+disabled:
+  - concat_without_spaces
