@@ -8,6 +8,14 @@
 [![Latest Unstable Version](https://poser.pugx.org/ucan-lab/laravel-dacapo/v/unstable)](https://packagist.org/packages/ucan-lab/laravel-dacapo)
 [![License](https://poser.pugx.org/ucan-lab/laravel-dacapo/license)](https://packagist.org/packages/ucan-lab/laravel-dacapo)
 
+## Introduction
+
+Dacapo is a Laravel migration file creation support library.
+Define the table structure in the schema yml file, Always generate the latest and tidy migration file.
+
+This library is intended for use only in the coding phase.
+In the operation phase, uninstall and return to normal migration operation.
+
 ## Installation
 
 ```
@@ -16,11 +24,12 @@ $ composer require --dev ucan-lab/laravel-dacapo
 
 ## Generate default schema.yml
 
-`database/schemas/default.yml`
-
 ```
 $ php artisan dacapo:init
 ```
+
+`database/schemas/default.yml`
+By default, a schema file for Laravel6.0 is generated.
 
 ### Laravel 5.0 〜 5.6
 
