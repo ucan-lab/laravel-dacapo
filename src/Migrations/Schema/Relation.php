@@ -40,7 +40,9 @@ class Relation
      */
     public function getDownForeignKeyLine(): string
     {
-        $str = "->dropForeign(['$this->foreign'])";
+        $str = $this->name
+            ? "->dropForeign('$this->name')"
+            : "->dropForeign(['$this->foreign'])";
 
         return '$table' . $str . ';';
     }
@@ -50,12 +52,11 @@ class Relation
      */
     private function getForeignKey(): string
     {
-        return sprintf(
-            "->foreign('%s')->references('%s')->on('%s')",
-            $this->foreign,
-            $this->references,
-            $this->on
-        );
+        $str = $this->name
+            ? "->foreign('$this->foreign', '$this->name')"
+            : "->foreign('$this->foreign')";
+
+        return "{$str}->references('$this->references')->on('$this->on')";
     }
 
     /**
