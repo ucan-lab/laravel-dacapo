@@ -3,6 +3,11 @@ users:
     id: bigIncrements
     name: string
 
+tags:
+  columns:
+    id: bigIncrements
+    title: string
+
 tasks:
   relations:
     - foreign: user_id
@@ -12,3 +17,16 @@ tasks:
     id: bigIncrements
     user_id: unsignedBigInteger
     content: string
+
+task_tag:
+  relations:
+    - name: task_tag_custom_task_id_foreign
+      foreign: task_id
+      references: id
+      on: tasks
+    - foreign: tag_id
+      references: id
+      on: tags
+  columns:
+    task_id: unsignedBigInteger
+    tag_id: unsignedBigInteger
