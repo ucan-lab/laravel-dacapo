@@ -31,8 +31,7 @@ $ php artisan dacapo:init
 ```
 
 `database/schemas/default.yml`
-By default, a schema file for Laravel6.0 is generated.
-
+By default, a schema file for Laravel6.0 is generated.  
 Reference example of schema yml and output example of migration file: [Example schema.yml](/tests/Storage)
 
 Contents of `database/schemas/default.yml`
