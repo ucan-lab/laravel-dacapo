@@ -98,8 +98,8 @@ column_type4:
       type: timestamp
     added_on_tz:
       type: timestampTz
-  softDeletesTz: true
-  timestampsTz: true
+    softDeletesTz: true
+    timestampsTz: true
 
 column_type5:
   columns:

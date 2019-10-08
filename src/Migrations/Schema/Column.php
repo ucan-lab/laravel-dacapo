@@ -38,9 +38,18 @@ class Column
         if ($name === 'rememberToken') {
             $this->name = null;
             $this->type = 'rememberToken';
+        } elseif ($name === 'softDeletes') {
+            $this->name = null;
+            $this->type = 'softDeletes';
+        } elseif ($name === 'softDeletesTz') {
+            $this->name = null;
+            $this->type = 'softDeletesTz';
         } elseif ($name === 'timestamps') {
             $this->name = is_int($attributes) ? $attributes : null;
             $this->type = 'timestamps';
+        } elseif ($name === 'timestampsTz') {
+            $this->name = is_int($attributes) ? $attributes : null;
+            $this->type = 'timestampsTz';
         } elseif (is_string($attributes)) {
             $this->type = $attributes;
         } elseif (is_array($attributes)) {
@@ -85,8 +94,14 @@ class Column
     {
         if ($this->type === 'rememberToken') {
             return '->rememberToken()';
+        } elseif ($this->type === 'softDeletes') {
+            return '->softDeletes()';
+        } elseif ($this->type === 'softDeletesTz') {
+            return '->softDeletesTz()';
         } elseif ($this->type === 'timestamps') {
             return '->timestamps(' . ($this->name ?: '') . ')';
+        } elseif ($this->type === 'timestampsTz') {
+            return '->timestampsTz(' . ($this->name ?: '') . ')';
         }
 
         preg_match('/\((.*)\)/', $this->type, $match);
