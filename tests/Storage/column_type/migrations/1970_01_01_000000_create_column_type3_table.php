@@ -27,6 +27,9 @@ class CreateColumnType3Table extends Migration
             $table->point('position_point');
             $table->polygon('positions_polygon');
             $table->set('flavors', ['strawberry', 'vanilla']);
+            $table->rememberToken();
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
