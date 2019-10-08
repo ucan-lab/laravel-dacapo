@@ -107,7 +107,8 @@ class Index
      */
     private function makeIndexName(): string
     {
-        return sprintf('%s_%s_%s',
+        return sprintf(
+            '%s_%s_%s',
             $this->tableName,
             is_array($this->columns) ? implode('_', $this->columns) : $this->columns,
             $this->type
