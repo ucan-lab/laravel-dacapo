@@ -22,6 +22,8 @@ class CreateColumnType4Table extends Migration
             $table->timeTz('sunrise_tz');
             $table->timestamp('added_on');
             $table->timestampTz('added_on_tz');
+            $table->softDeletesTz();
+            $table->timestampsTz();
         });
     }
 

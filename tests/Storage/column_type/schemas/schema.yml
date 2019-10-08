@@ -76,9 +76,9 @@ column_type3:
       type: polygon
     flavors:
       type: set(['strawberry', 'vanilla'])
-  rememberToken: true
-  softDeletes: true
-  timestamps: true
+    rememberToken: true
+    softDeletes: true
+    timestamps: true
 
 column_type4:
   columns:
