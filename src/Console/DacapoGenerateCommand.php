@@ -45,11 +45,10 @@ class DacapoGenerateCommand extends Command
             return;
         }
 
-        $this->call('dacapo:clear', ['--force' => true]);
-
         if ($this->option('dry-run')) {
             $migrationsStorage = new MigrationsMockStorage();
         } else {
+            $this->call('dacapo:clear', ['--force' => true]);
             $migrationsStorage = new MigrationsStorage();
         }
 
