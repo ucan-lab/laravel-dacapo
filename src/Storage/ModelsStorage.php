@@ -35,7 +35,7 @@ class ModelsStorage implements Storage
      */
     public function makeDirectory(): bool
     {
-        return File::makeDirectory($this->getPath());
+        return $this->exists() ? true : File::makeDirectory($this->getPath());
     }
 
     /**
@@ -43,7 +43,7 @@ class ModelsStorage implements Storage
      */
     public function deleteDirectory(): bool
     {
-        return File::deleteDirectory($this->getPath());
+        return $this->exists() ? File::deleteDirectory($this->getPath()) : true;
     }
 
     /**
