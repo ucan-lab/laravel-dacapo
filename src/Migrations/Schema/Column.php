@@ -126,10 +126,6 @@ class Column
     {
         $str = '';
 
-//        if ($this->after) {
-//            $str .= "->after('$this->after')";
-//        }
-
         if ($this->autoIncrement) {
             $str .= '->autoIncrement()';
         }
@@ -149,10 +145,6 @@ class Column
         if ($this->default) {
             $str .= "->comment('$this->default')";
         }
-
-//        if ($this->first) {
-//            $str .= "->first()";
-//        }
 
         if ($this->nullable !== null) {
             $str .= "->nullable($this->nullable)";
