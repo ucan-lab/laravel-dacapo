@@ -102,7 +102,8 @@ class Column
             if (is_null($this->args)) {
                 return sprintf('->%s()', $this->type);
             }
-            return sprintf("->%s(%s)", $this->type, $this->convertArgs());
+
+            return sprintf('->%s(%s)', $this->type, $this->convertArgs());
         } elseif ($this->type === 'enum') {
             return sprintf("->%s('%s', [%s])", $this->type, $this->name, $this->convertArgsToArray());
         } elseif ($this->type === 'set') {
