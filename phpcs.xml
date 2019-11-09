@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
 <ruleset name="Custom Standard">
-    <rule ref="PSR2">
-        <exclude name="PSR1.Classes.ClassDeclaration"/>
-    </rule>
     <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
     <rule ref="Generic.WhiteSpace.ScopeIndent"/>
     <rule ref="Generic.Formatting.SpaceAfterNot"/>
@@ -21,12 +18,11 @@
     <rule ref="Generic.PHP.DisallowShortOpenTag"/>
     <rule ref="Generic.PHP.DiscourageGoto"/>
     <rule ref="Generic.PHP.LowerCaseConstant"/>
-    <rule ref="Generic.Files.LineLength">
-        <properties>
-            <property name="lineLimit" value="180"/>
-        </properties>
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>tests/Storage</exclude-pattern>
     </rule>
+    <exclude name="PSR2.Generic.Files.LineLength.TooLong"/>
     <exclude-pattern>*.yml</exclude-pattern>
     <exclude-pattern>.phpstorm.meta.php</exclude-pattern>
-    <exclude-pattern>vendor/</exclude-pattern>
+    <exclude-pattern>vendor</exclude-pattern>
 </ruleset>

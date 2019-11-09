@@ -1,0 +1,3 @@
+linter:
+  code_sniffer:
+    standard: phpcs.xml
