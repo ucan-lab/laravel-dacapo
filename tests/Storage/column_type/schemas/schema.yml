@@ -9,7 +9,8 @@ column_type1:
     confirmed:
       type: boolean
     name:
-      type: char(100)
+      type: char
+      args: 100
     created_date:
       type: date
     created_at:
@@ -17,13 +18,17 @@ column_type1:
     created_tz:
       type: dateTimeTz
     amount:
-      type: decimal(8, 2)
+      type: decimal
+      args: [8, 2]
     total:
-      type: double(8, 2)
+      type: double
+      args: [8, 2]
     level:
-      type: enum(['easy', 'hard'])
+      type: enum
+      args: ['easy', 'hard']
     subtotal:
-      type: float(8, 2)
+      type: float
+      args: [8, 2]
     positions:
       type: geometry
     positions_collection:
@@ -67,18 +72,21 @@ column_type3:
     positions_multi_polygon:
       type: multiPolygon
     taggable_nullable:
-      type: nullableMorphs('custom_taggable_nullable_index')
+      type: nullableMorphs
+      args: custom_taggable_nullable_index
     taggable_nullable_uuid:
-      type: nullableMorphs('custom_taggable_nullable_nullable_morphs_index')
+      type: nullableMorphs
+      args: custom_taggable_nullable_nullable_morphs_index
     position_point:
       type: point
     positions_polygon:
       type: polygon
     flavors:
-      type: set(['strawberry', 'vanilla'])
-    rememberToken: true
-    softDeletes: true
-    timestamps: true
+      type: set
+      args: ['strawberry', 'vanilla']
+    rememberToken:
+    softDeletes:
+    timestamps:
 
 column_type4:
   columns:
@@ -87,7 +95,8 @@ column_type4:
     votes:
       type: smallInteger
     name:
-      type: string(100)
+      type: string
+      args: 100
     description:
       type: text
     sunrise:
@@ -98,8 +107,8 @@ column_type4:
       type: timestamp
     added_on_tz:
       type: timestampTz
-    softDeletesTz: true
-    timestampsTz: true
+    softDeletesTz:
+    timestampsTz:
 
 column_type5:
   columns:
@@ -118,7 +127,8 @@ column_type5:
     votes_uti:
       type: unsignedTinyInteger
     amount:
-      type: unsignedDecimal(8, 2)
+      type: unsignedDecimal
+      args: [8, 2]
     uuid:
       type: uuid
     birth_year:
