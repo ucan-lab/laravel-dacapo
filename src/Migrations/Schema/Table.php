@@ -7,8 +7,8 @@ use Illuminate\Support\Str;
 class Table
 {
     const PREFIX_CREATE_TABLE = 0;
-    const PREFIX_CREATE_INDEX = 1;
-    const PREFIX_CONSTRAINT_RELATION = 2;
+    const PREFIX_CONSTRAINT_RELATION = 1;
+    const PREFIX_CREATE_INDEX = 2;
 
     private $name;
     private $attributes;
