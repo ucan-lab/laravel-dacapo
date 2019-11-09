@@ -1,5 +1,6 @@
 {
     "name": "ucan-lab/laravel-dacapo",
+    "license": "MIT",
     "minimum-stability": "stable",
     "authors": [
         {
@@ -15,11 +16,20 @@
     "require": {
         "php": "~7.2",
         "laravel/framework": ">=5.5",
-        "symfony/yaml": "^4.1"
+        "symfony/yaml": "^4.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.3",
+        "orchestra/testbench": "^3.8"
     },
     "autoload": {
         "psr-4": {
             "UcanLab\\LaravelDacapo\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "UcanLab\\LaravelDacapo\\Test\\": "tests/"
         }
     },
     "extra": {
@@ -27,16 +37,6 @@
             "providers": [
                 "UcanLab\\LaravelDacapo\\Providers\\ConsoleServiceProvider"
             ]
-        }
-    },
-    "license": "MIT",
-    "require-dev": {
-        "phpunit/phpunit": "^8.3",
-        "orchestra/testbench": "^3.8"
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "UcanLab\\LaravelDacapo\\Test\\": "tests/"
         }
     }
 }

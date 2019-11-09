@@ -1,0 +1,29 @@
+# Feel free to add your own project rules to this YAML file.
+# The following example describes the rule syntax.
+# See the documentation for more details: https://github.com/sider/phinder/tree/master/doc
+
+- id: var_dump
+  pattern: var_dump(...)
+  message: Do not use var_dump.
+  justification: Allowed when debugging
+
+- id: dump
+  pattern: dump(...)
+  message: Do not use dump.
+  justification: Allowed when debugging
+
+- id: dd
+  pattern: dd(...)
+  message: Do not use dd.
+  justification: Allowed when debugging
+
+- id: in_array_without_3rd_param
+  pattern: in_array(_, _)
+  message: Specify 3rd parameter explicitly when calling in_array to avoid unexpected comparison results.
+  test:
+    fail:
+      - in_array(1, $arr)
+      - in_array(2, $arr)
+    pass:
+      - in_array(3, $arr, true)
+      - in_array(4, $arr, false)
