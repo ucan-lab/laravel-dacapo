@@ -103,6 +103,10 @@ class Column
                 return sprintf('->%s()', $this->type);
             }
             return sprintf("->%s(%s)", $this->type, $this->convertArgs());
+        } elseif ($this->type === 'enum') {
+            return sprintf("->%s('%s', [%s])", $this->type, $this->name, $this->convertArgsToArray());
+        } elseif ($this->type === 'set') {
+            return sprintf("->%s('%s', [%s])", $this->type, $this->name, $this->convertArgsToArray());
         } elseif (is_null($this->args)) {
             return sprintf("->%s('%s')", $this->type, $this->name);
         } else {
@@ -211,6 +215,19 @@ class Column
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    private function convertArgsToArray(): string
+    {
+        $str = '';
+        foreach ($this->args as $arg) {
+            $str .= ', ' . var_export($arg, true);
+        }
+
+        return ltrim($str, ', ');
     }
 
     /**
