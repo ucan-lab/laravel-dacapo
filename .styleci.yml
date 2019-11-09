@@ -8,4 +8,5 @@ enabled:
   - concat_with_spaces
   - length_ordered_imports
 disabled:
+  - alpha_ordered_imports
   - concat_without_spaces
