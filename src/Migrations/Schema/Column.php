@@ -152,11 +152,7 @@ class Column
         }
 
         if ($this->default !== null) {
-            if (is_string($this->default)) {
-                $str .= "->default('$this->default')";
-            } else {
-                $str .= '->default(' . var_export($this->default, true) . ')';
-            }
+            $str .= '->default(' . var_export($this->default, true) . ')';
         }
 
         if ($this->defaultRaw !== null) {
