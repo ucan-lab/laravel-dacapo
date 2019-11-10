@@ -9,7 +9,9 @@
     <rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
     <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing.IncorrectSingle"/>
     <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
-    <rule ref="Squiz.WhiteSpace.OperatorSpacing"/>
+    <properties>
+        <property name="ignoreNewlines" value="true"/>
+    </properties>
     <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
     <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
     <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>

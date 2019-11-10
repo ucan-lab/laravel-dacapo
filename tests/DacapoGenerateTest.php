@@ -20,10 +20,10 @@ class DacapoGenerateTest extends TestCase
         (new DacapoGenerator($schemasStorage, $tempStorage))->run();
 
         foreach ($tempStorage->getFiles() as $file) {
-            $this->assertFileEquals($file->getPathname(), $originStorage->getPath($file->getFilename()));
+            $this->assertFileEquals($originStorage->getPath($file->getFilename()), $file->getPathname());
         }
 
-        $this->assertSame($tempStorage->getFiles()->count(), $originStorage->getFiles()->count());
+        $this->assertSame($originStorage->getFiles()->count(), $tempStorage->getFiles()->count());
     }
 
     /**

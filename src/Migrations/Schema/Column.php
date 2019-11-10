@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Migrations\Schema;
 
 class Column
 {
-    const RESERVED_COLUMN_TYPE = '__reserved_column_type';
+    private const RESERVED_COLUMN_TYPE = '__reserved_column_type';
 
     private $name;
     private $type;
@@ -44,19 +44,19 @@ class Column
         } elseif ($name === 'softDeletes') {
             $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'softDeletes';
-            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
+            $this->args = $attributes['args'] ?? $attributes;
         } elseif ($name === 'softDeletesTz') {
             $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'softDeletesTz';
-            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
+            $this->args = $attributes['args'] ?? $attributes;
         } elseif ($name === 'timestamps') {
             $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'timestamps';
-            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
+            $this->args = $attributes['args'] ?? $attributes;
         } elseif ($name === 'timestampsTz') {
             $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'timestampsTz';
-            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
+            $this->args = $attributes['args'] ?? $attributes;
         } elseif (is_string($attributes)) {
             $this->type = $attributes;
         } elseif (is_array($attributes)) {
@@ -69,7 +69,7 @@ class Column
             $this->comment = $attributes['comment'] ?? null;
             $this->default = $attributes['default'] ?? null;
             $this->first = $attributes['first'] ?? null;
-            $this->nullable = $this->convertBoolType($attributes, 'nullable');
+            $this->nullable = $attributes['nullable'] ?? null;
             $this->storedAs = $attributes['storedAs'] ?? null;
             $this->unsigned = $attributes['unsigned'] ?? null;
             $this->useCurrent = $attributes['useCurrent'] ?? null;
@@ -109,76 +109,69 @@ class Column
     protected function getColumnType(): string
     {
         if ($this->name === self::RESERVED_COLUMN_TYPE) {
-            if (is_null($this->args)) {
-                return sprintf('->%s()', $this->type);
-            }
-
-            return sprintf('->%s(%s)', $this->type, $this->convertArgs());
-        } elseif ($this->type === 'enum') {
-            return sprintf("->%s('%s', [%s])", $this->type, $this->name, $this->convertArgsToArray());
-        } elseif ($this->type === 'set') {
-            return sprintf("->%s('%s', [%s])", $this->type, $this->name, $this->convertArgsToArray());
-        } elseif (is_null($this->args)) {
-            return sprintf("->%s('%s')", $this->type, $this->name);
-        } else {
-            return sprintf("->%s('%s'%s)", $this->type, $this->name, $this->convertArgs(true));
+            return Method::call($this->type, ...(array) $this->args);
         }
+
+        if ($this->type === 'enum' || $this->type === 'set') {
+            return Method::call($this->type, $this->name, (array) $this->args);
+        }
+
+        return Method::call($this->type, $this->name, ...(array) $this->args);
     }
 
     /**
      * @return string
-     * @todo refactor later
      */
     protected function getColumnModifier(): string
     {
         $str = '';
 
         if ($this->autoIncrement) {
-            $str .= '->autoIncrement()';
+            $str .= Method::call('autoIncrement');
         }
 
         if ($this->charset) {
-            $str .= "->charset('$this->charset')";
+            $str .= Method::call('charset', $this->charset);
         }
 
         if ($this->collation) {
-            $str .= "->collation('$this->collation')";
+            $str .= Method::call('collation', $this->collation);
         }
 
         if ($this->comment) {
-            $str .= "->comment('$this->comment')";
+            $str .= Method::call('comment', $this->comment);
         }
 
         if ($this->default !== null) {
-            $str .= sprintf('->default(%s)', isset($this->default['raw']) ? Literal::raw($this->default['raw']) : Literal::of($this->default));
+            $str .= Method::call('default', isset($this->default['raw']) ? Literal::raw($this->default['raw']) : $this->default);
         }
 
         if ($this->nullable !== null) {
-            $str .= "->nullable($this->nullable)";
+            $str .= Method::call('nullable', ...$this->nullable ? [] : [false]);
         }
 
         if ($this->storedAs) {
-            $str .= "->storedAs('$this->storedAs')";
+            $str .= Method::call('storedAs', $this->storedAs);
         }
 
         if ($this->unsigned) {
-            $str .= '->unsigned()';
+            $str .= Method::call('unsigned');
         }
 
         if ($this->useCurrent) {
-            $str .= '->useCurrent()';
+            $str .= Method::call('useCurrent');
         }
 
         if ($this->virtualAs) {
-            $str .= "->virtualAs('$this->virtualAs')";
+            $str .= Method::call('virtualAs', $this->virtualAs);
         }
 
         if ($this->generatedAs) {
-            $str .= "->generatedAs('$this->generatedAs')";
+            $str .= Method::call('generatedAs', $this->generatedAs);
         }
 
         if ($this->always) {
-            $str .= '->always()';
+            $str .= Method::call('always');
         }
 
         return $str;
@@ -192,74 +185,19 @@ class Column
         $str = '';
 
         if ($this->primary) {
-            $str .= '->primary()';
+            $str .= Method::call('primary');
         }
 
         if ($this->unique) {
-            $str .= '->unique()';
+            $str .= Method::call('unique');
         }
 
         if ($this->index) {
-            $str .= '->index()';
+            $str .= Method::call('index');
         }
 
         if ($this->spatialIndex) {
-            $str .= '->spatialIndex()';
-        }
-
-        return $str;
-    }
-
-    /**
-     * @param array $attributes
-     * @param string $name
-     * @return string|null
-     */
-    private function convertBoolType(array $attributes, string $name): ?string
-    {
-        if (isset($attributes[$name])) {
-            if ($attributes[$name]) {
-                return '';
-            }
-
-            return 'false';
-        }
-
-        return null;
-    }
-
-    /**
-     * @return string
-     */
-    private function convertArgsToArray(): string
-    {
-        $str = '';
-        foreach ($this->args as $arg) {
-            $str .= ', ' . var_export($arg, true);
-        }
-
-        return ltrim($str, ', ');
-    }
-
-    /**
-     * @param bool $prefix
-     * @return string
-     */
-    private function convertArgs(bool $prefix = false): string
-    {
-        $str = '';
-        if (is_null($this->args)) {
-            return '';
-        } elseif (is_array($this->args)) {
-            foreach ($this->args as $arg) {
-                $str .= ', ' . var_export($arg, true);
-            }
-        } else {
-            $str = ', ' . var_export($this->args, true);
-        }
-
-        if (! $prefix) {
-            return ltrim($str, ', ');
+            $str .= Method::call('spatialIndex');
         }
 
         return $str;
