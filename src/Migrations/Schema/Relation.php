@@ -40,7 +40,7 @@ class Relation
      */
     public function getDownForeignKeyLine(): string
     {
-        $str = Method::call('dropForeign', $this->name ?: (array)$this->foreign);
+        $str = Method::call('dropForeign', $this->name ?: (array) $this->foreign);
 
         return '$table' . $str . ';';
     }

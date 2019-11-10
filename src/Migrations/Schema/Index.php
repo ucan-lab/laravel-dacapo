@@ -56,6 +56,6 @@ class Index
      */
     private function makeDropIndex(): string
     {
-        return Method::call('drop' . ucfirst($this->type), ...[$this->alias ?: (array)$this->columns]);
+        return Method::call('drop' . ucfirst($this->type), ...[$this->alias ?: (array) $this->columns]);
     }
 }

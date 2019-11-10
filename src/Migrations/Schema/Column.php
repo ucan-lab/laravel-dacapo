@@ -109,14 +109,14 @@ class Column
     protected function getColumnType(): string
     {
         if ($this->name === self::RESERVED_COLUMN_TYPE) {
-            return Method::call($this->type, ...(array)$this->args);
+            return Method::call($this->type, ...(array) $this->args);
         }
 
         if ($this->type === 'enum' || $this->type === 'set') {
-            return Method::call($this->type, $this->name, (array)$this->args);
+            return Method::call($this->type, $this->name, (array) $this->args);
         }
 
-        return Method::call($this->type, $this->name, ...(array)$this->args);
+        return Method::call($this->type, $this->name, ...(array) $this->args);
     }
 
     /**
