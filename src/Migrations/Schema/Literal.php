@@ -15,9 +15,11 @@ class Literal
 
     public function __toString()
     {
-        return $this->raw
-            ? sprintf('DB::raw(%s)', var_export($this->value, true))
-            : var_export($this->value, true);
+        if ($this->raw) {
+            return sprintf('DB::raw(%s)', var_export($this->value, true));
+        }
+
+        return var_export($this->value, true);
     }
 
     public static function of($value)
