@@ -26,7 +26,7 @@ class CreateUsers1Index extends Migration
     public function down()
     {
         Schema::table('users1', function (Blueprint $table) {
-            $table->dropUnique('users1_name_unique');
+            $table->dropUnique(['name']);
         });
     }
 }
