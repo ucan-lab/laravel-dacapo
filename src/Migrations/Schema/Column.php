@@ -4,6 +4,8 @@ namespace UcanLab\LaravelDacapo\Migrations\Schema;
 
 class Column
 {
+    const RESERVED_COLUMN_TYPE = '__reserved_column_type';
+
     private $name;
     private $type;
     private $args;
@@ -37,22 +39,22 @@ class Column
         $this->name = $name;
 
         if ($name === 'rememberToken') {
-            $this->name = '__reserved_column_type';
+            $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'rememberToken';
         } elseif ($name === 'softDeletes') {
-            $this->name = '__reserved_column_type';
+            $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'softDeletes';
             $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
         } elseif ($name === 'softDeletesTz') {
-            $this->name = '__reserved_column_type';
+            $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'softDeletesTz';
             $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
         } elseif ($name === 'timestamps') {
-            $this->name = '__reserved_column_type';
+            $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'timestamps';
             $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
         } elseif ($name === 'timestampsTz') {
-            $this->name = '__reserved_column_type';
+            $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'timestampsTz';
             $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
         } elseif (is_string($attributes)) {
@@ -98,7 +100,7 @@ class Column
      */
     protected function getColumnType(): string
     {
-        if ($this->name === '__reserved_column_type') {
+        if ($this->name === self::RESERVED_COLUMN_TYPE) {
             if (is_null($this->args)) {
                 return sprintf('->%s()', $this->type);
             }
