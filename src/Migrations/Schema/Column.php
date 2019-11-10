@@ -16,7 +16,6 @@ class Column
     private $collation;
     private $comment;
     private $default;
-    private $defaultRaw;
     private $first;
     private $nullable;
     private $storedAs;
@@ -69,7 +68,6 @@ class Column
             $this->collation = $attributes['collation'] ?? null;
             $this->comment = $attributes['comment'] ?? null;
             $this->default = $attributes['default'] ?? null;
-            $this->defaultRaw = $attributes['default_raw'] ?? null;
             $this->first = $attributes['first'] ?? null;
             $this->nullable = $this->convertBoolType($attributes, 'nullable');
             $this->storedAs = $attributes['storedAs'] ?? null;
@@ -90,7 +88,7 @@ class Column
      */
     public function existsDefaultRaw(): bool
     {
-        return $this->defaultRaw !== null;
+        return isset($this->default['raw']);
     }
 
     /**
@@ -152,11 +150,7 @@ class Column
         }
 
         if ($this->default !== null) {
-            $str .= '->default(' . var_export($this->default, true) . ')';
-        }
-
-        if ($this->defaultRaw !== null) {
-            $str .= "->default(DB::raw('$this->defaultRaw'))";
+            $str .= sprintf('->default(%s)', isset($this->default['raw']) ? Literal::raw($this->default['raw']) : Literal::of($this->default));
         }
 
         if ($this->nullable !== null) {

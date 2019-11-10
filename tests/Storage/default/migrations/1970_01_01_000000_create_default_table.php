@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDefaultRawTable extends Migration
+class CreateDefaultTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateDefaultRawTable extends Migration
      */
     public function up()
     {
-        Schema::create('default_raw', function (Blueprint $table) {
+        Schema::create('default', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->default('');
             $table->integer('price')->default(0);
@@ -31,6 +31,6 @@ class CreateDefaultRawTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('default_raw');
+        Schema::dropIfExists('default');
     }
 }

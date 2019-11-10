@@ -1,4 +1,4 @@
-default_raw:
+default:
   columns:
     id:
       type: bigIncrements
@@ -13,7 +13,9 @@ default_raw:
       default: false
     created_at:
       type: timestamp
-      default_raw: CURRENT_TIMESTAMP
+      default:
+        raw: CURRENT_TIMESTAMP
     updated_at:
       type: timestamp
-      default_raw: CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP
+      default:
+        raw: CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP
