@@ -1,0 +1,19 @@
+default_raw:
+  columns:
+    id:
+      type: bigIncrements
+    name:
+      type: string
+      default: ''
+    price:
+      type: integer
+      default: 0
+    is_activate:
+      type: boolean
+      default: false
+    created_at:
+      type: timestamp
+      default_raw: CURRENT_TIMESTAMP
+    updated_at:
+      type: timestamp
+      default_raw: CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP

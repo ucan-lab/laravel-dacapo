@@ -16,6 +16,7 @@ class Column
     private $collation;
     private $comment;
     private $default;
+    private $defaultRaw;
     private $first;
     private $nullable;
     private $storedAs;
@@ -68,6 +69,7 @@ class Column
             $this->collation = $attributes['collation'] ?? null;
             $this->comment = $attributes['comment'] ?? null;
             $this->default = $attributes['default'] ?? null;
+            $this->defaultRaw = $attributes['default_raw'] ?? null;
             $this->first = $attributes['first'] ?? null;
             $this->nullable = $this->convertBoolType($attributes, 'nullable');
             $this->storedAs = $attributes['storedAs'] ?? null;
@@ -81,6 +83,14 @@ class Column
             $this->index = $attributes['index'] ?? null;
             $this->spatialIndex = $attributes['spatialIndex'] ?? null;
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function existsDefaultRaw(): bool
+    {
+        return $this->defaultRaw !== null;
     }
 
     /**
@@ -141,8 +151,16 @@ class Column
             $str .= "->comment('$this->comment')";
         }
 
-        if ($this->default) {
-            $str .= "->default('$this->default')";
+        if ($this->default !== null) {
+            if (is_string($this->default)) {
+                $str .= "->default('$this->default')";
+            } else {
+                $str .= '->default(' . var_export($this->default, true) . ')';
+            }
+        }
+
+        if ($this->defaultRaw !== null) {
+            $str .= "->default(DB::raw('$this->defaultRaw'))";
         }
 
         if ($this->nullable !== null) {

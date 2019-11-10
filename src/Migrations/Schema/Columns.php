@@ -39,4 +39,18 @@ class Columns implements IteratorAggregate
     {
         return new ArrayIterator($this->attributes);
     }
+
+    /**
+     * @return bool
+     */
+    public function hasDefaultRaw(): bool
+    {
+        foreach ($this as $column) {
+            if ($column->existsDefaultRaw()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
