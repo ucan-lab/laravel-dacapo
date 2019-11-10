@@ -36,7 +36,7 @@ Reference example of schema yml and output example of migration file: [Example s
 
 Contents of `database/schemas/default.yml`
 
-```
+```yaml
 users:
   columns:
     id: bigIncrements

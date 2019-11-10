@@ -142,7 +142,7 @@ class Column
         }
 
         if ($this->default) {
-            $str .= "->comment('$this->default')";
+            $str .= "->default('$this->default')";
         }
 
         if ($this->nullable !== null) {
