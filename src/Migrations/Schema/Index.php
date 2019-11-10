@@ -2,8 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Migrations\Schema;
 
-use Exception;
-
 class Index
 {
     private $tableName;
@@ -49,20 +47,7 @@ class Index
      */
     private function makeIndex(): string
     {
-        if ($this->alias) {
-            return sprintf(
-                "->%s(%s, '%s')",
-                $this->type,
-                $this->makeColumns(),
-                $this->alias
-            );
-        }
-
-        return sprintf(
-            '->%s(%s)',
-            $this->type,
-            $this->makeColumns()
-        );
+        return Method::call($this->type, $this->columns, ...$this->alias ? [$this->alias] : []);
     }
 
     /**
@@ -71,47 +56,6 @@ class Index
      */
     private function makeDropIndex(): string
     {
-        if ($this->alias) {
-            return sprintf(
-                "->drop%s('%s')",
-                ucfirst($this->type),
-                $this->alias
-            );
-        }
-
-        return sprintf(
-            "->drop%s('%s')",
-            ucfirst($this->type),
-            $this->makeIndexName()
-        );
-    }
-
-    /**
-     * @return string
-     * @throws
-     */
-    private function makeColumns(): string
-    {
-        if (is_string($this->columns)) {
-            return "'$this->columns'";
-        } elseif (is_array($this->columns)) {
-            return "['" . implode("', '", $this->columns) . "']";
-        }
-
-        throw new Exception('Error index of columns.');
-    }
-
-    /**
-     * @return string
-     * @throws
-     */
-    private function makeIndexName(): string
-    {
-        return sprintf(
-            '%s_%s_%s',
-            $this->tableName,
-            is_array($this->columns) ? implode('_', $this->columns) : $this->columns,
-            $this->type
-        );
+        return Method::call('drop' . ucfirst($this->type), ...[$this->alias ?: (array)$this->columns]);
     }
 }
