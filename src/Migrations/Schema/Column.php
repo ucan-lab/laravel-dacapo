@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Migrations\Schema;
 
 class Column
 {
-    const RESERVED_COLUMN_TYPE = '__reserved_column_type';
+    private const RESERVED_COLUMN_TYPE = '__reserved_column_type';
 
     private $name;
     private $type;
