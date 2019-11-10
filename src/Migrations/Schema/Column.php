@@ -44,19 +44,19 @@ class Column
         } elseif ($name === 'softDeletes') {
             $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'softDeletes';
-            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
+            $this->args = $attributes['args'] ?? $attributes;
         } elseif ($name === 'softDeletesTz') {
             $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'softDeletesTz';
-            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
+            $this->args = $attributes['args'] ?? $attributes;
         } elseif ($name === 'timestamps') {
             $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'timestamps';
-            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
+            $this->args = $attributes['args'] ?? $attributes;
         } elseif ($name === 'timestampsTz') {
             $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'timestampsTz';
-            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
+            $this->args = $attributes['args'] ?? $attributes;
         } elseif (is_string($attributes)) {
             $this->type = $attributes;
         } elseif (is_array($attributes)) {
