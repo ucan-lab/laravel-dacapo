@@ -84,6 +84,14 @@ class Column
     }
 
     /**
+     * @return bool
+     */
+    public function existsDefaultRaw(): bool
+    {
+        return isset($this->default['raw']);
+    }
+
+    /**
      * @return string
      */
     public function getColumnLine(): string
@@ -141,8 +149,8 @@ class Column
             $str .= "->comment('$this->comment')";
         }
 
-        if ($this->default) {
-            $str .= "->default('$this->default')";
+        if ($this->default !== null) {
+            $str .= sprintf('->default(%s)', isset($this->default['raw']) ? Literal::raw($this->default['raw']) : Literal::of($this->default));
         }
 
         if ($this->nullable !== null) {

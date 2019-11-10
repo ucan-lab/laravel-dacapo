@@ -59,10 +59,8 @@ class Table
     public function getCreateTableMigrationNamespace(): string
     {
         $namespace = '';
-        if ($this->comment) {
-            if (in_array(config('database.default'), ['mysql', 'pgsql'], true)) {
-                $namespace = 'use Illuminate\Support\Facades\DB;' . PHP_EOL;
-            }
+        if ($this->comment || $this->columns->hasDefaultRaw()) {
+            $namespace = 'use Illuminate\Support\Facades\DB;' . PHP_EOL;
         }
 
         $namespace .= 'use Illuminate\Support\Facades\Schema;';
