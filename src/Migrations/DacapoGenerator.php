@@ -32,8 +32,8 @@ class DacapoGenerator
 
         foreach ($tables as $table) {
             (new GenerateCreateTableMigration($table, $this->migrationsStorage))->run();
-            (new GenerateCreateIndexMigration($table, $this->migrationsStorage))->run();
             (new GenerateConstraintRelationMigration($table, $this->migrationsStorage))->run();
+            (new GenerateCreateIndexMigration($table, $this->migrationsStorage))->run();
         }
     }
 }

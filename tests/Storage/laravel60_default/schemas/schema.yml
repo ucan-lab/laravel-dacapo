@@ -9,8 +9,8 @@ users:
       type: timestamp
       nullable: true
     password: string
-    rememberToken: true
-    timestamps: true
+    rememberToken:
+    timestamps:
 
 password_resets:
   columns:

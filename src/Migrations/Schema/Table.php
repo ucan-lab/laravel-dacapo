@@ -7,8 +7,8 @@ use Illuminate\Support\Str;
 class Table
 {
     const PREFIX_CREATE_TABLE = 0;
-    const PREFIX_CREATE_INDEX = 1;
-    const PREFIX_CONSTRAINT_RELATION = 2;
+    const PREFIX_CONSTRAINT_RELATION = 1;
+    const PREFIX_CREATE_INDEX = 2;
 
     private $name;
     private $attributes;
@@ -59,10 +59,8 @@ class Table
     public function getCreateTableMigrationNamespace(): string
     {
         $namespace = '';
-        if ($this->comment) {
-            if (in_array(config('database.default'), ['mysql', 'pgsql'], true)) {
-                $namespace = 'use Illuminate\Support\Facades\DB;' . PHP_EOL;
-            }
+        if ($this->comment || $this->columns->hasDefaultRaw()) {
+            $namespace = 'use Illuminate\Support\Facades\DB;' . PHP_EOL;
         }
 
         $namespace .= 'use Illuminate\Support\Facades\Schema;';

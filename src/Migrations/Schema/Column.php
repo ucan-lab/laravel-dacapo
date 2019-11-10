@@ -4,8 +4,11 @@ namespace UcanLab\LaravelDacapo\Migrations\Schema;
 
 class Column
 {
+    const RESERVED_COLUMN_TYPE = '__reserved_column_type';
+
     private $name;
     private $type;
+    private $args;
     // column modifiers
     private $after;
     private $autoIncrement;
@@ -36,24 +39,29 @@ class Column
         $this->name = $name;
 
         if ($name === 'rememberToken') {
-            $this->name = null;
+            $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'rememberToken';
         } elseif ($name === 'softDeletes') {
-            $this->name = null;
+            $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'softDeletes';
+            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
         } elseif ($name === 'softDeletesTz') {
-            $this->name = null;
+            $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'softDeletesTz';
+            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
         } elseif ($name === 'timestamps') {
-            $this->name = is_int($attributes) ? $attributes : null;
+            $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'timestamps';
+            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
         } elseif ($name === 'timestampsTz') {
-            $this->name = is_int($attributes) ? $attributes : null;
+            $this->name = self::RESERVED_COLUMN_TYPE;
             $this->type = 'timestampsTz';
+            $this->args = isset($attributes['args']) ? $attributes['args'] : $attributes;
         } elseif (is_string($attributes)) {
             $this->type = $attributes;
         } elseif (is_array($attributes)) {
             $this->type = $attributes['type'];
+            $this->args = $attributes['args'] ?? null;
             $this->after = $attributes['after'] ?? null;
             $this->autoIncrement = $attributes['autoIncrement'] ?? null;
             $this->charset = $attributes['charset'] ?? null;
@@ -76,6 +84,14 @@ class Column
     }
 
     /**
+     * @return bool
+     */
+    public function existsDefaultRaw(): bool
+    {
+        return isset($this->default['raw']);
+    }
+
+    /**
      * @return string
      */
     public function getColumnLine(): string
@@ -92,30 +108,21 @@ class Column
      */
     protected function getColumnType(): string
     {
-        if ($this->type === 'rememberToken') {
-            return '->rememberToken()';
-        } elseif ($this->type === 'softDeletes') {
-            return '->softDeletes()';
-        } elseif ($this->type === 'softDeletesTz') {
-            return '->softDeletesTz()';
-        } elseif ($this->type === 'timestamps') {
-            return '->timestamps(' . ($this->name ?: '') . ')';
-        } elseif ($this->type === 'timestampsTz') {
-            return '->timestampsTz(' . ($this->name ?: '') . ')';
+        if ($this->name === self::RESERVED_COLUMN_TYPE) {
+            if (is_null($this->args)) {
+                return sprintf('->%s()', $this->type);
+            }
+
+            return sprintf('->%s(%s)', $this->type, $this->convertArgs());
+        } elseif ($this->type === 'enum') {
+            return sprintf("->%s('%s', [%s])", $this->type, $this->name, $this->convertArgsToArray());
+        } elseif ($this->type === 'set') {
+            return sprintf("->%s('%s', [%s])", $this->type, $this->name, $this->convertArgsToArray());
+        } elseif (is_null($this->args)) {
+            return sprintf("->%s('%s')", $this->type, $this->name);
+        } else {
+            return sprintf("->%s('%s'%s)", $this->type, $this->name, $this->convertArgs(true));
         }
-
-        preg_match('/\((.*)\)/', $this->type, $match);
-        $digits = isset($match[1]) ? $match[1] : 0;
-
-        $columnName = "'$this->name'";
-
-        if ($digits) {
-            $columnName .= ', ' . $digits;
-        }
-
-        $type = substr($this->type, 0, strcspn($this->type, '('));
-
-        return '->' . $type . "($columnName)";
     }
 
     /**
@@ -142,8 +149,8 @@ class Column
             $str .= "->comment('$this->comment')";
         }
 
-        if ($this->default) {
-            $str .= "->default('$this->default')";
+        if ($this->default !== null) {
+            $str .= sprintf('->default(%s)', isset($this->default['raw']) ? Literal::raw($this->default['raw']) : Literal::of($this->default));
         }
 
         if ($this->nullable !== null) {
@@ -219,5 +226,42 @@ class Column
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    private function convertArgsToArray(): string
+    {
+        $str = '';
+        foreach ($this->args as $arg) {
+            $str .= ', ' . var_export($arg, true);
+        }
+
+        return ltrim($str, ', ');
+    }
+
+    /**
+     * @param bool $prefix
+     * @return string
+     */
+    private function convertArgs(bool $prefix = false): string
+    {
+        $str = '';
+        if (is_null($this->args)) {
+            return '';
+        } elseif (is_array($this->args)) {
+            foreach ($this->args as $arg) {
+                $str .= ', ' . var_export($arg, true);
+            }
+        } else {
+            $str = ', ' . var_export($this->args, true);
+        }
+
+        if (! $prefix) {
+            return ltrim($str, ', ');
+        }
+
+        return $str;
     }
 }
