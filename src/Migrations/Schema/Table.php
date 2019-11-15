@@ -6,9 +6,9 @@ use Illuminate\Support\Str;
 
 class Table
 {
-    const PREFIX_CREATE_TABLE = 0;
-    const PREFIX_CONSTRAINT_RELATION = 1;
-    const PREFIX_CREATE_INDEX = 2;
+    const PREFIX_CREATE_TABLE = '1970_01_01_000000'; // unix time 0
+    const PREFIX_CONSTRAINT_RELATION = '1970_01_01_000001';
+    const PREFIX_CREATE_INDEX = '1970_01_01_000002';
 
     private $name;
     private $attributes;
@@ -100,7 +100,7 @@ class Table
      */
     public function getCreateTableMigrationFileName(): string
     {
-        return $this->getDatePrefix() . '_create_' . $this->name . '_table.php';
+        return self::PREFIX_CREATE_TABLE . '_create_' . $this->name . '_table.php';
     }
 
     /**
@@ -116,7 +116,7 @@ class Table
      */
     public function getCreateIndexMigrationFileName(): string
     {
-        return $this->getDatePrefix(self::PREFIX_CREATE_INDEX) . '_create_' . $this->name . '_index.php';
+        return self::PREFIX_CREATE_INDEX . '_create_' . $this->name . '_index.php';
     }
 
     /**
@@ -132,7 +132,7 @@ class Table
      */
     public function getConstraintRelationMigrationFileName(): string
     {
-        return $this->getDatePrefix(self::PREFIX_CONSTRAINT_RELATION) . '_constraint_' . $this->name . '_relation.php';
+        return self::PREFIX_CONSTRAINT_RELATION . '_constraint_' . $this->name . '_relation.php';
     }
 
     /**
@@ -232,16 +232,5 @@ class Table
     public function existsRelations(): bool
     {
         return $this->relations->count() > 0;
-    }
-
-    /**
-     * Get the date prefix for the migration.
-     *
-     * @param int $time
-     * @return string
-     */
-    protected function getDatePrefix(int $time = self::PREFIX_CREATE_TABLE): string
-    {
-        return date('Y_m_d_His', $time);
     }
 }
