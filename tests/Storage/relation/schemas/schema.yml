@@ -13,6 +13,8 @@ tasks:
     - foreign: user_id
       references: id
       on: users
+      onUpdate: cascade
+      onDelete: cascade
   columns:
     id: bigIncrements
     user_id: unsignedBigInteger

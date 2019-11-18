@@ -66,7 +66,9 @@ class Relation
 
         if ($this->onUpdate) {
             $str .= Method::call('onUpdate', $this->onUpdate);
-        } elseif ($this->onDelete) {
+        }
+
+        if ($this->onDelete) {
             $str .= Method::call('onDelete', $this->onDelete);
         }
 
