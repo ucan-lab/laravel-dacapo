@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsers1Index extends Migration
+class CreateUsers1Table extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateUsers1Index extends Migration
      */
     public function up()
     {
-        Schema::table('users1', function (Blueprint $table) {
-            $table->index('name');
+        Schema::create('users1', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('email');
         });
     }
 
@@ -25,8 +27,6 @@ class CreateUsers1Index extends Migration
      */
     public function down()
     {
-        Schema::table('users1', function (Blueprint $table) {
-            $table->dropIndex(['name']);
-        });
+        Schema::dropIfExists('users1');
     }
 }

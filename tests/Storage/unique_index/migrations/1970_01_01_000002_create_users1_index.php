@@ -14,7 +14,7 @@ class CreateUsers1Index extends Migration
     public function up()
     {
         Schema::table('users1', function (Blueprint $table) {
-            $table->index('name');
+            $table->unique('name');
         });
     }
 
@@ -26,7 +26,7 @@ class CreateUsers1Index extends Migration
     public function down()
     {
         Schema::table('users1', function (Blueprint $table) {
-            $table->dropIndex(['name']);
+            $table->dropUnique(['name']);
         });
     }
 }
