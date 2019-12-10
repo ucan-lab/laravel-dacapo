@@ -37,6 +37,8 @@ class GenerateCreateTableMigration
         $stub = str_replace('DummyTableName', $this->table->getTableName(), $stub);
         $stub = str_replace('DummyTableComment', $this->table->getTableComment(), $stub);
         $stub = str_replace('DummyColumn', $this->table->getColumnList(), $stub);
+        $stub = str_replace('DummyCreateTableMigration', $this->table->getCreateTableMigration(), $stub);
+        $stub = str_replace('DummyDropTableMigration', $this->table->getDropTableMigration(), $stub);
 
         return $stub;
     }

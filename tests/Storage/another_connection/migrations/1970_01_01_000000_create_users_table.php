@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DummyClass extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class DummyClass extends Migration
      */
     public function up()
     {
-        DummyTableMigration('DummyTableName', function (Blueprint $table) {
-            DummyTableUpColumn
+        Schema::connection('custom-connection')->create('users', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
         });
     }
 
@@ -25,8 +26,6 @@ class DummyClass extends Migration
      */
     public function down()
     {
-        DummyTableMigration('DummyTableName', function (Blueprint $table) {
-            DummyTableDownColumn
-        });
+        Schema::connection('custom-connection')->dropIfExists('users');
     }
 }

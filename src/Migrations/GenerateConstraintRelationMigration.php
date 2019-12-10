@@ -38,6 +38,7 @@ class GenerateConstraintRelationMigration
         $stub = str_replace('DummyTableName', $this->table->getTableName(), $stub);
         $stub = str_replace('DummyTableUpColumn', $this->table->getUpForeignKeyList(), $stub);
         $stub = str_replace('DummyTableDownColumn', $this->table->getDownForeignKeyList(), $stub);
+        $stub = str_replace('DummyTableMigration', $this->table->getTableMigration(), $stub);
 
         return $stub;
     }
