@@ -12,6 +12,7 @@ class Table
 
     private $name;
     private $attributes;
+    private $connection;
     private $comment;
     private $engine;
     private $charset;
@@ -28,6 +29,7 @@ class Table
     {
         $this->name = $name;
         $this->attributes = $attributes;
+        $this->connection = $attributes['connection'] ?? '';
         $this->comment = $attributes['comment'] ?? '';
         $this->engine = $attributes['engine'] ?? '';
         $this->charset = $attributes['charset'] ?? '';
@@ -148,6 +150,39 @@ class Table
         $spacer = PHP_EOL . '            ';
 
         return implode($spacer, $list);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreateTableMigration(): string
+    {
+        if ($this->connection) {
+            return sprintf("Schema::connection('%s')->create", $this->connection);
+        }
+
+        return 'Schema::create';
+    }
+
+    /**
+     * @return string
+     */
+    public function getDropTableMigration(): string
+    {
+        if ($this->connection) {
+            return sprintf("Schema::connection('%s')->dropIfExists", $this->connection);
+        }
+
+        return 'Schema::dropIfExists';
+    }
+
+    public function getTableMigration(): string
+    {
+        if ($this->connection) {
+            return sprintf("Schema::connection('%s')->table", $this->connection);
+        }
+
+        return 'Schema::table';
     }
 
     /**

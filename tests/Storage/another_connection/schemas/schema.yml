@@ -1,0 +1,22 @@
+users:
+  connection: custom-connection
+  columns:
+    id: bigIncrements
+    name: string
+
+tasks:
+  connection: custom-connection
+  indexes:
+    user_id_index:
+      columns: user_id
+      type: unique
+  relations:
+    - foreign: user_id
+      references: id
+      on: users
+      onUpdate: cascade
+      onDelete: cascade
+  columns:
+    id: bigIncrements
+    user_id: unsignedBigInteger
+    content: string

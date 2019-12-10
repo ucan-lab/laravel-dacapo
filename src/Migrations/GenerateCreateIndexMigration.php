@@ -38,6 +38,7 @@ class GenerateCreateIndexMigration
         $stub = str_replace('DummyTableName', $this->table->getTableName(), $stub);
         $stub = str_replace('DummyTableUpColumn', $this->table->getUpIndexList(), $stub);
         $stub = str_replace('DummyTableDownColumn', $this->table->getDownIndexList(), $stub);
+        $stub = str_replace('DummyTableMigration', $this->table->getTableMigration(), $stub);
 
         return $stub;
     }
