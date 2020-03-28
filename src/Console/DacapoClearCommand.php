@@ -3,8 +3,8 @@
 namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Illuminate\Console\ConfirmableTrait;
-use UcanLab\LaravelDacapo\Storage\MigrationsStorage;
 
 /**
  * Class DacapoClearCommand.
@@ -50,11 +50,28 @@ class DacapoClearCommand extends Command
      *
      * @return void
      */
-    private function clearMigrationDirectory(): void
+    protected function clearMigrationDirectory(): void
     {
-        $storage = new MigrationsStorage();
-        $storage->deleteDirectory();
-        $storage->makeDirectory();
+        foreach ($this->getMigrationsFiles() as $filePath) {
+            unlink($filePath);
+        }
+
         $this->info('Cleared migration directory.');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getMigrationsFiles(): array
+    {
+        $files = [];
+
+        foreach (File::allFiles(database_path('migrations')) as $file) {
+            if ($file->getExtension() === 'php') {
+                $files[] = $file->getRealPath();
+            }
+        }
+
+        return $files;
     }
 }
