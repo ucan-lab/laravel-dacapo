@@ -3,12 +3,12 @@
 namespace UcanLab\LaravelDacapo\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
 use UcanLab\LaravelDacapo\Console\DacapoCommand;
-use UcanLab\LaravelDacapo\Console\DacapoFreshCommand;
 use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
-use UcanLab\LaravelDacapo\Console\DacapoModelsCommand;
 use UcanLab\LaravelDacapo\Console\DacapoSeedCommand;
+use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
+use UcanLab\LaravelDacapo\Console\DacapoFreshCommand;
+use UcanLab\LaravelDacapo\Console\DacapoModelsCommand;
 use UcanLab\LaravelDacapo\Console\DacapoUninstallCommand;
 
 /**

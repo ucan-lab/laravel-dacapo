@@ -43,6 +43,7 @@ class DacapoCommand extends Command
 
         if ($this->option('no-migrate')) {
             $this->info('No migrate.');
+
             return;
         }
 
