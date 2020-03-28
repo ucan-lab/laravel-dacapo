@@ -1,0 +1,24 @@
+users:
+  columns:
+    id: id
+    name: string
+    email:
+      type: string
+      unique: true
+    email_verified_at:
+      type: timestamp
+      nullable: true
+    password: string
+    rememberToken:
+    timestamps:
+
+failed_jobs:
+  columns:
+    id: id
+    connection: text
+    queue: text
+    payload: longText
+    exception: longText
+    failed_at:
+      type: timestamp
+      useCurrent: true

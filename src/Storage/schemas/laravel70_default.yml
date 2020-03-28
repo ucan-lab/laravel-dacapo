@@ -1,0 +1,24 @@
+users:
+  columns:
+    id: bigIncrements
+    name: string
+    email:
+      type: string
+      unique: true
+    email_verified_at:
+      type: timestamp
+      nullable: true
+    password: string
+    rememberToken: true
+    timestamps: true
+
+failed_jobs:
+  columns:
+    id: bigIncrements
+    connection: text
+    queue: text
+    payload: longText
+    exception: longText
+    failed_at:
+      type: timestamp
+      useCurrent: true
