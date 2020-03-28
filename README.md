@@ -31,7 +31,7 @@ $ php artisan dacapo:init
 ```
 
 `database/schemas/default.yml`
-By default, a schema file for Laravel6.0 is generated.  
+By default, a schema file for Laravel7 is generated.  
 Reference example of schema yml and output example of migration file: [Example schema.yml](/tests/Storage)
 
 Contents of `database/schemas/default.yml`
@@ -39,7 +39,7 @@ Contents of `database/schemas/default.yml`
 ```yaml
 users:
   columns:
-    id: bigIncrements
+    id: id
     name: string
     email:
       type: string
@@ -51,19 +51,9 @@ users:
     rememberToken: true
     timestamps: true
 
-password_resets:
-  columns:
-    email:
-      type: string
-      index: true
-    token: string
-    created_at:
-      type: timestamp
-      nullable: true
-
 failed_jobs:
   columns:
-    id: bigIncrements
+    id: id
     connection: text
     queue: text
     payload: longText
@@ -73,39 +63,12 @@ failed_jobs:
       useCurrent: true
 ```
 
-Excecute `php artisan dacapo:generate`, 3 files are generated.
+Excecute `php artisan dacapo`, 3 files are generated and migrate fresh.
 
-- [database/migrations/1970_01_01_000000_create_users_table.php](tests/Storage/laravel60_default/migrations/1970_01_01_000000_create_users_table.php)
-- [database/migrations/1970_01_01_000000_create_password_resets_table.php](tests/Storage/laravel60_default/migrations/1970_01_01_000000_create_password_resets_table.php)
-- [database/migrations/1970_01_01_000000_create_failed_jobs_table.php](tests/Storage/laravel60_default/migrations/1970_01_01_000000_create_failed_jobs_table.php)
-
-Excecute `php artisan migrate:fresh`, Repeat this during development.
+- [database/migrations/1970_01_01_000000_create_users_table.php](tests/Storage/laravel70_default/migrations/1970_01_01_000000_create_users_table.php)
+- [database/migrations/1970_01_01_000000_create_failed_jobs_table.php](tests/Storage/laravel70_default/migrations/1970_01_01_000000_create_failed_jobs_table.php)
 
 ## Tips
-
-### Dacapo fresh option
-
-```
-$ php artisan dacapo:generate --fresh
-```
-
-It is synonymous with the following command.
-
-```
-$ php artisan dacapo:generate && php artisan migrate:fresh
-```
-
-### Dacapo seed option
-
-```
-$ php artisan dacapo:generate --seed
-```
-
-It is synonymous with the following command.
-
-```
-$ php artisan dacapo:generate && php artisan migrate:fresh && php artisan db:seed
-```
 
 ### Generate Laravel 5.0 〜 5.6 schema.yml
 
@@ -125,11 +88,15 @@ $ php artisan dacapo:init --laravel57
 - [database/migrations/1970_01_01_000000_create_users_table.php](tests/Storage/laravel57_default/migrations/1970_01_01_000000_create_users_table.php)
 - [database/migrations/1970_01_01_000000_create_password_resets_table.php](tests/Storage/laravel57_default/migrations/1970_01_01_000000_create_password_resets_table.php)
 
-### Generate migration files from schema.yml
+### Generate Laravel 6.x schema.yml
 
 ```
-$ php artisan dacapo:generate
+$ php artisan dacapo:init --laravel57
 ```
+
+- [database/migrations/1970_01_01_000000_create_users_table.php](tests/Storage/laravel60_default/migrations/1970_01_01_000000_create_users_table.php)
+- [database/migrations/1970_01_01_000000_create_password_resets_table.php](tests/Storage/laravel60_default/migrations/1970_01_01_000000_create_password_resets_table.php)
+- [database/migrations/1970_01_01_000000_create_failed_jobs_table.php](tests/Storage/laravel60_default/migrations/1970_01_01_000000_create_failed_jobs_table.php)
 
 ### Generate template models from schema.yml
 
