@@ -3,10 +3,12 @@
 namespace UcanLab\LaravelDacapo\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
 use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
+use UcanLab\LaravelDacapo\Console\DacapoCommand;
+use UcanLab\LaravelDacapo\Console\DacapoFreshCommand;
+use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
 use UcanLab\LaravelDacapo\Console\DacapoModelsCommand;
-use UcanLab\LaravelDacapo\Console\DacapoGenerateCommand;
+use UcanLab\LaravelDacapo\Console\DacapoSeedCommand;
 use UcanLab\LaravelDacapo\Console\DacapoUninstallCommand;
 
 /**
@@ -17,7 +19,7 @@ class ConsoleServiceProvider extends ServiceProvider
     /** @var bool */
     protected $defer = true;
 
-    public function boot()
+    public function boot(): void
     {
         $this->registerCommands();
     }
@@ -25,7 +27,7 @@ class ConsoleServiceProvider extends ServiceProvider
     /**
      * {@inheritdoc}
      */
-    public function register()
+    public function register(): void
     {
         // register bindings
     }
@@ -33,14 +35,22 @@ class ConsoleServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    protected function registerCommands()
+    protected function registerCommands(): void
     {
         $this->app->singleton('command.ucan.dacapo.init', function () {
             return new DacapoInitCommand();
         });
 
-        $this->app->singleton('command.ucan.dacapo.generate', function () {
-            return new DacapoGenerateCommand();
+        $this->app->singleton('command.ucan.dacapo', function () {
+            return new DacapoCommand();
+        });
+
+        $this->app->singleton('command.ucan.dacapo.fresh', function () {
+            return new DacapoFreshCommand();
+        });
+
+        $this->app->singleton('command.ucan.dacapo.seed', function () {
+            return new DacapoSeedCommand();
         });
 
         $this->app->singleton('command.ucan.dacapo.models', function () {
@@ -55,23 +65,19 @@ class ConsoleServiceProvider extends ServiceProvider
             return new DacapoUninstallCommand();
         });
 
-        $this->commands([
-            'command.ucan.dacapo.init',
-            'command.ucan.dacapo.generate',
-            'command.ucan.dacapo.models',
-            'command.ucan.dacapo.clear',
-            'command.ucan.dacapo.uninstall',
-        ]);
+        $this->commands($this->provides());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function provides()
+    public function provides(): array
     {
         return [
             'command.ucan.dacapo.init',
-            'command.ucan.dacapo.generate',
+            'command.ucan.dacapo',
+            'command.ucan.dacapo.fresh',
+            'command.ucan.dacapo.seed',
             'command.ucan.dacapo.models',
             'command.ucan.dacapo.clear',
             'command.ucan.dacapo.uninstall',
