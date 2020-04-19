@@ -18,7 +18,7 @@ class Relation
     {
         $this->name = $attributes['name'] ?? null;
         $this->foreign = $attributes['foreign'];
-        $this->references = $attributes['references'];
+        $this->references = $attributes['references'] ?? 'id';
         $this->on = $attributes['on'];
         $this->onUpdate = $attributes['onUpdate'] ?? null;
         $this->onDelete = $attributes['onDelete'] ?? null;
