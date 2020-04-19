@@ -61,7 +61,7 @@ class Column
             $this->type = $attributes;
         } elseif (is_array($attributes)) {
             $this->type = $attributes['type'];
-            $this->args = $attributes['args'] ?? null;
+            $this->args = $attributes['args'] ?? ($attributes['length'] ?? null);
             $this->after = $attributes['after'] ?? null;
             $this->autoIncrement = $attributes['autoIncrement'] ?? null;
             $this->charset = $attributes['charset'] ?? null;
