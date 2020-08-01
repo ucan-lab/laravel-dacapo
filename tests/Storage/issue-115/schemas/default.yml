@@ -1,0 +1,27 @@
+users:
+  indexes:
+    email_index:
+      columns: name
+      type: index
+  columns:
+    id: bigIncrements
+    name:
+      type: string
+    email:
+      type: string
+
+notice_settings:
+  columns:
+    id: id
+    user_id: unsignedBigInteger
+    is_notice: boolean
+    timestamps: true
+  indexes:
+    user_id_unique_index:
+      columns:
+        - user_id
+      type: unique
+  relations:
+    - foreign: user_id
+      references: id
+      on: users
