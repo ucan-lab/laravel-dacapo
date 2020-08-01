@@ -7,8 +7,8 @@ use Illuminate\Support\Str;
 class Table
 {
     const PREFIX_CREATE_TABLE = '1970_01_01_000000'; // unix time 0
-    const PREFIX_CONSTRAINT_RELATION = '1970_01_01_000001';
-    const PREFIX_CREATE_INDEX = '1970_01_01_000002';
+    const PREFIX_CREATE_INDEX = '1970_01_01_000001';
+    const PREFIX_CONSTRAINT_RELATION = '1970_01_01_000002';
 
     private $name;
     private $attributes;
