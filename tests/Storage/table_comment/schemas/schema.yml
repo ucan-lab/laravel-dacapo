@@ -1,5 +1,0 @@
-posts:
-  comment: post table
-  columns:
-    id: bigIncrements
-    content: string
