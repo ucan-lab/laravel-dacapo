@@ -2,49 +2,51 @@
 
 namespace UcanLab\LaravelDacapo\Providers;
 
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
+use UcanLab\LaravelDacapo\App\Port\MigrationsStorage;
 use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
+use UcanLab\LaravelDacapo\Infra\Adapter\LocalMigrationsStorage;
 
 /**
  * Class ConsoleServiceProvider.
  */
-class ConsoleServiceProvider extends ServiceProvider
+class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /** @var bool */
-    protected $defer = true;
+    public array $bindings = [
+        MigrationsStorage::class => LocalMigrationsStorage::class,
+    ];
 
-    public function boot(): void
-    {
-        $this->registerCommands();
-    }
+    protected array $commands = [
+        DacapoClearCommand::class,
+    ];
 
     /**
      * {@inheritdoc}
      */
     public function register(): void
     {
-        // register bindings
-    }
-
-    /**
-     * @return void
-     */
-    protected function registerCommands(): void
-    {
-        $this->app->singleton('command.ucan.dacapo.init', function () {
-            return new DacapoClearCommand();
-        });
-
-        $this->commands($this->provides());
+        $this->registerBindings();
+        $this->registerCommands();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function provides(): array
+    public function provides()
     {
-        return [
-            'command.ucan.dacapo.init',
-        ];
+        return $this->commands;
+    }
+
+    protected function registerBindings(): void
+    {
+        foreach ($this->bindings as $abstract => $concrete) {
+            $this->app->bind($abstract, $concrete);
+        }
+    }
+
+    protected function registerCommands(): void
+    {
+        $this->commands($this->commands);
     }
 }
