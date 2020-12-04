@@ -1,0 +1,43 @@
+tables:
+  - name: users
+    comment: users table
+    columns:
+      - type: id
+      - name: name
+        type: string
+        unique: true
+      - name: email_verified_at
+        nullable: true
+      - name: password
+        type: string
+      - type: rememberToken
+      - type: timestamps
+
+  - name: password_resets
+    columns:
+      - name: email
+        type: string
+        index: true
+      - name: token
+        type: string
+      - name: created_at
+        type: timestamp
+        nullable: true
+
+  - name: failed_jobs
+    columns:
+      - type: id
+      - name: uuid
+        type: string
+        unique: true
+      - name: connection
+        type: text
+      - name: queue
+        type: text
+      - name: payload
+        type: longText
+      - name: exception
+        type: longText
+      - name: failed_at
+        type: timestamp
+        useCurrent: true

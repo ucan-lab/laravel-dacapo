@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use UcanLab\LaravelDacapo\App\Port\MigrationsStorage;
 use UcanLab\LaravelDacapo\App\Port\SchemasStorage;
 use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
+use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
 use UcanLab\LaravelDacapo\Console\DacapoUninstallCommand;
 use UcanLab\LaravelDacapo\Infra\Adapter\LocalMigrationsStorage;
 use UcanLab\LaravelDacapo\Infra\Adapter\LocalSchemasStorage;
@@ -22,6 +23,7 @@ class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvid
     ];
 
     protected array $commands = [
+        DacapoInitCommand::class,
         DacapoClearCommand::class,
         DacapoUninstallCommand::class,
     ];

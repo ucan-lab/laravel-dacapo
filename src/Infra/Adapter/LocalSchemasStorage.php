@@ -10,6 +10,20 @@ class LocalSchemasStorage implements SchemasStorage
     /**
      * @return bool
      */
+    public function makeDirectory(): bool
+    {
+        $path = $this->getPath();
+
+        if ($this->exists($path) === false) {
+            File::makeDirectory($path);
+        }
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
     public function deleteDirectory(): bool
     {
         $path = $this->getPath();
@@ -17,6 +31,20 @@ class LocalSchemasStorage implements SchemasStorage
         if ($this->exists($path)) {
             File::deleteDirectory($path);
         }
+
+        return true;
+    }
+
+    /**
+     * @param string $name
+     * @param string $content
+     * @return bool
+     */
+    public function saveFile(string $name, string $content): bool
+    {
+        $path = $this->getPath($name);
+
+        File::put($path, $content);
 
         return true;
     }
