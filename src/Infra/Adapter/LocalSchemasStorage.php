@@ -3,6 +3,7 @@
 namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
 use Illuminate\Support\Facades\File;
+use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\App\Port\SchemasStorage;
 
 class LocalSchemasStorage implements SchemasStorage
@@ -33,6 +34,33 @@ class LocalSchemasStorage implements SchemasStorage
         }
 
         return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFiles(): array
+    {
+        $files = File::files($this->getPath());
+
+        $fileNames = [];
+
+        foreach ($files as $file) {
+            $fileNames[] = $file->getFilename();
+        }
+
+        return $fileNames;
+    }
+
+    /**
+     * @param string $name
+     * @return array
+     */
+    public function getYamlContent(string $name): array
+    {
+        $path = $this->getPath($name);
+
+        return Yaml::parseFile($path);
     }
 
     /**
@@ -69,5 +97,16 @@ class LocalSchemasStorage implements SchemasStorage
         }
 
         return database_path('schemas');
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected function getContent(string $name): string
+    {
+        $path = $this->getPath($name);
+
+        return File::get($path);
     }
 }

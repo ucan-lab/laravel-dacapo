@@ -8,5 +8,9 @@ interface SchemasStorage
 
     public function deleteDirectory(): bool;
 
+    public function getFiles(): array;
+
+    public function getYamlContent(string $name): array;
+
     public function saveFile(string $name, string $content): bool;
 }

@@ -1,41 +1,34 @@
-tables:
-  - name: users
-    columns:
-      - name: id
-        type: increments
-      - name: name
-        type: string
-        unique: true
-      - name: email_verified_at
-        nullable: true
-      - name: password
-        type: string
-      - type: rememberToken
-      - type: timestamps
+users:
+  columns:
+    id: increments
+    name: string
+    email:
+      type: string
+      unique: true
+    email_verified_at:
+      type: timestamp
+      nullable: true
+    password: string
+    rememberToken: true
+    timestamps: true
 
-  - name: password_resets
-    columns:
-      - name: email
-        type: string
-        index: true
-      - name: token
-        type: string
-      - name: created_at
-        type: timestamp
-        nullable: true
+password_resets:
+  columns:
+    email:
+      type: string
+      index: true
+    token: string
+    created_at:
+      type: timestamp
+      nullable: true
 
-  - name: failed_jobs
-    columns:
-      - name: id
-        type: bigIncrements
-      - name: connection
-        type: text
-      - name: queue
-        type: text
-      - name: payload
-        type: longText
-      - name: exception
-        type: longText
-      - name: failed_at
-        type: timestamp
-        useCurrent: true
+failed_jobs:
+  columns:
+    id: bigIncrements
+    connection: text
+    queue: text
+    payload: longText
+    exception: longText
+    failed_at:
+      type: timestamp
+      useCurrent: true
