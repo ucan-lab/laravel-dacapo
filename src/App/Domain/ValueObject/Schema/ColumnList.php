@@ -13,7 +13,7 @@ class ColumnList implements IteratorAggregate
      * @param Column $column
      * @return ColumnList
      */
-    function add(Column $column): self
+    public function add(Column $column): self
     {
         $this->attributes[] = $column;
 
@@ -23,7 +23,7 @@ class ColumnList implements IteratorAggregate
     /**
      * @return ArrayIterator
      */
-    function getIterator(): ArrayIterator
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->attributes);
     }

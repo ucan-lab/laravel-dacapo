@@ -42,4 +42,12 @@ class Schema
 
         return new Schema($name, $columnList);
     }
+
+    /**
+     * @return string
+     */
+    public function getTableName(): string
+    {
+        return $this->tableName->getName();
+    }
 }

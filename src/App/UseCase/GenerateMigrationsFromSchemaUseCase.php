@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\App\UseCase;
 
+use Exception;
 use UcanLab\LaravelDacapo\App\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\App\Port\SchemasStorage;
 
@@ -18,15 +19,23 @@ class GenerateMigrationsFromSchemaUseCase
         $this->storage = $storage;
     }
 
+    /**
+     * @throws
+     */
     public function handle(): void
     {
-        $schemas = [];
+        $schemaList = new SchemaList();
 
         foreach ($this->storage->getFiles() as $file) {
             $yaml = $this->storage->getYamlContent($file);
 
-            $schemas[] = SchemaList::factoryFromYaml($yaml);
-            var_dump($schemas);
+            try {
+                $schemaList->merge(SchemaList::factoryFromYaml($yaml));
+            } catch (Exception $e) {
+                throw new Exception(sprintf('%s, by %s', $e->getMessage(), $file), 0, $e);
+            }
         }
+
+        var_dump($schemaList);
     }
 }

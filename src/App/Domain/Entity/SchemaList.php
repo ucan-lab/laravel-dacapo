@@ -3,22 +3,29 @@
 namespace UcanLab\LaravelDacapo\App\Domain\Entity;
 
 use ArrayIterator;
+use Exception;
 use IteratorAggregate;
 
 class SchemaList implements IteratorAggregate
 {
+    /**
+     * @var Schema[]
+     */
     protected array $attributes = [];
 
     /**
      * Schema constructor.
      * @param array $attributes
      */
-    public function __construct(
-        array $attributes
-    ) {
+    public function __construct(array $attributes = [])
+    {
         $this->attributes = $attributes;
     }
 
+    /**
+     * @param array $yaml
+     * @return SchemaList
+     */
     public static function factoryFromYaml(array $yaml): self
     {
         $schemaList = new self([]);
@@ -38,6 +45,32 @@ class SchemaList implements IteratorAggregate
     public function add(Schema $schema): self
     {
         $this->attributes[] = $schema;
+
+        return $this;
+    }
+
+    /**
+     * @param SchemaList $schemaList
+     * @return SchemaList
+     * @throws
+     */
+    public function merge(SchemaList $schemaList): self
+    {
+        $tableNames = [];
+
+        foreach ($this->attributes as $attribute) {
+            $tableNames[] = $attribute->getTableName();
+        }
+
+        foreach ($schemaList as $schema) {
+            $schema->getTableName();
+
+            if (in_array($schema->getTableName(), $tableNames, true)) {
+                throw new Exception(sprintf('[%s] table name is already in use', $schema->getTableName()));
+            }
+
+            $this->attributes[] = $schema;
+        }
 
         return $this;
     }
