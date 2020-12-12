@@ -25,6 +25,17 @@ class LocalMigrationsStorage implements MigrationsStorage
 
     /**
      * @param string $name
+     * @param string $contents
+     */
+    public function saveFile(string $name, string $contents): void
+    {
+        $path = $this->getPath($name);
+
+        File::put($path, $contents);
+    }
+
+    /**
+     * @param string $name
      * @return bool
      */
     public function delete(string $name): bool

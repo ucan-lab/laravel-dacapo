@@ -4,4 +4,5 @@ namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema;
 
 interface ColumnType
 {
+    public function createMigrationMethod(ColumnName $columnName): string;
 }

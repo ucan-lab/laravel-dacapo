@@ -50,4 +50,36 @@ class Schema
     {
         return $this->tableName->getName();
     }
+
+    /**
+     * @return bool
+     */
+    public function hasColumnList(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasIndexList(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasForeignKeyList(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @return ColumnList
+     */
+    public function getColumnList(): ColumnList
+    {
+        return $this->columnList;
+    }
 }

@@ -12,11 +12,11 @@ class Column
 
     /**
      * Column constructor.
-     * @param $name
-     * @param $type
-     * @param $modifierList
+     * @param ColumnName $name
+     * @param ColumnType $type
+     * @param ColumnModifierList $modifierList
      */
-    public function __construct($name, $type, $modifierList)
+    public function __construct(ColumnName $name, ColumnType $type, ColumnModifierList $modifierList)
     {
         $this->name = $name;
         $this->type = $type;
@@ -65,5 +65,15 @@ class Column
         }
 
         throw new Exception(sprintf('%s class not found exception.', $columnTypeClass));
+    }
+
+    /**
+     * @return string
+     */
+    public function createColumnMigration(): string
+    {
+        $method = $this->type->createMigrationMethod($this->name);
+
+        return sprintf('$table%s;', $method);
     }
 }

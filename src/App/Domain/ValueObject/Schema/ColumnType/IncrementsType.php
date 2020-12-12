@@ -2,8 +2,17 @@
 
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnName;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 
 class IncrementsType implements ColumnType
 {
+    /**
+     * @param ColumnName $columnName
+     * @return string
+     */
+    public function createMigrationMethod(ColumnName $columnName): string
+    {
+        return sprintf("->increments('%s')", $columnName->getName());
+    }
 }
