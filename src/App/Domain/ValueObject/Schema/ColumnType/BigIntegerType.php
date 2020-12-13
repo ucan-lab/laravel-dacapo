@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnName;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 
-class StringType implements ColumnType
+class BigIntegerType implements ColumnType
 {
     /**
      * @param ColumnName $columnName
@@ -13,12 +13,6 @@ class StringType implements ColumnType
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
-        $args = $columnName->getArgs();
-
-        if (is_int($args)) {
-            return sprintf("->string('%s', %d)", $columnName->getName(), $args);
-        }
-
-        return sprintf("->string('%s')", $columnName->getName());
+        return sprintf("->bigInteger('%s')", $columnName->getName());
     }
 }

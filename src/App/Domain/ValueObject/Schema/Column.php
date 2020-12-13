@@ -31,7 +31,7 @@ class Column
      */
     public static function factoryFromYaml(string $name, $attributes): self
     {
-        $columnName = new ColumnName($name);
+        $columnName = new ColumnName($name, $attributes['args'] ?? null);
         $modifierList = new ColumnModifierList();
 
         if (is_string($attributes)) {

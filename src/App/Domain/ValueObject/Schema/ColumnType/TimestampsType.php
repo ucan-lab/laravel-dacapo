@@ -13,6 +13,12 @@ class TimestampsType implements ColumnType
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
+        $args = $columnName->getArgs();
+
+        if (is_int($args)) {
+            return sprintf("->timestamps(%d)", $args);
+        }
+
         return '->timestamps()';
     }
 }
