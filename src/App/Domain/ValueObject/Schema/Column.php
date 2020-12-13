@@ -36,14 +36,21 @@ class Column
 
         if (is_string($attributes)) {
             $columnType = self::factoryColumnTypeClass($attributes);
+        } elseif (is_bool($attributes)) {
+            $columnType = self::factoryColumnTypeClass($name);
         } elseif (is_array($attributes)) {
             if (isset($attributes['type'])) {
                 $columnType = self::factoryColumnTypeClass($attributes['type']);
             } else {
                 throw new Exception('Column type is unspecified.');
             }
-        } elseif (is_bool($attributes)) {
-            $columnType = self::factoryColumnTypeClass($name);
+
+            unset($attributes['type']);
+            unset($attributes['args']);
+
+            foreach ($attributes as $modifierName => $modifierValue) {
+                $modifierList->add(self::factoryColumnModifierClass($modifierName, $modifierValue));
+            }
         } else {
             throw new Exception('Unsupported format exception.');
         }
@@ -68,12 +75,34 @@ class Column
     }
 
     /**
+     * @param string $name
+     * @param $value
+     * @return ColumnModifier
+     * @throws Exception
+     */
+    protected static function factoryColumnModifierClass(string $name, $value): ColumnModifier
+    {
+        $columnModifierClass = __NAMESPACE__ . '\\ColumnModifier\\' . ucfirst($name) . 'Modifier';
+
+        if (class_exists($columnModifierClass)) {
+            return new $columnModifierClass($value);
+        }
+
+        throw new Exception(sprintf('%s class not found exception.', $columnModifierClass));
+    }
+
+    /**
      * @return string
      */
     public function createColumnMigration(): string
     {
-        $method = $this->type->createMigrationMethod($this->name);
+        $typeMethod = $this->type->createMigrationMethod($this->name);
 
-        return sprintf('$table%s;', $method);
+        $modifierMethod = '';
+        foreach ($this->modifierList as $modifier) {
+            $modifierMethod .= $modifier->createMigrationMethod();
+        }
+
+        return sprintf('$table%s%s;', $typeMethod, $modifierMethod);
     }
 }

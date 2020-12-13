@@ -4,7 +4,6 @@ namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema;
 
 use ArrayIterator;
 use IteratorAggregate;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Column\ColumnModifier;
 
 class ColumnModifierList implements IteratorAggregate
 {
