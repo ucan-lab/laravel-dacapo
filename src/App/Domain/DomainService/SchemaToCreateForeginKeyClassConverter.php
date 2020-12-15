@@ -33,7 +33,7 @@ class SchemaToCreateForeginKeyClassConverter
      */
     protected function makeMigrationFileName(): string
     {
-        return sprintf('1970_01_01_000000_create_%s_table.php', $this->schema->getTableName());
+        return sprintf('1970_01_01_000002_constraint_%s_relation.php', $this->schema->getTableName());
     }
 
     /**

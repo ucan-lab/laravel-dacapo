@@ -55,7 +55,7 @@ class SchemaToCreateTableClassConverter
         $stub = file_get_contents(__DIR__ . '/../../../Infra/Storage/stubs/migration.create.stub');
         $stub = str_replace('{{ class }}', $this->makeMigrationClassName(), $stub);
         $stub = str_replace('{{ table }}', $this->schema->getTableName(), $stub);
-        $stub = str_replace('{{ columns }}', $this->makeMigrationColumns(), $stub);
+        $stub = str_replace('{{ up }}', $this->makeMigrationUp(), $stub);
 
         return $stub;
     }
@@ -71,7 +71,7 @@ class SchemaToCreateTableClassConverter
     /**
      * @return string
      */
-    protected function makeMigrationColumns(): string
+    protected function makeMigrationUp(): string
     {
         $str = '';
 

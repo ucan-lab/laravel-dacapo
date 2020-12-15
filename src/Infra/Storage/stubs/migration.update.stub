@@ -13,7 +13,7 @@ class {{ class }} extends Migration
      */
     public function up()
     {
-        Schema::create('{{ table }}', function (Blueprint $table) {
+        Schema::table('{{ table }}', function (Blueprint $table) {
             {{ up }}
         });
     }
@@ -25,6 +25,8 @@ class {{ class }} extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('{{ table }}');
+        Schema::table('{{ table }}', function (Blueprint $table) {
+            {{ down }}
+        });
     }
 }

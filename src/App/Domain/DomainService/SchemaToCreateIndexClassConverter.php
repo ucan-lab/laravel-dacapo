@@ -33,7 +33,7 @@ class SchemaToCreateIndexClassConverter
      */
     protected function makeMigrationFileName(): string
     {
-        return sprintf('1970_01_01_000000_create_%s_table.php', $this->schema->getTableName());
+        return sprintf('1970_01_01_000001_create_%s_index.php', $this->schema->getTableName());
     }
 
     /**
