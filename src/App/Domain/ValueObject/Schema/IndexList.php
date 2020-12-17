@@ -1,21 +1,21 @@
-<?php declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema;
 
-use IteratorAggregate;
 use ArrayIterator;
+use IteratorAggregate;
 
-class ColumnList implements IteratorAggregate
+class IndexList implements IteratorAggregate
 {
     protected array $attributes = [];
 
     /**
-     * @param Column $column
-     * @return ColumnList
+     * @param Index $index
+     * @return IndexList
      */
-    public function add(Column $column): self
+    public function add(Index $index): self
     {
-        $this->attributes[] = $column;
+        $this->attributes[] = $index;
 
         return $this;
     }

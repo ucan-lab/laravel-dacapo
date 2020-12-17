@@ -4,24 +4,30 @@ namespace UcanLab\LaravelDacapo\App\Domain\Entity;
 
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Column;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnList;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Index;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\IndexList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\TableName;
 
 class Schema
 {
     protected TableName $tableName;
     protected ColumnList $columnList;
+    protected IndexList $indexList;
 
     /**
      * Schema constructor.
      * @param TableName $tableName
      * @param ColumnList $columnList
+     * @param IndexList $indexList
      */
-    public function __construct(
+    public function __construct (
         TableName $tableName,
-        ColumnList $columnList
+        ColumnList $columnList,
+        IndexList $indexList
     ) {
         $this->tableName = $tableName;
         $this->columnList = $columnList;
+        $this->indexList = $indexList;
     }
 
     /**
@@ -35,12 +41,22 @@ class Schema
         $name = new TableName($name);
 
         $columnList = new ColumnList();
-        foreach ($attributes['columns'] as $columnName => $columnAttributes) {
-            $column = Column::factoryFromYaml($columnName, $columnAttributes);
-            $columnList->add($column);
+        if (isset($attributes['columns'])) {
+            foreach ($attributes['columns'] as $columnName => $columnAttributes) {
+                $column = Column::factoryFromYaml($columnName, $columnAttributes);
+                $columnList->add($column);
+            }
         }
 
-        return new Schema($name, $columnList);
+        $indexList = new IndexList();
+        if (isset($attributes['indexes'])) {
+            foreach ($attributes['indexes'] as $indexAttributes) {
+                $index = Index::factoryFromYaml($indexAttributes);
+                $indexList->add($index);
+            }
+        }
+
+        return new Schema($name, $columnList, $indexList);
     }
 
     /**
@@ -64,7 +80,7 @@ class Schema
      */
     public function hasIndexList(): bool
     {
-        return false;
+        return $this->indexList->exists();
     }
 
     /**
@@ -81,5 +97,13 @@ class Schema
     public function getColumnList(): ColumnList
     {
         return $this->columnList;
+    }
+
+    /**
+     * @return IndexList
+     */
+    public function getIndexList(): IndexList
+    {
+        return $this->indexList;
     }
 }
