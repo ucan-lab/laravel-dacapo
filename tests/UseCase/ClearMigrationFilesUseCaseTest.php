@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Test\UseCase;
 
-use UcanLab\LaravelDacapo\App\UseCase\ClearMigrationFilesUseCase;
+use UcanLab\LaravelDacapo\App\UseCase\Console\DacapoClearCommandUseCase;
 use UcanLab\LaravelDacapo\Infra\Adapter\InMemoryMigrationsStorage;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
@@ -11,14 +11,14 @@ class ClearMigrationFilesUseCaseTest extends TestCase
     /**
      * @param array $files
      * @param $resolveFiles
-     * @covers ClearMigrationFilesUseCase::handle
+     * @covers DacapoClearCommandUseCase::handle
      * @dataProvider dataResolve
      */
     public function testResolve(array $files, $resolveFiles): void
     {
         $storage = new InMemoryMigrationsStorage($files);
 
-        (new ClearMigrationFilesUseCase($storage))->handle();
+        (new DacapoClearCommandUseCase($storage))->handle();
 
         $this->assertSame($resolveFiles, $storage->getFiles());
     }

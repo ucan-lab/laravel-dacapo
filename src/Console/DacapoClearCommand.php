@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use UcanLab\LaravelDacapo\App\UseCase\ClearMigrationFilesUseCase;
+use UcanLab\LaravelDacapo\App\UseCase\Console\DacapoClearCommandUseCase;
 
 /**
  * Class DacapoClearCommand.
@@ -28,15 +28,15 @@ class DacapoClearCommand extends Command
     protected $description = 'Clear migration directory.';
 
     /**
-     * @var ClearMigrationFilesUseCase
+     * @var DacapoClearCommandUseCase
      */
-    protected ClearMigrationFilesUseCase $useCase;
+    protected DacapoClearCommandUseCase $useCase;
 
     /**
      * DacapoClearCommand constructor.
-     * @param ClearMigrationFilesUseCase $useCase
+     * @param DacapoClearCommandUseCase $useCase
      */
-    public function __construct(ClearMigrationFilesUseCase $useCase)
+    public function __construct(DacapoClearCommandUseCase $useCase)
     {
         parent::__construct();
 

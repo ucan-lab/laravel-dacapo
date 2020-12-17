@@ -13,4 +13,6 @@ interface SchemasStorage
     public function getYamlContent(string $name): array;
 
     public function saveFile(string $name, string $content): bool;
+
+    public function getLaravelDefaultSchemaFile(string $version): string;
 }

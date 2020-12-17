@@ -78,6 +78,15 @@ class LocalSchemasStorage implements SchemasStorage
     }
 
     /**
+     * @param string $version
+     * @return string
+     */
+    public function getLaravelDefaultSchemaFile(string $version): string
+    {
+        return file_get_contents(__DIR__ . '/../Storage/default-schemas/' . $version . '.yml');
+    }
+
+    /**
      * @param string $path
      * @return bool
      */

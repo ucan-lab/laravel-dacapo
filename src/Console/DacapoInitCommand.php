@@ -3,7 +3,7 @@
 namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
-use UcanLab\LaravelDacapo\App\UseCase\InitUseCase;
+use UcanLab\LaravelDacapo\App\UseCase\Console\DacapoInitCommandUseCase;
 
 /**
  * Class DacapoInitCommand
@@ -29,15 +29,15 @@ class DacapoInitCommand extends Command
     protected $description = 'Init dacapo default schema.';
 
     /**
-     * @var InitUseCase
+     * @var DacapoInitCommandUseCase
      */
-    protected InitUseCase $useCase;
+    protected DacapoInitCommandUseCase $useCase;
 
     /**
      * DacapoInitCommand constructor.
-     * @param InitUseCase $useCase
+     * @param DacapoInitCommandUseCase $useCase
      */
-    public function __construct(InitUseCase $useCase)
+    public function __construct(DacapoInitCommandUseCase $useCase)
     {
         parent::__construct();
 

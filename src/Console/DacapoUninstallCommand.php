@@ -3,7 +3,7 @@
 namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
-use UcanLab\LaravelDacapo\App\UseCase\UninstallUseCase;
+use UcanLab\LaravelDacapo\App\UseCase\Console\DacapoUninstallCommandUseCase;
 
 /**
  * Class DacapoUninstallCommand
@@ -25,15 +25,15 @@ class DacapoUninstallCommand extends Command
     protected $description = 'Uninstall dacapo.';
 
     /**
-     * @var UninstallUseCase
+     * @var DacapoUninstallCommandUseCase
      */
-    protected UninstallUseCase $useCase;
+    protected DacapoUninstallCommandUseCase $useCase;
 
     /**
      * DacapoUninstallCommand constructor.
-     * @param UninstallUseCase $useCase
+     * @param DacapoUninstallCommandUseCase $useCase
      */
-    public function __construct(UninstallUseCase $useCase)
+    public function __construct(DacapoUninstallCommandUseCase $useCase)
     {
         parent::__construct();
 

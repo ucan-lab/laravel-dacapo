@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\App\UseCase;
+namespace UcanLab\LaravelDacapo\App\UseCase\Console;
 
 use UcanLab\LaravelDacapo\App\Port\SchemasStorage;
 
-class UninstallUseCase
+class DacapoUninstallCommandUseCase
 {
     protected SchemasStorage $storage;
 
     /**
-     * UninstallDacapoUseCase constructor.
+     * DacapoUninstallCommandUseCase constructor.
      * @param SchemasStorage $storage
      */
     public function __construct(SchemasStorage $storage)

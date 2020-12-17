@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use UcanLab\LaravelDacapo\App\UseCase\GenerateMigrationsFromSchemaUseCase;
+use UcanLab\LaravelDacapo\App\UseCase\Console\DacapoCommandUseCase;
 
 /**
  * Class DacapoCommand.
@@ -32,15 +32,15 @@ class DacapoCommand extends Command
     protected $description = 'Generate migrations from schemas and migrate:fresh command.';
 
     /**
-     * @var GenerateMigrationsFromSchemaUseCase
+     * @var DacapoCommandUseCase
      */
-    protected GenerateMigrationsFromSchemaUseCase $useCase;
+    protected DacapoCommandUseCase $useCase;
 
     /**
      * DacapoCommand constructor.
-     * @param GenerateMigrationsFromSchemaUseCase $useCase
+     * @param DacapoCommandUseCase $useCase
      */
-    public function __construct(GenerateMigrationsFromSchemaUseCase $useCase)
+    public function __construct(DacapoCommandUseCase $useCase)
     {
         parent::__construct();
 

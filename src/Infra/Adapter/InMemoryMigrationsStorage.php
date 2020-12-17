@@ -49,4 +49,13 @@ class InMemoryMigrationsStorage implements MigrationsStorage
 
         return '/tmp';
     }
+
+    /**
+     * @param string $name
+     * @param string $content
+     * @return void
+     */
+    public function saveFile(string $name, string $content): void
+    {
+    }
 }

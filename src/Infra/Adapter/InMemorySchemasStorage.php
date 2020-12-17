@@ -23,6 +23,23 @@ class InMemorySchemasStorage implements SchemasStorage
     }
 
     /**
+     * @return array
+     */
+    public function getFiles(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param string $name
+     * @return array
+     */
+    public function getYamlContent(string $name): array
+    {
+        return [];
+    }
+
+    /**
      * @param string $name
      * @param string $content
      * @return bool
@@ -30,5 +47,14 @@ class InMemorySchemasStorage implements SchemasStorage
     public function saveFile(string $name, string $content): bool
     {
         return true;
+    }
+
+    /**
+     * @param string $version
+     * @return string
+     */
+    public function getLaravelDefaultSchemaFile(string $version): string
+    {
+        return file_get_contents(__DIR__ . '/../Storage/default-schemas/' . $version . '.yml');
     }
 }

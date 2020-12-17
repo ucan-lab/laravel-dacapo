@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\App\UseCase;
+namespace UcanLab\LaravelDacapo\App\UseCase\Console;
 
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\App\Port\MigrationsStorage;
 
-class ClearMigrationFilesUseCase
+class DacapoClearCommandUseCase
 {
     protected MigrationsStorage $storage;
 
     /**
-     * ClearMigrationFilesUseCase constructor.
+     * DacapoClearCommandUseCase constructor.
      * @param MigrationsStorage $storage
      */
     public function __construct(MigrationsStorage $storage)

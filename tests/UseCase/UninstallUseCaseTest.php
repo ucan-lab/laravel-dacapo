@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Test\UseCase;
 
-use UcanLab\LaravelDacapo\App\UseCase\UninstallUseCase;
+use UcanLab\LaravelDacapo\App\UseCase\Console\DacapoUninstallCommandUseCase;
 use UcanLab\LaravelDacapo\Infra\Adapter\InMemorySchemasStorage;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
@@ -12,6 +12,6 @@ class UninstallUseCaseTest extends TestCase
     {
         $storage = new InMemorySchemasStorage();
 
-        $this->assertTrue((new UninstallUseCase($storage))->handle());
+        $this->assertTrue((new DacapoUninstallCommandUseCase($storage))->handle());
     }
 }

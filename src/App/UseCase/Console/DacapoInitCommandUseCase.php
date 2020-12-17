@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\App\UseCase;
+namespace UcanLab\LaravelDacapo\App\UseCase\Console;
 
 use UcanLab\LaravelDacapo\App\Port\SchemasStorage;
 
-class InitUseCase
+class DacapoInitCommandUseCase
 {
     protected SchemasStorage $storage;
 
     /**
-     * InitUseCase constructor.
+     * DacapoInitCommandUseCase constructor.
      * @param SchemasStorage $storage
      */
     public function __construct(SchemasStorage $storage)
@@ -24,17 +24,8 @@ class InitUseCase
     public function handle(string $version): bool
     {
         $this->storage->makeDirectory();
-        $this->storage->saveFile('default.yml', $this->getDefaultSchemaFile($version));
+        $this->storage->saveFile('default.yml', $this->storage->getLaravelDefaultSchemaFile($version));
 
         return true;
-    }
-
-    /**
-     * @param string $version
-     * @return string
-     */
-    private function getDefaultSchemaFile(string $version): string
-    {
-        return file_get_contents(__DIR__ . '/../../Infra/Storage/default-schemas/' . $version . '.yml');
     }
 }

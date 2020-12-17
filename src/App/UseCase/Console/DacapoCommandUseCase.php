@@ -1,32 +1,47 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\App\UseCase;
+namespace UcanLab\LaravelDacapo\App\UseCase\Console;
 
 use Exception;
 use UcanLab\LaravelDacapo\App\Domain\Entity\SchemaList;
-use UcanLab\LaravelDacapo\App\Domain\DomainService\SchemaToCreateForeginKeyClassConverter;
-use UcanLab\LaravelDacapo\App\Domain\DomainService\SchemaToCreateIndexClassConverter;
-use UcanLab\LaravelDacapo\App\Domain\DomainService\SchemaToCreateTableClassConverter;
 use UcanLab\LaravelDacapo\App\Port\MigrationsStorage;
 use UcanLab\LaravelDacapo\App\Port\SchemasStorage;
+use UcanLab\LaravelDacapo\App\UseCase\SchemaConverter\CreateForeignKeyMigrationConverter;
+use UcanLab\LaravelDacapo\App\UseCase\SchemaConverter\CreateIndexMigrationConverter;
+use UcanLab\LaravelDacapo\App\UseCase\SchemaConverter\CreateTableMigrationConverter;
 
-class GenerateMigrationsFromSchemaUseCase
+class DacapoCommandUseCase
 {
     protected SchemaList $schemaList;
     protected SchemasStorage $schemasStorage;
     protected MigrationsStorage $migrationsStorage;
+    protected CreateTableMigrationConverter $createTableMigrationConverter;
+    protected CreateIndexMigrationConverter $createIndexMigrationConverter;
+    protected CreateForeignKeyMigrationConverter $createForeignKeyMigrationConverter;
 
     /**
-     * GenerateMigrationsFromSchemaUseCase constructor.
+     * DacapoCommandUseCase constructor.
      * @param SchemaList $schemaList
      * @param SchemasStorage $schemasStorage
      * @param MigrationsStorage $migrationsStorage
+     * @param CreateTableMigrationConverter $createTableMigrationConverter
+     * @param CreateIndexMigrationConverter $createIndexMigrationConverter
+     * @param CreateForeignKeyMigrationConverter $createForeignKeyMigrationConverter
      */
-    public function __construct(SchemaList $schemaList, SchemasStorage $schemasStorage, MigrationsStorage $migrationsStorage)
-    {
+    public function __construct (
+        SchemaList $schemaList,
+        SchemasStorage $schemasStorage,
+        MigrationsStorage $migrationsStorage,
+        CreateTableMigrationConverter $createTableMigrationConverter,
+        CreateIndexMigrationConverter $createIndexMigrationConverter,
+        CreateForeignKeyMigrationConverter $createForeignKeyMigrationConverter
+    ) {
         $this->schemaList = $schemaList;
         $this->schemasStorage = $schemasStorage;
         $this->migrationsStorage = $migrationsStorage;
+        $this->createTableMigrationConverter = $createTableMigrationConverter;
+        $this->createIndexMigrationConverter = $createIndexMigrationConverter;
+        $this->createForeignKeyMigrationConverter = $createForeignKeyMigrationConverter;
     }
 
     /**
@@ -58,17 +73,17 @@ class GenerateMigrationsFromSchemaUseCase
     {
         foreach ($this->schemaList as $schema) {
             if ($schema->hasColumnList()) {
-                [$name, $contents] = (new SchemaToCreateTableClassConverter($schema))->convert();
+                [$name, $contents] = $this->createTableMigrationConverter->convert($schema);
                 $this->migrationsStorage->saveFile($name, $contents);
             }
 
             if ($schema->hasIndexList()) {
-                [$name, $contents] = (new SchemaToCreateIndexClassConverter($schema))->convert();
+                [$name, $contents] = $this->createIndexMigrationConverter->convert($schema);
                 $this->migrationsStorage->saveFile($name, $contents);
             }
 
             if ($schema->hasForeignKeyList()) {
-                [$name, $contents] = (new SchemaToCreateForeginKeyClassConverter($schema))->convert();
+                [$name, $contents] = $this->createForeignKeyMigrationConverter->convert($schema);
                 $this->migrationsStorage->saveFile($name, $contents);
             }
         }
