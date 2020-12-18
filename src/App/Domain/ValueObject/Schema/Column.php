@@ -31,7 +31,7 @@ class Column
      */
     public static function factoryFromYaml(string $name, $attributes): self
     {
-        $columnName = new ColumnName($name, $attributes['args'] ?? null);
+        $columnName = new ColumnName($name);
         $modifierList = new ColumnModifierList();
 
         if (is_string($attributes)) {
@@ -39,11 +39,11 @@ class Column
         } elseif (is_bool($attributes)) {
             $columnType = self::factoryColumnTypeClass($name);
         } elseif (is_array($attributes)) {
-            if (isset($attributes['type'])) {
-                $columnType = self::factoryColumnTypeClass($attributes['type']);
-            } else {
+            if (isset($attributes['type']) === false) {
                 throw new Exception('Column type is unspecified.');
             }
+
+            $columnType = self::factoryColumnTypeClass($attributes['type'], $attributes['args'] ?? null);
 
             unset($attributes['type']);
             unset($attributes['args']);
@@ -60,14 +60,19 @@ class Column
 
     /**
      * @param string $name
+     * @param $args
      * @return ColumnType
      * @throws Exception
      */
-    protected static function factoryColumnTypeClass(string $name): ColumnType
+    protected static function factoryColumnTypeClass(string $name, $args = null): ColumnType
     {
         $columnTypeClass = __NAMESPACE__ . '\\ColumnType\\' . ucfirst($name) . 'Type';
 
         if (class_exists($columnTypeClass)) {
+            if ($args) {
+                return new $columnTypeClass($args);
+            }
+
             return new $columnTypeClass();
         }
 

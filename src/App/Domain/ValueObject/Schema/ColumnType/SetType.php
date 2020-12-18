@@ -9,18 +9,26 @@ use Exception;
 class SetType implements ColumnType
 {
     /**
+     * @var array
+     */
+    protected array $args;
+
+    public function __construct(array $args)
+    {
+        $this->args = $args;
+    }
+
+    /**
      * @param ColumnName $columnName
      * @return string
      * @throws
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
-        $args = $columnName->getArgs();
-
-        if (is_array($args)) {
-            return sprintf("->set('%s', ['%s'])", $columnName->getName(), implode("', '", $args));
+        if (is_array($this->args)) {
+            return sprintf("->set('%s', ['%s'])", $columnName->getName(), implode("', '", $this->args));
         }
 
-        throw new Exception('Not support EnumType $args');
+        throw new Exception('Not support SetType $args');
     }
 }

@@ -8,13 +8,25 @@ use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 class NullableTimestampsType implements ColumnType
 {
     /**
+     * @var int|null
+     */
+    protected ?int $args;
+
+    public function __construct(?int $args = null)
+    {
+        $this->args = $args;
+    }
+
+    /**
      * @param ColumnName $columnName
      * @return string
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
-        $args = $columnName->getArgs();
+        if ($this->args) {
+            return sprintf('->nullableTimestamps(%d)', $this->args);
+        }
 
-        return sprintf('->nullableTimestamps(%d)', $args);
+        return '->nullableTimestamps()';
     }
 }

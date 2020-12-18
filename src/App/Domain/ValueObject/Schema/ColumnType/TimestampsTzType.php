@@ -8,15 +8,23 @@ use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 class TimestampsTzType implements ColumnType
 {
     /**
+     * @var int|null
+     */
+    protected ?int $args;
+
+    public function __construct(?int $args = null)
+    {
+        $this->args = $args;
+    }
+
+    /**
      * @param ColumnName $columnName
      * @return string
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
-        $args = $columnName->getArgs();
-
-        if (is_int($args)) {
-            return sprintf("->timestamps(%d)", $args);
+        if (is_int($this->args)) {
+            return sprintf("->timestamps(%d)", $this->args);
         }
 
         return '->timestamps()';
