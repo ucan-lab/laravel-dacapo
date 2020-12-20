@@ -4,6 +4,8 @@ namespace UcanLab\LaravelDacapo\App\Domain\Entity;
 
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Column;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnList;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKeyList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Index;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\IndexList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\TableName;
@@ -13,21 +15,25 @@ class Schema
     protected TableName $tableName;
     protected ColumnList $columnList;
     protected IndexList $indexList;
+    protected ForeignKeyList $foreignKeyList;
 
     /**
      * Schema constructor.
      * @param TableName $tableName
      * @param ColumnList $columnList
      * @param IndexList $indexList
+     * @param ForeignKeyList $foreignKeyList
      */
     public function __construct (
         TableName $tableName,
         ColumnList $columnList,
-        IndexList $indexList
+        IndexList $indexList,
+        ForeignKeyList $foreignKeyList
     ) {
         $this->tableName = $tableName;
         $this->columnList = $columnList;
         $this->indexList = $indexList;
+        $this->foreignKeyList = $foreignKeyList;
     }
 
     /**
@@ -56,7 +62,15 @@ class Schema
             }
         }
 
-        return new Schema($name, $columnList, $indexList);
+        $foreignKeyList = new ForeignKeyList();
+        if (isset($attributes['foreign_keys'])) {
+            foreach ($attributes['foreign_keys'] as $foreignKeyAttribute) {
+                $foreign = ForeignKey::factoryFromYaml($foreignKeyAttribute);
+                $foreignKeyList->add($foreign);
+            }
+        }
+
+        return new Schema($name, $columnList, $indexList, $foreignKeyList);
     }
 
     /**
@@ -72,7 +86,7 @@ class Schema
      */
     public function hasColumnList(): bool
     {
-        return true;
+        return $this->columnList->exists();
     }
 
     /**
@@ -88,7 +102,7 @@ class Schema
      */
     public function hasForeignKeyList(): bool
     {
-        return false;
+        return $this->foreignKeyList->exists();
     }
 
     /**
@@ -105,5 +119,13 @@ class Schema
     public function getIndexList(): IndexList
     {
         return $this->indexList;
+    }
+
+    /**
+     * @return ForeignKeyList
+     */
+    public function getForeignKeyList(): ForeignKeyList
+    {
+        return $this->foreignKeyList;
     }
 }
