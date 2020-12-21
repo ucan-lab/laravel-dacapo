@@ -2,12 +2,12 @@
 
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema;
 
-class Charset
+class Engine
 {
     protected ?string $value;
 
     /**
-     * Charset constructor.
+     * Engine constructor.
      * @param string|null $value
      */
     public function __construct(?string $value)
@@ -36,6 +36,6 @@ class Charset
      */
     public function makeMigration(): string
     {
-        return sprintf("\$table->charset = '%s';", $this->getValue());
+        return sprintf("\$table->engine = '%s';", $this->getValue());
     }
 }

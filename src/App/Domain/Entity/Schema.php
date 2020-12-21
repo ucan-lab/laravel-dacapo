@@ -2,13 +2,17 @@
 
 namespace UcanLab\LaravelDacapo\App\Domain\Entity;
 
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Charset;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Collation;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Column;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnList;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Engine;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKeyList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Index;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\IndexList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\TableName;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Temporary;
 
 class Schema
 {
@@ -16,6 +20,10 @@ class Schema
     protected ColumnList $columnList;
     protected IndexList $indexList;
     protected ForeignKeyList $foreignKeyList;
+    protected Engine $engine;
+    protected Charset $charset;
+    protected Collation $collation;
+    protected Temporary $temporary;
 
     /**
      * Schema constructor.
@@ -23,17 +31,29 @@ class Schema
      * @param ColumnList $columnList
      * @param IndexList $indexList
      * @param ForeignKeyList $foreignKeyList
+     * @param Engine $engine
+     * @param Charset $charset
+     * @param Collation $collation
+     * @param Temporary $temporary
      */
     public function __construct (
         TableName $tableName,
         ColumnList $columnList,
         IndexList $indexList,
-        ForeignKeyList $foreignKeyList
+        ForeignKeyList $foreignKeyList,
+        Engine $engine,
+        Charset $charset,
+        Collation $collation,
+        Temporary $temporary
     ) {
         $this->tableName = $tableName;
         $this->columnList = $columnList;
         $this->indexList = $indexList;
         $this->foreignKeyList = $foreignKeyList;
+        $this->engine = $engine;
+        $this->charset = $charset;
+        $this->collation = $collation;
+        $this->temporary = $temporary;
     }
 
     /**
@@ -70,7 +90,21 @@ class Schema
             }
         }
 
-        return new Schema($name, $columnList, $indexList, $foreignKeyList);
+        $engine = new Engine($attributes['engine'] ?? null);
+        $charset = new Charset($attributes['charset'] ?? null);
+        $collation = new Collation($attributes['collation'] ?? null);
+        $temporary = new Temporary($attributes['temporary'] ?? false);
+
+        return new Schema (
+            $name,
+            $columnList,
+            $indexList,
+            $foreignKeyList,
+            $engine,
+            $charset,
+            $collation,
+            $temporary
+        );
     }
 
     /**
@@ -127,5 +161,37 @@ class Schema
     public function getForeignKeyList(): ForeignKeyList
     {
         return $this->foreignKeyList;
+    }
+
+    /**
+     * @return Engine
+     */
+    public function getEngine(): Engine
+    {
+        return $this->engine;
+    }
+
+    /**
+     * @return Charset
+     */
+    public function getCharset(): Charset
+    {
+        return $this->charset;
+    }
+
+    /**
+     * @return Collation
+     */
+    public function getCollation(): Collation
+    {
+        return $this->collation;
+    }
+
+    /**
+     * @return Temporary
+     */
+    public function getTemporary(): Temporary
+    {
+        return $this->temporary;
     }
 }

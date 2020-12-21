@@ -72,17 +72,26 @@ class CreateTableMigrationConverter
     {
         $str = '';
 
-        $columnListIterator = $schema->getColumnList()->getIterator();
-
-        while ($columnListIterator->valid()) {
-            $str .= $columnListIterator->current()->createColumnMigration();
-            $columnListIterator->next();
-
-            if ($columnListIterator->valid()) {
-                $str .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
-            }
+        if ($schema->getEngine()->hasValue()) {
+            $str .= $schema->getEngine()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
         }
 
-        return $str;
+        if ($schema->getCharset()->hasValue()) {
+            $str .= $schema->getCharset()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        if ($schema->getCollation()->hasValue()) {
+            $str .= $schema->getCollation()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        if ($schema->getTemporary()->isEnable()) {
+            $str .= $schema->getTemporary()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        foreach ($schema->getColumnList() as $column) {
+            $str .= $column->createColumnMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        return trim($str);
     }
 }
