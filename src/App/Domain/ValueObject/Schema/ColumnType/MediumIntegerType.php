@@ -13,6 +13,6 @@ class MediumIntegerType implements ColumnType
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
-        return sprintf("->mediumIncrements('%s')", $columnName->getName());
+        return sprintf("->mediumInteger('%s')", $columnName->getName());
     }
 }

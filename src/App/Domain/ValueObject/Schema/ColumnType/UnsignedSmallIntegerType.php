@@ -13,6 +13,6 @@ class UnsignedSmallIntegerType implements ColumnType
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
-        return sprintf("->unsignedMediumInteger('%s')", $columnName->getName());
+        return sprintf("->unsignedSmallInteger('%s')", $columnName->getName());
     }
 }

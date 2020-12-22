@@ -23,7 +23,7 @@ class NullableTimestampsType implements ColumnType
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
-        if ($this->args) {
+        if (is_int($this->args)) {
             return sprintf('->nullableTimestamps(%d)', $this->args);
         }
 

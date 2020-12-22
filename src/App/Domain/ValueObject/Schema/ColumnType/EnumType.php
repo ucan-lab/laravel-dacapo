@@ -4,7 +4,6 @@ namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnName;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
-use Exception;
 
 class EnumType implements ColumnType
 {
@@ -25,10 +24,6 @@ class EnumType implements ColumnType
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
-        if (is_array($this->args)) {
-            return sprintf("->enum('%s', ['%s'])", $columnName->getName(), implode("', '", $this->args));
-        }
-
-        throw new Exception('Not support EnumType $args');
+        return sprintf("->enum('%s', ['%s'])", $columnName->getName(), implode("', '", $this->args));
     }
 }

@@ -4,7 +4,6 @@ namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnName;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
-use Exception;
 
 class SetType implements ColumnType
 {
@@ -25,10 +24,6 @@ class SetType implements ColumnType
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
-        if (is_array($this->args)) {
-            return sprintf("->set('%s', ['%s'])", $columnName->getName(), implode("', '", $this->args));
-        }
-
-        throw new Exception('Not support SetType $args');
+        return sprintf("->set('%s', ['%s'])", $columnName->getName(), implode("', '", $this->args));
     }
 }

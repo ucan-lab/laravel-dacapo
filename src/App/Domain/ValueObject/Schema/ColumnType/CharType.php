@@ -24,9 +24,9 @@ class CharType implements ColumnType
     public function createMigrationMethod(ColumnName $columnName): string
     {
         if (is_int($this->args)) {
-            return sprintf("->string('%s', %d)", $columnName->getName(), $this->args);
+            return sprintf("->char('%s', %d)", $columnName->getName(), $this->args);
         }
 
-        return sprintf("->string('%s')", $columnName->getName());
+        return sprintf("->char('%s')", $columnName->getName());
     }
 }

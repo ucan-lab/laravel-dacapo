@@ -29,7 +29,7 @@ class DoubleType implements ColumnType
             return sprintf("->double('%s', %d)", $columnName->getName(), $this->args[0]);
         } elseif (is_int($this->args)) {
             return sprintf("->double('%s', %s)", $columnName->getName(), $this->args);
-        } elseif (is_string($this->args)) {
+        } elseif (is_string($this->args) && $this->args !== '') {
             return sprintf("->double('%s', %s)", $columnName->getName(), $this->args);
         }
 

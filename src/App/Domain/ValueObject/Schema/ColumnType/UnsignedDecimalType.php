@@ -29,7 +29,7 @@ class UnsignedDecimalType implements ColumnType
             return sprintf("->unsignedDecimal('%s', %d)", $columnName->getName(), $this->args[0]);
         } elseif (is_int($this->args)) {
             return sprintf("->unsignedDecimal('%s', %s)", $columnName->getName(), $this->args);
-        } elseif (is_string($this->args)) {
+        } elseif (is_string($this->args) && $this->args !== '') {
             return sprintf("->unsignedDecimal('%s', %s)", $columnName->getName(), $this->args);
         }
 
