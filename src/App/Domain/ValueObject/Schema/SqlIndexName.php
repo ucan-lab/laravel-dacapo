@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema;
 
-class IndexName
+class SqlIndexName
 {
     /**
      * @var string|array

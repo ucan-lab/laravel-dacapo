@@ -72,7 +72,7 @@ class CreateIndexMigrationConverter
     {
         $str = '';
 
-        $indexListIterator = $schema->getIndexList()->getIterator();
+        $indexListIterator = $schema->getSqlIndexList()->getIterator();
 
         while ($indexListIterator->valid()) {
             $str .= $indexListIterator->current()->createIndexMigrationUpMethod();
@@ -94,7 +94,7 @@ class CreateIndexMigrationConverter
     {
         $str = '';
 
-        $indexListIterator = $schema->getIndexList()->getIterator();
+        $indexListIterator = $schema->getSqlIndexList()->getIterator();
 
         while ($indexListIterator->valid()) {
             $str .= $indexListIterator->current()->createIndexMigrationDownMethod($schema->getTableName());

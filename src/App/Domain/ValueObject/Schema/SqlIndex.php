@@ -4,12 +4,12 @@ namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema;
 
 use Exception;
 
-class Index
+class SqlIndex
 {
     /**
-     * @var IndexType
+     * @var SqlIndexType
      */
-    protected IndexType $type;
+    protected SqlIndexType $type;
 
     /**
      * @var string|array
@@ -29,11 +29,11 @@ class Index
     /**
      * Index constructor.
      * @param string|array $columns
-     * @param IndexType $type
+     * @param SqlIndexType $type
      * @param string|null $name = null
      * @param string|null $algorithm = null
      */
-    public function __construct(IndexType $type, $columns, ?string $name = null, ?string $algorithm = null)
+    public function __construct(SqlIndexType $type, $columns, ?string $name = null, ?string $algorithm = null)
     {
         $this->type = $type;
         $this->columns = $columns;
@@ -43,27 +43,27 @@ class Index
 
     /**
      * @param string|array $attributes
-     * @return Index
+     * @return SqlIndex
      * @throws Exception
      */
     public static function factoryFromYaml($attributes): self
     {
         $columns = $attributes['columns'];
-        $indexType = self::factoryIndexTypeClass($attributes['type']);
+        $indexType = self::factorySqlIndexTypeClass($attributes['type']);
         $name = $attributes['name'] ?? null;
         $algorithm = $attributes['algorithm'] ?? null;
 
-        return new Index($indexType, $columns, $name, $algorithm);
+        return new SqlIndex($indexType, $columns, $name, $algorithm);
     }
 
     /**
      * @param string $name
-     * @return IndexType
+     * @return SqlIndexType
      * @throws Exception
      */
-    protected static function factoryIndexTypeClass(string $name): IndexType
+    protected static function factorySqlIndexTypeClass(string $name): SqlIndexType
     {
-        $indexTypeClass = __NAMESPACE__ . '\\IndexType\\' . ucfirst($name) . 'Type';
+        $indexTypeClass = __NAMESPACE__ . '\\SqlIndexType\\' . ucfirst($name) . 'Type';
 
         if (class_exists($indexTypeClass)) {
             return new $indexTypeClass();
@@ -93,9 +93,9 @@ class Index
     }
 
     /**
-     * @return IndexType
+     * @return SqlIndexType
      */
-    public function getType(): IndexType
+    public function getType(): SqlIndexType
     {
         return $this->type;
     }

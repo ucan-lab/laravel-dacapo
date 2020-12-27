@@ -9,8 +9,8 @@ use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Engine;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKeyList;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Index;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\IndexList;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndex;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndexList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\TableName;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Temporary;
 
@@ -18,7 +18,7 @@ class Schema
 {
     protected TableName $tableName;
     protected ColumnList $columnList;
-    protected IndexList $indexList;
+    protected SqlIndexList $sqlIndexList;
     protected ForeignKeyList $foreignKeyList;
     protected Engine $engine;
     protected Charset $charset;
@@ -29,7 +29,7 @@ class Schema
      * Schema constructor.
      * @param TableName $tableName
      * @param ColumnList $columnList
-     * @param IndexList $indexList
+     * @param SqlIndexList $sqlIndexList
      * @param ForeignKeyList $foreignKeyList
      * @param Engine $engine
      * @param Charset $charset
@@ -39,7 +39,7 @@ class Schema
     public function __construct (
         TableName $tableName,
         ColumnList $columnList,
-        IndexList $indexList,
+        SqlIndexList $sqlIndexList,
         ForeignKeyList $foreignKeyList,
         Engine $engine,
         Charset $charset,
@@ -48,7 +48,7 @@ class Schema
     ) {
         $this->tableName = $tableName;
         $this->columnList = $columnList;
-        $this->indexList = $indexList;
+        $this->sqlIndexList = $sqlIndexList;
         $this->foreignKeyList = $foreignKeyList;
         $this->engine = $engine;
         $this->charset = $charset;
@@ -74,11 +74,11 @@ class Schema
             }
         }
 
-        $indexList = new IndexList();
+        $sqlIndexList = new SqlIndexList();
         if (isset($attributes['indexes'])) {
             foreach ($attributes['indexes'] as $indexAttributes) {
-                $index = Index::factoryFromYaml($indexAttributes);
-                $indexList->add($index);
+                $sqlIndex = SqlIndex::factoryFromYaml($indexAttributes);
+                $sqlIndexList->add($sqlIndex);
             }
         }
 
@@ -98,7 +98,7 @@ class Schema
         return new Schema (
             $name,
             $columnList,
-            $indexList,
+            $sqlIndexList,
             $foreignKeyList,
             $engine,
             $charset,
@@ -126,9 +126,9 @@ class Schema
     /**
      * @return bool
      */
-    public function hasIndexList(): bool
+    public function hasSqlIndexList(): bool
     {
-        return $this->indexList->exists();
+        return $this->sqlIndexList->exists();
     }
 
     /**
@@ -148,11 +148,11 @@ class Schema
     }
 
     /**
-     * @return IndexList
+     * @return SqlIndexList
      */
-    public function getIndexList(): IndexList
+    public function getSqlIndexList(): SqlIndexList
     {
-        return $this->indexList;
+        return $this->sqlIndexList;
     }
 
     /**

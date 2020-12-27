@@ -77,7 +77,7 @@ class DacapoCommandUseCase
                 $this->migrationsStorage->saveFile($name, $contents);
             }
 
-            if ($schema->hasIndexList()) {
+            if ($schema->hasSqlIndexList()) {
                 [$name, $contents] = $this->createIndexMigrationConverter->convert($schema);
                 $this->migrationsStorage->saveFile($name, $contents);
             }

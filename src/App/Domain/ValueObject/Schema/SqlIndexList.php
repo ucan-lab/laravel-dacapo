@@ -5,15 +5,15 @@ namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema;
 use ArrayIterator;
 use IteratorAggregate;
 
-class IndexList implements IteratorAggregate
+class SqlIndexList implements IteratorAggregate
 {
     protected array $attributes = [];
 
     /**
-     * @param Index $index
-     * @return IndexList
+     * @param SqlIndex $index
+     * @return SqlIndexList
      */
-    public function add(Index $index): self
+    public function add(SqlIndex $index): self
     {
         $this->attributes[] = $index;
 

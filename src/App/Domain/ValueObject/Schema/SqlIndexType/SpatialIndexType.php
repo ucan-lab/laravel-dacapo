@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\IndexType;
+namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndexType;
 
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Index;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\IndexType;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndex;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndexType;
 
-class SpatialIndexType implements IndexType
+class SpatialIndexType implements SqlIndexType
 {
     /**
-     * @param Index $index
+     * @param SqlIndex $index
      * @return string
      */
-    public function createIndexMigrationUpMethod(Index $index): string
+    public function createIndexMigrationUpMethod(SqlIndex $index): string
     {
         $args[] = $index->getColumns();
 
@@ -23,10 +23,10 @@ class SpatialIndexType implements IndexType
     }
 
     /**
-     * @param Index $index
+     * @param SqlIndex $index
      * @return string
      */
-    public function createIndexMigrationDownMethod(Index $index): string
+    public function createIndexMigrationDownMethod(SqlIndex $index): string
     {
         if ($index->getName()) {
             return sprintf("->dropSpatialIndex('%s')", $index->getName());
