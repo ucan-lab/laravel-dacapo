@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\App\UseCase\SchemaConverter;
+namespace UcanLab\LaravelDacapo\App\UseCase\Converter;
 
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\App\Domain\Entity\Schema;
 
-class CreateIndexMigrationConverter
+class SchemaToConstraintForeignKeyMigrationConverter
 {
     const MIGRATION_COLUMN_INDENT = '            ';
     protected Schema $schema;
@@ -28,7 +28,7 @@ class CreateIndexMigrationConverter
      */
     protected function makeMigrationFileName(Schema $schema): string
     {
-        return sprintf('1970_01_01_000001_%s.php', $this->makeMigrationName($schema));
+        return sprintf('1970_01_01_000002_%s.php', $this->makeMigrationName($schema));
     }
 
     /**
@@ -37,11 +37,19 @@ class CreateIndexMigrationConverter
      */
     protected function makeMigrationName(Schema $schema): string
     {
-        return sprintf('create_%s_index', $schema->getTableName());
+        return sprintf('constraint_%s_foreign_key', $schema->getTableName());
     }
 
     /**
      * @param Schema $schema
+     * @return string
+     */
+    protected function makeMigrationClassName(Schema $schema): string
+    {
+        return Str::studly($this->makeMigrationName($schema));
+    }
+
+    /**
      * @return string
      */
     protected function makeMigrationContents(Schema $schema): string
@@ -59,26 +67,17 @@ class CreateIndexMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationClassName(Schema $schema): string
-    {
-        return Str::studly($this->makeMigrationName($schema));
-    }
-
-    /**
-     * @param Schema $schema
-     * @return string
-     */
     protected function makeMigrationUp(Schema $schema): string
     {
         $str = '';
 
-        $indexListIterator = $schema->getSqlIndexList()->getIterator();
+        $foreignKeyListIterator = $schema->getForeignKeyList()->getIterator();
 
-        while ($indexListIterator->valid()) {
-            $str .= $indexListIterator->current()->createIndexMigrationUpMethod();
-            $indexListIterator->next();
+        while ($foreignKeyListIterator->valid()) {
+            $str .= $foreignKeyListIterator->current()->createForeignKeyMigrationUpMethod();
+            $foreignKeyListIterator->next();
 
-            if ($indexListIterator->valid()) {
+            if ($foreignKeyListIterator->valid()) {
                 $str .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
             }
         }
@@ -94,13 +93,13 @@ class CreateIndexMigrationConverter
     {
         $str = '';
 
-        $indexListIterator = $schema->getSqlIndexList()->getIterator();
+        $foreignKeyListIterator = $schema->getForeignKeyList()->getIterator();
 
-        while ($indexListIterator->valid()) {
-            $str .= $indexListIterator->current()->createIndexMigrationDownMethod($schema->getTableName());
-            $indexListIterator->next();
+        while ($foreignKeyListIterator->valid()) {
+            $str .= $foreignKeyListIterator->current()->createForeignKeyMigrationDownMethod();
+            $foreignKeyListIterator->next();
 
-            if ($indexListIterator->valid()) {
+            if ($foreignKeyListIterator->valid()) {
                 $str .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
             }
         }

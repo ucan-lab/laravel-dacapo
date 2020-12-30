@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\App\UseCase\SchemaConverter;
+namespace UcanLab\LaravelDacapo\App\UseCase\Converter;
 
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\App\Domain\Entity\Schema;
 
-class CreateTableMigrationConverter
+class SchemaToCreateTableMigrationConverter
 {
     const MIGRATION_COLUMN_INDENT = '            ';
 
