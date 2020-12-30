@@ -74,12 +74,15 @@ class SqlIndex
 
     /**
      * @return string
+     * @throws
      */
     public function createIndexMigrationUpMethod(): string
     {
-        $typeMethod = $this->type->createIndexMigrationUpMethod($this);
+        if ($this->hasArgs()) {
+            return '$table->' . sprintf("%s(%s, %s);", $this->type->getUpMethodName(), $this->getColumns(), $this->makeArgs());
+        }
 
-        return sprintf('$table%s;', $typeMethod);
+        return '$table->' . sprintf("%s(%s);", $this->type->getUpMethodName(), $this->getColumns());
     }
 
     /**
@@ -87,45 +90,58 @@ class SqlIndex
      */
     public function createIndexMigrationDownMethod(): string
     {
-        $typeMethod = $this->type->createIndexMigrationDownMethod($this);
+        if ($this->name) {
+            return '$table->' . sprintf("%s('%s');", $this->type->getDownMethodName(), $this->name);
+        } elseif (is_array($this->columns)) {
+            return '$table->' . sprintf("%s(['%s']);", $this->type->getDownMethodName(), implode("', '", $this->columns));
+        }
 
-        return sprintf('$table%s;', $typeMethod);
-    }
-
-    /**
-     * @return SqlIndexType
-     */
-    public function getType(): SqlIndexType
-    {
-        return $this->type;
+        return '$table->' . sprintf("%s(['%s']);", $this->type->getDownMethodName(), $this->columns);
     }
 
     /**
      * @return string|array
      * @throws
      */
-    public function getColumns(): string
+    protected function getColumns(): string
     {
         if (is_array($this->columns)) {
             return sprintf("['%s']", implode("', '", $this->columns));
         }
 
-        return sprintf("['%s']", $this->columns);
+        return sprintf("'%s'", $this->columns);
     }
 
     /**
-     * @return string|null
+     * @return bool
      */
-    public function getName(): ?string
+    protected function hasArgs(): bool
     {
-        return $this->name;
+        if ($this->name) {
+            return true;
+        }
+
+        if ($this->algorithm) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
-     * @return string|null
+     * @return string
+     * @throws Exception
      */
-    public function getAlgorithm(): ?string
+    protected function makeArgs(): string
     {
-        return $this->algorithm;
+        if ($this->name && $this->algorithm) {
+            return sprintf("'%s', '%s'", $this->name, $this->algorithm);
+        } elseif (empty($this->name) && $this->algorithm) {
+            return sprintf("null, '%s'", $this->algorithm);
+        } elseif ($this->name && empty($this->algorithm)) {
+            return sprintf("'%s'", $this->name);
+        }
+
+        throw new Exception('Has no args.');
     }
 }

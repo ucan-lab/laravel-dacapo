@@ -2,36 +2,17 @@
 
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndexType;
 
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndex;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndexType;
 
 class SpatialIndexType implements SqlIndexType
 {
-    /**
-     * @param SqlIndex $index
-     * @return string
-     */
-    public function createIndexMigrationUpMethod(SqlIndex $index): string
+    public function getUpMethodName(): string
     {
-        $args[] = $index->getColumns();
-
-        if ($index->getName()) {
-            $args[] = sprintf("'%s'", $index->getName());
-        }
-
-        return sprintf("->spatialIndex(%s)", implode(', ', $args));
+        return 'spatialIndex';
     }
 
-    /**
-     * @param SqlIndex $index
-     * @return string
-     */
-    public function createIndexMigrationDownMethod(SqlIndex $index): string
+    public function getDownMethodName(): string
     {
-        if ($index->getName()) {
-            return sprintf("->dropSpatialIndex('%s')", $index->getName());
-        }
-
-        return sprintf("->dropSpatialIndex(%s)", $index->getColumns());
+        return 'dropSpatialIndex';
     }
 }

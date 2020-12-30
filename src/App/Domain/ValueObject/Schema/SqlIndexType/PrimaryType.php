@@ -2,40 +2,17 @@
 
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndexType;
 
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndex;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndexType;
 
 class PrimaryType implements SqlIndexType
 {
-    /**
-     * @param SqlIndex $index
-     * @return string
-     */
-    public function createIndexMigrationUpMethod(SqlIndex $index): string
+    public function getUpMethodName(): string
     {
-        $args[] = $index->getColumns();
-
-        if ($index->getName()) {
-            $args[] = sprintf("'%s'", $index->getName());
-        }
-
-        if ($index->getAlgorithm()) {
-            $args[] = sprintf("'%s'", $index->getAlgorithm());
-        }
-
-        return sprintf("->primary(%s)", implode(', ', $args));
+        return 'primary';
     }
 
-    /**
-     * @param SqlIndex $index
-     * @return string
-     */
-    public function createIndexMigrationDownMethod(SqlIndex $index): string
+    public function getDownMethodName(): string
     {
-        if ($index->getName()) {
-            return sprintf("->dropPrimary('%s')", $index->getName());
-        }
-
-        return sprintf("->dropPrimary(%s)", $index->getColumns());
+        return 'dropPrimary';
     }
 }

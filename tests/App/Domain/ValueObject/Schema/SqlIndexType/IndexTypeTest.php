@@ -10,32 +10,38 @@ class IndexTypeTest extends TestCase
 {
     /**
      * @param string $expected
-     * @param string $columns
+     * @param string|array $columns
      * @param string|null $name
      * @param string|null $algorithm
-     * @dataProvider dataCreateIndexMigrationUpMethod
+     * @dataProvider dataResolve
      */
-    public function testCreateIndexMigrationUpMethod(string $expected, string $columns, ?string $name, ?string $algorithm): void
+    public function testResolve(string $expected, $columns, ?string $name, ?string $algorithm): void
     {
         $indexType = new IndexType();
         $index = new SqlIndex($indexType, $columns, $name, $algorithm);
-        $this->assertSame($expected, $indexType->createIndexMigrationUpMethod($index));
+        $this->assertSame($expected, $index->createIndexMigrationUpMethod());
     }
 
     /**
      * @return array
      */
-    public  function dataCreateIndexMigrationUpMethod(): array
+    public  function dataResolve(): array
     {
         return [
+            'columns:test1,test2' => [
+                'expected' => '$table' . "->index(['test1', 'test2']);",
+                'columns' => ['test1', 'test2'],
+                'name' => null,
+                'algorithm' => null,
+            ],
             'name:null' => [
-                'expected' => "->index(['test'])",
+                'expected' => '$table' . "->index('test');",
                 'columns' => 'test',
                 'name' => null,
                 'algorithm' => null,
             ],
             'name:test_alias_index' => [
-                'expected' => "->index(['test'], 'test_alias_index')",
+                'expected' => '$table' . "->index('test', 'test_alias_index');",
                 'columns' => 'test',
                 'name' => 'test_alias_index',
                 'algorithm' => null,
@@ -45,15 +51,15 @@ class IndexTypeTest extends TestCase
 
     /**
      * @param string $expected
-     * @param string $columns
+     * @param string|array $columns
      * @param string|null $name
      * @dataProvider dataCreateIndexMigrationDownMethod
      */
-    public function testCreateIndexMigrationDownMethod(string $expected, string $columns, ?string $name): void
+    public function testCreateIndexMigrationDownMethod(string $expected, $columns, ?string $name): void
     {
         $indexType = new IndexType();
         $index = new SqlIndex($indexType, $columns, $name);
-        $this->assertSame($expected, $indexType->createIndexMigrationDownMethod($index));
+        $this->assertSame($expected, $index->createIndexMigrationDownMethod());
     }
 
     /**
@@ -62,13 +68,18 @@ class IndexTypeTest extends TestCase
     public  function dataCreateIndexMigrationDownMethod(): array
     {
         return [
+            'columns:test1,test2' => [
+                'expected' => '$table' . "->dropIndex(['test1', 'test2']);",
+                'columns' => ['test1', 'test2'],
+                'name' => null,
+            ],
             'name:null' => [
-                'expected' => "->dropIndex(['test'])",
+                'expected' => '$table' . "->dropIndex(['test']);",
                 'columns' => 'test',
                 'name' => null,
             ],
             'name:test_alias_index' => [
-                'expected' => "->dropIndex('test_alias_index')",
+                'expected' => '$table' . "->dropIndex('test_alias_index');",
                 'columns' => 'test',
                 'name' => 'test_alias_index',
             ],

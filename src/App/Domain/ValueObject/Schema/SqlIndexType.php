@@ -4,6 +4,6 @@ namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema;
 
 interface SqlIndexType
 {
-    public function createIndexMigrationUpMethod(SqlIndex $index): string;
-    public function createIndexMigrationDownMethod(SqlIndex $index): string;
+    public function getUpMethodName(): string;
+    public function getDownMethodName(): string;
 }
