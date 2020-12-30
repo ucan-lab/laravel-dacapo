@@ -2,19 +2,19 @@
 
 namespace UcanLab\LaravelDacapo\App\UseCase\Console;
 
-use UcanLab\LaravelDacapo\App\Port\SchemasStorage;
+use UcanLab\LaravelDacapo\App\Port\SchemaListRepository;
 
 class DacapoInitCommandUseCase
 {
-    protected SchemasStorage $storage;
+    protected SchemaListRepository $repository;
 
     /**
      * DacapoInitCommandUseCase constructor.
-     * @param SchemasStorage $storage
+     * @param SchemaListRepository $repository
      */
-    public function __construct(SchemasStorage $storage)
+    public function __construct(SchemaListRepository $repository)
     {
-        $this->storage = $storage;
+        $this->repository = $repository;
     }
 
     /**
@@ -23,8 +23,8 @@ class DacapoInitCommandUseCase
      */
     public function handle(string $version): bool
     {
-        $this->storage->makeDirectory();
-        $this->storage->saveFile('default.yml', $this->storage->getLaravelDefaultSchemaFile($version));
+        $this->repository->makeDirectory();
+        $this->repository->saveFile('default.yml', $this->repository->getLaravelDefaultSchemaFile($version));
 
         return true;
     }

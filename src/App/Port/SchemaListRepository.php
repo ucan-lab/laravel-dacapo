@@ -2,15 +2,15 @@
 
 namespace UcanLab\LaravelDacapo\App\Port;
 
-interface SchemasStorage
+use UcanLab\LaravelDacapo\App\Domain\Entity\SchemaList;
+
+interface SchemaListRepository
 {
+    public function get(): SchemaList;
+
     public function makeDirectory(): bool;
 
     public function deleteDirectory(): bool;
-
-    public function getFiles(): array;
-
-    public function getYamlContent(string $name): array;
 
     public function saveFile(string $name, string $content): bool;
 

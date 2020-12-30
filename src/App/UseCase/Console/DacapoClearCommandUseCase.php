@@ -3,19 +3,19 @@
 namespace UcanLab\LaravelDacapo\App\UseCase\Console;
 
 use Illuminate\Support\Str;
-use UcanLab\LaravelDacapo\App\Port\MigrationsStorage;
+use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
 
 class DacapoClearCommandUseCase
 {
-    protected MigrationsStorage $storage;
+    protected MigrationListRepository $repository;
 
     /**
      * DacapoClearCommandUseCase constructor.
-     * @param MigrationsStorage $storage
+     * @param MigrationListRepository $repository
      */
-    public function __construct(MigrationsStorage $storage)
+    public function __construct(MigrationListRepository $repository)
     {
-        $this->storage = $storage;
+        $this->repository = $repository;
     }
 
     /**
@@ -25,9 +25,9 @@ class DacapoClearCommandUseCase
     {
         $deletedFiles = [];
 
-        foreach ($this->storage->getFiles() as $fileName) {
+        foreach ($this->repository->getFiles() as $fileName) {
             if ($this->isFileGeneratedByDacapo($fileName)) {
-                if ($this->storage->delete($fileName)) {
+                if ($this->repository->delete($fileName)) {
                     $deletedFiles[] = $fileName;
                 }
             }

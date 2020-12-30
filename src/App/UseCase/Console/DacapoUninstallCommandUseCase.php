@@ -2,19 +2,19 @@
 
 namespace UcanLab\LaravelDacapo\App\UseCase\Console;
 
-use UcanLab\LaravelDacapo\App\Port\SchemasStorage;
+use UcanLab\LaravelDacapo\App\Port\SchemaListRepository;
 
 class DacapoUninstallCommandUseCase
 {
-    protected SchemasStorage $storage;
+    protected SchemaListRepository $repository;
 
     /**
      * DacapoUninstallCommandUseCase constructor.
-     * @param SchemasStorage $storage
+     * @param SchemaListRepository $repository
      */
-    public function __construct(SchemasStorage $storage)
+    public function __construct(SchemaListRepository $repository)
     {
-        $this->storage = $storage;
+        $this->repository = $repository;
     }
 
     /**
@@ -22,6 +22,6 @@ class DacapoUninstallCommandUseCase
      */
     public function handle(): bool
     {
-        return $this->storage->deleteDirectory();
+        return $this->repository->deleteDirectory();
     }
 }

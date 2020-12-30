@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
-use UcanLab\LaravelDacapo\App\Port\MigrationsStorage;
+use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
 
-class InMemoryMigrationsStorage implements MigrationsStorage
+class InMemoryMigrationListRepository implements MigrationListRepository
 {
     private array $files;
 

@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\App\Port;
 
-interface MigrationsStorage
+interface MigrationListRepository
 {
     public function getFiles(): array;
 

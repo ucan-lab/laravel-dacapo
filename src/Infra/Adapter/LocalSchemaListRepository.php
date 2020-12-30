@@ -2,12 +2,35 @@
 
 namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
+use Exception;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Yaml\Yaml;
-use UcanLab\LaravelDacapo\App\Port\SchemasStorage;
+use UcanLab\LaravelDacapo\App\Domain\Entity\SchemaList;
+use UcanLab\LaravelDacapo\App\Port\SchemaListRepository;
 
-class LocalSchemasStorage implements SchemasStorage
+class LocalSchemaListRepository implements SchemaListRepository
 {
+    /**
+     * @return SchemaList
+     * @throws Exception
+     */
+    public function get(): SchemaList
+    {
+        $schemaList = new SchemaList();
+
+        foreach ($this->getFiles() as $file) {
+            $yaml = $this->getYamlContent($file);
+
+            try {
+                $schemaList->merge(SchemaList::factoryFromYaml($yaml));
+            } catch (Exception $e) {
+                throw new Exception(sprintf('%s, by %s', $e->getMessage(), $file), 0, $e);
+            }
+        }
+
+        return $schemaList;
+    }
+
     /**
      * @return bool
      */
@@ -34,33 +57,6 @@ class LocalSchemasStorage implements SchemasStorage
         }
 
         return true;
-    }
-
-    /**
-     * @return array
-     */
-    public function getFiles(): array
-    {
-        $files = File::files($this->getPath());
-
-        $fileNames = [];
-
-        foreach ($files as $file) {
-            $fileNames[] = $file->getFilename();
-        }
-
-        return $fileNames;
-    }
-
-    /**
-     * @param string $name
-     * @return array
-     */
-    public function getYamlContent(string $name): array
-    {
-        $path = $this->getPath($name);
-
-        return Yaml::parseFile($path);
     }
 
     /**
@@ -117,5 +113,32 @@ class LocalSchemasStorage implements SchemasStorage
         $path = $this->getPath($name);
 
         return File::get($path);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFiles(): array
+    {
+        $files = File::files($this->getPath());
+
+        $fileNames = [];
+
+        foreach ($files as $file) {
+            $fileNames[] = $file->getFilename();
+        }
+
+        return $fileNames;
+    }
+
+    /**
+     * @param string $name
+     * @return array
+     */
+    protected function getYamlContent(string $name): array
+    {
+        $path = $this->getPath($name);
+
+        return Yaml::parseFile($path);
     }
 }

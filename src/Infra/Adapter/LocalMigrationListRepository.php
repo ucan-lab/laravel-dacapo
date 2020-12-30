@@ -3,9 +3,9 @@
 namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
 use Illuminate\Support\Facades\File;
-use UcanLab\LaravelDacapo\App\Port\MigrationsStorage;
+use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
 
-class LocalMigrationsStorage implements MigrationsStorage
+class LocalMigrationListRepository implements MigrationListRepository
 {
     /**
      * @return array

@@ -2,10 +2,19 @@
 
 namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
-use UcanLab\LaravelDacapo\App\Port\SchemasStorage;
+use UcanLab\LaravelDacapo\App\Domain\Entity\SchemaList;
+use UcanLab\LaravelDacapo\App\Port\SchemaListRepository;
 
-class InMemorySchemasStorage implements SchemasStorage
+class InMemorySchemaListRepository implements SchemaListRepository
 {
+    /**
+     * @return SchemaList
+     */
+    public function get(): SchemaList
+    {
+        return new SchemaList();
+    }
+
     /**
      * @return bool
      */

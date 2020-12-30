@@ -4,14 +4,14 @@ namespace UcanLab\LaravelDacapo\Providers;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use UcanLab\LaravelDacapo\App\Port\MigrationsStorage;
-use UcanLab\LaravelDacapo\App\Port\SchemasStorage;
+use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
+use UcanLab\LaravelDacapo\App\Port\SchemaListRepository;
 use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
 use UcanLab\LaravelDacapo\Console\DacapoCommand;
 use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
 use UcanLab\LaravelDacapo\Console\DacapoUninstallCommand;
-use UcanLab\LaravelDacapo\Infra\Adapter\LocalMigrationsStorage;
-use UcanLab\LaravelDacapo\Infra\Adapter\LocalSchemasStorage;
+use UcanLab\LaravelDacapo\Infra\Adapter\LocalMigrationListRepository;
+use UcanLab\LaravelDacapo\Infra\Adapter\LocalSchemaListRepository;
 
 /**
  * Class ConsoleServiceProvider.
@@ -19,8 +19,8 @@ use UcanLab\LaravelDacapo\Infra\Adapter\LocalSchemasStorage;
 class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     public array $bindings = [
-        MigrationsStorage::class => LocalMigrationsStorage::class,
-        SchemasStorage::class => LocalSchemasStorage::class,
+        SchemaListRepository::class => LocalSchemaListRepository::class,
+        MigrationListRepository::class => LocalMigrationListRepository::class,
     ];
 
     protected array $commands = [
