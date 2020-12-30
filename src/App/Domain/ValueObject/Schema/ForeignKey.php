@@ -3,8 +3,8 @@
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema;
 
 use Exception;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKeyConstraint\Reference;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKeyConstraint\ReferenceAction;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey\Reference;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey\ReferenceAction;
 
 class ForeignKey
 {

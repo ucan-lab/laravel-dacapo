@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKeyConstraint;
+namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey;
 
 class Reference
 {

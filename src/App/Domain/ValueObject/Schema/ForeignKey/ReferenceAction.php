@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKeyConstraint;
+namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey;
 
 class ReferenceAction
 {
@@ -10,7 +10,7 @@ class ReferenceAction
     /**
      * Reference constructor.
      * @param string|null $onUpdateAction
-     * @param string|null $onDeleteAction;
+     * @param string|null $onDeleteAction
      */
     public function __construct(?string $onUpdateAction, ?string $onDeleteAction)
     {
