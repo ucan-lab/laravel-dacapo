@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\App\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SchemaFile;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SchemaFileList;
 use UcanLab\LaravelDacapo\App\Port\SchemaListRepository;
 
 class LocalSchemaListRepository implements SchemaListRepository
@@ -20,7 +21,7 @@ class LocalSchemaListRepository implements SchemaListRepository
         $schemaList = new SchemaList();
 
         foreach ($this->getFiles() as $file) {
-            $yaml = $this->getYamlContent($file);
+            $yaml = $this->parseYaml($file);
 
             try {
                 $schemaList->merge(SchemaList::factoryFromYaml($yaml));
@@ -96,40 +97,27 @@ class LocalSchemaListRepository implements SchemaListRepository
     }
 
     /**
-     * @param string $name
-     * @return string
+     * @return SchemaFileList
      */
-    protected function getContent(string $name): string
-    {
-        $path = $this->getPath($name);
-
-        return File::get($path);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getFiles(): array
+    protected function getFiles(): SchemaFileList
     {
         $files = File::files($this->getPath());
 
-        $fileNames = [];
+        $schemaFileList = new SchemaFileList();
 
         foreach ($files as $file) {
-            $fileNames[] = $file->getFilename();
+            $schemaFileList->add(new SchemaFile($file->getFilename(), $file->getContents()));
         }
 
-        return $fileNames;
+        return $schemaFileList;
     }
 
     /**
-     * @param string $name
+     * @param SchemaFile $file
      * @return array
      */
-    protected function getYamlContent(string $name): array
+    protected function parseYaml(SchemaFile $file): array
     {
-        $path = $this->getPath($name);
-
-        return Yaml::parseFile($path);
+        return Yaml::parse($file->getContents());
     }
 }

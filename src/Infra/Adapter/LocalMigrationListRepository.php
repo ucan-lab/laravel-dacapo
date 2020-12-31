@@ -4,24 +4,41 @@ namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
 use Illuminate\Support\Facades\File;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFile;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
+use Exception;
 
 class LocalMigrationListRepository implements MigrationListRepository
 {
+    protected string $basePath;
+
     /**
-     * @return array
+     * LocalMigrationListRepository constructor.
      */
-    public function getFiles(): array
+    public function __construct()
+    {
+        $this->basePath = database_path('migrations');
+    }
+
+    /**
+     * @return MigrationFileList
+     */
+    public function getFiles(): MigrationFileList
     {
         $files = File::files($this->getPath());
 
-        $fileNames = [];
+        $migrationFileList = new MigrationFileList();
 
         foreach ($files as $file) {
-            $fileNames[] = $file->getFilename();
+            try {
+                $migrationFile = new MigrationFile($file->getFilename(), $file->getContents());
+                $migrationFileList->add($migrationFile);
+            } catch (Exception $exception) {
+                // skip
+            }
         }
 
-        return $fileNames;
+        return $migrationFileList;
     }
 
     /**
@@ -35,12 +52,12 @@ class LocalMigrationListRepository implements MigrationListRepository
     }
 
     /**
-     * @param string $name
+     * @param MigrationFile $file
      * @return bool
      */
-    public function delete(string $name): bool
+    public function delete(MigrationFile $file): bool
     {
-        File::delete($this->getPath($name));
+        File::delete($this->getPath($file->getName()));
 
         return true;
     }
@@ -52,9 +69,9 @@ class LocalMigrationListRepository implements MigrationListRepository
     protected function getPath(?string $fileName = null): string
     {
         if ($fileName) {
-            return database_path('migrations') . '/' . $fileName;
+            return $this->basePath . '/' . $fileName;
         }
 
-        return database_path('migrations');
+        return $this->basePath;
     }
 }

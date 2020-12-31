@@ -2,6 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration;
 
+use Exception;
+use Illuminate\Support\Str;
+
 class MigrationFile
 {
     protected string $name;
@@ -11,9 +14,12 @@ class MigrationFile
      * MigrationFile constructor.
      * @param string $name
      * @param string $contents
+     * @throws
      */
     public function __construct(string $name, string $contents)
     {
+        $this->validateName($name);
+
         $this->name = $name;
         $this->contents = $contents;
     }
@@ -32,5 +38,16 @@ class MigrationFile
     public function getContents(): string
     {
         return $this->contents;
+    }
+
+    /**
+     * @param string $name
+     * @throws Exception
+     */
+    protected function validateName(string $name): void
+    {
+        if (Str::startsWith($name, '1970_01_01') === false) {
+            throw new Exception(sprintf('$name: %s must start with 1970_01_01.', $name));
+        }
     }
 }

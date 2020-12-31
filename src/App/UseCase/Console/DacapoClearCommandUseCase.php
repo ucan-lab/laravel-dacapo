@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\App\UseCase\Console;
 
-use Illuminate\Support\Str;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
 
 class DacapoClearCommandUseCase
@@ -19,29 +19,16 @@ class DacapoClearCommandUseCase
     }
 
     /**
-     * @return array
+     * @return MigrationFileList
      */
-    public function handle(): array
+    public function handle(): MigrationFileList
     {
-        $deletedFiles = [];
+        $files = $this->repository->getFiles();
 
-        foreach ($this->repository->getFiles() as $fileName) {
-            if ($this->isFileGeneratedByDacapo($fileName)) {
-                if ($this->repository->delete($fileName)) {
-                    $deletedFiles[] = $fileName;
-                }
-            }
+        foreach ($files as $file) {
+            $this->repository->delete($file);
         }
 
-        return $deletedFiles;
-    }
-
-    /**
-     * @param string $fileName
-     * @return bool
-     */
-    private function isFileGeneratedByDacapo(string $fileName): bool
-    {
-        return Str::startsWith($fileName, '1970_01_01');
+        return $files;
     }
 }

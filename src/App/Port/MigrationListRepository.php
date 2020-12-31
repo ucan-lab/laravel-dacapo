@@ -3,12 +3,13 @@
 namespace UcanLab\LaravelDacapo\App\Port;
 
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFile;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFileList;
 
 interface MigrationListRepository
 {
-    public function getFiles(): array;
+    public function getFiles(): MigrationFileList;
 
     public function saveFile(MigrationFile $file): void;
 
-    public function delete(string $name): bool;
+    public function delete(MigrationFile $file): bool;
 }

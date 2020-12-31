@@ -3,52 +3,37 @@
 namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFile;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
 
 class InMemoryMigrationListRepository implements MigrationListRepository
 {
-    private array $files;
+    protected MigrationFileList $migrationFileList;
 
     /**
-     * InMemoryMigrationsStorage constructor.
-     * @param array $files
+     * InMemoryMigrationListRepository constructor.
+     * @param MigrationFileList $migrationFileList
      */
-    public function __construct(array $files = [])
+    public function __construct(MigrationFileList $migrationFileList)
     {
-        $this->files = $files;
+        $this->migrationFileList = $migrationFileList;
     }
 
     /**
-     * @return array
+     * @return MigrationFileList
      */
-    public function getFiles(): array
+    public function getFiles(): MigrationFileList
     {
-        return $this->files;
+        return $this->migrationFileList;
     }
 
     /**
-     * @param string $name
+     * @param MigrationFile $file
      * @return bool
      */
-    public function delete(string $name): bool
+    public function delete(MigrationFile $file): bool
     {
-        $key = array_search($name, $this->files);
-        unset($this->files[$key]);
-
         return true;
-    }
-
-    /**
-     * @param string|null $fileName
-     * @return string
-     */
-    protected function getPath(?string $fileName = null): string
-    {
-        if ($fileName) {
-            return '/tmp/' . $fileName;
-        }
-
-        return '/tmp';
     }
 
     /**
@@ -56,5 +41,6 @@ class InMemoryMigrationListRepository implements MigrationListRepository
      */
     public function saveFile(MigrationFile $file): void
     {
+        $this->migrationFileList->add($file);
     }
 }
