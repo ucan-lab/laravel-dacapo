@@ -9,11 +9,9 @@ interface SchemaListRepository
 {
     public function get(): SchemaList;
 
-    public function makeDirectory(): bool;
+    public function init(): bool;
 
-    public function deleteDirectory(): bool;
+    public function clear(): bool;
 
     public function saveFile(SchemaFile $file): bool;
-
-    public function getLaravelDefaultSchemaFile(string $version): string;
 }

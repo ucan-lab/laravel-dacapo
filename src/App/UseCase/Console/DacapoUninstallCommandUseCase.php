@@ -22,6 +22,6 @@ class DacapoUninstallCommandUseCase
      */
     public function handle(): bool
     {
-        return $this->repository->deleteDirectory();
+        return $this->repository->clear();
     }
 }

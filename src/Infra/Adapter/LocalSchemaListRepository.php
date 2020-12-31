@@ -35,7 +35,7 @@ class LocalSchemaListRepository implements SchemaListRepository
     /**
      * @return bool
      */
-    public function makeDirectory(): bool
+    public function init(): bool
     {
         $path = $this->getPath();
 
@@ -49,7 +49,7 @@ class LocalSchemaListRepository implements SchemaListRepository
     /**
      * @return bool
      */
-    public function deleteDirectory(): bool
+    public function clear(): bool
     {
         $path = $this->getPath();
 
@@ -71,15 +71,6 @@ class LocalSchemaListRepository implements SchemaListRepository
         File::put($path, $file->getContents());
 
         return true;
-    }
-
-    /**
-     * @param string $version
-     * @return string
-     */
-    public function getLaravelDefaultSchemaFile(string $version): string
-    {
-        return file_get_contents(__DIR__ . '/../Storage/default-schemas/' . $version . '.yml');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
+use Exception;
 use UcanLab\LaravelDacapo\App\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SchemaFile;
 use UcanLab\LaravelDacapo\App\Port\SchemaListRepository;
@@ -10,16 +11,29 @@ class InMemorySchemaListRepository implements SchemaListRepository
 {
     /**
      * @return SchemaList
+     * @throws Exception
      */
     public function get(): SchemaList
     {
-        return new SchemaList();
+        $schemaList = new SchemaList();
+
+        foreach ($this->getFiles() as $file) {
+            $yaml = $this->getYamlContent($file);
+
+            try {
+                $schemaList->merge(SchemaList::factoryFromYaml($yaml));
+            } catch (Exception $e) {
+                throw new Exception(sprintf('%s, by %s', $e->getMessage(), $file), 0, $e);
+            }
+        }
+
+        return $schemaList;
     }
 
     /**
      * @return bool
      */
-    public function makeDirectory(): bool
+    public function init(): bool
     {
         return true;
     }
@@ -27,7 +41,7 @@ class InMemorySchemaListRepository implements SchemaListRepository
     /**
      * @return bool
      */
-    public function deleteDirectory(): bool
+    public function clear(): bool
     {
         return true;
     }
@@ -56,14 +70,5 @@ class InMemorySchemaListRepository implements SchemaListRepository
     public function saveFile(SchemaFile $file): bool
     {
         return true;
-    }
-
-    /**
-     * @param string $version
-     * @return string
-     */
-    public function getLaravelDefaultSchemaFile(string $version): string
-    {
-        return file_get_contents(__DIR__ . '/../Storage/default-schemas/' . $version . '.yml');
     }
 }
