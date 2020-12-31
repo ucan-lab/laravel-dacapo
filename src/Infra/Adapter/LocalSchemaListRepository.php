@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\App\Domain\Entity\SchemaList;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SchemaFile;
 use UcanLab\LaravelDacapo\App\Port\SchemaListRepository;
 
 class LocalSchemaListRepository implements SchemaListRepository
@@ -60,15 +61,14 @@ class LocalSchemaListRepository implements SchemaListRepository
     }
 
     /**
-     * @param string $name
-     * @param string $content
+     * @param SchemaFile $file
      * @return bool
      */
-    public function saveFile(string $name, string $content): bool
+    public function saveFile(SchemaFile $file): bool
     {
-        $path = $this->getPath($name);
+        $path = $this->getPath($file->getName());
 
-        File::put($path, $content);
+        File::put($path, $file->getContents());
 
         return true;
     }

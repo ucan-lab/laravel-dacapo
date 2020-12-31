@@ -3,6 +3,7 @@
 namespace UcanLab\LaravelDacapo\App\Port;
 
 use UcanLab\LaravelDacapo\App\Domain\Entity\SchemaList;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SchemaFile;
 
 interface SchemaListRepository
 {
@@ -12,7 +13,7 @@ interface SchemaListRepository
 
     public function deleteDirectory(): bool;
 
-    public function saveFile(string $name, string $content): bool;
+    public function saveFile(SchemaFile $file): bool;
 
     public function getLaravelDefaultSchemaFile(string $version): string;
 }

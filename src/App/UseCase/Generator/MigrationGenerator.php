@@ -41,18 +41,18 @@ class MigrationGenerator
     {
         foreach ($schemaList as $schema) {
             if ($schema->hasColumnList()) {
-                [$name, $contents] = $this->schemaToCreateTableMigrationConverter->convert($schema);
-                $this->repository->saveFile($name, $contents);
+                $migrationFile = $this->schemaToCreateTableMigrationConverter->convert($schema);
+                $this->repository->saveFile($migrationFile);
             }
 
             if ($schema->hasSqlIndexList()) {
-                [$name, $contents] = $this->schemaToCreateIndexMigrationConverter->convert($schema);
-                $this->repository->saveFile($name, $contents);
+                $migrationFile = $this->schemaToCreateIndexMigrationConverter->convert($schema);
+                $this->repository->saveFile($migrationFile);
             }
 
             if ($schema->hasForeignKeyList()) {
-                [$name, $contents] = $this->schemaToConstraintForeignKeyMigrationConverter->convert($schema);
-                $this->repository->saveFile($name, $contents);
+                $migrationFile = $this->schemaToConstraintForeignKeyMigrationConverter->convert($schema);
+                $this->repository->saveFile($migrationFile);
             }
         }
     }

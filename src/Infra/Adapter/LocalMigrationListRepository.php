@@ -3,6 +3,7 @@
 namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
 use Illuminate\Support\Facades\File;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
 
 class LocalMigrationListRepository implements MigrationListRepository
@@ -24,14 +25,13 @@ class LocalMigrationListRepository implements MigrationListRepository
     }
 
     /**
-     * @param string $name
-     * @param string $contents
+     * @param MigrationFile $file
      */
-    public function saveFile(string $name, string $contents): void
+    public function saveFile(MigrationFile $file): void
     {
-        $path = $this->getPath($name);
+        $path = $this->getPath($file->getName());
 
-        File::put($path, $contents);
+        File::put($path, $file->getContents());
     }
 
     /**

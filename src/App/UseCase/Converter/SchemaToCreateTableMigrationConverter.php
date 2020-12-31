@@ -4,6 +4,7 @@ namespace UcanLab\LaravelDacapo\App\UseCase\Converter;
 
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\App\Domain\Entity\Schema;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFile;
 
 class SchemaToCreateTableMigrationConverter
 {
@@ -13,14 +14,11 @@ class SchemaToCreateTableMigrationConverter
 
     /**
      * @param Schema $schema
-     * @return array
+     * @return MigrationFile
      */
-    public function convert(Schema $schema): array
+    public function convert(Schema $schema): MigrationFile
     {
-        return [
-            $this->makeMigrationFileName($schema),
-            $this->makeMigrationContents($schema),
-        ];
+        return new MigrationFile($this->makeMigrationFileName($schema), $this->makeMigrationContents($schema));
     }
 
     /**

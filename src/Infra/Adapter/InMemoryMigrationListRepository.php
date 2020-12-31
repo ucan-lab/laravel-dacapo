@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
 
 class InMemoryMigrationListRepository implements MigrationListRepository
@@ -51,11 +52,9 @@ class InMemoryMigrationListRepository implements MigrationListRepository
     }
 
     /**
-     * @param string $name
-     * @param string $content
-     * @return void
+     * @param MigrationFile $file
      */
-    public function saveFile(string $name, string $content): void
+    public function saveFile(MigrationFile $file): void
     {
     }
 }
