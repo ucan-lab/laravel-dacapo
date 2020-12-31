@@ -25,7 +25,7 @@ class IndexTypeTest extends TestCase
     /**
      * @return array
      */
-    public  function dataResolve(): array
+    public function dataResolve(): array
     {
         return [
             'columns:test1,test2' => [
@@ -65,7 +65,7 @@ class IndexTypeTest extends TestCase
     /**
      * @return array
      */
-    public  function dataCreateIndexMigrationDownMethod(): array
+    public function dataCreateIndexMigrationDownMethod(): array
     {
         return [
             'columns:test1,test2' => [

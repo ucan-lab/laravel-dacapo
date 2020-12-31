@@ -53,7 +53,34 @@ class SqlIndex
         $name = $attributes['name'] ?? null;
         $algorithm = $attributes['algorithm'] ?? null;
 
-        return new SqlIndex($indexType, $columns, $name, $algorithm);
+        return new self($indexType, $columns, $name, $algorithm);
+    }
+
+    /**
+     * @return string
+     * @throws
+     */
+    public function createIndexMigrationUpMethod(): string
+    {
+        if ($this->hasArgs()) {
+            return '$table->' . sprintf('%s(%s, %s);', $this->type->getUpMethodName(), $this->getColumns(), $this->makeArgs());
+        }
+
+        return '$table->' . sprintf('%s(%s);', $this->type->getUpMethodName(), $this->getColumns());
+    }
+
+    /**
+     * @return string
+     */
+    public function createIndexMigrationDownMethod(): string
+    {
+        if ($this->name) {
+            return '$table->' . sprintf("%s('%s');", $this->type->getDownMethodName(), $this->name);
+        } elseif (is_array($this->columns)) {
+            return '$table->' . sprintf("%s(['%s']);", $this->type->getDownMethodName(), implode("', '", $this->columns));
+        }
+
+        return '$table->' . sprintf("%s(['%s']);", $this->type->getDownMethodName(), $this->columns);
     }
 
     /**
@@ -70,33 +97,6 @@ class SqlIndex
         }
 
         throw new Exception(sprintf('%s class not found exception.', $indexTypeClass));
-    }
-
-    /**
-     * @return string
-     * @throws
-     */
-    public function createIndexMigrationUpMethod(): string
-    {
-        if ($this->hasArgs()) {
-            return '$table->' . sprintf("%s(%s, %s);", $this->type->getUpMethodName(), $this->getColumns(), $this->makeArgs());
-        }
-
-        return '$table->' . sprintf("%s(%s);", $this->type->getUpMethodName(), $this->getColumns());
-    }
-
-    /**
-     * @return string
-     */
-    public function createIndexMigrationDownMethod(): string
-    {
-        if ($this->name) {
-            return '$table->' . sprintf("%s('%s');", $this->type->getDownMethodName(), $this->name);
-        } elseif (is_array($this->columns)) {
-            return '$table->' . sprintf("%s(['%s']);", $this->type->getDownMethodName(), implode("', '", $this->columns));
-        }
-
-        return '$table->' . sprintf("%s(['%s']);", $this->type->getDownMethodName(), $this->columns);
     }
 
     /**

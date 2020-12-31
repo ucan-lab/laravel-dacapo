@@ -24,7 +24,7 @@ class TimestampsTzType implements ColumnType
     public function createMigrationMethod(ColumnName $columnName): string
     {
         if (is_int($this->args)) {
-            return sprintf("->timestampsTz(%d)", $this->args);
+            return sprintf('->timestampsTz(%d)', $this->args);
         }
 
         return '->timestampsTz()';

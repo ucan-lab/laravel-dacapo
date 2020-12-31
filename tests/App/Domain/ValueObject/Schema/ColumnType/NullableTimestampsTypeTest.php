@@ -27,11 +27,11 @@ class NullableTimestampsTypeTest extends TestCase
     {
         return [
             'precision:null' => [
-                'expected' => "->nullableTimestamps()",
+                'expected' => '->nullableTimestamps()',
                 'precision' => null,
             ],
             'precision:0' => [
-                'expected' => "->nullableTimestamps(0)",
+                'expected' => '->nullableTimestamps(0)',
                 'precision' => 0,
             ],
         ];

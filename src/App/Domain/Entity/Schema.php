@@ -36,7 +36,7 @@ class Schema
      * @param Collation $collation
      * @param Temporary $temporary
      */
-    public function __construct (
+    public function __construct(
         TableName $tableName,
         ColumnList $columnList,
         SqlIndexList $sqlIndexList,
@@ -67,6 +67,7 @@ class Schema
         $name = new TableName($name);
 
         $columnList = new ColumnList();
+
         if (isset($attributes['columns'])) {
             foreach ($attributes['columns'] as $columnName => $columnAttributes) {
                 $column = Column::factoryFromYaml($columnName, $columnAttributes);
@@ -75,6 +76,7 @@ class Schema
         }
 
         $sqlIndexList = new SqlIndexList();
+
         if (isset($attributes['indexes'])) {
             foreach ($attributes['indexes'] as $indexAttributes) {
                 $sqlIndex = SqlIndex::factoryFromYaml($indexAttributes);
@@ -83,6 +85,7 @@ class Schema
         }
 
         $foreignKeyList = new ForeignKeyList();
+
         if (isset($attributes['foreign_keys'])) {
             foreach ($attributes['foreign_keys'] as $foreignKeyAttribute) {
                 $foreign = ForeignKey::factoryFromYaml($foreignKeyAttribute);
@@ -95,7 +98,7 @@ class Schema
         $collation = new Collation($attributes['collation'] ?? null);
         $temporary = new Temporary($attributes['temporary'] ?? false);
 
-        return new Schema (
+        return new self(
             $name,
             $columnList,
             $sqlIndexList,

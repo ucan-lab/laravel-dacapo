@@ -15,7 +15,7 @@ class DacapoCommandUseCase
      * @param SchemaListRepository $repository
      * @param MigrationGenerator $generator
      */
-    public function __construct (SchemaListRepository $repository, MigrationGenerator $generator)
+    public function __construct(SchemaListRepository $repository, MigrationGenerator $generator)
     {
         $this->repository = $repository;
         $this->generator = $generator;

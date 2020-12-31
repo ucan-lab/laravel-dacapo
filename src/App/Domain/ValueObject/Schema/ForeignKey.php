@@ -34,7 +34,7 @@ class ForeignKey
         $reference = new Reference($attributes['columns'], $attributes['references'], $attributes['on'], $attributes['name'] ?? null);
         $referenceAction = new ReferenceAction($attributes['onUpdate'] ?? null, $attributes['onDelete'] ?? null);
 
-        return new ForeignKey($reference, $referenceAction);
+        return new self($reference, $referenceAction);
     }
 
     /**

@@ -3,8 +3,6 @@
 namespace UcanLab\LaravelDacapo\Test\App\Domain\ValueObject\Schema\ColumnType;
 
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnName;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType\BigIncrementsType;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType\TimestampsType;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType\TimestampsTzType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
@@ -29,11 +27,11 @@ class TimestampsTzTypeTest extends TestCase
     {
         return [
             'precision:null' => [
-                'expected' => "->timestampsTz()",
+                'expected' => '->timestampsTz()',
                 'precision' => null,
             ],
             'precision:0' => [
-                'expected' => "->timestampsTz(0)",
+                'expected' => '->timestampsTz(0)',
                 'precision' => 0,
             ],
         ];

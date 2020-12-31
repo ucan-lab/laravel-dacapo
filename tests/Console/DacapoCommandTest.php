@@ -47,11 +47,13 @@ class DacapoCommandTest extends TestCase
             [$migrations, $schemas] = File::directories($dir);
 
             $expectedMigrationFileList = new MigrationFileList();
+
             foreach (File::files($migrations) as $file) {
                 $expectedMigrationFileList->add(new MigrationFile($file->getFilename(), $file->getContents()));
             }
 
             $schemaFileList = new SchemaFileList();
+
             foreach (File::files($schemas) as $file) {
                 $schemaFileList->add(new SchemaFile($file->getFilename(), $file->getContents()));
             }

@@ -1,9 +1,9 @@
-<?php declare( strict_types=1 );
+<?php declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema;
 
-use IteratorAggregate;
 use ArrayIterator;
+use IteratorAggregate;
 
 class ColumnList implements IteratorAggregate
 {

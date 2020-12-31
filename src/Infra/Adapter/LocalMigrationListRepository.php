@@ -2,11 +2,11 @@
 
 namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
+use Exception;
 use Illuminate\Support\Facades\File;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
-use Exception;
 
 class LocalMigrationListRepository implements MigrationListRepository
 {

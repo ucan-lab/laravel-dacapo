@@ -2,8 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnModifier;
 
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnModifier;
 use Exception;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnModifier;
 
 class DefaultModifier implements ColumnModifier
 {

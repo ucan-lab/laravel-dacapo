@@ -49,6 +49,7 @@ class SchemaToConstraintForeignKeyMigrationConverter
 
     /**
      * @return string
+     * @param Schema $schema
      */
     protected function makeMigrationContents(Schema $schema): string
     {

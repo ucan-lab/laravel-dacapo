@@ -12,6 +12,6 @@ class RememberTokenTypeTest extends TestCase
     {
         $columnName = new ColumnName('test');
         $columnType = new RememberTokenType();
-        $this->assertSame("->rememberToken()", $columnType->createMigrationMethod($columnName));
+        $this->assertSame('->rememberToken()', $columnType->createMigrationMethod($columnName));
     }
 }

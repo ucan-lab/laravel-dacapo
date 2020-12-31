@@ -24,7 +24,6 @@ class DacapoClearCommandTest extends TestCase
             ->expectsOutput('1970_01_01_000000_create_failed_jobs_table.php is deleted.')
             ->expectsOutput('1970_01_01_000000_create_password_resets_table.php is deleted.')
             ->expectsOutput('1970_01_01_000000_create_users_table.php is deleted.')
-            ->assertExitCode(0)
-        ;
+            ->assertExitCode(0);
     }
 }

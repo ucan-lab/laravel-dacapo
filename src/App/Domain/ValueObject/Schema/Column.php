@@ -45,8 +45,7 @@ class Column
 
             $columnType = self::factoryColumnTypeClass($attributes['type'], $attributes['args'] ?? null);
 
-            unset($attributes['type']);
-            unset($attributes['args']);
+            unset($attributes['type'], $attributes['args']);
 
             foreach ($attributes as $modifierName => $modifierValue) {
                 $modifierList->add(self::factoryColumnModifierClass($modifierName, $modifierValue));
@@ -55,7 +54,23 @@ class Column
             throw new Exception('Unsupported format exception.');
         }
 
-        return new Column($columnName, $columnType, $modifierList);
+        return new self($columnName, $columnType, $modifierList);
+    }
+
+    /**
+     * @return string
+     */
+    public function createColumnMigration(): string
+    {
+        $typeMethod = $this->type->createMigrationMethod($this->name);
+
+        $modifierMethod = '';
+
+        foreach ($this->modifierList as $modifier) {
+            $modifierMethod .= $modifier->createMigrationMethod();
+        }
+
+        return sprintf('$table%s%s;', $typeMethod, $modifierMethod);
     }
 
     /**
@@ -94,20 +109,5 @@ class Column
         }
 
         throw new Exception(sprintf('%s class not found exception.', $columnModifierClass));
-    }
-
-    /**
-     * @return string
-     */
-    public function createColumnMigration(): string
-    {
-        $typeMethod = $this->type->createMigrationMethod($this->name);
-
-        $modifierMethod = '';
-        foreach ($this->modifierList as $modifier) {
-            $modifierMethod .= $modifier->createMigrationMethod();
-        }
-
-        return sprintf('$table%s%s;', $typeMethod, $modifierMethod);
     }
 }

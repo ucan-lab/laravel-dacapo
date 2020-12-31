@@ -15,4 +15,3 @@ class GeometryCollectionTypeTest extends TestCase
         $this->assertSame("->geometryCollection('test')", $columnType->createMigrationMethod($columnName));
     }
 }
-

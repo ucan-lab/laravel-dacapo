@@ -54,7 +54,7 @@ class SchemaList implements IteratorAggregate
      * @return SchemaList
      * @throws
      */
-    public function merge(SchemaList $schemaList): self
+    public function merge(self $schemaList): self
     {
         $tableNames = [];
 
@@ -78,7 +78,7 @@ class SchemaList implements IteratorAggregate
     /**
      * @return ArrayIterator
      */
-    function getIterator(): ArrayIterator
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->attributes);
     }

@@ -3,8 +3,6 @@
 namespace UcanLab\LaravelDacapo\Test\App\Domain\ValueObject\Schema\ColumnType;
 
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnName;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType\BigIncrementsType;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType\TimestampType;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType\TimestampTzType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 

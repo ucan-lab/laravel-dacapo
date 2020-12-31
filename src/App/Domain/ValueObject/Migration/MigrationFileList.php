@@ -3,8 +3,8 @@
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration;
 
 use ArrayIterator;
-use IteratorAggregate;
 use Countable;
+use IteratorAggregate;
 
 class MigrationFileList implements IteratorAggregate, Countable
 {

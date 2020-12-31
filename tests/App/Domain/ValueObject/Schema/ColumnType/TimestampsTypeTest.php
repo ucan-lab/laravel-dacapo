@@ -27,11 +27,11 @@ class TimestampsTypeTest extends TestCase
     {
         return [
             'precision:null' => [
-                'expected' => "->timestamps()",
+                'expected' => '->timestamps()',
                 'precision' => null,
             ],
             'precision:0' => [
-                'expected' => "->timestamps(0)",
+                'expected' => '->timestamps(0)',
                 'precision' => 0,
             ],
         ];
