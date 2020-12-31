@@ -1,5 +1,6 @@
 {
     "name": "ucan-lab/laravel-dacapo",
+    "description": "Laravel migration support tools",
     "license": "MIT",
     "minimum-stability": "stable",
     "authors": [
