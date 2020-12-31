@@ -13,7 +13,7 @@ class InMemoryMigrationListRepository implements MigrationListRepository
      * InMemoryMigrationsStorage constructor.
      * @param array $files
      */
-    public function __construct(array $files)
+    public function __construct(array $files = [])
     {
         $this->files = $files;
     }
