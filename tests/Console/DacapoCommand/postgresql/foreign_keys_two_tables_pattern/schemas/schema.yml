@@ -1,0 +1,43 @@
+# https://dev.mysql.com/doc/refman/5.6/ja/create-table-foreign-keys.html
+# Foreign keys two tables pattern
+product:
+  columns:
+    category: integer
+    id: integer
+    price: decimal
+    name: string
+  indexes:
+    - columns: [category, id]
+      type: primary
+
+customer:
+  columns:
+    id: integer
+    price: decimal
+    name: string
+  indexes:
+    - columns: id
+      type: primary
+
+product_order:
+  columns:
+    no: increments
+    product_category: integer
+    product_id: integer
+    customer_id: integer
+  indexes:
+    - columns: [product_category, product_id]
+      type: index
+    - columns: customer_id
+      type: index
+  foreign_keys:
+    # Reference 2-column index
+    - columns: [product_category, product_id]
+      references: [category, id]
+      on: product
+      onUpdate: cascade
+      onDelete: restrict
+    # Reference 1-column index
+    - columns: customer_id
+      references: id
+      on: customer
