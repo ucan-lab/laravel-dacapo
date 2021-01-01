@@ -5,12 +5,18 @@ namespace UcanLab\LaravelDacapo\App\UseCase\Converter;
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\App\Domain\Entity\Schema;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFile;
+use UcanLab\LaravelDacapo\App\UseCase\Builder\DatabaseBuilder;
 
 class SchemaToCreateTableMigrationConverter
 {
     const MIGRATION_COLUMN_INDENT = '            ';
 
-    protected Schema $schema;
+    protected DatabaseBuilder $databaseBuilder;
+
+    public function __construct(DatabaseBuilder $databaseBuilder)
+    {
+        $this->databaseBuilder = $databaseBuilder;
+    }
 
     /**
      * @param Schema $schema
@@ -46,11 +52,50 @@ class SchemaToCreateTableMigrationConverter
     protected function makeMigrationContents(Schema $schema): string
     {
         $stub = file_get_contents(__DIR__ . '/../../../Infra/Storage/stubs/migration.create.stub');
+        $stub = str_replace('{{ namespace }}', $this->makeMigrationNamespace($schema), $stub);
         $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
-        $stub = str_replace('{{ table }}', $schema->getTableName(), $stub);
+        $stub = str_replace('{{ tableName }}', $schema->getTableName(), $stub);
+        $stub = str_replace('{{ tableComment }}', $this->makeMigrationTableComment($schema), $stub);
         $stub = str_replace('{{ up }}', $this->makeMigrationUp($schema), $stub);
 
         return $stub;
+    }
+
+    /**
+     * @param Schema $schema
+     * @return string
+     */
+    protected function makeMigrationNamespace(Schema $schema): string
+    {
+        if ($schema->hasTableComment()) {
+            $str = <<< 'EOF'
+            use Illuminate\Database\Migrations\Migration;
+            use Illuminate\Database\Schema\Blueprint;
+            use Illuminate\Support\Facades\DB;
+            use Illuminate\Support\Facades\Schema;
+            EOF;
+        } else {
+            $str = <<< 'EOF'
+            use Illuminate\Database\Migrations\Migration;
+            use Illuminate\Database\Schema\Blueprint;
+            use Illuminate\Support\Facades\Schema;
+            EOF;
+        }
+
+        return $str;
+    }
+
+    /**
+     * @param Schema $schema
+     * @return string
+     */
+    protected function makeMigrationTableComment(Schema $schema): string
+    {
+        if ($schema->hasTableComment() && $this->databaseBuilder->hasTableComment()) {
+            return $this->databaseBuilder->makeTableComment($schema);
+        }
+
+        return '';
     }
 
     /**

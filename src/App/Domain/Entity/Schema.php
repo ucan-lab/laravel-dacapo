@@ -11,12 +11,14 @@ use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKeyList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndex;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndexList;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\TableComment;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\TableName;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Temporary;
 
 class Schema
 {
     protected TableName $tableName;
+    protected TableComment $tableComment;
     protected ColumnList $columnList;
     protected SqlIndexList $sqlIndexList;
     protected ForeignKeyList $foreignKeyList;
@@ -28,6 +30,7 @@ class Schema
     /**
      * Schema constructor.
      * @param TableName $tableName
+     * @param TableComment $tableComment
      * @param ColumnList $columnList
      * @param SqlIndexList $sqlIndexList
      * @param ForeignKeyList $foreignKeyList
@@ -38,6 +41,7 @@ class Schema
      */
     public function __construct(
         TableName $tableName,
+        TableComment $tableComment,
         ColumnList $columnList,
         SqlIndexList $sqlIndexList,
         ForeignKeyList $foreignKeyList,
@@ -47,6 +51,7 @@ class Schema
         Temporary $temporary
     ) {
         $this->tableName = $tableName;
+        $this->tableComment = $tableComment;
         $this->columnList = $columnList;
         $this->sqlIndexList = $sqlIndexList;
         $this->foreignKeyList = $foreignKeyList;
@@ -93,6 +98,7 @@ class Schema
             }
         }
 
+        $tableComment = new TableComment($attributes['comment'] ?? null);
         $engine = new Engine($attributes['engine'] ?? null);
         $charset = new Charset($attributes['charset'] ?? null);
         $collation = new Collation($attributes['collation'] ?? null);
@@ -100,6 +106,7 @@ class Schema
 
         return new self(
             $name,
+            $tableComment,
             $columnList,
             $sqlIndexList,
             $foreignKeyList,
@@ -116,6 +123,22 @@ class Schema
     public function getTableName(): string
     {
         return $this->tableName->getName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTableComment(): string
+    {
+        return $this->tableComment->get();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTableComment(): bool
+    {
+        return $this->tableComment->exists();
     }
 
     /**

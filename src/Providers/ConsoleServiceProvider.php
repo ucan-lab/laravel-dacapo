@@ -2,10 +2,14 @@
 
 namespace UcanLab\LaravelDacapo\Providers;
 
+use Exception;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
 use UcanLab\LaravelDacapo\App\Port\SchemaListRepository;
+use UcanLab\LaravelDacapo\App\UseCase\Builder\DatabaseBuilder;
+use UcanLab\LaravelDacapo\App\UseCase\Builder\MysqlDatabaseBuilder;
+use UcanLab\LaravelDacapo\App\UseCase\Builder\PostgresqlDatabaseBuilder;
 use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
 use UcanLab\LaravelDacapo\Console\DacapoCommand;
 use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
@@ -30,13 +34,19 @@ class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvid
         DacapoUninstallCommand::class,
     ];
 
+    protected array $databaseBuilders = [
+        'mysql' => MysqlDatabaseBuilder::class,
+        'pgsql' => PostgresqlDatabaseBuilder::class,
+    ];
+
     /**
      * {@inheritdoc}
+     * @throws
      */
     public function register(): void
     {
-        $this->registerBindings();
         $this->registerCommands();
+        $this->registerBindings();
     }
 
     /**
@@ -47,15 +57,37 @@ class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvid
         return $this->commands;
     }
 
+    protected function registerCommands(): void
+    {
+        $this->commands($this->commands);
+    }
+
+    /**
+     * @throws Exception
+     */
     protected function registerBindings(): void
     {
         foreach ($this->bindings as $abstract => $concrete) {
             $this->app->bind($abstract, $concrete);
         }
+
+        $driver = $this->getDatabaseDriver();
+
+        if (isset($this->databaseBuilders[$driver]) === false) {
+            throw new Exception(sprintf('driver %s is not found.', $driver));
+        }
+
+        $this->app->bind(DatabaseBuilder::class, $this->databaseBuilders[$driver]);
     }
 
-    protected function registerCommands(): void
+    /**
+     * @return string
+     */
+    protected function getDatabaseDriver(): string
     {
-        $this->commands($this->commands);
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+
+        return (string) $driver;
     }
 }
