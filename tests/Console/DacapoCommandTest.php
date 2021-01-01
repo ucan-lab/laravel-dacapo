@@ -9,6 +9,8 @@ use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SchemaFile;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SchemaFileList;
 use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
 use UcanLab\LaravelDacapo\App\Port\SchemaListRepository;
+use UcanLab\LaravelDacapo\App\UseCase\Builder\DatabaseBuilder;
+use UcanLab\LaravelDacapo\App\UseCase\Builder\MysqlDatabaseBuilder;
 use UcanLab\LaravelDacapo\Infra\Adapter\InMemoryMigrationListRepository;
 use UcanLab\LaravelDacapo\Infra\Adapter\InMemorySchemaListRepository;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
@@ -26,6 +28,7 @@ class DacapoCommandTest extends TestCase
         $this->app->register(ConsoleServiceProvider::class);
 
         $actualMigrationFileList = new MigrationFileList();
+        $this->instance(DatabaseBuilder::class, new MysqlDatabaseBuilder());
         $this->instance(SchemaListRepository::class, new InMemorySchemaListRepository($schemaFileList));
         $this->instance(MigrationListRepository::class, new InMemoryMigrationListRepository($actualMigrationFileList));
         $this->artisan('dacapo')->assertExitCode(0);
