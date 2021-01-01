@@ -74,6 +74,14 @@ class Column
     }
 
     /**
+     * @return ColumnModifierList
+     */
+    public function getColumnModifierList(): ColumnModifierList
+    {
+        return $this->modifierList;
+    }
+
+    /**
      * @param string $name
      * @param $args
      * @return ColumnType

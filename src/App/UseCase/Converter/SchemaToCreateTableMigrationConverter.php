@@ -67,7 +67,7 @@ class SchemaToCreateTableMigrationConverter
      */
     protected function makeMigrationNamespace(Schema $schema): string
     {
-        if ($schema->hasTableComment()) {
+        if ($schema->useDbFacade()) {
             $str = <<< 'EOF'
             use Illuminate\Database\Migrations\Migration;
             use Illuminate\Database\Schema\Blueprint;

@@ -6,6 +6,7 @@ use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Charset;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Collation;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Column;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnList;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnModifier\DefaultRawModifier;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Engine;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKeyList;
@@ -219,5 +220,25 @@ class Schema
     public function getTemporary(): Temporary
     {
         return $this->temporary;
+    }
+
+    /**
+     * @return bool
+     */
+    public function useDbFacade(): bool
+    {
+        if ($this->tableComment->exists()) {
+            return true;
+        }
+
+        foreach ($this->columnList as $column) {
+            foreach ($column->getColumnModifierList() as $columnModifier) {
+                if ($columnModifier instanceof DefaultRawModifier) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
