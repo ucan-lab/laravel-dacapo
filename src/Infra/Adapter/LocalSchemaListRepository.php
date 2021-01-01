@@ -26,7 +26,7 @@ class LocalSchemaListRepository implements SchemaListRepository
             try {
                 $schemaList->merge(SchemaList::factoryFromYaml($yaml));
             } catch (Exception $e) {
-                throw new Exception(sprintf('%s, by %s', $e->getMessage(), $file), 0, $e);
+                throw new Exception(sprintf('%s, by %s', $e->getMessage(), $file->getName()), 0, $e);
             }
         }
 
