@@ -1,0 +1,27 @@
+example1:
+  columns:
+    id: bigIncrements
+    name: string
+    email: string
+  indexes:
+    - columns: name
+      type: unique
+
+example2:
+  columns:
+    id: bigIncrements
+    name: string
+    email: string
+  indexes:
+    - columns: [name, email]
+      type: unique
+
+example3:
+  columns:
+    id: bigIncrements
+    name: string
+    email: string
+  indexes:
+    - columns: [name, email]
+      type: unique
+      name: users_name_unique_index
