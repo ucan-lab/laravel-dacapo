@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class {{ class }} extends Migration
+class CreateTasksIndex extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class {{ class }} extends Migration
      */
     public function up()
     {
-        Schema::{{ connection }}table('{{ table }}', function (Blueprint $table) {
-            {{ up }}
+        Schema::connection('custom-connection')->table('tasks', function (Blueprint $table) {
+            $table->unique('user_id');
         });
     }
 
@@ -25,8 +25,8 @@ class {{ class }} extends Migration
      */
     public function down()
     {
-        Schema::{{ connection }}table('{{ table }}', function (Blueprint $table) {
-            {{ down }}
+        Schema::connection('custom-connection')->table('tasks', function (Blueprint $table) {
+            $table->dropUnique(['user_id']);
         });
     }
 }

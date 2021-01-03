@@ -46,6 +46,7 @@ class SchemaToCreateIndexMigrationConverter
     {
         $stub = file_get_contents(__DIR__ . '/../../../Infra/Storage/stubs/migration.update.stub');
         $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
+        $stub = str_replace('{{ connection }}', $this->makeMigrationConnection($schema), $stub);
         $stub = str_replace('{{ table }}', $schema->getTableName(), $stub);
         $stub = str_replace('{{ up }}', $this->makeMigrationUp($schema), $stub);
         $stub = str_replace('{{ down }}', $this->makeMigrationDown($schema), $stub);
@@ -60,6 +61,15 @@ class SchemaToCreateIndexMigrationConverter
     protected function makeMigrationClassName(Schema $schema): string
     {
         return Str::studly($this->makeMigrationName($schema));
+    }
+
+    /**
+     * @param Schema $schema
+     * @return string
+     */
+    protected function makeMigrationConnection(Schema $schema): string
+    {
+        return $schema->getConnection()->makeMigration();
     }
 
     /**

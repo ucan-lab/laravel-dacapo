@@ -11,7 +11,7 @@ class {{ class }} extends Migration
      */
     public function up()
     {
-        Schema::create('{{ tableName }}', function (Blueprint $table) {
+        Schema::{{ connection }}create('{{ tableName }}', function (Blueprint $table) {
             {{ up }}
         });{{ tableComment }}
     }
@@ -23,6 +23,6 @@ class {{ class }} extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('{{ tableName }}');
+        Schema::{{ connection }}dropIfExists('{{ tableName }}');
     }
 }

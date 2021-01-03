@@ -7,6 +7,7 @@ use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Collation;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Column;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnModifier\DefaultRawModifier;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Connection;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Engine;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKeyList;
@@ -18,6 +19,7 @@ use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Temporary;
 
 class Schema
 {
+    protected Connection $connection;
     protected TableName $tableName;
     protected TableComment $tableComment;
     protected ColumnList $columnList;
@@ -30,6 +32,7 @@ class Schema
 
     /**
      * Schema constructor.
+     * @param Connection $connection
      * @param TableName $tableName
      * @param TableComment $tableComment
      * @param ColumnList $columnList
@@ -41,6 +44,7 @@ class Schema
      * @param Temporary $temporary
      */
     public function __construct(
+        Connection $connection,
         TableName $tableName,
         TableComment $tableComment,
         ColumnList $columnList,
@@ -51,6 +55,7 @@ class Schema
         Collation $collation,
         Temporary $temporary
     ) {
+        $this->connection = $connection;
         $this->tableName = $tableName;
         $this->tableComment = $tableComment;
         $this->columnList = $columnList;
@@ -99,6 +104,7 @@ class Schema
             }
         }
 
+        $connection = new Connection($attributes['connection'] ?? null);
         $tableComment = new TableComment($attributes['comment'] ?? null);
         $engine = new Engine($attributes['engine'] ?? null);
         $charset = new Charset($attributes['charset'] ?? null);
@@ -106,6 +112,7 @@ class Schema
         $temporary = new Temporary($attributes['temporary'] ?? false);
 
         return new self(
+            $connection,
             $name,
             $tableComment,
             $columnList,
@@ -188,6 +195,14 @@ class Schema
     public function getForeignKeyList(): ForeignKeyList
     {
         return $this->foreignKeyList;
+    }
+
+    /**
+     * @return Connection
+     */
+    public function getConnection(): Connection
+    {
+        return $this->connection;
     }
 
     /**

@@ -54,6 +54,7 @@ class SchemaToCreateTableMigrationConverter
         $stub = file_get_contents(__DIR__ . '/../../../Infra/Storage/stubs/migration.create.stub');
         $stub = str_replace('{{ namespace }}', $this->makeMigrationNamespace($schema), $stub);
         $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
+        $stub = str_replace('{{ connection }}', $this->makeMigrationConnection($schema), $stub);
         $stub = str_replace('{{ tableName }}', $schema->getTableName(), $stub);
         $stub = str_replace('{{ tableComment }}', $this->makeMigrationTableComment($schema), $stub);
         $stub = str_replace('{{ up }}', $this->makeMigrationUp($schema), $stub);
@@ -105,6 +106,15 @@ class SchemaToCreateTableMigrationConverter
     protected function makeMigrationClassName(Schema $schema): string
     {
         return Str::studly($this->makeMigrationName($schema));
+    }
+
+    /**
+     * @param Schema $schema
+     * @return string
+     */
+    protected function makeMigrationConnection(Schema $schema): string
+    {
+        return $schema->getConnection()->makeMigration();
     }
 
     /**
