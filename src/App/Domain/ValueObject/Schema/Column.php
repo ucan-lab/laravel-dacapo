@@ -40,7 +40,7 @@ class Column
             } catch (Exception $exception) {
                 throw new Exception(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
             }
-        } elseif (is_bool($attributes)) {
+        } elseif (is_bool($attributes) || is_null($attributes)) {
             try {
                 $columnType = self::factoryColumnTypeClass($name);
             } catch (Exception $exception) {
@@ -108,7 +108,7 @@ class Column
         $columnTypeClass = __NAMESPACE__ . '\\ColumnType\\' . ucfirst($name) . 'Type';
 
         if (class_exists($columnTypeClass)) {
-            if ($args) {
+            if ($args !== null) {
                 return new $columnTypeClass($args);
             }
 
