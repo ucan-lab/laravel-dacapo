@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\App\Domain\Entity;
 
+use Exception;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Charset;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Collation;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\Column;
@@ -71,37 +72,41 @@ class Schema
      * @param string $name
      * @param array $attributes
      * @return Schema
-     * @throws
+     * @throws Exception
      */
     public static function factoryFromYaml(string $name, array $attributes): self
     {
-        $name = new TableName($name);
+        $tableName = new TableName($name);
 
-        $columnList = new ColumnList();
+        try {
+            $columnList = new ColumnList();
 
-        if (isset($attributes['columns'])) {
-            foreach ($attributes['columns'] as $columnName => $columnAttributes) {
-                $column = Column::factoryFromYaml($columnName, $columnAttributes);
-                $columnList->add($column);
+            if (isset($attributes['columns'])) {
+                foreach ($attributes['columns'] as $columnName => $columnAttributes) {
+                    $column = Column::factoryFromYaml($columnName, $columnAttributes);
+                    $columnList->add($column);
+                }
             }
-        }
 
-        $sqlIndexList = new SqlIndexList();
+            $sqlIndexList = new SqlIndexList();
 
-        if (isset($attributes['indexes'])) {
-            foreach ($attributes['indexes'] as $indexAttributes) {
-                $sqlIndex = SqlIndex::factoryFromYaml($indexAttributes);
-                $sqlIndexList->add($sqlIndex);
+            if (isset($attributes['indexes'])) {
+                foreach ($attributes['indexes'] as $indexAttributes) {
+                    $sqlIndex = SqlIndex::factoryFromYaml($indexAttributes);
+                    $sqlIndexList->add($sqlIndex);
+                }
             }
-        }
 
-        $foreignKeyList = new ForeignKeyList();
+            $foreignKeyList = new ForeignKeyList();
 
-        if (isset($attributes['foreign_keys'])) {
-            foreach ($attributes['foreign_keys'] as $foreignKeyAttribute) {
-                $foreign = ForeignKey::factoryFromYaml($foreignKeyAttribute);
-                $foreignKeyList->add($foreign);
+            if (isset($attributes['foreign_keys'])) {
+                foreach ($attributes['foreign_keys'] as $foreignKeyAttribute) {
+                    $foreign = ForeignKey::factoryFromYaml($foreignKeyAttribute);
+                    $foreignKeyList->add($foreign);
+                }
             }
+        } catch (Exception $exception) {
+            throw new Exception(sprintf('%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
         }
 
         $connection = new Connection($attributes['connection'] ?? null);
@@ -113,7 +118,7 @@ class Schema
 
         return new self(
             $connection,
-            $name,
+            $tableName,
             $tableComment,
             $columnList,
             $sqlIndexList,

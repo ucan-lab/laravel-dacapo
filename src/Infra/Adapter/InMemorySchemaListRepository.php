@@ -36,7 +36,7 @@ class InMemorySchemaListRepository implements SchemaListRepository
             try {
                 $schemaList->merge(SchemaList::factoryFromYaml($yaml));
             } catch (Exception $e) {
-                throw new Exception(sprintf('%s, by %s', $e->getMessage(), $file->getName()), 0, $e);
+                throw new Exception(sprintf('%s in %s', $e->getMessage(), $file->getName()), $e->getCode(), $e);
             }
         }
 

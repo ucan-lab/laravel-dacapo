@@ -25,6 +25,7 @@ class SchemaList implements IteratorAggregate
     /**
      * @param array $yaml
      * @return SchemaList
+     * @throws
      */
     public static function factoryFromYaml(array $yaml): self
     {

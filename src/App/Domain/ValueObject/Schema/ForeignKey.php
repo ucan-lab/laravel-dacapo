@@ -31,6 +31,18 @@ class ForeignKey
      */
     public static function factoryFromYaml($attributes): self
     {
+        if (isset($attributes['columns']) === false) {
+            throw new Exception('foreign_keys.columns field is required');
+        }
+
+        if (isset($attributes['references']) === false) {
+            throw new Exception('foreign_keys.references field is required');
+        }
+
+        if (isset($attributes['on']) === false) {
+            throw new Exception('foreign_keys.on field is required');
+        }
+
         $reference = new Reference($attributes['columns'], $attributes['references'], $attributes['on'], $attributes['name'] ?? null);
         $referenceAction = new ReferenceAction($attributes['onUpdate'] ?? null, $attributes['onDelete'] ?? null);
 

@@ -48,6 +48,14 @@ class SqlIndex
      */
     public static function factoryFromYaml($attributes): self
     {
+        if (isset($attributes['columns']) === false) {
+            throw new Exception('foreign_keys.columns field is required');
+        }
+
+        if (isset($attributes['type']) === false) {
+            throw new Exception('foreign_keys.type field is required');
+        }
+
         $columns = $attributes['columns'];
         $indexType = self::factorySqlIndexTypeClass($attributes['type']);
         $name = $attributes['name'] ?? null;

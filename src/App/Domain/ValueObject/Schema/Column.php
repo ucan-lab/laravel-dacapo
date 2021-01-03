@@ -35,23 +35,39 @@ class Column
         $modifierList = new ColumnModifierList();
 
         if (is_string($attributes)) {
-            $columnType = self::factoryColumnTypeClass($attributes);
+            try {
+                $columnType = self::factoryColumnTypeClass($attributes);
+            } catch (Exception $exception) {
+                throw new Exception(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
+            }
         } elseif (is_bool($attributes)) {
-            $columnType = self::factoryColumnTypeClass($name);
+            try {
+                $columnType = self::factoryColumnTypeClass($name);
+            } catch (Exception $exception) {
+                throw new Exception(sprintf('columns.%s', $exception->getMessage()), $exception->getCode(), $exception);
+            }
         } elseif (is_array($attributes)) {
             if (isset($attributes['type']) === false) {
-                throw new Exception('Column type is unspecified.');
+                throw new Exception(sprintf('columns.%s.type field is required', $name));
             }
 
-            $columnType = self::factoryColumnTypeClass($attributes['type'], $attributes['args'] ?? null);
+            try {
+                $columnType = self::factoryColumnTypeClass($attributes['type'], $attributes['args'] ?? null);
+            } catch (Exception $exception) {
+                throw new Exception(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
+            }
 
             unset($attributes['type'], $attributes['args']);
 
-            foreach ($attributes as $modifierName => $modifierValue) {
-                $modifierList->add(self::factoryColumnModifierClass($modifierName, $modifierValue));
+            try {
+                foreach ($attributes as $modifierName => $modifierValue) {
+                    $modifierList->add(self::factoryColumnModifierClass($modifierName, $modifierValue));
+                }
+            } catch (Exception $exception) {
+                throw new Exception(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
             }
         } else {
-            throw new Exception('Unsupported format exception.');
+            throw new Exception(sprintf('columns.%s field is unsupported format', $name));
         }
 
         return new self($columnName, $columnType, $modifierList);
@@ -99,7 +115,7 @@ class Column
             return new $columnTypeClass();
         }
 
-        throw new Exception(sprintf('%s class not found exception.', $columnTypeClass));
+        throw new Exception(sprintf('%s column type does not exist', $name));
     }
 
     /**
@@ -116,6 +132,6 @@ class Column
             return new $columnModifierClass($value);
         }
 
-        throw new Exception(sprintf('%s class not found exception.', $columnModifierClass));
+        throw new Exception(sprintf('%s column modifier does not exist', $name));
     }
 }
