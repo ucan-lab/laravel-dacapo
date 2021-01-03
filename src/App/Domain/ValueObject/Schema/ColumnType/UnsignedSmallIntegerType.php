@@ -2,17 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnName;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
-
-class UnsignedSmallIntegerType implements ColumnType
+class UnsignedSmallIntegerType extends BaseUnsignedIntegerType
 {
     /**
-     * @param ColumnName $columnName
      * @return string
      */
-    public function createMigrationMethod(ColumnName $columnName): string
+    protected function getName(): string
     {
-        return sprintf("->unsignedSmallInteger('%s')", $columnName->getName());
+        return 'unsignedSmallInteger';
     }
 }
