@@ -40,7 +40,7 @@ class Column
             } catch (Exception $exception) {
                 throw new Exception(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
             }
-        } elseif (is_bool($attributes) || is_null($attributes)) {
+        } elseif (is_bool($attributes) || $attributes === null) {
             try {
                 $columnType = self::factoryColumnTypeClass($name);
             } catch (Exception $exception) {
