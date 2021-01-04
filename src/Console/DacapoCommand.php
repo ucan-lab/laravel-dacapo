@@ -22,6 +22,7 @@ class DacapoCommand extends Command
         {--f|force : Force the operation to run when in production}
         {--no-migrate : Do not migrate}
         {--seed : Seed the database with records}
+        {--refresh : Migrate refresh (for debug)}
     ';
 
     /**
@@ -59,6 +60,14 @@ class DacapoCommand extends Command
             return;
         }
 
-        $this->call('migrate:fresh', ['--force' => true, '--seed' => $this->option('seed')]);
+        $this->call('migrate:fresh', ['--force' => true]);
+
+        if ($this->option('refresh')) {
+            $this->call('migrate:refresh', ['--force' => true]);
+        }
+
+        if ($this->option('seed')) {
+            $this->call('db:seed', ['--force' => true]);
+        }
     }
 }
