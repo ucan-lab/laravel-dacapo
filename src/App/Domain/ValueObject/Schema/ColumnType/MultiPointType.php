@@ -13,6 +13,6 @@ class MultiPointType implements ColumnType
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
-        return sprintf("->multiLineString('%s')", $columnName->getName());
+        return sprintf("->multiPoint('%s')", $columnName->getName());
     }
 }

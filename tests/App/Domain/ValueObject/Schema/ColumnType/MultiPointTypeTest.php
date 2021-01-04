@@ -3,7 +3,7 @@
 namespace UcanLab\LaravelDacapo\Test\App\Domain\ValueObject\Schema\ColumnType;
 
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnName;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType\MultiPolygonType;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType\MultiPointType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
 class MultiPointTypeTest extends TestCase
@@ -11,7 +11,7 @@ class MultiPointTypeTest extends TestCase
     public function testResolve(): void
     {
         $columnName = new ColumnName('test');
-        $columnType = new MultiPolygonType();
-        $this->assertSame("->multiPolygon('test')", $columnType->createMigrationMethod($columnName));
+        $columnType = new MultiPointType();
+        $this->assertSame("->multiPoint('test')", $columnType->createMigrationMethod($columnName));
     }
 }
