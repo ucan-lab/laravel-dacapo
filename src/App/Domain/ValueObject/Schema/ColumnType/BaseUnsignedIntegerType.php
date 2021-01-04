@@ -9,8 +9,6 @@ abstract class BaseUnsignedIntegerType implements ColumnType
 {
     protected bool $autoIncrement = false;
 
-    abstract protected function getName(): string;
-
     public function __construct($args = null)
     {
         if (is_array($args)) {
@@ -34,4 +32,6 @@ abstract class BaseUnsignedIntegerType implements ColumnType
 
         return sprintf("->%s('%s')", $this->getName(), $columnName->getName());
     }
+
+    abstract protected function getName(): string;
 }

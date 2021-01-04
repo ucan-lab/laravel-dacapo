@@ -10,13 +10,11 @@ abstract class BaseIntegerType implements ColumnType
     protected bool $autoIncrement = false;
     protected bool $unsigned = false;
 
-    abstract protected function getName(): string;
-
     public function __construct($args = null)
     {
         if (is_array($args) && count($args) === 2) {
             $this->autoIncrement = (bool) $args[0];
-            $this->unsigned =(bool) $args[1];
+            $this->unsigned = (bool) $args[1];
         } elseif (is_array($args) && count($args) === 1) {
             $this->autoIncrement = (bool) $args[0];
             $this->unsigned = false;
@@ -45,4 +43,6 @@ abstract class BaseIntegerType implements ColumnType
 
         return sprintf("->%s('%s')", $this->getName(), $columnName->getName());
     }
+
+    abstract protected function getName(): string;
 }

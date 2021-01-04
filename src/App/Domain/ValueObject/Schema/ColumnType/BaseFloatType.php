@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnName;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 
-class UnsignedDecimalType implements ColumnType
+abstract class BaseFloatType implements ColumnType
 {
     protected ?int $total = null;
     protected ?int $places = null;
@@ -33,11 +33,13 @@ class UnsignedDecimalType implements ColumnType
     public function createMigrationMethod(ColumnName $columnName): string
     {
         if (is_int($this->total) && is_int($this->places)) {
-            return sprintf("->unsignedDecimal('%s', %d, %d)", $columnName->getName(), $this->total, $this->places);
+            return sprintf("->%s('%s', %d, %d)", $this->getName(), $columnName->getName(), $this->total, $this->places);
         } elseif (is_int($this->total) && is_int($this->places) === false) {
-            return sprintf("->unsignedDecimal('%s', %d)", $columnName->getName(), $this->total);
+            return sprintf("->%s('%s', %d)", $this->getName(), $columnName->getName(), $this->total);
         }
 
-        return sprintf("->unsignedDecimal('%s')", $columnName->getName());
+        return sprintf("->%s('%s')", $this->getName(), $columnName->getName());
     }
+
+    abstract protected function getName(): string;
 }

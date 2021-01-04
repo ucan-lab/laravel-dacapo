@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnName;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 
-class DecimalType implements ColumnType
+abstract class BaseDecimalType implements ColumnType
 {
     protected ?int $total = null;
     protected ?int $places = null;
@@ -43,13 +43,15 @@ class DecimalType implements ColumnType
     public function createMigrationMethod(ColumnName $columnName): string
     {
         if (is_int($this->total) && is_int($this->places) && is_bool($this->unsigned)) {
-            return sprintf("->decimal('%s', %d, %d, %s)", $columnName->getName(), $this->total, $this->places, $this->unsigned ? 'true' : 'false');
+            return sprintf("->%s('%s', %d, %d, %s)", $this->getName(), $columnName->getName(), $this->total, $this->places, $this->unsigned ? 'true' : 'false');
         } elseif (is_int($this->total) && is_int($this->places)) {
-            return sprintf("->decimal('%s', %d, %d)", $columnName->getName(), $this->total, $this->places);
+            return sprintf("->%s('%s', %d, %d)", $this->getName(), $columnName->getName(), $this->total, $this->places);
         } elseif (is_int($this->total) && is_int($this->places) === false) {
-            return sprintf("->decimal('%s', %d)", $columnName->getName(), $this->total);
+            return sprintf("->%s('%s', %d)", $this->getName(), $columnName->getName(), $this->total);
         }
 
-        return sprintf("->decimal('%s')", $columnName->getName());
+        return sprintf("->%s('%s')", $this->getName(), $columnName->getName());
     }
+
+    abstract protected function getName(): string;
 }
