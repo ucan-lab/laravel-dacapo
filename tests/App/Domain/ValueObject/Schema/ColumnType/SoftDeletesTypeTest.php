@@ -10,12 +10,13 @@ class SoftDeletesTypeTest extends TestCase
 {
     /**
      * @param string $expected
+     * @param string $columnName
      * @param int|null $precision
      * @dataProvider dataResolve
      */
-    public function testResolve(string $expected, ?int $precision): void
+    public function testResolve(string $expected, string $columnName, ?int $precision): void
     {
-        $columnName = new ColumnName('test');
+        $columnName = new ColumnName($columnName);
         $columnType = new SoftDeletesType($precision);
         $this->assertSame($expected, $columnType->createMigrationMethod($columnName));
     }
@@ -26,12 +27,19 @@ class SoftDeletesTypeTest extends TestCase
     public function dataResolve(): array
     {
         return [
+            'columnName:empty' => [
+                'expected' => '->softDeletes()',
+                'columnName' => '',
+                'precision' => null,
+            ],
             'precision:null' => [
                 'expected' => "->softDeletes('test')",
+                'columnName' => 'test',
                 'precision' => null,
             ],
             'precision:0' => [
                 'expected' => "->softDeletes('test', 0)",
+                'columnName' => 'test',
                 'precision' => 0,
             ],
         ];

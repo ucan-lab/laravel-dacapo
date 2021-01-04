@@ -7,14 +7,15 @@ use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType;
 
 class SoftDeletesTzType implements ColumnType
 {
-    /**
-     * @var int|null
-     */
-    protected ?int $args;
+    protected ?int $precision = null;
 
+    /**
+     * SoftDeletesType constructor.
+     * @param int|null $args
+     */
     public function __construct(?int $args = null)
     {
-        $this->args = $args;
+        $this->precision = $args;
     }
 
     /**
@@ -23,8 +24,12 @@ class SoftDeletesTzType implements ColumnType
      */
     public function createMigrationMethod(ColumnName $columnName): string
     {
-        if (is_int($this->args)) {
-            return sprintf("->softDeletesTz('%s', %d)", $columnName->getName(), $this->args);
+        if ($columnName->getName() === '') {
+            return sprintf('->softDeletesTz()');
+        }
+
+        if (is_int($this->precision)) {
+            return sprintf("->softDeletesTz('%s', %d)", $columnName->getName(), $this->precision);
         }
 
         return sprintf("->softDeletesTz('%s')", $columnName->getName());

@@ -42,6 +42,7 @@ class Column
             }
         } elseif (is_bool($attributes) || $attributes === null) {
             try {
+                $columnName = new ColumnName('');
                 $columnType = self::factoryColumnTypeClass($name);
             } catch (Exception $exception) {
                 throw new Exception(sprintf('columns.%s', $exception->getMessage()), $exception->getCode(), $exception);
