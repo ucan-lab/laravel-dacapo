@@ -40,5 +40,10 @@
                 "UcanLab\\LaravelDacapo\\Providers\\ConsoleServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "test": [
+            "phpunit"
+        ]
     }
 }
