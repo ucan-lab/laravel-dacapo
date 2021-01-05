@@ -33,7 +33,7 @@ class SqlIndexList implements IteratorAggregate
     }
 
     /**
-     * @return ArrayIterator
+     * @return SqlIndex[] | ArrayIterator
      */
     public function getIterator(): ArrayIterator
     {

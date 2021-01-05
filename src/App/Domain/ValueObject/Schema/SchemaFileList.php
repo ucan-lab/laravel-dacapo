@@ -30,7 +30,7 @@ class SchemaFileList implements IteratorAggregate
     }
 
     /**
-     * @return ArrayIterator
+     * @return SchemaFile[] | ArrayIterator
      */
     public function getIterator(): ArrayIterator
     {

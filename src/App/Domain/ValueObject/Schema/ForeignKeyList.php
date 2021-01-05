@@ -33,7 +33,7 @@ class ForeignKeyList implements IteratorAggregate
     }
 
     /**
-     * @return ArrayIterator
+     * @return ForeignKey[] | ArrayIterator
      */
     public function getIterator(): ArrayIterator
     {
