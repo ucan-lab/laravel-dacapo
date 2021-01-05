@@ -26,7 +26,7 @@ class SchemaToCreateIndexMigrationConverter
      */
     protected function makeMigrationFileName(Schema $schema): string
     {
-        return sprintf('1970_01_01_000001_%s.php', $this->makeMigrationName($schema));
+        return sprintf('1970_01_01_000002_%s.php', $this->makeMigrationName($schema));
     }
 
     /**

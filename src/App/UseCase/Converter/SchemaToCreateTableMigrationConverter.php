@@ -33,7 +33,7 @@ class SchemaToCreateTableMigrationConverter
      */
     protected function makeMigrationFileName(Schema $schema): string
     {
-        return sprintf('1970_01_01_000000_%s.php', $this->makeMigrationName($schema));
+        return sprintf('1970_01_01_000001_%s.php', $this->makeMigrationName($schema));
     }
 
     /**
