@@ -2,7 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Console;
 
-use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use UcanLab\LaravelDacapo\App\UseCase\Console\DacapoClearCommandUseCase;
 

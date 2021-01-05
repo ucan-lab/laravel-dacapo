@@ -2,7 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Console;
 
-use Illuminate\Console\Command;
 use UcanLab\LaravelDacapo\App\UseCase\Console\DacapoUninstallCommandUseCase;
 
 /**
