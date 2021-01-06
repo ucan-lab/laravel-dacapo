@@ -39,21 +39,35 @@ class MigrationGenerator
      */
     public function generate(SchemaList $schemaList): void
     {
-        foreach ($schemaList as $schema) {
-            if ($schema->hasColumnList()) {
-                $migrationFile = $this->schemaToCreateTableMigrationConverter->convert($schema);
-                $this->repository->saveFile($migrationFile);
-            }
+        $this->generateCreateTable($schemaList);
+        $this->generateCreateIndex($schemaList);
+        $this->generateConstraintForeignKey($schemaList);
+    }
 
-            if ($schema->hasSqlIndexList()) {
-                $migrationFile = $this->schemaToCreateIndexMigrationConverter->convert($schema);
-                $this->repository->saveFile($migrationFile);
-            }
+    /**
+     * @param SchemaList $schemaList
+     */
+    public function generateCreateTable(SchemaList $schemaList): void
+    {
+        $fileList = $this->schemaToCreateTableMigrationConverter->convertList($schemaList);
+        $this->repository->saveFileList($fileList);
+    }
 
-            if ($schema->hasForeignKeyList()) {
-                $migrationFile = $this->schemaToConstraintForeignKeyMigrationConverter->convert($schema);
-                $this->repository->saveFile($migrationFile);
-            }
-        }
+    /**
+     * @param SchemaList $schemaList
+     */
+    public function generateCreateIndex(SchemaList $schemaList): void
+    {
+        $fileList = $this->schemaToCreateIndexMigrationConverter->convertList($schemaList);
+        $this->repository->saveFileList($fileList);
+    }
+
+    /**
+     * @param SchemaList $schemaList
+     */
+    public function generateConstraintForeignKey(SchemaList $schemaList): void
+    {
+        $fileList = $this->schemaToConstraintForeignKeyMigrationConverter->convertList($schemaList);
+        $this->repository->saveFileList($fileList);
     }
 }

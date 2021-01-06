@@ -4,7 +4,9 @@ namespace UcanLab\LaravelDacapo\App\UseCase\Converter;
 
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\App\Domain\Entity\Schema;
+use UcanLab\LaravelDacapo\App\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFile;
+use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\App\UseCase\Builder\DatabaseBuilder;
 
 class SchemaToCreateTableMigrationConverter
@@ -16,6 +18,23 @@ class SchemaToCreateTableMigrationConverter
     public function __construct(DatabaseBuilder $databaseBuilder)
     {
         $this->databaseBuilder = $databaseBuilder;
+    }
+
+    /**
+     * @param SchemaList $schemaList
+     * @return MigrationFileList
+     */
+    public function convertList(SchemaList $schemaList): MigrationFileList
+    {
+        $fileList = new MigrationFileList();
+
+        foreach ($schemaList as $schema) {
+            if ($schema->hasColumnList()) {
+                $fileList->add($this->convert($schema));
+            }
+        }
+
+        return $fileList;
     }
 
     /**

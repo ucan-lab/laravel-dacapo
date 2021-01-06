@@ -42,6 +42,16 @@ class LocalMigrationListRepository implements MigrationListRepository
     }
 
     /**
+     * @param MigrationFileList $fileList
+     */
+    public function saveFileList(MigrationFileList $fileList): void
+    {
+        foreach ($fileList as $file) {
+            $this->saveFile($file);
+        }
+    }
+
+    /**
      * @param MigrationFile $file
      */
     public function saveFile(MigrationFile $file): void
