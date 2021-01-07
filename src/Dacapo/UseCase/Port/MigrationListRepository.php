@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Port;
+namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Port;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;

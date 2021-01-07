@@ -8,7 +8,7 @@ use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFileList;
-use UcanLab\LaravelDacapo\Dacapo\Port\SchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
 
 class LocalSchemaListRepository implements SchemaListRepository
 {

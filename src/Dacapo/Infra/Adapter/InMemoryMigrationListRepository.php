@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
-use UcanLab\LaravelDacapo\Dacapo\Port\MigrationListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
 
 class InMemoryMigrationListRepository implements MigrationListRepository
 {

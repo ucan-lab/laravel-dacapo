@@ -3,7 +3,7 @@
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Console;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
-use UcanLab\LaravelDacapo\Dacapo\Port\MigrationListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
 
 class DacapoClearCommandUseCase
 {

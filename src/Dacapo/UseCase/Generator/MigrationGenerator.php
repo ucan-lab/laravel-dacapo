@@ -3,7 +3,7 @@
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Generator;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
-use UcanLab\LaravelDacapo\Dacapo\Port\MigrationListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToConstraintForeignKeyMigrationConverter;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToCreateIndexMigrationConverter;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToCreateTableMigrationConverter;

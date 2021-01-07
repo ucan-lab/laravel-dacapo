@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Console;
 
 use Exception;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFile;
-use UcanLab\LaravelDacapo\Dacapo\Port\SchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
 
 class DacapoInitCommandUseCase
 {

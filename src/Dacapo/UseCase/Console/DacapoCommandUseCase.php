@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Console;
 
-use UcanLab\LaravelDacapo\Dacapo\Port\SchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Generator\MigrationGenerator;
 
 class DacapoCommandUseCase
