@@ -2,8 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Test\App\Domain\ValueObject\Schema\SqlIndexType;
 
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndex;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SqlIndexType\UniqueType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SqlIndex;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SqlIndexType\UniqueType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
 class UniqueTypeTest extends TestCase

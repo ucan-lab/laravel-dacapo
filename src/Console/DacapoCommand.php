@@ -3,7 +3,7 @@
 namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Console\ConfirmableTrait;
-use UcanLab\LaravelDacapo\App\UseCase\Console\DacapoCommandUseCase;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoCommandUseCase;
 
 /**
  * Class DacapoCommand.

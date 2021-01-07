@@ -4,9 +4,9 @@ namespace UcanLab\LaravelDacapo\Infra\Adapter;
 
 use Exception;
 use Illuminate\Support\Facades\File;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFile;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFileList;
-use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Port\MigrationListRepository;
 
 class LocalMigrationListRepository implements MigrationListRepository
 {

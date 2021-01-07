@@ -3,15 +3,15 @@
 namespace UcanLab\LaravelDacapo\Test\App\UseCase\Console;
 
 use Illuminate\Support\Facades\File;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFile;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Migration\MigrationFileList;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SchemaFile;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\SchemaFileList;
-use UcanLab\LaravelDacapo\App\Port\MigrationListRepository;
-use UcanLab\LaravelDacapo\App\Port\SchemaListRepository;
-use UcanLab\LaravelDacapo\App\UseCase\Builder\DatabaseBuilder;
-use UcanLab\LaravelDacapo\App\UseCase\Builder\MysqlDatabaseBuilder;
-use UcanLab\LaravelDacapo\App\UseCase\Builder\PostgresqlDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFile;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFileList;
+use UcanLab\LaravelDacapo\Dacapo\Port\MigrationListRepository;
+use UcanLab\LaravelDacapo\Dacapo\Port\SchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\DatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\MysqlDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\PostgresqlDatabaseBuilder;
 use UcanLab\LaravelDacapo\Infra\Adapter\InMemoryMigrationListRepository;
 use UcanLab\LaravelDacapo\Infra\Adapter\InMemorySchemaListRepository;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;

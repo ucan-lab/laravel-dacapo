@@ -2,8 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Test\App\Domain\ValueObject\Schema\ColumnType;
 
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnName;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ColumnType\TimestampsTzType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ColumnName;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ColumnType\TimestampsTzType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
 class TimestampsTzTypeTest extends TestCase

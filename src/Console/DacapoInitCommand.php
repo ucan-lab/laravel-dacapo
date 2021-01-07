@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Console;
 
-use UcanLab\LaravelDacapo\App\UseCase\Console\DacapoInitCommandUseCase;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoInitCommandUseCase;
 
 /**
  * Class DacapoInitCommand

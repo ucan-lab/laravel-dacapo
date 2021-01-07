@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Test\App\Domain\ValueObject\Schema;
 
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey\Reference;
-use UcanLab\LaravelDacapo\App\Domain\ValueObject\Schema\ForeignKey\ReferenceAction;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ForeignKey;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ForeignKey\Reference;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ForeignKey\ReferenceAction;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
 class ForeignKeyTest extends TestCase
