@@ -57,7 +57,7 @@ class DacapoInitCommandUseCase
      */
     protected function makeSchemaFile(string $version): SchemaFile
     {
-        $path = sprintf('%s/../../Infra/Storage/default-schemas/%s.yml', __DIR__, $version);
+        $path = sprintf('%s/../../App/Storage/default-schemas/%s.yml', __DIR__, $version);
 
         return new SchemaFile('default.yml', file_get_contents($path));
     }

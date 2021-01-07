@@ -63,7 +63,7 @@ class SchemaToCreateIndexMigrationConverter
      */
     protected function makeMigrationContents(Schema $schema): string
     {
-        $stub = file_get_contents(__DIR__ . '/../../Infra/Storage/stubs/migration.update.stub');
+        $stub = file_get_contents(__DIR__ . '/../../App/Storage/stubs/migration.update.stub');
         $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
         $stub = str_replace('{{ connection }}', $this->makeMigrationConnection($schema), $stub);
         $stub = str_replace('{{ table }}', $schema->getTableName(), $stub);

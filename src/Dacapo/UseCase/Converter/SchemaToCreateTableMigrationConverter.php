@@ -70,7 +70,7 @@ class SchemaToCreateTableMigrationConverter
      */
     protected function makeMigrationContents(Schema $schema): string
     {
-        $stub = file_get_contents(__DIR__ . '/../../Infra/Storage/stubs/migration.create.stub');
+        $stub = file_get_contents(__DIR__ . '/../../App/Storage/stubs/migration.create.stub');
         $stub = str_replace('{{ namespace }}', $this->makeMigrationNamespace($schema), $stub);
         $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
         $stub = str_replace('{{ connection }}', $this->makeMigrationConnection($schema), $stub);
