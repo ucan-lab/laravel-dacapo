@@ -9,13 +9,13 @@ use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
 use UcanLab\LaravelDacapo\Console\DacapoCommand;
 use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
 use UcanLab\LaravelDacapo\Console\DacapoUninstallCommand;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalMigrationListRepository;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalSchemaListRepository;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\DatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\MysqlDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\PostgresqlDatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalMigrationListRepository;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalSchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
 
 /**
  * Class ConsoleServiceProvider.
