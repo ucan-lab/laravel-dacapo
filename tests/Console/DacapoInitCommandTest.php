@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Test\App\UseCase\Console;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFileList;
 use UcanLab\LaravelDacapo\Dacapo\Port\SchemaListRepository;
-use UcanLab\LaravelDacapo\Infra\Adapter\InMemorySchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemorySchemaListRepository;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
 use UcanLab\LaravelDacapo\Test\TestCase;
 

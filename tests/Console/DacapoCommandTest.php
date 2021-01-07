@@ -12,8 +12,8 @@ use UcanLab\LaravelDacapo\Dacapo\Port\SchemaListRepository;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\DatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\MysqlDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\PostgresqlDatabaseBuilder;
-use UcanLab\LaravelDacapo\Infra\Adapter\InMemoryMigrationListRepository;
-use UcanLab\LaravelDacapo\Infra\Adapter\InMemorySchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemoryMigrationListRepository;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemorySchemaListRepository;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
 use UcanLab\LaravelDacapo\Test\TestCase;
 

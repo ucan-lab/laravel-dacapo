@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Infra\Adapter;
+namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
 use Exception;
 use Illuminate\Support\Facades\File;
