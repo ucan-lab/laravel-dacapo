@@ -21,9 +21,9 @@ class DacapoClearCommandTest extends TestCase
         ])));
 
         $this->artisan('dacapo:clear')
-            ->expectsOutput('1970_01_01_000000_create_failed_jobs_table.php is deleted.')
-            ->expectsOutput('1970_01_01_000000_create_password_resets_table.php is deleted.')
-            ->expectsOutput('1970_01_01_000000_create_users_table.php is deleted.')
+            ->expectsOutput('Deleted: 1970_01_01_000000_create_failed_jobs_table.php')
+            ->expectsOutput('Deleted: 1970_01_01_000000_create_password_resets_table.php')
+            ->expectsOutput('Deleted: 1970_01_01_000000_create_users_table.php')
             ->assertExitCode(0);
     }
 }

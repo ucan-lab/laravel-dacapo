@@ -3,6 +3,7 @@
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Generator;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToConstraintForeignKeyMigrationConverter;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToCreateIndexMigrationConverter;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToCreateTableMigrationConverter;
@@ -36,38 +37,50 @@ class MigrationGenerator
 
     /**
      * @param SchemaList $schemaList
+     * @return MigrationFileList
      */
-    public function generate(SchemaList $schemaList): void
+    public function generate(SchemaList $schemaList): MigrationFileList
     {
-        $this->generateCreateTable($schemaList);
-        $this->generateCreateIndex($schemaList);
-        $this->generateConstraintForeignKey($schemaList);
+        $tableFileList = $this->generateCreateTable($schemaList);
+        $indexFileList = $this->generateCreateIndex($schemaList);
+        $foreignKeyFileList = $this->generateConstraintForeignKey($schemaList);
+
+        return $tableFileList->merge($indexFileList)->merge($foreignKeyFileList);
     }
 
     /**
      * @param SchemaList $schemaList
+     * @return MigrationFileList
      */
-    public function generateCreateTable(SchemaList $schemaList): void
+    public function generateCreateTable(SchemaList $schemaList): MigrationFileList
     {
         $fileList = $this->schemaToCreateTableMigrationConverter->convertList($schemaList);
         $this->repository->saveFileList($fileList);
+
+        return $fileList;
     }
 
     /**
      * @param SchemaList $schemaList
+     * @return MigrationFileList
      */
-    public function generateCreateIndex(SchemaList $schemaList): void
+    public function generateCreateIndex(SchemaList $schemaList): MigrationFileList
     {
         $fileList = $this->schemaToCreateIndexMigrationConverter->convertList($schemaList);
         $this->repository->saveFileList($fileList);
+
+        return $fileList;
     }
 
     /**
      * @param SchemaList $schemaList
+     * @return MigrationFileList
      */
-    public function generateConstraintForeignKey(SchemaList $schemaList): void
+    public function generateConstraintForeignKey(SchemaList $schemaList): MigrationFileList
     {
         $fileList = $this->schemaToConstraintForeignKeyMigrationConverter->convertList($schemaList);
         $this->repository->saveFileList($fileList);
+
+        return $fileList;
     }
 }

@@ -50,11 +50,15 @@ class DacapoCommand extends Command
     public function handle(): void
     {
         $this->call('dacapo:clear', ['--force' => true]);
-        $this->useCase->handle();
-        $this->info('Generated migration files.');
+
+        $fileList = $this->useCase->handle();
+
+        foreach ($fileList as $file) {
+            $this->line(sprintf('<fg=green>Generated:</> %s', $file->getName()));
+        }
 
         if ($this->option('no-migrate')) {
-            $this->info('No migrate.');
+            $this->line('No migrate.');
 
             return;
         }

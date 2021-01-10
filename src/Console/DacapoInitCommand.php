@@ -55,6 +55,6 @@ class DacapoInitCommand extends Command
             $this->useCase->handle('laravel8');
         }
 
-        $this->info('Generated default.yml');
+        $this->line('<fg=green>Generated:</> database/schemas/default.yml');
     }
 }

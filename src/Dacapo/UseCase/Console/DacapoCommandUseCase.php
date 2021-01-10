@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Console;
 
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Generator\MigrationGenerator;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
 
@@ -22,10 +23,10 @@ class DacapoCommandUseCase
     }
 
     /**
-     * @throws
+     * @return MigrationFileList
      */
-    public function handle(): void
+    public function handle(): MigrationFileList
     {
-        $this->generator->generate($this->repository->get());
+        return $this->generator->generate($this->repository->get());
     }
 }

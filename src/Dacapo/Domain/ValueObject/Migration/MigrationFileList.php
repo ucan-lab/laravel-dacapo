@@ -24,6 +24,14 @@ class MigrationFileList implements IteratorAggregate, Countable
     }
 
     /**
+     * @return array
+     */
+    public function get(): array
+    {
+        return $this->attributes;
+    }
+
+    /**
      * @param MigrationFile $file
      * @return MigrationFileList
      */
@@ -49,6 +57,18 @@ class MigrationFileList implements IteratorAggregate, Countable
     public function empty(): bool
     {
         return empty($this->attributes);
+    }
+
+    /**
+     * @param MigrationFileList $fileList
+     * @return MigrationFileList
+     */
+    public function merge(self $fileList): self
+    {
+        $this->attributes += $fileList->get();
+        ksort($this->attributes);
+
+        return $this;
     }
 
     /**
