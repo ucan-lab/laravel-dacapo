@@ -1,12 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Console;
 
-use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use UcanLab\LaravelDacapo\Storage\SchemasStorage;
-use UcanLab\LaravelDacapo\Storage\MigrationsStorage;
-use UcanLab\LaravelDacapo\Migrations\DacapoGenerator;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoCommandUseCase;
 
 /**
  * Class DacapoCommand.
@@ -21,8 +18,10 @@ class DacapoCommand extends Command
      * @var string
      */
     protected $signature = 'dacapo
+        {--f|force : Force the operation to run when in production}
         {--no-migrate : Do not migrate}
         {--seed : Seed the database with records}
+        {--refresh : Migrate refresh (for debug)}
     ';
 
     /**
@@ -30,39 +29,48 @@ class DacapoCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Generate migration file and migrate fresh.';
+    protected $description = 'Generate migrations from schemas and migrate:fresh command.';
 
     /**
-     * @return void
+     * @var DacapoCommandUseCase
      */
+    protected DacapoCommandUseCase $useCase;
+
+    /**
+     * DacapoCommand constructor.
+     * @param DacapoCommandUseCase $useCase
+     */
+    public function __construct(DacapoCommandUseCase $useCase)
+    {
+        parent::__construct();
+
+        $this->useCase = $useCase;
+    }
+
     public function handle(): void
     {
         $this->call('dacapo:clear', ['--force' => true]);
-        $this->runDacapoGenerate();
-        $this->info('Generated migration files.');
+
+        $fileList = $this->useCase->handle();
+
+        foreach ($fileList as $file) {
+            $this->line(sprintf('<fg=green>Generated:</> %s', $file->getName()));
+        }
 
         if ($this->option('no-migrate')) {
-            $this->info('No migrate.');
+            $this->line('No migrate.');
 
             return;
         }
 
-        $this->runMigrate();
-    }
+        $this->call('migrate:fresh', ['--force' => true]);
 
-    /**
-     * @return void
-     */
-    protected function runDacapoGenerate(): void
-    {
-        (new DacapoGenerator(new SchemasStorage(), new MigrationsStorage()))->run();
-    }
+        if ($this->option('refresh')) {
+            $this->call('migrate:refresh', ['--force' => true]);
+        }
 
-    /**
-     * @return void
-     */
-    protected function runMigrate(): void
-    {
-        $this->call('migrate:fresh', ['--seed' => $this->option('seed')]);
+        if ($this->option('seed')) {
+            $this->call('db:seed', ['--force' => true]);
+        }
     }
 }

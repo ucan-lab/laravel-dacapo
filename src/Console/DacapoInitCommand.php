@@ -1,13 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Console;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
-use UcanLab\LaravelDacapo\Storage\SchemasStorage;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoInitCommandUseCase;
 
 /**
- * Class DacapoInitCommand.
+ * Class DacapoInitCommand
  */
 class DacapoInitCommand extends Command
 {
@@ -17,9 +15,9 @@ class DacapoInitCommand extends Command
      * @var string
      */
     protected $signature = 'dacapo:init
-        {--laravel50 : Laravel 5.0 default schema}
-        {--laravel57 : Laravel 5.7 default schema}
-        {--laravel60 : Laravel 6.0 default schema}
+        {--laravel6 : Laravel 6.x default schema}
+        {--laravel7 : Laravel 7.x default schema}
+        {--laravel8 : Laravel 8.x default schema}
     ';
 
     /**
@@ -29,61 +27,34 @@ class DacapoInitCommand extends Command
      */
     protected $description = 'Init dacapo default schema.';
 
-    private $schemasStorage;
+    /**
+     * @var DacapoInitCommandUseCase
+     */
+    protected DacapoInitCommandUseCase $useCase;
 
-    public function __construct()
+    /**
+     * DacapoInitCommand constructor.
+     * @param DacapoInitCommandUseCase $useCase
+     */
+    public function __construct(DacapoInitCommandUseCase $useCase)
     {
         parent::__construct();
-        $this->schemasStorage = new SchemasStorage();
+
+        $this->useCase = $useCase;
     }
 
-    /**
-     * @return void
-     */
-    public function handle()
+    public function handle(): void
     {
-        if ($this->schemasStorage->exists()) {
-            if ($this->ask('The database/schemas directory already exists. Initialize ? [y/N]')) {
-                $this->schemasStorage->deleteDirectory();
-                $this->schemasStorage->makeDirectory();
-            } else {
-                $this->comment('Command Cancelled!');
-
-                return;
-            }
+        if ($this->option('laravel8')) {
+            $this->useCase->handle('laravel8');
+        } elseif ($this->option('laravel7')) {
+            $this->useCase->handle('laravel7');
+        } elseif ($this->option('laravel6')) {
+            $this->useCase->handle('laravel6');
         } else {
-            $this->schemasStorage->makeDirectory();
+            $this->useCase->handle('laravel8');
         }
 
-        $this->initSchema();
-    }
-
-    /**
-     * init dacapo default schema.
-     *
-     * @return void
-     */
-    private function initSchema(): void
-    {
-        if ($this->option('laravel50')) {
-            File::copy($this->getDefaultSchemasPath('laravel50_default.yml'), $this->schemasStorage->getPath('default.yml'));
-        } elseif ($this->option('laravel57')) {
-            File::copy($this->getDefaultSchemasPath('laravel57_default.yml'), $this->schemasStorage->getPath('default.yml'));
-        } elseif ($this->option('laravel60')) {
-            File::copy($this->getDefaultSchemasPath('laravel60_default.yml'), $this->schemasStorage->getPath('default.yml'));
-        } else {
-            File::copy($this->getDefaultSchemasPath('laravel70_default.yml'), $this->schemasStorage->getPath('default.yml'));
-        }
-
-        $this->info('Init dacapo default schema yaml.');
-    }
-
-    /**
-     * @param string $path
-     * @return string
-     */
-    private function getDefaultSchemasPath(string $path): string
-    {
-        return __DIR__ . '/../Storage/schemas/' . $path;
+        $this->line('<fg=green>Generated:</> database/schemas/default.yml');
     }
 }

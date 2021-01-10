@@ -1,86 +1,97 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Providers;
 
+use Exception;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
+use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
 use UcanLab\LaravelDacapo\Console\DacapoCommand;
 use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
-use UcanLab\LaravelDacapo\Console\DacapoSeedCommand;
-use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
-use UcanLab\LaravelDacapo\Console\DacapoFreshCommand;
-use UcanLab\LaravelDacapo\Console\DacapoModelsCommand;
 use UcanLab\LaravelDacapo\Console\DacapoUninstallCommand;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalMigrationListRepository;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalSchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\DatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\MysqlDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\PostgresqlDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\SqliteDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\SqlsrvDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
 
 /**
  * Class ConsoleServiceProvider.
  */
-class ConsoleServiceProvider extends ServiceProvider
+class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /** @var bool */
-    protected $defer = true;
+    public array $bindings = [
+        SchemaListRepository::class => LocalSchemaListRepository::class,
+        MigrationListRepository::class => LocalMigrationListRepository::class,
+    ];
 
-    public function boot(): void
-    {
-        $this->registerCommands();
-    }
+    protected array $commands = [
+        DacapoInitCommand::class,
+        DacapoCommand::class,
+        DacapoClearCommand::class,
+        DacapoUninstallCommand::class,
+    ];
+
+    protected array $databaseBuilders = [
+        'mysql' => MysqlDatabaseBuilder::class,
+        'pgsql' => PostgresqlDatabaseBuilder::class,
+        'sqlsrv' => SqlsrvDatabaseBuilder::class,
+        'sqlite' => SqliteDatabaseBuilder::class,
+    ];
 
     /**
      * {@inheritdoc}
+     * @throws
      */
     public function register(): void
     {
-        // register bindings
-    }
-
-    /**
-     * @return void
-     */
-    protected function registerCommands(): void
-    {
-        $this->app->singleton('command.ucan.dacapo.init', function () {
-            return new DacapoInitCommand();
-        });
-
-        $this->app->singleton('command.ucan.dacapo', function () {
-            return new DacapoCommand();
-        });
-
-        $this->app->singleton('command.ucan.dacapo.fresh', function () {
-            return new DacapoFreshCommand();
-        });
-
-        $this->app->singleton('command.ucan.dacapo.seed', function () {
-            return new DacapoSeedCommand();
-        });
-
-        $this->app->singleton('command.ucan.dacapo.models', function () {
-            return new DacapoModelsCommand();
-        });
-
-        $this->app->singleton('command.ucan.dacapo.clear', function () {
-            return new DacapoClearCommand();
-        });
-
-        $this->app->singleton('command.ucan.dacapo.uninstall', function () {
-            return new DacapoUninstallCommand();
-        });
-
-        $this->commands($this->provides());
+        $this->registerCommands();
+        $this->registerBindings();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function provides(): array
+    public function provides()
     {
-        return [
-            'command.ucan.dacapo.init',
-            'command.ucan.dacapo',
-            'command.ucan.dacapo.fresh',
-            'command.ucan.dacapo.seed',
-            'command.ucan.dacapo.models',
-            'command.ucan.dacapo.clear',
-            'command.ucan.dacapo.uninstall',
-        ];
+        return $this->commands;
+    }
+
+    protected function registerCommands(): void
+    {
+        $this->commands($this->commands);
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function registerBindings(): void
+    {
+        foreach ($this->bindings as $abstract => $concrete) {
+            $this->app->bind($abstract, $concrete);
+        }
+
+        $driver = $this->getDatabaseDriver();
+
+        if (isset($this->databaseBuilders[$driver]) === false) {
+            throw new Exception(sprintf('driver %s is not found.', $driver));
+        }
+
+        $this->app->bind(DatabaseBuilder::class, $this->databaseBuilders[$driver]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDatabaseDriver(): string
+    {
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+
+        return (string) $driver;
     }
 }

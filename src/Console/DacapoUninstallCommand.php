@@ -1,12 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Console;
 
-use Illuminate\Console\Command;
-use UcanLab\LaravelDacapo\Storage\SchemasStorage;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoUninstallCommandUseCase;
 
 /**
- * Class DacapoUninstallCommand.
+ * Class DacapoUninstallCommand
  */
 class DacapoUninstallCommand extends Command
 {
@@ -24,32 +23,30 @@ class DacapoUninstallCommand extends Command
      */
     protected $description = 'Uninstall dacapo.';
 
-    private $schemasStorage;
+    /**
+     * @var DacapoUninstallCommandUseCase
+     */
+    protected DacapoUninstallCommandUseCase $useCase;
 
-    public function __construct()
+    /**
+     * DacapoUninstallCommand constructor.
+     * @param DacapoUninstallCommandUseCase $useCase
+     */
+    public function __construct(DacapoUninstallCommandUseCase $useCase)
     {
         parent::__construct();
-        $this->schemasStorage = new SchemasStorage();
+
+        $this->useCase = $useCase;
     }
 
-    /**
-     * @return void
-     */
-    public function handle()
+    public function handle(): void
     {
-        $this->uninstallDacapo();
-    }
-
-    /**
-     * Uninstall dacapo.
-     *
-     * @return void
-     */
-    private function uninstallDacapo(): void
-    {
-        $this->schemasStorage->deleteDirectory();
-        $this->info('Deleted schemas directory.');
-        $this->info('Please delete dacapo composer package.');
-        $this->comment('composer remove --dev ucan-lab/laravel-dacapo');
+        if ($this->useCase->handle()) {
+            $this->info('Deleted schemas directory.');
+            $this->info('Please delete dacapo composer package.');
+            $this->comment('composer remove --dev ucan-lab/laravel-dacapo');
+        } else {
+            $this->error('Failed to delete the schemas directory.');
+        }
     }
 }

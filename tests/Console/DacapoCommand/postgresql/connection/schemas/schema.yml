@@ -1,0 +1,19 @@
+users:
+  connection: custom-connection
+  columns:
+    id: bigIncrements
+    name: string
+
+tasks:
+  connection: custom-connection
+  columns:
+    id: bigIncrements
+    user_id: unsignedBigInteger
+    content: string
+  indexes:
+    - columns: user_id
+      type: unique
+  foreign_keys:
+    - columns: user_id
+      references: id
+      on: users
