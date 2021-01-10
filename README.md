@@ -31,15 +31,12 @@ $ php artisan dacapo:init
 ```
 
 `database/schemas/default.yml`
-By default, a schema file for Laravel7 is generated.  
-Reference example of schema yml and output example of migration file: [Example schema.yml](/tests/Storage)
-
-Contents of `database/schemas/default.yml`
+By default, a schema file for Laravel8 is generated.
 
 ```yaml
 users:
   columns:
-    id: id
+    id: bigIncrements
     name: string
     email:
       type: string
@@ -51,9 +48,22 @@ users:
     rememberToken: true
     timestamps: true
 
+password_resets:
+  columns:
+    email:
+      type: string
+      index: true
+    token: string
+    created_at:
+      type: timestamp
+      nullable: true
+
 failed_jobs:
   columns:
-    id: id
+    id: true
+    uuid:
+      type: string
+      unique: true
     connection: text
     queue: text
     payload: longText
@@ -63,43 +73,14 @@ failed_jobs:
       useCurrent: true
 ```
 
-Excecute `php artisan dacapo`, 3 files are generated and migrate fresh.
-
-- [database/migrations/1970_01_01_000000_create_users_table.php](tests/Storage/laravel70_default/migrations/1970_01_01_000000_create_users_table.php)
-- [database/migrations/1970_01_01_000000_create_failed_jobs_table.php](tests/Storage/laravel70_default/migrations/1970_01_01_000000_create_failed_jobs_table.php)
-
-## Tips
-
-### Generate Laravel 5.0 〜 5.6 schema.yml
+### Generate migration files
 
 ```
-$ php artisan dacapo:init --laravel50
+$ php artisan dacapo
 ```
 
-- [database/migrations/1970_01_01_000000_create_users_table.php](tests/Storage/laravel50_default/migrations/1970_01_01_000000_create_users_table.php)
-- [database/migrations/1970_01_01_000000_create_password_resets_table.php](tests/Storage/laravel50_default/migrations/1970_01_01_000000_create_password_resets_table.php)
+3 files are generated and migrate fresh.
 
-### Generate Laravel 5.7 〜 5.8 schema.yml
-
-```
-$ php artisan dacapo:init --laravel57
-```
-
-- [database/migrations/1970_01_01_000000_create_users_table.php](tests/Storage/laravel57_default/migrations/1970_01_01_000000_create_users_table.php)
-- [database/migrations/1970_01_01_000000_create_password_resets_table.php](tests/Storage/laravel57_default/migrations/1970_01_01_000000_create_password_resets_table.php)
-
-### Generate Laravel 6.x schema.yml
-
-```
-$ php artisan dacapo:init --laravel57
-```
-
-- [database/migrations/1970_01_01_000000_create_users_table.php](tests/Storage/laravel60_default/migrations/1970_01_01_000000_create_users_table.php)
-- [database/migrations/1970_01_01_000000_create_password_resets_table.php](tests/Storage/laravel60_default/migrations/1970_01_01_000000_create_password_resets_table.php)
-- [database/migrations/1970_01_01_000000_create_failed_jobs_table.php](tests/Storage/laravel60_default/migrations/1970_01_01_000000_create_failed_jobs_table.php)
-
-### Generate template models from schema.yml
-
-```
-$ php artisan dacapo:models
-```
+- 1970_01_01_000001_create_failed_jobs_table.php
+- 1970_01_01_000001_create_password_resets_table.php
+- 1970_01_01_000001_create_users_table.php
