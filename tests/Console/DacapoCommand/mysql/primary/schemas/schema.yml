@@ -1,0 +1,23 @@
+example1:
+  columns:
+    no: integer
+  indexes:
+    - columns: no
+      type: primary
+
+example2:
+  columns:
+    no: integer
+    joined_year: date
+  indexes:
+    - columns: [no, joined_year]
+      type: primary
+
+example3:
+  columns:
+    no: integer
+    joined_year: date
+  indexes:
+    - columns: [no, joined_year]
+      type: primary
+      name: example_primary

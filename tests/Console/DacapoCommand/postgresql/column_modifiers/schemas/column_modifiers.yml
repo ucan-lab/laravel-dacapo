@@ -1,0 +1,33 @@
+column_modifiers1:
+  columns:
+    id:
+      type: integer
+      autoIncrement: true
+    name:
+      type: string
+      charset: utf8
+      collation: utf8_unicode_ci
+      comment: my comment
+      default: test value
+      nullable: true
+    price:
+      type: integer
+      unsigned: true
+    count:
+      type: integer
+      unsigned: true
+    total_stored:
+      type: integer
+      storedAs: price * count
+    total_virtual:
+      type: integer
+      virtualAs: price * count
+    total_generated:
+      type: integer
+      generatedAs: price * count
+    created_at:
+      type: timestamp
+      useCurrent: true
+    seq:
+      type: integer
+      always: true

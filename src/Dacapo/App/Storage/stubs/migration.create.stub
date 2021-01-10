@@ -1,0 +1,28 @@
+<?php
+
+{{ namespace }}
+
+class {{ class }} extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::{{ connection }}create('{{ tableName }}', function (Blueprint $table) {
+            {{ up }}
+        });{{ tableComment }}
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::{{ connection }}dropIfExists('{{ tableName }}');
+    }
+}

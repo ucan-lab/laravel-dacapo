@@ -1,0 +1,7 @@
+users:
+  comment: users table
+  columns:
+    id: bigIncrements
+    name:
+      type: string
+      comment: user name

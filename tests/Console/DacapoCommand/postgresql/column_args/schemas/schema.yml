@@ -1,0 +1,41 @@
+column_args1:
+  columns:
+    id:
+      type: bigInteger
+    name1: string
+    name2:
+      type: string
+    name3:
+      type: string
+      args: 128
+    price1: decimal
+    price2:
+      type: decimal
+    price3:
+      type: decimal
+      args: [8, 2]
+    price4:
+      type: decimal
+      args: [8]
+    price5:
+      type: decimal
+      args: '8'
+    price6:
+      type: decimal
+      args: '8, 2'
+    price7:
+      type: decimal
+      args: 8
+    timestamps:
+    softDeletes:
+
+column_args2:
+  columns:
+    id:
+      type: bigIncrements
+    timestamps:
+      type: timestamps
+      args: 0
+    deleted_at:
+      type: softDeletes
+      args: 0
