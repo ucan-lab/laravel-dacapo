@@ -14,6 +14,7 @@ use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalSchemaListRepository;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\DatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\MysqlDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\PostgresqlDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\SqliteDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\SqlsrvDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
@@ -39,6 +40,7 @@ class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvid
         'mysql' => MysqlDatabaseBuilder::class,
         'pgsql' => PostgresqlDatabaseBuilder::class,
         'sqlsrv' => SqlsrvDatabaseBuilder::class,
+        'sqlite' => SqliteDatabaseBuilder::class,
     ];
 
     /**
