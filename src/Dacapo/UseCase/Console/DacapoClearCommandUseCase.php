@@ -2,6 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Console;
 
+use Illuminate\Support\Str;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
 
@@ -19,16 +21,32 @@ class DacapoClearCommandUseCase
     }
 
     /**
+     * @param bool $isAll
      * @return MigrationFileList
      */
-    public function handle(): MigrationFileList
+    public function handle(bool $isAll): MigrationFileList
     {
-        $files = $this->repository->getFiles();
+        $deletedFiles = new MigrationFileList();
 
-        foreach ($files as $file) {
-            $this->repository->delete($file);
+        foreach ($this->repository->getFiles() as $file) {
+            if ($isAll) {
+                $this->repository->delete($file);
+                $deletedFiles->add($file);
+            } elseif ($this->isDacapoFileName($file)) {
+                $this->repository->delete($file);
+                $deletedFiles->add($file);
+            }
         }
 
-        return $files;
+        return $deletedFiles;
+    }
+
+    /**
+     * @param MigrationFile $file
+     * @return bool
+     */
+    protected function isDacapoFileName(MigrationFile $file): bool
+    {
+        return Str::startsWith($file->getName(), '1970_01_01');
     }
 }

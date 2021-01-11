@@ -15,6 +15,7 @@ class DacapoInitCommand extends Command
      * @var string
      */
     protected $signature = 'dacapo:init
+        {--no-clear : Do not execute the dacapo:clear command}
         {--laravel6 : Laravel 6.x default schema}
         {--laravel7 : Laravel 7.x default schema}
         {--laravel8 : Laravel 8.x default schema}
@@ -45,6 +46,10 @@ class DacapoInitCommand extends Command
 
     public function handle(): void
     {
+        if ($this->option('no-clear') === false) {
+            $this->call('dacapo:clear', ['--force' => true, '--all' => true]);
+        }
+
         if ($this->option('laravel8')) {
             $this->useCase->handle('laravel8');
         } elseif ($this->option('laravel7')) {
@@ -56,5 +61,6 @@ class DacapoInitCommand extends Command
         }
 
         $this->line('<fg=green>Generated:</> database/schemas/default.yml');
+        $this->line('Run: <fg=magenta>php artisan dacapo</> command');
     }
 }
