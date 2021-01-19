@@ -15,10 +15,9 @@
         "migration"
     ],
     "require": {
-        "php": "~7.4",
+        "php": "^7.4|^8.0",
         "laravel/framework": ">=6",
-        "symfony/yaml": "^4.3",
-        "zendframework/zend-code": "^3.4"
+        "symfony/yaml": "^4.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.3",

@@ -4,14 +4,21 @@ on: [pull_request]
 
 jobs:
   dacapo-testing:
-    runs-on: ubuntu-latest
+    name: Laravel Dacapo (PHP ${{ matrix.php-versions }} on ${{ matrix.operating-system }})
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ['8.0', '7.4']
+
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: ${{ matrix.php-versions }}
 
       - name: Version
         run: |
@@ -21,7 +28,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+          composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --prefer-dist
 
       - name: Execute tests via PHPUnit
         run: |
