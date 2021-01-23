@@ -14,23 +14,20 @@ class DecimalType implements ColumnType
     public function __construct($args = null)
     {
         if (is_string($args) && $args !== '') {
-            $args = explode(',', $args);
+            $args = array_map('trim', explode(',', $args));
         }
 
-        if (is_array($args) && count($args) === 3) {
-            $this->total = (int) $args[0];
-            $this->places = (int) $args[1];
+        if (is_array($args)) {
+            $this->total = isset($args[0]) ? (int) $args[0] : null;
+            $this->places = isset($args[1]) ? (int) $args[1] : null;
 
-            if (is_string($args[2])) {
-                $this->unsigned = (trim($args[2]) === 'true') ? true : false;
-            } else {
-                $this->unsigned = $args[2];
+            if (isset($args[2])) {
+                if (is_string($args[2])) {
+                    $this->unsigned = $args[2] === 'true';
+                } else {
+                    $this->unsigned = $args[2];
+                }
             }
-        } elseif (is_array($args) && count($args) === 2) {
-            $this->total = (int) $args[0];
-            $this->places = (int) $args[1];
-        } elseif (is_array($args) && count($args) === 1) {
-            $this->total = (int) $args[0];
         } elseif (is_int($args)) {
             $this->total = $args;
         }

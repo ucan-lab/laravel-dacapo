@@ -75,23 +75,22 @@ class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvid
             $this->app->bind($abstract, $concrete);
         }
 
-        $driver = $this->getDatabaseDriver();
+        $this->app->bind(DatabaseBuilder::class, $this->concreteDatabaseBuilder());
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    protected function concreteDatabaseBuilder(): string
+    {
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
 
         if (isset($this->databaseBuilders[$driver]) === false) {
             throw new Exception(sprintf('driver %s is not found.', $driver));
         }
 
-        $this->app->bind(DatabaseBuilder::class, $this->databaseBuilders[$driver]);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getDatabaseDriver(): string
-    {
-        $connection = config('database.default');
-        $driver = config("database.connections.{$connection}.driver");
-
-        return (string) $driver;
+        return $this->databaseBuilders[$driver];
     }
 }

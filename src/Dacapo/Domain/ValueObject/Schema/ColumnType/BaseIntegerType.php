@@ -12,12 +12,9 @@ abstract class BaseIntegerType implements ColumnType
 
     public function __construct($args = null)
     {
-        if (is_array($args) && count($args) === 2) {
-            $this->autoIncrement = (bool) $args[0];
-            $this->unsigned = (bool) $args[1];
-        } elseif (is_array($args) && count($args) === 1) {
-            $this->autoIncrement = (bool) $args[0];
-            $this->unsigned = false;
+        if (is_array($args)) {
+            $this->autoIncrement = (bool) $args[0] ?? false;
+            $this->unsigned = (bool) $args[1] ?? false;
         } elseif (is_bool($args)) {
             $this->autoIncrement = $args;
             $this->unsigned = false;
