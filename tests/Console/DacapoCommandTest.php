@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Test\App\UseCase\Console;
 
+use DateTime;
 use Illuminate\Support\Facades\File;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
@@ -29,6 +30,7 @@ class DacapoCommandTest extends TestCase
         $this->app->register(ConsoleServiceProvider::class);
 
         $actualMigrationFileList = new MigrationFileList();
+        $this->instance(DateTime::class, new DateTime());
         $this->instance(DatabaseBuilder::class, new MysqlDatabaseBuilder());
         $this->instance(SchemaListRepository::class, new InMemorySchemaListRepository($schemaFileList));
         $this->instance(MigrationListRepository::class, new InMemoryMigrationListRepository($actualMigrationFileList));
@@ -81,6 +83,7 @@ class DacapoCommandTest extends TestCase
         $this->app->register(ConsoleServiceProvider::class);
 
         $actualMigrationFileList = new MigrationFileList();
+        $this->instance(DateTime::class, new DateTime());
         $this->instance(DatabaseBuilder::class, new PostgresqlDatabaseBuilder());
         $this->instance(SchemaListRepository::class, new InMemorySchemaListRepository($schemaFileList));
         $this->instance(MigrationListRepository::class, new InMemoryMigrationListRepository($actualMigrationFileList));
