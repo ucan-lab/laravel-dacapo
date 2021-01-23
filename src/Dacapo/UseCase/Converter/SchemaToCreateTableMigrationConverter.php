@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Converter;
 
+use DateTime;
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
@@ -14,10 +15,28 @@ class SchemaToCreateTableMigrationConverter
     const MIGRATION_COLUMN_INDENT = '            ';
 
     protected DatabaseBuilder $databaseBuilder;
+    protected DateTime $prefixDate;
 
-    public function __construct(DatabaseBuilder $databaseBuilder)
+    /**
+     * SchemaToCreateTableMigrationConverter constructor.
+     * @param DatabaseBuilder $databaseBuilder
+     * @param DateTime $prefixDate
+     */
+    public function __construct(DatabaseBuilder $databaseBuilder, DateTime $prefixDate)
     {
         $this->databaseBuilder = $databaseBuilder;
+        $this->prefixDate = $prefixDate;
+    }
+
+    /**
+     * @param DateTime $prefixDate
+     * @return $this
+     */
+    public function setPrefixDate(DateTime $prefixDate): self
+    {
+        $this->prefixDate = $prefixDate;
+
+        return $this;
     }
 
     /**
@@ -52,7 +71,7 @@ class SchemaToCreateTableMigrationConverter
      */
     protected function makeMigrationFileName(Schema $schema): string
     {
-        return sprintf('1970_01_01_000001_%s.php', $this->makeMigrationName($schema));
+        return sprintf('%s_000001_%s.php', $this->prefixDate->format('Y_m_d'), $this->makeMigrationName($schema));
     }
 
     /**

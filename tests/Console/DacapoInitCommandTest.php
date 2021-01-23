@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Test\App\UseCase\Console;
 
+use DateTime;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFileList;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemorySchemaListRepository;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
@@ -13,6 +14,7 @@ class DacapoInitCommandTest extends TestCase
     public function testResolve(): void
     {
         $this->app->register(ConsoleServiceProvider::class);
+        $this->instance(DateTime::class, new DateTime());
         $this->instance(SchemaListRepository::class, new InMemorySchemaListRepository(new SchemaFileList()));
         $this->artisan('dacapo:init')->assertExitCode(0);
     }

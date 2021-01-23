@@ -2,6 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Console;
 
+use DateTime;
+use Exception;
 use Illuminate\Console\ConfirmableTrait;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoCommandUseCase;
 
@@ -22,6 +24,7 @@ class DacapoCommand extends Command
         {--no-migrate : Do not migrate}
         {--seed : Seed the database with records}
         {--refresh : Migrate refresh (for debug)}
+        {--prefix=1970-01-01 : Prefix date of the output migration file}
     ';
 
     /**
@@ -51,7 +54,15 @@ class DacapoCommand extends Command
     {
         $this->call('dacapo:clear', ['--force' => true]);
 
-        $fileList = $this->useCase->handle();
+        try {
+            $prefixDate = new DateTime($this->option('prefix'));
+        } catch (Exception $exception) {
+            $this->error('Error: Set the --prefix option to a value that can be converted to a date type.');
+
+            return;
+        }
+
+        $fileList = $this->useCase->handle($prefixDate);
 
         foreach ($fileList as $file) {
             $this->line(sprintf('<fg=green>Generated:</> %s', $file->getName()));
