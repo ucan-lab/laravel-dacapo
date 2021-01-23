@@ -16,11 +16,9 @@ abstract class BaseFloatType implements ColumnType
             $args = explode(',', $args);
         }
 
-        if (is_array($args) && count($args) === 2) {
-            $this->total = (int) $args[0];
-            $this->places = (int) $args[1];
-        } elseif (is_array($args) && count($args) === 1) {
-            $this->total = (int) $args[0];
+        if (is_array($args)) {
+            $this->total = isset($args[0]) ? (int) $args[0] : null;
+            $this->places = isset($args[1]) ? (int) $args[1] : null;
         } elseif (is_int($args)) {
             $this->total = $args;
         }
