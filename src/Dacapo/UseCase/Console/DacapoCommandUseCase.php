@@ -2,8 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Console;
 
-use DateTime;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\PrefixDateTime;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Generator\MigrationGenerator;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
 
@@ -24,10 +24,10 @@ class DacapoCommandUseCase
     }
 
     /**
-     * @param DateTime $prefixDate
+     * @param PrefixDateTime $prefixDate
      * @return MigrationFileList
      */
-    public function handle(DateTime $prefixDate): MigrationFileList
+    public function handle(PrefixDateTime $prefixDate): MigrationFileList
     {
         return $this->generator->generate($prefixDate, $this->repository->get());
     }

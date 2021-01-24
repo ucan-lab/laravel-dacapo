@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Generator;
 
-use DateTime;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\PrefixDateTime;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToConstraintForeignKeyMigrationConverter;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToCreateIndexMigrationConverter;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToCreateTableMigrationConverter;
@@ -37,11 +37,11 @@ class MigrationGenerator
     }
 
     /**
-     * @param DateTime $prefixDate
+     * @param PrefixDateTime $prefixDate
      * @param SchemaList $schemaList
      * @return MigrationFileList
      */
-    public function generate(DateTime $prefixDate, SchemaList $schemaList): MigrationFileList
+    public function generate(PrefixDateTime $prefixDate, SchemaList $schemaList): MigrationFileList
     {
         $this->schemaToCreateTableMigrationConverter->setPrefixDate($prefixDate);
         $this->schemaToCreateIndexMigrationConverter->setPrefixDate($prefixDate);

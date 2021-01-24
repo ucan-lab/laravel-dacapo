@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Test\App\UseCase\Console;
 
-use DateTime;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\PrefixDateTime;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemoryMigrationListRepository;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
@@ -15,7 +15,7 @@ class DacapoClearCommandTest extends TestCase
     public function testResolve(): void
     {
         $this->app->register(ConsoleServiceProvider::class);
-        $this->instance(DateTime::class, new DateTime());
+        $this->instance(PrefixDateTime::class, new PrefixDateTime());
         $this->instance(MigrationListRepository::class, new InMemoryMigrationListRepository(new MigrationFileList([
             new MigrationFile('1970_01_01_000000_create_users_table.php', ''),
             new MigrationFile('1970_01_01_000000_create_password_resets_table.php', ''),

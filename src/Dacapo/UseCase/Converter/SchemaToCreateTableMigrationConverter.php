@@ -2,12 +2,12 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Converter;
 
-use DateTime;
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\PrefixDateTime;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\DatabaseBuilder;
 
 class SchemaToCreateTableMigrationConverter
@@ -15,24 +15,24 @@ class SchemaToCreateTableMigrationConverter
     const MIGRATION_COLUMN_INDENT = '            ';
 
     protected DatabaseBuilder $databaseBuilder;
-    protected DateTime $prefixDate;
+    protected PrefixDateTime $prefixDate;
 
     /**
      * SchemaToCreateTableMigrationConverter constructor.
      * @param DatabaseBuilder $databaseBuilder
-     * @param DateTime $prefixDate
+     * @param PrefixDateTime $prefixDate
      */
-    public function __construct(DatabaseBuilder $databaseBuilder, DateTime $prefixDate)
+    public function __construct(DatabaseBuilder $databaseBuilder, PrefixDateTime $prefixDate)
     {
         $this->databaseBuilder = $databaseBuilder;
         $this->prefixDate = $prefixDate;
     }
 
     /**
-     * @param DateTime $prefixDate
+     * @param PrefixDateTime $prefixDate
      * @return $this
      */
-    public function setPrefixDate(DateTime $prefixDate): self
+    public function setPrefixDate(PrefixDateTime $prefixDate): self
     {
         $this->prefixDate = $prefixDate;
 

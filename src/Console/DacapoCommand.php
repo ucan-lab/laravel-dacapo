@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Console;
 
-use DateTime;
 use Exception;
 use Illuminate\Console\ConfirmableTrait;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\PrefixDateTime;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoCommandUseCase;
 
 /**
@@ -55,7 +55,7 @@ class DacapoCommand extends Command
         $this->call('dacapo:clear', ['--force' => true]);
 
         try {
-            $prefixDate = new DateTime($this->option('prefix'));
+            $prefixDate = new PrefixDateTime($this->option('prefix'));
         } catch (Exception $exception) {
             $this->error('Error: Set the --prefix option to a value that can be converted to a date type.');
 
