@@ -2,7 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Converter;
 
-use DateTime;
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
@@ -12,16 +11,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
 class SchemaToConstraintForeignKeyMigrationConverter
 {
     const MIGRATION_COLUMN_INDENT = '            ';
-    protected DateTime $prefixDate;
-
-    /**
-     * SchemaToConstraintForeignKeyMigrationConverter constructor.
-     * @param DateTime $prefixDate
-     */
-    public function __construct(DateTime $prefixDate)
-    {
-        $this->prefixDate = $prefixDate;
-    }
+    protected Schema $schema;
 
     /**
      * @param SchemaList $schemaList
@@ -41,17 +31,6 @@ class SchemaToConstraintForeignKeyMigrationConverter
     }
 
     /**
-     * @param DateTime $prefixDate
-     * @return $this
-     */
-    public function setPrefixDate(DateTime $prefixDate): self
-    {
-        $this->prefixDate = $prefixDate;
-
-        return $this;
-    }
-
-    /**
      * @param Schema $schema
      * @return MigrationFile
      */
@@ -66,7 +45,7 @@ class SchemaToConstraintForeignKeyMigrationConverter
      */
     protected function makeMigrationFileName(Schema $schema): string
     {
-        return sprintf('%s_000003_%s.php', $this->prefixDate->format('Y_m_d'), $this->makeMigrationName($schema));
+        return sprintf('1970_01_01_000003_%s.php', $this->makeMigrationName($schema));
     }
 
     /**
