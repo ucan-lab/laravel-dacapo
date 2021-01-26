@@ -9,7 +9,7 @@ class StoredAsModifier implements ColumnModifier
     protected string $value;
 
     /**
-     * CommentModifier constructor.
+     * StoredAsModifier constructor.
      * @param string $value
      */
     public function __construct(string $value)

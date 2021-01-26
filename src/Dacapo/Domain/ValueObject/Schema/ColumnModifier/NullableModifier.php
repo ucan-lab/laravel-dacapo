@@ -9,12 +9,12 @@ class NullableModifier implements ColumnModifier
     protected bool $value;
 
     /**
-     * CommentModifier constructor.
-     * @param bool $value
+     * NullableModifier constructor.
+     * @param bool|null $value
      */
-    public function __construct(bool $value)
+    public function __construct(?bool $value)
     {
-        $this->value = $value;
+        $this->value = $value ?? true;
     }
 
     /**
