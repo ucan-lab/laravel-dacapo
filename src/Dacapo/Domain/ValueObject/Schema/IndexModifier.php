@@ -4,12 +4,12 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema;
 
 use Exception;
 
-class SqlIndex
+class IndexModifier
 {
     /**
-     * @var SqlIndexType
+     * @var IndexModifierType
      */
-    protected SqlIndexType $type;
+    protected IndexModifierType $type;
 
     /**
      * @var string|array
@@ -29,11 +29,11 @@ class SqlIndex
     /**
      * Index constructor.
      * @param string|array $columns
-     * @param SqlIndexType $type
+     * @param IndexModifierType $type
      * @param string|null $name = null
      * @param string|null $algorithm = null
      */
-    public function __construct(SqlIndexType $type, $columns, ?string $name = null, ?string $algorithm = null)
+    public function __construct(IndexModifierType $type, $columns, ?string $name = null, ?string $algorithm = null)
     {
         $this->type = $type;
         $this->columns = $columns;
@@ -43,7 +43,7 @@ class SqlIndex
 
     /**
      * @param string|array $attributes
-     * @return SqlIndex
+     * @return IndexModifier
      * @throws Exception
      */
     public static function factoryFromYaml($attributes): self
@@ -57,7 +57,7 @@ class SqlIndex
         }
 
         $columns = $attributes['columns'];
-        $indexType = self::factorySqlIndexTypeClass($attributes['type']);
+        $indexType = self::factoryIndexModifierTypeClass($attributes['type']);
         $name = $attributes['name'] ?? null;
         $algorithm = $attributes['algorithm'] ?? null;
 
@@ -93,12 +93,12 @@ class SqlIndex
 
     /**
      * @param string $name
-     * @return SqlIndexType
+     * @return IndexModifierType
      * @throws Exception
      */
-    protected static function factorySqlIndexTypeClass(string $name): SqlIndexType
+    protected static function factoryIndexModifierTypeClass(string $name): IndexModifierType
     {
-        $indexTypeClass = __NAMESPACE__ . '\\SqlIndexType\\' . ucfirst($name) . 'Type';
+        $indexTypeClass = __NAMESPACE__ . '\\IndexModifierType\\' . ucfirst($name) . 'Type';
 
         if (class_exists($indexTypeClass)) {
             return new $indexTypeClass();
@@ -108,8 +108,7 @@ class SqlIndex
     }
 
     /**
-     * @return string|array
-     * @throws
+     * @return string
      */
     protected function getColumns(): string
     {

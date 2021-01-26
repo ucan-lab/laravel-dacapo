@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Test\App\Domain\ValueObject\Schema\SqlIndexType;
+namespace UcanLab\LaravelDacapo\Test\App\Domain\ValueObject\Schema\IndexModifierType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SqlIndex;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SqlIndexType\SpatialIndexType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifier;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifierType\PrimaryType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class SpatialIndexTypeTest extends TestCase
+class PrimaryTypeTest extends TestCase
 {
     /**
      * @param string $expected
@@ -17,8 +17,8 @@ class SpatialIndexTypeTest extends TestCase
      */
     public function testResolve(string $expected, $columns, ?string $name, ?string $algorithm): void
     {
-        $indexType = new SpatialIndexType();
-        $index = new SqlIndex($indexType, $columns, $name, $algorithm);
+        $indexType = new PrimaryType();
+        $index = new IndexModifier($indexType, $columns, $name, $algorithm);
         $this->assertSame($expected, $index->createIndexMigrationUpMethod());
     }
 
@@ -29,19 +29,19 @@ class SpatialIndexTypeTest extends TestCase
     {
         return [
             'columns:test1,test2' => [
-                'expected' => '$table' . "->spatialIndex(['test1', 'test2']);",
+                'expected' => '$table' . "->primary(['test1', 'test2']);",
                 'columns' => ['test1', 'test2'],
                 'name' => null,
                 'algorithm' => null,
             ],
             'name:null' => [
-                'expected' => '$table' . "->spatialIndex('test');",
+                'expected' => '$table' . "->primary('test');",
                 'columns' => 'test',
                 'name' => null,
                 'algorithm' => null,
             ],
             'name:test_alias_index' => [
-                'expected' => '$table' . "->spatialIndex('test', 'test_alias_index');",
+                'expected' => '$table' . "->primary('test', 'test_alias_index');",
                 'columns' => 'test',
                 'name' => 'test_alias_index',
                 'algorithm' => null,
@@ -57,8 +57,8 @@ class SpatialIndexTypeTest extends TestCase
      */
     public function testCreateIndexMigrationDownMethod(string $expected, $columns, ?string $name): void
     {
-        $indexType = new SpatialIndexType();
-        $index = new SqlIndex($indexType, $columns, $name);
+        $indexType = new PrimaryType();
+        $index = new IndexModifier($indexType, $columns, $name);
         $this->assertSame($expected, $index->createIndexMigrationDownMethod());
     }
 
@@ -69,17 +69,17 @@ class SpatialIndexTypeTest extends TestCase
     {
         return [
             'columns:test1,test2' => [
-                'expected' => '$table' . "->dropSpatialIndex(['test1', 'test2']);",
+                'expected' => '$table' . "->dropPrimary(['test1', 'test2']);",
                 'columns' => ['test1', 'test2'],
                 'name' => null,
             ],
             'name:null' => [
-                'expected' => '$table' . "->dropSpatialIndex(['test']);",
+                'expected' => '$table' . "->dropPrimary(['test']);",
                 'columns' => 'test',
                 'name' => null,
             ],
             'name:test_alias_index' => [
-                'expected' => '$table' . "->dropSpatialIndex('test_alias_index');",
+                'expected' => '$table' . "->dropPrimary('test_alias_index');",
                 'columns' => 'test',
                 'name' => 'test_alias_index',
             ],

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SqlIndexType;
+namespace UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifierType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SqlIndexType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifierType;
 
-class IndexType implements SqlIndexType
+class IndexType implements IndexModifierType
 {
     /**
      * @return string

@@ -12,8 +12,8 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Connection;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Engine;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ForeignKey;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ForeignKeyList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SqlIndex;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SqlIndexList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifier;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifierList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\TableComment;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\TableName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Temporary;
@@ -24,7 +24,7 @@ class Schema
     protected TableName $tableName;
     protected TableComment $tableComment;
     protected ColumnList $columnList;
-    protected SqlIndexList $sqlIndexList;
+    protected IndexModifierList $sqlIndexList;
     protected ForeignKeyList $foreignKeyList;
     protected Engine $engine;
     protected Charset $charset;
@@ -37,7 +37,7 @@ class Schema
      * @param TableName $tableName
      * @param TableComment $tableComment
      * @param ColumnList $columnList
-     * @param SqlIndexList $sqlIndexList
+     * @param IndexModifierList $sqlIndexList
      * @param ForeignKeyList $foreignKeyList
      * @param Engine $engine
      * @param Charset $charset
@@ -49,7 +49,7 @@ class Schema
         TableName $tableName,
         TableComment $tableComment,
         ColumnList $columnList,
-        SqlIndexList $sqlIndexList,
+        IndexModifierList $sqlIndexList,
         ForeignKeyList $foreignKeyList,
         Engine $engine,
         Charset $charset,
@@ -88,11 +88,11 @@ class Schema
                 }
             }
 
-            $sqlIndexList = new SqlIndexList();
+            $sqlIndexList = new IndexModifierList();
 
             if (isset($attributes['indexes'])) {
                 foreach ($attributes['indexes'] as $indexAttributes) {
-                    $sqlIndex = SqlIndex::factoryFromYaml($indexAttributes);
+                    $sqlIndex = IndexModifier::factoryFromYaml($indexAttributes);
                     $sqlIndexList->add($sqlIndex);
                 }
             }
@@ -165,7 +165,7 @@ class Schema
     /**
      * @return bool
      */
-    public function hasSqlIndexList(): bool
+    public function hasIndexModifierList(): bool
     {
         return $this->sqlIndexList->exists();
     }
@@ -187,9 +187,9 @@ class Schema
     }
 
     /**
-     * @return SqlIndexList
+     * @return IndexModifierList
      */
-    public function getSqlIndexList(): SqlIndexList
+    public function getIndexModifierList(): IndexModifierList
     {
         return $this->sqlIndexList;
     }
