@@ -9,7 +9,7 @@ class FromModifier implements ColumnModifier
     protected int $value;
 
     /**
-     * CommentModifier constructor.
+     * FromModifier constructor.
      * @param int $value
      */
     public function __construct(int $value)

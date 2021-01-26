@@ -9,7 +9,7 @@ class CollationModifier implements ColumnModifier
     protected string $value;
 
     /**
-     * CommentModifier constructor.
+     * CollationModifier constructor.
      * @param string $value
      */
     public function __construct(string $value)

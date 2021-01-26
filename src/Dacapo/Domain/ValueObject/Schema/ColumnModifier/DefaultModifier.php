@@ -10,7 +10,7 @@ class DefaultModifier implements ColumnModifier
     protected $value;
 
     /**
-     * CommentModifier constructor.
+     * DefaultModifier constructor.
      * @param mixed $value
      */
     public function __construct($value)

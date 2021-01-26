@@ -9,12 +9,12 @@ class AutoIncrementModifier implements ColumnModifier
     protected bool $value;
 
     /**
-     * CommentModifier constructor.
+     * AutoIncrementModifier constructor.
      * @param bool $value
      */
     public function __construct(bool $value)
     {
-        $this->value = $value;
+        $this->value = $value ?? true;
     }
 
     /**

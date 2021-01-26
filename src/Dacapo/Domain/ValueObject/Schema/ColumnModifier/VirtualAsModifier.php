@@ -9,7 +9,7 @@ class VirtualAsModifier implements ColumnModifier
     protected string $value;
 
     /**
-     * CommentModifier constructor.
+     * VirtualAsModifier constructor.
      * @param string $value
      */
     public function __construct(string $value)

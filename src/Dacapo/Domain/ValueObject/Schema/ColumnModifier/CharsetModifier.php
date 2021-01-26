@@ -9,7 +9,7 @@ class CharsetModifier implements ColumnModifier
     protected string $value;
 
     /**
-     * CommentModifier constructor.
+     * CharsetModifier constructor.
      * @param string $value
      */
     public function __construct(string $value)

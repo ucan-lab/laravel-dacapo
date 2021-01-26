@@ -9,12 +9,12 @@ class IndexModifier implements ColumnModifier
     protected bool $value;
 
     /**
-     * CommentModifier constructor.
-     * @param bool $value
+     * IndexModifier constructor.
+     * @param bool|null $value
      */
-    public function __construct(bool $value)
+    public function __construct(?bool $value)
     {
-        $this->value = $value;
+        $this->value = $value ?? true;
     }
 
     /**

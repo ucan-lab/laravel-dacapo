@@ -13,7 +13,7 @@ class DefaultRawModifier implements ColumnModifier
     protected string $value;
 
     /**
-     * CommentModifier constructor.
+     * DefaultRawModifier constructor.
      * @param string $value
      */
     public function __construct(string $value)

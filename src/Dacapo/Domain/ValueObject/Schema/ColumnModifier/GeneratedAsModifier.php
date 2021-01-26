@@ -9,7 +9,7 @@ class GeneratedAsModifier implements ColumnModifier
     protected string $value;
 
     /**
-     * CommentModifier constructor.
+     * GeneratedAsModifier constructor.
      * @param string $value
      */
     public function __construct(string $value)
