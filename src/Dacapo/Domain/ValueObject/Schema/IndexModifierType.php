@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema;
 
-interface SqlIndexType
+interface IndexModifierType
 {
     public function getUpMethodName(): string;
 

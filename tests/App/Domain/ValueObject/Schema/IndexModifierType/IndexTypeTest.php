@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Test\App\Domain\ValueObject\Schema\SqlIndexType;
+namespace UcanLab\LaravelDacapo\Test\App\Domain\ValueObject\Schema\IndexModifierType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SqlIndex;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SqlIndexType\UniqueType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifier;
+use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifierType\IndexType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class UniqueTypeTest extends TestCase
+class IndexTypeTest extends TestCase
 {
     /**
      * @param string $expected
@@ -17,8 +17,8 @@ class UniqueTypeTest extends TestCase
      */
     public function testResolve(string $expected, $columns, ?string $name, ?string $algorithm): void
     {
-        $indexType = new UniqueType();
-        $index = new SqlIndex($indexType, $columns, $name, $algorithm);
+        $indexType = new IndexType();
+        $index = new IndexModifier($indexType, $columns, $name, $algorithm);
         $this->assertSame($expected, $index->createIndexMigrationUpMethod());
     }
 
@@ -29,19 +29,19 @@ class UniqueTypeTest extends TestCase
     {
         return [
             'columns:test1,test2' => [
-                'expected' => '$table' . "->unique(['test1', 'test2']);",
+                'expected' => '$table' . "->index(['test1', 'test2']);",
                 'columns' => ['test1', 'test2'],
                 'name' => null,
                 'algorithm' => null,
             ],
             'name:null' => [
-                'expected' => '$table' . "->unique('test');",
+                'expected' => '$table' . "->index('test');",
                 'columns' => 'test',
                 'name' => null,
                 'algorithm' => null,
             ],
             'name:test_alias_index' => [
-                'expected' => '$table' . "->unique('test', 'test_alias_index');",
+                'expected' => '$table' . "->index('test', 'test_alias_index');",
                 'columns' => 'test',
                 'name' => 'test_alias_index',
                 'algorithm' => null,
@@ -57,8 +57,8 @@ class UniqueTypeTest extends TestCase
      */
     public function testCreateIndexMigrationDownMethod(string $expected, $columns, ?string $name): void
     {
-        $indexType = new UniqueType();
-        $index = new SqlIndex($indexType, $columns, $name);
+        $indexType = new IndexType();
+        $index = new IndexModifier($indexType, $columns, $name);
         $this->assertSame($expected, $index->createIndexMigrationDownMethod());
     }
 
@@ -69,17 +69,17 @@ class UniqueTypeTest extends TestCase
     {
         return [
             'columns:test1,test2' => [
-                'expected' => '$table' . "->dropUnique(['test1', 'test2']);",
+                'expected' => '$table' . "->dropIndex(['test1', 'test2']);",
                 'columns' => ['test1', 'test2'],
                 'name' => null,
             ],
             'name:null' => [
-                'expected' => '$table' . "->dropUnique(['test']);",
+                'expected' => '$table' . "->dropIndex(['test']);",
                 'columns' => 'test',
                 'name' => null,
             ],
             'name:test_alias_index' => [
-                'expected' => '$table' . "->dropUnique('test_alias_index');",
+                'expected' => '$table' . "->dropIndex('test_alias_index');",
                 'columns' => 'test',
                 'name' => 'test_alias_index',
             ],

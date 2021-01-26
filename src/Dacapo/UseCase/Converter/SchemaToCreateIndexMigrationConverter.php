@@ -22,7 +22,7 @@ class SchemaToCreateIndexMigrationConverter
         $fileList = new MigrationFileList();
 
         foreach ($schemaList as $schema) {
-            if ($schema->hasSqlIndexList()) {
+            if ($schema->hasIndexModifierList()) {
                 $fileList->add($this->convert($schema));
             }
         }
@@ -99,7 +99,7 @@ class SchemaToCreateIndexMigrationConverter
     {
         $str = '';
 
-        $indexListIterator = $schema->getSqlIndexList()->getIterator();
+        $indexListIterator = $schema->getIndexModifierList()->getIterator();
 
         while ($indexListIterator->valid()) {
             $str .= $indexListIterator->current()->createIndexMigrationUpMethod();
@@ -121,7 +121,7 @@ class SchemaToCreateIndexMigrationConverter
     {
         $str = '';
 
-        $indexListIterator = $schema->getSqlIndexList()->getIterator();
+        $indexListIterator = $schema->getIndexModifierList()->getIterator();
 
         while ($indexListIterator->valid()) {
             $str .= $indexListIterator->current()->createIndexMigrationDownMethod($schema->getTableName());
