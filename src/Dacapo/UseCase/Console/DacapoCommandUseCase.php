@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Console;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Generator\MigrationGenerator;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
 

@@ -2,8 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Port;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\MigrationFile;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\MigrationFileList;
 
 interface MigrationListRepository
 {
