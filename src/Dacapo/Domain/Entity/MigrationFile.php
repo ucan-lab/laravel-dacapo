@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration;
+namespace UcanLab\LaravelDacapo\Dacapo\Domain\Entity;
 
 class MigrationFile
 {
