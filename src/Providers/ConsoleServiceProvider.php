@@ -8,7 +8,10 @@ use Illuminate\Support\ServiceProvider;
 use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
 use UcanLab\LaravelDacapo\Console\DacapoCommand;
 use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
+use UcanLab\LaravelDacapo\Console\DacapoStubPublishCommand;
 use UcanLab\LaravelDacapo\Console\DacapoUninstallCommand;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelMigrationCreateStub;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelMigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalMigrationListRepository;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalSchemaListRepository;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\DatabaseBuilder;
@@ -18,6 +21,8 @@ use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\SqliteDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\SqlsrvDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub\MigrationCreateStub;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub\MigrationUpdateStub;
 
 /**
  * Class ConsoleServiceProvider.
@@ -27,12 +32,15 @@ class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvid
     public array $bindings = [
         SchemaListRepository::class => LocalSchemaListRepository::class,
         MigrationListRepository::class => LocalMigrationListRepository::class,
+        MigrationCreateStub::class => LaravelMigrationCreateStub::class,
+        MigrationUpdateStub::class => LaravelMigrationUpdateStub::class,
     ];
 
     protected array $commands = [
         DacapoInitCommand::class,
         DacapoCommand::class,
         DacapoClearCommand::class,
+        DacapoStubPublishCommand::class,
         DacapoUninstallCommand::class,
     ];
 

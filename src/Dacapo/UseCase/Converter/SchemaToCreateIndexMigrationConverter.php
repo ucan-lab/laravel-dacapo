@@ -7,11 +7,20 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub\MigrationUpdateStub;
 
 class SchemaToCreateIndexMigrationConverter
 {
     const MIGRATION_COLUMN_INDENT = '            ';
-    protected Schema $schema;
+    protected MigrationUpdateStub $migrationUpdateStub;
+
+    /**
+     * @param MigrationUpdateStub $migrationUpdateStub
+     */
+    public function __construct(MigrationUpdateStub $migrationUpdateStub)
+    {
+        $this->migrationUpdateStub = $migrationUpdateStub;
+    }
 
     /**
      * @param SchemaList $schemaList
@@ -63,7 +72,7 @@ class SchemaToCreateIndexMigrationConverter
      */
     protected function makeMigrationContents(Schema $schema): string
     {
-        $stub = file_get_contents(__DIR__ . '/../../App/Storage/stubs/migration.update.stub');
+        $stub = $this->migrationUpdateStub->getStub();
         $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
         $stub = str_replace('{{ connection }}', $this->makeMigrationConnection($schema), $stub);
         $stub = str_replace('{{ table }}', $schema->getTableName(), $stub);

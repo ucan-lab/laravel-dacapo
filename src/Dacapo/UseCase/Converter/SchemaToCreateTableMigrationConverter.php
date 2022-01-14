@@ -8,16 +8,21 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\DatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub\MigrationCreateStub;
 
 class SchemaToCreateTableMigrationConverter
 {
     const MIGRATION_COLUMN_INDENT = '            ';
 
     protected DatabaseBuilder $databaseBuilder;
+    protected MigrationCreateStub $migrationCreateStub;
 
-    public function __construct(DatabaseBuilder $databaseBuilder)
-    {
+    public function __construct(
+        DatabaseBuilder $databaseBuilder,
+        MigrationCreateStub $migrationCreateStub
+    ) {
         $this->databaseBuilder = $databaseBuilder;
+        $this->migrationCreateStub = $migrationCreateStub;
     }
 
     /**
@@ -70,7 +75,7 @@ class SchemaToCreateTableMigrationConverter
      */
     protected function makeMigrationContents(Schema $schema): string
     {
-        $stub = file_get_contents(__DIR__ . '/../../App/Storage/stubs/migration.create.stub');
+        $stub = $this->migrationCreateStub->getStub();
         $stub = str_replace('{{ namespace }}', $this->makeMigrationNamespace($schema), $stub);
         $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
         $stub = str_replace('{{ connection }}', $this->makeMigrationConnection($schema), $stub);
