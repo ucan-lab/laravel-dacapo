@@ -2,7 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Converter;
 
-use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFileList;
@@ -73,22 +72,12 @@ final class SchemaToCreateIndexMigrationConverter
     private function makeMigrationContents(Schema $schema): string
     {
         $stub = $this->migrationUpdateStub->getStub();
-        $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
         $stub = str_replace('{{ connection }}', $this->makeMigrationConnection($schema), $stub);
         $stub = str_replace('{{ table }}', $schema->getTableName(), $stub);
         $stub = str_replace('{{ up }}', $this->makeMigrationUp($schema), $stub);
         $stub = str_replace('{{ down }}', $this->makeMigrationDown($schema), $stub);
 
         return $stub;
-    }
-
-    /**
-     * @param Schema $schema
-     * @return string
-     */
-    private function makeMigrationClassName(Schema $schema): string
-    {
-        return Str::studly($this->makeMigrationName($schema));
     }
 
     /**
