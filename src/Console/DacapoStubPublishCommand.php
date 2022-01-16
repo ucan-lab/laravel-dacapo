@@ -3,7 +3,6 @@
 namespace UcanLab\LaravelDacapo\Console;
 
 use Illuminate\Filesystem\Filesystem;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoUninstallCommandUseCase;
 
 /**
  * Class DacapoStubPublishCommand
@@ -23,11 +22,6 @@ class DacapoStubPublishCommand extends Command
      * @var string
      */
     protected $description = 'Publish dacapo stubs that are available for customization.';
-
-    /**
-     * @var DacapoUninstallCommandUseCase
-     */
-    protected DacapoUninstallCommandUseCase $useCase;
 
     public function handle(): void
     {

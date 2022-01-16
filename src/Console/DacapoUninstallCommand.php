@@ -24,24 +24,11 @@ class DacapoUninstallCommand extends Command
     protected $description = 'Uninstall dacapo.';
 
     /**
-     * @var DacapoUninstallCommandUseCase
-     */
-    protected DacapoUninstallCommandUseCase $useCase;
-
-    /**
-     * DacapoUninstallCommand constructor.
      * @param DacapoUninstallCommandUseCase $useCase
      */
-    public function __construct(DacapoUninstallCommandUseCase $useCase)
+    public function handle(DacapoUninstallCommandUseCase $useCase): void
     {
-        parent::__construct();
-
-        $this->useCase = $useCase;
-    }
-
-    public function handle(): void
-    {
-        if ($this->useCase->handle()) {
+        if ($useCase->handle()) {
             $this->info('Deleted schemas directory.');
             $this->info('Please delete dacapo composer package.');
             $this->comment('composer remove --dev ucan-lab/laravel-dacapo');

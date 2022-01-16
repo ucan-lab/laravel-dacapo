@@ -32,26 +32,13 @@ class DacapoCommand extends Command
     protected $description = 'Generate migrations from schemas and migrate:fresh command.';
 
     /**
-     * @var DacapoCommandUseCase
-     */
-    protected DacapoCommandUseCase $useCase;
-
-    /**
-     * DacapoCommand constructor.
      * @param DacapoCommandUseCase $useCase
      */
-    public function __construct(DacapoCommandUseCase $useCase)
-    {
-        parent::__construct();
-
-        $this->useCase = $useCase;
-    }
-
-    public function handle(): void
+    public function handle(DacapoCommandUseCase $useCase): void
     {
         $this->call('dacapo:clear', ['--force' => true]);
 
-        $fileList = $this->useCase->handle();
+        $fileList = $useCase->handle();
 
         foreach ($fileList as $file) {
             $this->line(sprintf('<fg=green>Generated:</> %s', $file->getName()));
