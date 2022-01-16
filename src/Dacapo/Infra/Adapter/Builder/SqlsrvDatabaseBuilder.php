@@ -1,10 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Builder;
+namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\Schema;
+use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Builder\DatabaseBuilder;
 
-class SqliteDatabaseBuilder implements DatabaseBuilder
+class SqlsrvDatabaseBuilder implements DatabaseBuilder
 {
     /**
      * @return bool
