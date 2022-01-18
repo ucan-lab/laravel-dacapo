@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Console;
+namespace UcanLab\LaravelDacapo\Dacapo\Application\Console;
 
 use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoInitCommandUseCase;
 

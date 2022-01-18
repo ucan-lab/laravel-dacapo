@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Test\App\UseCase\Console;
+namespace UcanLab\LaravelDacapo\Test\Application\Console;
 
 use Illuminate\Support\Facades\File;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
@@ -45,7 +45,7 @@ class DacapoCommandTest extends TestCase
         $this->createApplication();
 
         $data = [];
-        $dirs = File::directories(__DIR__ . '/DacapoCommand/mysql');
+        $dirs = File::directories(__DIR__ . '/DacapoCommandTest/mysql');
 
         foreach ($dirs as $dir) {
             [$migrations, $schemas] = File::directories($dir);
@@ -97,7 +97,7 @@ class DacapoCommandTest extends TestCase
         $this->createApplication();
 
         $data = [];
-        $dirs = File::directories(__DIR__ . '/DacapoCommand/postgresql');
+        $dirs = File::directories(__DIR__ . '/DacapoCommandTest/postgresql');
 
         foreach ($dirs as $dir) {
             [$migrations, $schemas] = File::directories($dir);
