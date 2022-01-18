@@ -20,14 +20,6 @@ class InMemoryMigrationListRepository implements MigrationListRepository
     }
 
     /**
-     * @return MigrationFileList
-     */
-    public function getFiles(): MigrationFileList
-    {
-        return $this->migrationFileList;
-    }
-
-    /**
      * @param MigrationFileList $fileList
      */
     public function saveFileList(MigrationFileList $fileList): void
@@ -43,14 +35,5 @@ class InMemoryMigrationListRepository implements MigrationListRepository
     public function saveFile(MigrationFile $file): void
     {
         $this->migrationFileList->add($file);
-    }
-
-    /**
-     * @param MigrationFile $file
-     * @return bool
-     */
-    public function delete(MigrationFile $file): bool
-    {
-        return true;
     }
 }

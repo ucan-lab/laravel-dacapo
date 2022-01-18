@@ -2,7 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
-use Exception;
 use Illuminate\Support\Facades\File;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
@@ -18,27 +17,6 @@ class LocalMigrationListRepository implements MigrationListRepository
     public function __construct()
     {
         $this->basePath = database_path('migrations');
-    }
-
-    /**
-     * @return MigrationFileList
-     */
-    public function getFiles(): MigrationFileList
-    {
-        $files = File::files($this->getPath());
-
-        $migrationFileList = new MigrationFileList();
-
-        foreach ($files as $file) {
-            try {
-                $migrationFile = new MigrationFile($file->getFilename(), $file->getContents());
-                $migrationFileList->add($migrationFile);
-            } catch (Exception $exception) {
-                // skip
-            }
-        }
-
-        return $migrationFileList;
     }
 
     /**
@@ -59,17 +37,6 @@ class LocalMigrationListRepository implements MigrationListRepository
         $path = $this->getPath($file->getName());
 
         File::put($path, $file->getContents());
-    }
-
-    /**
-     * @param MigrationFile $file
-     * @return bool
-     */
-    public function delete(MigrationFile $file): bool
-    {
-        File::delete($this->getPath($file->getName()));
-
-        return true;
     }
 
     /**
