@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Application\Console;
 
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoInitCommandUseCase;
+use Illuminate\Filesystem\Filesystem;
 
 /**
  * Class DacapoInitCommand
@@ -28,24 +28,29 @@ class DacapoInitCommand extends Command
      */
     protected $description = 'Init dacapo default schema.';
 
-    /**
-     * @param DacapoInitCommandUseCase $useCase
-     */
-    public function handle(DacapoInitCommandUseCase $useCase): void
+    public function handle(): void
     {
+        if (!is_dir($schemasPath = $this->laravel->databasePath('schemas'))) {
+            (new Filesystem)->makeDirectory($schemasPath);
+        }
+
         if ($this->option('no-clear') === false) {
             $this->call('dacapo:clear', ['--force' => true, '--all' => true]);
         }
 
+        $version = 'laravel8';
+
         if ($this->option('laravel8')) {
-            $useCase->handle('laravel8');
+            $version = 'laravel8';
         } elseif ($this->option('laravel7')) {
-            $useCase->handle('laravel7');
+            $version = 'laravel7';
         } elseif ($this->option('laravel6')) {
-            $useCase->handle('laravel6');
-        } else {
-            $useCase->handle('laravel8');
+            $version = 'laravel6';
         }
+
+        $from = __DIR__ . '/DacapoInitCommand/' . $version . '.yml';
+        $to = $this->laravel->databasePath('schemas/default.yml');
+        file_put_contents($to, file_get_contents($from));
 
         $this->line('<fg=green>Generated:</> database/schemas/default.yml');
         $this->line('Run: <fg=magenta>php artisan dacapo</> command');

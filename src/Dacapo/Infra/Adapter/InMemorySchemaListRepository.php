@@ -46,24 +46,7 @@ class InMemorySchemaListRepository implements SchemaListRepository
     /**
      * @return bool
      */
-    public function init(): bool
-    {
-        return true;
-    }
-
-    /**
-     * @return bool
-     */
     public function clear(): bool
-    {
-        return true;
-    }
-
-    /**
-     * @param SchemaFile $file
-     * @return bool
-     */
-    public function saveFile(SchemaFile $file): bool
     {
         return true;
     }

@@ -36,20 +36,6 @@ class LocalSchemaListRepository implements SchemaListRepository
     /**
      * @return bool
      */
-    public function init(): bool
-    {
-        $path = $this->getPath();
-
-        if ($this->exists($path) === false) {
-            File::makeDirectory($path);
-        }
-
-        return true;
-    }
-
-    /**
-     * @return bool
-     */
     public function clear(): bool
     {
         $path = $this->getPath();
@@ -57,19 +43,6 @@ class LocalSchemaListRepository implements SchemaListRepository
         if ($this->exists($path)) {
             File::deleteDirectory($path);
         }
-
-        return true;
-    }
-
-    /**
-     * @param SchemaFile $file
-     * @return bool
-     */
-    public function saveFile(SchemaFile $file): bool
-    {
-        $path = $this->getPath($file->getName());
-
-        File::put($path, $file->getContents());
 
         return true;
     }
