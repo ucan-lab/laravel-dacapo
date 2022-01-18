@@ -28,10 +28,13 @@ class DacapoInitCommand extends Command
      */
     protected $description = 'Init dacapo default schema.';
 
-    public function handle(): void
+    /**
+     * @param Filesystem $filesystem
+     */
+    public function handle(Filesystem $filesystem): void
     {
         if (!is_dir($schemasPath = $this->laravel->databasePath('schemas'))) {
-            (new Filesystem)->makeDirectory($schemasPath);
+            $filesystem->makeDirectory($schemasPath);
         }
 
         if ($this->option('no-clear') === false) {

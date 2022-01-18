@@ -23,10 +23,13 @@ class DacapoStubPublishCommand extends Command
      */
     protected $description = 'Publish dacapo stubs that are available for customization.';
 
-    public function handle(): void
+    /**
+     * @param Filesystem $filesystem
+     */
+    public function handle(Filesystem $filesystem): void
     {
         if (!is_dir($stubsPath = $this->laravel->basePath('stubs'))) {
-            (new Filesystem)->makeDirectory($stubsPath);
+            $filesystem->makeDirectory($stubsPath);
         }
 
         $files = [

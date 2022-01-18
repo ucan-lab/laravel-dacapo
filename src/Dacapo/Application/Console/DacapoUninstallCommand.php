@@ -23,10 +23,13 @@ class DacapoUninstallCommand extends Command
      */
     protected $description = 'Uninstall dacapo.';
 
-    public function handle(): void
+    /**
+     * @param Filesystem $filesystem
+     */
+    public function handle(Filesystem $filesystem): void
     {
         if (is_dir($schemasPath = $this->laravel->databasePath('schemas'))) {
-            (new Filesystem)->deleteDirectory($schemasPath);
+            $filesystem->deleteDirectory($schemasPath);
         }
 
         $this->info('Deleted schemas directory.');
