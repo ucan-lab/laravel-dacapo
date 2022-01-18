@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Application\Console;
 
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoUninstallCommandUseCase;
+use Illuminate\Filesystem\Filesystem;
 
 /**
  * Class DacapoUninstallCommand
@@ -23,17 +23,14 @@ class DacapoUninstallCommand extends Command
      */
     protected $description = 'Uninstall dacapo.';
 
-    /**
-     * @param DacapoUninstallCommandUseCase $useCase
-     */
-    public function handle(DacapoUninstallCommandUseCase $useCase): void
+    public function handle(): void
     {
-        if ($useCase->handle()) {
-            $this->info('Deleted schemas directory.');
-            $this->info('Please delete dacapo composer package.');
-            $this->comment('composer remove --dev ucan-lab/laravel-dacapo');
-        } else {
-            $this->error('Failed to delete the schemas directory.');
+        if (is_dir($schemasPath = $this->laravel->databasePath('schemas'))) {
+            (new Filesystem)->deleteDirectory($schemasPath);
         }
+
+        $this->info('Deleted schemas directory.');
+        $this->info('Please delete dacapo composer package.');
+        $this->comment('composer remove --dev ucan-lab/laravel-dacapo');
     }
 }

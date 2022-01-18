@@ -44,14 +44,6 @@ class InMemorySchemaListRepository implements SchemaListRepository
     }
 
     /**
-     * @return bool
-     */
-    public function clear(): bool
-    {
-        return true;
-    }
-
-    /**
      * @return SchemaFileList
      */
     protected function getFiles(): SchemaFileList

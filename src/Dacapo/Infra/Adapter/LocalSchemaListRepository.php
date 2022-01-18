@@ -34,20 +34,6 @@ class LocalSchemaListRepository implements SchemaListRepository
     }
 
     /**
-     * @return bool
-     */
-    public function clear(): bool
-    {
-        $path = $this->getPath();
-
-        if ($this->exists($path)) {
-            File::deleteDirectory($path);
-        }
-
-        return true;
-    }
-
-    /**
      * @param string $path
      * @return bool
      */

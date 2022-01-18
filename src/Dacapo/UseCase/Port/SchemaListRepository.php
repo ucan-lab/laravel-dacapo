@@ -7,6 +7,4 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 interface SchemaListRepository
 {
     public function get(): SchemaList;
-
-    public function clear(): bool;
 }
