@@ -2,7 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Application\Console;
 
-use Carbon\Carbon;
 use Illuminate\Console\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,11 +12,12 @@ abstract class Command extends BaseCommand
 
     /**
      * Command constructor.
+     * @param CommandTimer $timer
      */
-    public function __construct()
+    public function __construct(CommandTimer $timer)
     {
         parent::__construct();
-        $this->timer = new CommandTimer(Carbon::now(), Carbon::now());
+        $this->timer = $timer;
     }
 
     /**
