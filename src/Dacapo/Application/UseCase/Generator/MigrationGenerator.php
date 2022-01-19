@@ -5,31 +5,26 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Generator;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter\SchemaToConstraintForeignKeyMigrationConverter;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter\SchemaToCreateIndexMigrationConverter;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter\SchemaToCreateTableMigrationConverter;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Port\MigrationListRepository;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
 
 class MigrationGenerator
 {
-    protected MigrationListRepository $repository;
     protected SchemaToCreateTableMigrationConverter $schemaToCreateTableMigrationConverter;
     protected SchemaToCreateIndexMigrationConverter $schemaToCreateIndexMigrationConverter;
     protected SchemaToConstraintForeignKeyMigrationConverter $schemaToConstraintForeignKeyMigrationConverter;
 
     /**
      * MigrationGenerator constructor.
-     * @param MigrationListRepository $repository
      * @param SchemaToCreateTableMigrationConverter $schemaToCreateTableMigrationConverter
      * @param SchemaToCreateIndexMigrationConverter $schemaToCreateIndexMigrationConverter
      * @param SchemaToConstraintForeignKeyMigrationConverter $schemaToConstraintForeignKeyMigrationConverter
      */
     public function __construct(
-        MigrationListRepository $repository,
         SchemaToCreateTableMigrationConverter $schemaToCreateTableMigrationConverter,
         SchemaToCreateIndexMigrationConverter $schemaToCreateIndexMigrationConverter,
         SchemaToConstraintForeignKeyMigrationConverter $schemaToConstraintForeignKeyMigrationConverter
     ) {
-        $this->repository = $repository;
         $this->schemaToCreateTableMigrationConverter = $schemaToCreateTableMigrationConverter;
         $this->schemaToCreateIndexMigrationConverter = $schemaToCreateIndexMigrationConverter;
         $this->schemaToConstraintForeignKeyMigrationConverter = $schemaToConstraintForeignKeyMigrationConverter;
@@ -54,10 +49,7 @@ class MigrationGenerator
      */
     public function generateCreateTable(SchemaList $schemaList): MigrationFileList
     {
-        $fileList = $this->schemaToCreateTableMigrationConverter->convertList($schemaList);
-        $this->repository->saveFileList($fileList);
-
-        return $fileList;
+        return $this->schemaToCreateTableMigrationConverter->convertList($schemaList);
     }
 
     /**
@@ -66,10 +58,7 @@ class MigrationGenerator
      */
     public function generateCreateIndex(SchemaList $schemaList): MigrationFileList
     {
-        $fileList = $this->schemaToCreateIndexMigrationConverter->convertList($schemaList);
-        $this->repository->saveFileList($fileList);
-
-        return $fileList;
+        return $this->schemaToCreateIndexMigrationConverter->convertList($schemaList);
     }
 
     /**
@@ -78,9 +67,6 @@ class MigrationGenerator
      */
     public function generateConstraintForeignKey(SchemaList $schemaList): MigrationFileList
     {
-        $fileList = $this->schemaToConstraintForeignKeyMigrationConverter->convertList($schemaList);
-        $this->repository->saveFileList($fileList);
-
-        return $fileList;
+        return $this->schemaToConstraintForeignKeyMigrationConverter->convertList($schemaList);
     }
 }

@@ -2,8 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Console;
 
+use Exception;
 use Illuminate\Console\ConfirmableTrait;
+use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\DacapoCommandUseCase;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input\DacapoCommandUseCaseInput;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
 
 /**
  * Class DacapoCommand.
@@ -33,15 +38,23 @@ class DacapoCommand extends Command
 
     /**
      * @param DacapoCommandUseCase $useCase
+     * @param DatabaseSchemasStorage $databaseSchemasStorage
+     * @param DatabaseMigrationsStorage $databaseMigrationsStorage
+     * @throws Exception
      */
-    public function handle(DacapoCommandUseCase $useCase): void
-    {
+    public function handle(
+        DacapoCommandUseCase $useCase,
+        DatabaseSchemasStorage $databaseSchemasStorage,
+        DatabaseMigrationsStorage $databaseMigrationsStorage
+    ): void {
         $this->call('dacapo:clear', ['--force' => true]);
 
-        $fileList = $useCase->handle();
+        $input = $this->makeDacapoCommandUseCaseInput($databaseSchemasStorage->getFilePathList());
+        $output = $useCase->handle($input);
 
-        foreach ($fileList as $file) {
-            $this->line(sprintf('<fg=green>Generated:</> %s', $file->getName()));
+        foreach ($output->migrationFileList as $migrationFile) {
+            $databaseMigrationsStorage->saveFile($migrationFile->getName(), $migrationFile->getContents());
+            $this->line(sprintf('<fg=green>Generated:</> %s', $migrationFile->getName()));
         }
 
         if ($this->option('no-migrate')) {
@@ -59,5 +72,29 @@ class DacapoCommand extends Command
         if ($this->option('seed')) {
             $this->call('db:seed', ['--force' => true]);
         }
+    }
+
+    /**
+     * @param array $ymlFiles
+     * @return DacapoCommandUseCaseInput
+     * @throws Exception
+     */
+    private function makeDacapoCommandUseCaseInput(array $ymlFiles): DacapoCommandUseCaseInput
+    {
+        $schemaFiles = [];
+
+        foreach ($ymlFiles as $ymlFile) {
+            $parsedYmlFile = Yaml::parseFile($ymlFile);
+
+            $intersectKeys = array_intersect_key($schemaFiles, $parsedYmlFile);
+
+            if (count($intersectKeys) > 0) {
+                throw new Exception(sprintf('Duplicate table name for `%s` in the schema YAML', implode(', ', array_keys($intersectKeys))));
+            }
+
+            $schemaFiles = array_merge($schemaFiles, $parsedYmlFile);
+        }
+
+        return new DacapoCommandUseCaseInput($schemaFiles);
     }
 }

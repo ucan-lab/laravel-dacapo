@@ -2,31 +2,41 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase;
 
+use Exception;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Generator\MigrationGenerator;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Port\SchemaListRepository;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input\DacapoCommandUseCaseInput;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output\DacapoCommandUseCaseOutput;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\Schema;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 
 class DacapoCommandUseCase
 {
-    protected SchemaListRepository $repository;
     protected MigrationGenerator $generator;
 
     /**
      * DacapoCommandUseCase constructor.
-     * @param SchemaListRepository $repository
      * @param MigrationGenerator $generator
      */
-    public function __construct(SchemaListRepository $repository, MigrationGenerator $generator)
+    public function __construct(MigrationGenerator $generator)
     {
-        $this->repository = $repository;
         $this->generator = $generator;
     }
 
     /**
-     * @return MigrationFileList
+     * @param DacapoCommandUseCaseInput $input
+     * @return DacapoCommandUseCaseOutput
+     * @throws Exception
      */
-    public function handle(): MigrationFileList
+    public function handle(DacapoCommandUseCaseInput $input): DacapoCommandUseCaseOutput
     {
-        return $this->generator->generate($this->repository->get());
+        $schemaList = new SchemaList();
+
+        foreach ($input->schemaFiles as $tableName => $tableAttributes) {
+            $schemaList->add(Schema::factoryFromYaml($tableName, $tableAttributes));
+        }
+
+        $migrationFileList = $this->generator->generate($schemaList);
+
+        return new DacapoCommandUseCaseOutput($migrationFileList);
     }
 }

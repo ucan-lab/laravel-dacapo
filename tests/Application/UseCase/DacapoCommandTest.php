@@ -3,38 +3,39 @@
 namespace UcanLab\LaravelDacapo\Test\Application\UseCase\Console;
 
 use Illuminate\Support\Facades\File;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Port\MigrationListRepository;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Port\SchemaListRepository;
+use Mockery\MockInterface;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFile;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFileList;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\MysqlDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\PostgresqlDatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemoryMigrationListRepository;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemorySchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemoryDatabaseMigrationsStorage;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
 class DacapoCommandTest extends TestCase
 {
     /**
-     * @param MigrationFileList $expectedMigrationFileList
-     * @param SchemaFileList $schemaFileList
+     * @param string $schemas
+     * @param string $migrations
      * @dataProvider dataMysql
      */
-    public function testMysql(MigrationFileList $expectedMigrationFileList, SchemaFileList $schemaFileList): void
+    public function testMysql(string $schemas, string $migrations): void
     {
         $this->app->register(ConsoleServiceProvider::class);
 
-        $actualMigrationFileList = new MigrationFileList();
         $this->instance(DatabaseBuilder::class, new MysqlDatabaseBuilder());
-        $this->instance(SchemaListRepository::class, new InMemorySchemaListRepository($schemaFileList));
-        $this->instance(MigrationListRepository::class, new InMemoryMigrationListRepository($actualMigrationFileList));
+        $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
+
+        $this->mock(DatabaseSchemasStorage::class, function (MockInterface $mock) use ($schemas): void {
+            $mock->shouldReceive('getFilePathList')->once()->andReturn(
+                array_map(fn ($f) => $f->getRealPath(), File::files($schemas))
+            );
+        });
+
         $this->artisan('dacapo --no-migrate')->assertExitCode(0);
 
-        $this->assertMigrationFileList($expectedMigrationFileList, $actualMigrationFileList);
+        $this->assertMigrationFileList($migrations, $databaseMigrationsStorage);
     }
 
     /**
@@ -50,21 +51,9 @@ class DacapoCommandTest extends TestCase
         foreach ($dirs as $dir) {
             [$migrations, $schemas] = File::directories($dir);
 
-            $expectedMigrationFileList = new MigrationFileList();
-
-            foreach (File::files($migrations) as $file) {
-                $expectedMigrationFileList->add(new MigrationFile($file->getFilename(), $file->getContents()));
-            }
-
-            $schemaFileList = new SchemaFileList();
-
-            foreach (File::files($schemas) as $file) {
-                $schemaFileList->add(new SchemaFile($file->getFilename(), $file->getContents()));
-            }
-
             $data[basename($dir)] = [
-                'expectedMigrationFileList' => $expectedMigrationFileList,
-                'schemaFileList' => $schemaFileList,
+                'schemas' => $schemas,
+                'migrations' => $migrations,
             ];
         }
 
@@ -72,21 +61,26 @@ class DacapoCommandTest extends TestCase
     }
 
     /**
-     * @param MigrationFileList $expectedMigrationFileList
-     * @param SchemaFileList $schemaFileList
+     * @param string $schemas
+     * @param string $migrations
      * @dataProvider dataPostgresql
      */
-    public function testPostgresql(MigrationFileList $expectedMigrationFileList, SchemaFileList $schemaFileList): void
+    public function testPostgresql(string $schemas, string $migrations): void
     {
         $this->app->register(ConsoleServiceProvider::class);
 
-        $actualMigrationFileList = new MigrationFileList();
         $this->instance(DatabaseBuilder::class, new PostgresqlDatabaseBuilder());
-        $this->instance(SchemaListRepository::class, new InMemorySchemaListRepository($schemaFileList));
-        $this->instance(MigrationListRepository::class, new InMemoryMigrationListRepository($actualMigrationFileList));
+        $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
+
+        $this->mock(DatabaseSchemasStorage::class, function (MockInterface $mock) use ($schemas): void {
+            $mock->shouldReceive('getFilePathList')->once()->andReturn(
+                array_map(fn ($f) => $f->getRealPath(), File::files($schemas))
+            );
+        });
+
         $this->artisan('dacapo --no-migrate')->assertExitCode(0);
 
-        $this->assertMigrationFileList($expectedMigrationFileList, $actualMigrationFileList);
+        $this->assertMigrationFileList($migrations, $databaseMigrationsStorage);
     }
 
     /**
@@ -102,21 +96,9 @@ class DacapoCommandTest extends TestCase
         foreach ($dirs as $dir) {
             [$migrations, $schemas] = File::directories($dir);
 
-            $expectedMigrationFileList = new MigrationFileList();
-
-            foreach (File::files($migrations) as $file) {
-                $expectedMigrationFileList->add(new MigrationFile($file->getFilename(), $file->getContents()));
-            }
-
-            $schemaFileList = new SchemaFileList();
-
-            foreach (File::files($schemas) as $file) {
-                $schemaFileList->add(new SchemaFile($file->getFilename(), $file->getContents()));
-            }
-
             $data[basename($dir)] = [
-                'expectedMigrationFileList' => $expectedMigrationFileList,
-                'schemaFileList' => $schemaFileList,
+                'schemas' => $schemas,
+                'migrations' => $migrations,
             ];
         }
 
@@ -124,25 +106,22 @@ class DacapoCommandTest extends TestCase
     }
 
     /**
-     * @param MigrationFileList $expected
-     * @param MigrationFileList $actual
+     * @param string $migrations
+     * @param InMemoryDatabaseMigrationsStorage $databaseMigrationsStorage
      */
-    protected function assertMigrationFileList(MigrationFileList $expected, MigrationFileList $actual): void
+    private function assertMigrationFileList(string $migrations, InMemoryDatabaseMigrationsStorage $databaseMigrationsStorage): void
     {
-        $this->assertSame($expected->count(), $actual->count());
+        $expectedMigrationFileList = array_map(fn ($f) => $f->getRealPath(), File::files($migrations));
+        $actualMigrationFileList = $databaseMigrationsStorage->fileList;
 
-        $expectedIterator = $expected->getIterator();
-        $actualIterator = $actual->getIterator();
+        $this->assertSame(count($expectedMigrationFileList), count($actualMigrationFileList));
 
-        for ($i = 0; $i < $expected->count(); $i++) {
-            $expectedFile = $expectedIterator->current();
-            $actualFile = $actualIterator->current();
+        for ($i = 0; $i < count($expectedMigrationFileList); $i++) {
+            $expectedFile = $expectedMigrationFileList[$i];
+            $actualFile = $actualMigrationFileList[$i];
 
-            $this->assertSame($expectedFile->getName(), $actualFile->getName());
-            $this->assertSame($expectedFile->getContents(), $actualFile->getContents());
-
-            $expectedIterator->next();
-            $actualIterator->next();
+            $this->assertSame(basename($expectedFile), $actualFile['fileName']);
+            $this->assertSame(file_get_contents($expectedFile), $actualFile['fileContents']);
         }
     }
 }

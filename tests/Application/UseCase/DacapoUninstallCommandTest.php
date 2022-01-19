@@ -2,9 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Test\Application\UseCase\Console;
 
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Port\SchemaListRepository;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFileList;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemorySchemaListRepository;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
@@ -13,7 +10,6 @@ class DacapoUninstallCommandTest extends TestCase
     public function testResolve(): void
     {
         $this->app->register(ConsoleServiceProvider::class);
-        $this->instance(SchemaListRepository::class, new InMemorySchemaListRepository(new SchemaFileList()));
         $this->artisan('dacapo:uninstall')->assertExitCode(0);
     }
 }
