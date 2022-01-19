@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Builder;
+namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\Schema;
 

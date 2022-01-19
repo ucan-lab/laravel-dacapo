@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Port;
+namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Port;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 

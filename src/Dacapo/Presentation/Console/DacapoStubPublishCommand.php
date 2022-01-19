@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Application\Console;
+namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Console;
 
 use Illuminate\Filesystem\Filesystem;
 

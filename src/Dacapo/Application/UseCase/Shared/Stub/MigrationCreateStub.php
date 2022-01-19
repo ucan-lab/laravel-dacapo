@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub;
+namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub;
 
 interface MigrationCreateStub
 {

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Console;
+namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase;
 
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Generator\MigrationGenerator;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Port\SchemaListRepository;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Generator\MigrationGenerator;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
 
 class DacapoCommandUseCase
 {

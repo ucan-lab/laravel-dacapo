@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub\MigrationUpdateStub;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
 
 class LaravelMigrationUpdateStub implements MigrationUpdateStub
 {

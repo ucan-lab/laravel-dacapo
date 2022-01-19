@@ -4,10 +4,10 @@ namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
 use Exception;
 use Symfony\Component\Yaml\Yaml;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Port\SchemaListRepository;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\SchemaFileList;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
 
 class InMemorySchemaListRepository implements SchemaListRepository
 {

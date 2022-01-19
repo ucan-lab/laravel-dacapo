@@ -5,11 +5,11 @@ namespace UcanLab\LaravelDacapo\Providers;
 use Exception;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use UcanLab\LaravelDacapo\Dacapo\Application\Console\DacapoClearCommand;
-use UcanLab\LaravelDacapo\Dacapo\Application\Console\DacapoCommand;
-use UcanLab\LaravelDacapo\Dacapo\Application\Console\DacapoInitCommand;
-use UcanLab\LaravelDacapo\Dacapo\Application\Console\DacapoStubPublishCommand;
-use UcanLab\LaravelDacapo\Dacapo\Application\Console\DacapoUninstallCommand;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Port\MigrationListRepository;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Port\SchemaListRepository;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\MysqlDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\PostgresqlDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\SqliteDatabaseBuilder;
@@ -18,11 +18,11 @@ use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelMigrationCreateStub;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelMigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalMigrationListRepository;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalSchemaListRepository;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Builder\DatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub\MigrationCreateStub;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub\MigrationUpdateStub;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoClearCommand;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoCommand;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoInitCommand;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoStubPublishCommand;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoUninstallCommand;
 
 /**
  * Class ConsoleServiceProvider.

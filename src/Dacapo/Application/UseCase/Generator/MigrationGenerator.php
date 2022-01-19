@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Generator;
+namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Generator;
 
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter\SchemaToConstraintForeignKeyMigrationConverter;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter\SchemaToCreateIndexMigrationConverter;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter\SchemaToCreateTableMigrationConverter;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Port\MigrationListRepository;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToConstraintForeignKeyMigrationConverter;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToCreateIndexMigrationConverter;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Converter\SchemaToCreateTableMigrationConverter;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
 
 class MigrationGenerator
 {

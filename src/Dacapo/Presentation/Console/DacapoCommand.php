@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Application\Console;
+namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Console;
 
 use Illuminate\Console\ConfirmableTrait;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Console\DacapoCommandUseCase;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\DacapoCommandUseCase;
 
 /**
  * Class DacapoCommand.

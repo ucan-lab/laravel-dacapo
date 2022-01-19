@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\UseCase\Converter;
+namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter;
 
 use Illuminate\Support\Str;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub\MigrationUpdateStub;
 
 class SchemaToConstraintForeignKeyMigrationConverter
 {
