@@ -42,29 +42,6 @@ class IndexModifier
     }
 
     /**
-     * @param string|array $attributes
-     * @return IndexModifier
-     * @throws Exception
-     */
-    public static function factoryFromYaml($attributes): self
-    {
-        if (isset($attributes['columns']) === false) {
-            throw new Exception('foreign_keys.columns field is required');
-        }
-
-        if (isset($attributes['type']) === false) {
-            throw new Exception('foreign_keys.type field is required');
-        }
-
-        $columns = $attributes['columns'];
-        $indexType = self::factoryIndexModifierTypeClass($attributes['type']);
-        $name = $attributes['name'] ?? null;
-        $algorithm = $attributes['algorithm'] ?? null;
-
-        return new self($indexType, $columns, $name, $algorithm);
-    }
-
-    /**
      * @return string
      * @throws
      */
@@ -89,22 +66,6 @@ class IndexModifier
         }
 
         return '$table->' . sprintf("%s(['%s']);", $this->type->getDownMethodName(), $this->columns);
-    }
-
-    /**
-     * @param string $name
-     * @return IndexModifierType
-     * @throws Exception
-     */
-    protected static function factoryIndexModifierTypeClass(string $name): IndexModifierType
-    {
-        $indexTypeClass = __NAMESPACE__ . '\\IndexModifierType\\' . ucfirst($name) . 'Type';
-
-        if (class_exists($indexTypeClass)) {
-            return new $indexTypeClass();
-        }
-
-        throw new Exception(sprintf('%s class not found exception.', $indexTypeClass));
     }
 
     /**

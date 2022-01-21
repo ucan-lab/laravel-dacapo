@@ -5,24 +5,24 @@ namespace UcanLab\LaravelDacapo\Providers;
 use Exception;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use UcanLab\LaravelDacapo\Console\DacapoClearCommand;
-use UcanLab\LaravelDacapo\Console\DacapoCommand;
-use UcanLab\LaravelDacapo\Console\DacapoInitCommand;
-use UcanLab\LaravelDacapo\Console\DacapoStubPublishCommand;
-use UcanLab\LaravelDacapo\Console\DacapoUninstallCommand;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\MysqlDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\PostgresqlDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\SqliteDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\SqlsrvDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelDatabaseMigrationsStorage;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelDatabaseSchemasStorage;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelMigrationCreateStub;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelMigrationUpdateStub;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalMigrationListRepository;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LocalSchemaListRepository;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\DatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\MysqlDatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\PostgresqlDatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\SqliteDatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Builder\SqlsrvDatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\MigrationListRepository;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Port\SchemaListRepository;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub\MigrationCreateStub;
-use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub\MigrationUpdateStub;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoClearCommand;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoCommand;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoInitCommand;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoStubPublishCommand;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoUninstallCommand;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
 
 /**
  * Class ConsoleServiceProvider.
@@ -30,10 +30,10 @@ use UcanLab\LaravelDacapo\Dacapo\UseCase\Shared\Stub\MigrationUpdateStub;
 class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     public array $bindings = [
-        SchemaListRepository::class => LocalSchemaListRepository::class,
-        MigrationListRepository::class => LocalMigrationListRepository::class,
         MigrationCreateStub::class => LaravelMigrationCreateStub::class,
         MigrationUpdateStub::class => LaravelMigrationUpdateStub::class,
+        DatabaseSchemasStorage::class => LaravelDatabaseSchemasStorage::class,
+        DatabaseMigrationsStorage::class => LaravelDatabaseMigrationsStorage::class,
     ];
 
     protected array $commands = [

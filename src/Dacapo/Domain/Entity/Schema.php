@@ -2,17 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Entity;
 
-use Exception;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Charset;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Collation;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Column;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ColumnList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ColumnModifier\DefaultRawModifier;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Connection;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Engine;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ForeignKey;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ForeignKeyList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifier;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifierList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\TableComment;
 use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\TableName;
@@ -66,68 +62,6 @@ class Schema
         $this->charset = $charset;
         $this->collation = $collation;
         $this->temporary = $temporary;
-    }
-
-    /**
-     * @param string $name
-     * @param array $attributes
-     * @return Schema
-     * @throws Exception
-     */
-    public static function factoryFromYaml(string $name, array $attributes): self
-    {
-        $tableName = new TableName($name);
-
-        try {
-            $columnList = new ColumnList();
-
-            if (isset($attributes['columns'])) {
-                foreach ($attributes['columns'] as $columnName => $columnAttributes) {
-                    $column = Column::factoryFromYaml($columnName, $columnAttributes);
-                    $columnList->add($column);
-                }
-            }
-
-            $sqlIndexList = new IndexModifierList();
-
-            if (isset($attributes['indexes'])) {
-                foreach ($attributes['indexes'] as $indexAttributes) {
-                    $sqlIndex = IndexModifier::factoryFromYaml($indexAttributes);
-                    $sqlIndexList->add($sqlIndex);
-                }
-            }
-
-            $foreignKeyList = new ForeignKeyList();
-
-            if (isset($attributes['foreign_keys'])) {
-                foreach ($attributes['foreign_keys'] as $foreignKeyAttribute) {
-                    $foreign = ForeignKey::factoryFromYaml($foreignKeyAttribute);
-                    $foreignKeyList->add($foreign);
-                }
-            }
-        } catch (Exception $exception) {
-            throw new Exception(sprintf('%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
-        }
-
-        $connection = new Connection($attributes['connection'] ?? null);
-        $tableComment = new TableComment($attributes['comment'] ?? null);
-        $engine = new Engine($attributes['engine'] ?? null);
-        $charset = new Charset($attributes['charset'] ?? null);
-        $collation = new Collation($attributes['collation'] ?? null);
-        $temporary = new Temporary($attributes['temporary'] ?? false);
-
-        return new self(
-            $connection,
-            $tableName,
-            $tableComment,
-            $columnList,
-            $sqlIndexList,
-            $foreignKeyList,
-            $engine,
-            $charset,
-            $collation,
-            $temporary
-        );
     }
 
     /**

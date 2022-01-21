@@ -23,23 +23,6 @@ class SchemaList implements IteratorAggregate
     }
 
     /**
-     * @param array $yaml
-     * @return SchemaList
-     * @throws
-     */
-    public static function factoryFromYaml(array $yaml): self
-    {
-        $schemaList = new self([]);
-
-        foreach ($yaml as $tableName => $tableAttributes) {
-            $schema = Schema::factoryFromYaml($tableName, $tableAttributes);
-            $schemaList->add($schema);
-        }
-
-        return $schemaList;
-    }
-
-    /**
      * @param Schema $schema
      * @return SchemaList
      */

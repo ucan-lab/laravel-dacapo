@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 $finder = PhpCsFixer\Finder::create()
-    ->exclude(['vendor', 'tests/Console/DacapoCommand'])
+    ->exclude(['vendor', 'tests/Application/UseCase/DacapoCommandTest'])
     ->in(__DIR__)
 ;
 
