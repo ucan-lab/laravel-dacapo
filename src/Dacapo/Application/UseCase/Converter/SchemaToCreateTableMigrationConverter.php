@@ -5,10 +5,10 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter;
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\Schema;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFile;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFile;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
 class SchemaToCreateTableMigrationConverter
 {

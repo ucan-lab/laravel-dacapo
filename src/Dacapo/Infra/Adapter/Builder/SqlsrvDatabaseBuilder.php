@@ -3,7 +3,7 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder;
 
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\Schema;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 
 class SqlsrvDatabaseBuilder implements DatabaseBuilder
 {
