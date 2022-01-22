@@ -1,8 +1,12 @@
+composer-install-tools:
+	composer install --working-dir=tools/php-cs-fixer
 php-cs-version:
-	docker run --rm --volume `pwd`:/project ucanlab/php-cs-fixer fix --version
+	./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --version
 php-cs-dry:
-	docker run --rm --volume `pwd`:/project ucanlab/php-cs-fixer fix --diff --diff-format udiff --verbose --dry-run
+	./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --dry-run
+php-cs-dry-diff:
+	./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --diff --dry-run
 php-cs-fix:
-	docker run --rm --volume `pwd`:/project ucanlab/php-cs-fixer fix --diff --diff-format udiff --verbose
+	./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose
 test:
 	./vendor/bin/phpunit

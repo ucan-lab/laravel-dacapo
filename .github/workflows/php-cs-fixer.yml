@@ -9,5 +9,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: php-cs-version
         run: |
+          make composer-install-tools
           make php-cs-version
           make php-cs-dry
