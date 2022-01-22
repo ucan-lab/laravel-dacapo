@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
-class Temporary
+final class Temporary
 {
-    protected bool $enable;
+    private bool $enable;
 
     /**
      * Temporary constructor.

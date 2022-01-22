@@ -4,13 +4,14 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
+use function is_int;
 
-class TimestampsType implements ColumnType
+final class TimestampsType implements ColumnType
 {
     /**
      * @var int|null
      */
-    protected ?int $args;
+    private ?int $args;
 
     public function __construct(?int $args = null)
     {

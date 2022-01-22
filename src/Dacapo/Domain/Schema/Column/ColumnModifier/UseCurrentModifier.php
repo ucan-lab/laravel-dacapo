@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-class UseCurrentModifier implements ColumnModifier
+final class UseCurrentModifier implements ColumnModifier
 {
-    protected bool $value;
+    private bool $value;
 
     /**
      * UseCurrentModifier constructor.

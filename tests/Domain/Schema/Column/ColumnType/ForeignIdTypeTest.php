@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\ForeignIdType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class ForeignIdTypeTest extends TestCase
+final class ForeignIdTypeTest extends TestCase
 {
     public function testResolve(): void
     {

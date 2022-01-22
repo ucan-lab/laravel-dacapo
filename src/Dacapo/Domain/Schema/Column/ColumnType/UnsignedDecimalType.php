@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-class UnsignedDecimalType extends BaseFloatType
+final class UnsignedDecimalType extends BaseFloatType
 {
     /**
      * @return string

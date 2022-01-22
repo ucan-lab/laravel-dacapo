@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\JsonType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class JsonTypeTest extends TestCase
+final class JsonTypeTest extends TestCase
 {
     public function testResolve(): void
     {

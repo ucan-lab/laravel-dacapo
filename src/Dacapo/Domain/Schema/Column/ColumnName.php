@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column;
 
-class ColumnName
+final class ColumnName
 {
-    protected string $name;
+    private string $name;
 
     /**
      * ColumnName constructor.

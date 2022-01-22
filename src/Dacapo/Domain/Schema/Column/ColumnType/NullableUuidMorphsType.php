@@ -5,12 +5,12 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-class NullableUuidMorphsType implements ColumnType
+final class NullableUuidMorphsType implements ColumnType
 {
     /**
      * @var string|null
      */
-    protected ?string $args;
+    private ?string $args;
 
     public function __construct(?string $args = null)
     {

@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\SoftDeletesType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class SoftDeletesTypeTest extends TestCase
+final class SoftDeletesTypeTest extends TestCase
 {
     /**
      * @param string $expected

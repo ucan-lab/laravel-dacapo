@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-class DoubleType extends BaseFloatType
+final class DoubleType extends BaseFloatType
 {
     /**
      * @return string

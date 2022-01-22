@@ -10,58 +10,33 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Charset;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Collation;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Connection;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Engine;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableComment;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Table;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Temporary;
 
-class Schema
+final class Schema
 {
-    protected Connection $connection;
-    protected TableName $tableName;
-    protected TableComment $tableComment;
-    protected ColumnList $columnList;
-    protected IndexModifierList $sqlIndexList;
-    protected ForeignKeyList $foreignKeyList;
-    protected Engine $engine;
-    protected Charset $charset;
-    protected Collation $collation;
-    protected Temporary $temporary;
+    private Table $table;
+    private ColumnList $columnList;
+    private IndexModifierList $sqlIndexList;
+    private ForeignKeyList $foreignKeyList;
 
     /**
      * Schema constructor.
-     * @param Connection $connection
-     * @param TableName $tableName
-     * @param TableComment $tableComment
+     * @param Table $table
      * @param ColumnList $columnList
      * @param IndexModifierList $sqlIndexList
      * @param ForeignKeyList $foreignKeyList
-     * @param Engine $engine
-     * @param Charset $charset
-     * @param Collation $collation
-     * @param Temporary $temporary
      */
     public function __construct(
-        Connection $connection,
-        TableName $tableName,
-        TableComment $tableComment,
+        Table $table,
         ColumnList $columnList,
         IndexModifierList $sqlIndexList,
-        ForeignKeyList $foreignKeyList,
-        Engine $engine,
-        Charset $charset,
-        Collation $collation,
-        Temporary $temporary
+        ForeignKeyList $foreignKeyList
     ) {
-        $this->connection = $connection;
-        $this->tableName = $tableName;
-        $this->tableComment = $tableComment;
+        $this->table = $table;
         $this->columnList = $columnList;
         $this->sqlIndexList = $sqlIndexList;
         $this->foreignKeyList = $foreignKeyList;
-        $this->engine = $engine;
-        $this->charset = $charset;
-        $this->collation = $collation;
-        $this->temporary = $temporary;
     }
 
     /**
@@ -69,7 +44,7 @@ class Schema
      */
     public function getTableName(): string
     {
-        return $this->tableName->getName();
+        return $this->table->getTableName()->getName();
     }
 
     /**
@@ -77,7 +52,7 @@ class Schema
      */
     public function getTableComment(): string
     {
-        return $this->tableComment->get();
+        return $this->table->getTableComment()->get();
     }
 
     /**
@@ -85,7 +60,7 @@ class Schema
      */
     public function hasTableComment(): bool
     {
-        return $this->tableComment->exists();
+        return $this->table->getTableComment()->exists();
     }
 
     /**
@@ -141,7 +116,7 @@ class Schema
      */
     public function getConnection(): Connection
     {
-        return $this->connection;
+        return $this->table->getConnection();
     }
 
     /**
@@ -149,7 +124,7 @@ class Schema
      */
     public function getEngine(): Engine
     {
-        return $this->engine;
+        return $this->table->getEngine();
     }
 
     /**
@@ -157,7 +132,7 @@ class Schema
      */
     public function getCharset(): Charset
     {
-        return $this->charset;
+        return $this->table->getCharset();
     }
 
     /**
@@ -165,7 +140,7 @@ class Schema
      */
     public function getCollation(): Collation
     {
-        return $this->collation;
+        return $this->table->getCollation();
     }
 
     /**
@@ -173,7 +148,7 @@ class Schema
      */
     public function getTemporary(): Temporary
     {
-        return $this->temporary;
+        return $this->table->getTemporary();
     }
 
     /**
@@ -181,7 +156,7 @@ class Schema
      */
     public function useDbFacade(): bool
     {
-        if ($this->tableComment->exists()) {
+        if ($this->table->getTableComment()->exists()) {
             return true;
         }
 

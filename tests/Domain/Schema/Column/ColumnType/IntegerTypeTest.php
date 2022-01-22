@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\IntegerType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class IntegerTypeTest extends TestCase
+final class IntegerTypeTest extends TestCase
 {
     public function testResolve(): void
     {

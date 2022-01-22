@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 use Illuminate\Filesystem\Filesystem;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
 
-class LaravelDatabaseSchemasStorage implements DatabaseSchemasStorage
+final class LaravelDatabaseSchemasStorage implements DatabaseSchemasStorage
 {
     private Filesystem $filesystem;
 

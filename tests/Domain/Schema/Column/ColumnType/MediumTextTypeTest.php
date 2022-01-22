@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MediumTextType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class MediumTextTypeTest extends TestCase
+final class MediumTextTypeTest extends TestCase
 {
     public function testResolve(): void
     {

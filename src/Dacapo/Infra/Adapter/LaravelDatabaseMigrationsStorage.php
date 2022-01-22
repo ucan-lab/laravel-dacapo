@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 use Illuminate\Filesystem\Filesystem;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
 
-class LaravelDatabaseMigrationsStorage implements DatabaseMigrationsStorage
+final class LaravelDatabaseMigrationsStorage implements DatabaseMigrationsStorage
 {
     private Filesystem $filesystem;
 

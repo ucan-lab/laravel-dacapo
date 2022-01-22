@@ -2,12 +2,12 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier;
 
-class IndexModifierName
+final class IndexModifierName
 {
     /**
      * @var string|array
      */
-    protected $name;
+    private $name;
 
     /**
      * IndexName constructor.

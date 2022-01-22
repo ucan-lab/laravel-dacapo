@@ -2,12 +2,14 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
-class Reference
+use function is_array;
+
+final class Reference
 {
-    protected $columns;
-    protected $references;
-    protected string $on;
-    protected ?string $name;
+    private $columns;
+    private $references;
+    private string $on;
+    private ?string $name;
 
     /**
      * Reference constructor.
@@ -71,7 +73,7 @@ class Reference
     /**
      * @return string
      */
-    private function makeColumnsMigration(): string
+    protected function makeColumnsMigration(): string
     {
         if (is_array($this->columns)) {
             return sprintf("['%s']", implode("', '", $this->columns));
@@ -83,7 +85,7 @@ class Reference
     /**
      * @return string
      */
-    private function makeReferencesMigration(): string
+    protected function makeReferencesMigration(): string
     {
         if (is_array($this->references)) {
             return sprintf("['%s']", implode("', '", $this->references));

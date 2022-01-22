@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
-class TableComment
+final class TableComment
 {
-    protected ?string $value;
+    private ?string $value;
 
     /**
      * TableComment constructor.

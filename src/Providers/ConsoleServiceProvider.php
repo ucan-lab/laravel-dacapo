@@ -27,7 +27,7 @@ use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStor
 /**
  * Class ConsoleServiceProvider.
  */
-class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvider
+final class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     public array $bindings = [
         MigrationCreateStub::class => LaravelMigrationCreateStub::class,

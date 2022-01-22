@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
-class Collation
+final class Collation
 {
-    protected ?string $value;
+    private ?string $value;
 
     /**
      * Charset constructor.

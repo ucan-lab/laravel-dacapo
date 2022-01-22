@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UuidType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class UuidTypeTest extends TestCase
+final class UuidTypeTest extends TestCase
 {
     public function testResolve(): void
     {

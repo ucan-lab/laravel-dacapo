@@ -5,12 +5,12 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-class SetType implements ColumnType
+final class SetType implements ColumnType
 {
     /**
      * @var array
      */
-    protected array $args;
+    private array $args;
 
     public function __construct(array $args)
     {

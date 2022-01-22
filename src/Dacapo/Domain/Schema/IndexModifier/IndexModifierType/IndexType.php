@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
 
-class IndexType implements IndexModifierType
+final class IndexType implements IndexModifierType
 {
     /**
      * @return string

@@ -3,15 +3,16 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema;
 
 use ArrayIterator;
-use Exception;
 use IteratorAggregate;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\DuplicatedTableNameException;
+use function in_array;
 
-class SchemaList implements IteratorAggregate
+final class SchemaList implements IteratorAggregate
 {
     /**
      * @var Schema[]
      */
-    protected array $attributes = [];
+    private array $attributes = [];
 
     /**
      * Schema constructor.
@@ -50,7 +51,7 @@ class SchemaList implements IteratorAggregate
             $schema->getTableName();
 
             if (in_array($schema->getTableName(), $tableNames, true)) {
-                throw new Exception(sprintf('[%s] table name is already in use', $schema->getTableName()));
+                throw new DuplicatedTableNameException(sprintf('[%s] table name is already in use', $schema->getTableName()));
             }
 
             $this->attributes[] = $schema;
@@ -60,7 +61,7 @@ class SchemaList implements IteratorAggregate
     }
 
     /**
-     * @return Schema[] | ArrayIterator
+     * @return Schema[]|ArrayIterator
      */
     public function getIterator(): ArrayIterator
     {

@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
 
-class InMemoryDatabaseMigrationsStorage implements DatabaseMigrationsStorage
+final class InMemoryDatabaseMigrationsStorage implements DatabaseMigrationsStorage
 {
     public array $fileList = [];
 

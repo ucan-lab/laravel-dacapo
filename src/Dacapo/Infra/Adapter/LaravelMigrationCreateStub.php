@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
 
-class LaravelMigrationCreateStub implements MigrationCreateStub
+final class LaravelMigrationCreateStub implements MigrationCreateStub
 {
     /**
      * @return string

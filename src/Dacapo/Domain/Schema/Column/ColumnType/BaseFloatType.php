@@ -4,11 +4,14 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
+use function is_string;
+use function is_array;
+use function is_int;
 
 abstract class BaseFloatType implements ColumnType
 {
-    protected ?int $total = null;
-    protected ?int $places = null;
+    private ?int $total = null;
+    private ?int $places = null;
 
     public function __construct($args = null)
     {

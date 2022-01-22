@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-class UnsignedTinyIntegerType extends BaseUnsignedIntegerType
+final class UnsignedTinyIntegerType extends BaseUnsignedIntegerType
 {
     /**
      * @return string

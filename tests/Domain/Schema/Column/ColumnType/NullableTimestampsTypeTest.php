@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\NullableTimestampsType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class NullableTimestampsTypeTest extends TestCase
+final class NullableTimestampsTypeTest extends TestCase
 {
     /**
      * @param string $expected

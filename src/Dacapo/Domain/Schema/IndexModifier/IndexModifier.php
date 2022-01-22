@@ -2,29 +2,30 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier;
 
-use Exception;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\IndexModifier\InvalidArgumentException;
+use function is_array;
 
-class IndexModifier
+final class IndexModifier
 {
     /**
      * @var IndexModifierType
      */
-    protected IndexModifierType $type;
+    private IndexModifierType $type;
 
     /**
      * @var string|array
      */
-    protected $columns;
+    private $columns;
 
     /**
      * @var string|null
      */
-    protected ?string $name;
+    private ?string $name;
 
     /**
      * @var string|null
      */
-    protected ?string $algorithm;
+    private ?string $algorithm;
 
     /**
      * Index constructor.
@@ -98,7 +99,6 @@ class IndexModifier
 
     /**
      * @return string
-     * @throws Exception
      */
     protected function makeArgs(): string
     {
@@ -110,6 +110,6 @@ class IndexModifier
             return sprintf("'%s'", $this->name);
         }
 
-        throw new Exception('Has no args.');
+        throw new InvalidArgumentException('Has no args.');
     }
 }

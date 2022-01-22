@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-class GeneratedAsModifier implements ColumnModifier
+final class GeneratedAsModifier implements ColumnModifier
 {
-    protected string $value;
+    private string $value;
 
     /**
      * GeneratedAsModifier constructor.

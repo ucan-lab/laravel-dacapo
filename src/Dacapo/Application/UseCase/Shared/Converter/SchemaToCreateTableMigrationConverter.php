@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter;
+namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Converter;
 
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
@@ -10,12 +10,12 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
-class SchemaToCreateTableMigrationConverter
+final class SchemaToCreateTableMigrationConverter
 {
-    const MIGRATION_COLUMN_INDENT = '            ';
+    private const MIGRATION_COLUMN_INDENT = '            ';
 
-    protected DatabaseBuilder $databaseBuilder;
-    protected MigrationCreateStub $migrationCreateStub;
+    private DatabaseBuilder $databaseBuilder;
+    private MigrationCreateStub $migrationCreateStub;
 
     public function __construct(
         DatabaseBuilder $databaseBuilder,

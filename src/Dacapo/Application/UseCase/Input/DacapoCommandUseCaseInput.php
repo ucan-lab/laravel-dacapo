@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input;
 
-class DacapoCommandUseCaseInput
+final class DacapoCommandUseCaseInput
 {
     public array $schemaFiles;
 

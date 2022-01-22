@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
 
-class DacapoCommandUseCaseOutput
+final class DacapoCommandUseCaseOutput
 {
     public MigrationFileList $migrationFileList;
 

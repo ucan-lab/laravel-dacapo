@@ -4,13 +4,14 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
+use function is_int;
 
-class CharType implements ColumnType
+final class CharType implements ColumnType
 {
     /**
      * @var int|null
      */
-    protected ?int $args;
+    private ?int $args;
 
     public function __construct(?int $args)
     {

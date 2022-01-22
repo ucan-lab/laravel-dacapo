@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TimestampsType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class TimestampsTypeTest extends TestCase
+final class TimestampsTypeTest extends TestCase
 {
     /**
      * @param string $expected

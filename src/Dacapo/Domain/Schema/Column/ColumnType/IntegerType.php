@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-class IntegerType extends BaseIntegerType
+final class IntegerType extends BaseIntegerType
 {
     /**
      * @return string

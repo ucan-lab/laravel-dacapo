@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\LineStringType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class LineStringTypeTest extends TestCase
+final class LineStringTypeTest extends TestCase
 {
     public function testResolve(): void
     {

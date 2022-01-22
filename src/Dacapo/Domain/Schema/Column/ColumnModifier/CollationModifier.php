@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-class CollationModifier implements ColumnModifier
+final class CollationModifier implements ColumnModifier
 {
-    protected string $value;
+    private string $value;
 
     /**
      * CollationModifier constructor.

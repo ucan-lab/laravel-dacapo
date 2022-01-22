@@ -4,11 +4,14 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
+use function is_array;
+use function is_bool;
+use function is_int;
 
 abstract class BaseIntegerType implements ColumnType
 {
-    protected bool $autoIncrement = false;
-    protected bool $unsigned = false;
+    private bool $autoIncrement = false;
+    private bool $unsigned = false;
 
     public function __construct($args = null)
     {

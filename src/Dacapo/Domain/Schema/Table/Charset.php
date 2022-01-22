@@ -2,9 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
-class Charset
+final class Charset
 {
-    protected ?string $value;
+    private ?string $value;
 
     /**
      * Charset constructor.

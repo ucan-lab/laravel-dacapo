@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\EnumType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class EnumTypeTest extends TestCase
+final class EnumTypeTest extends TestCase
 {
     public function testResolve(): void
     {

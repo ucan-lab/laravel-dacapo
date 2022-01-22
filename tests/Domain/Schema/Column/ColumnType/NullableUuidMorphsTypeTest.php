@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\NullableUuidMorphsType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class NullableUuidMorphsTypeTest extends TestCase
+final class NullableUuidMorphsTypeTest extends TestCase
 {
     public function testResolve(): void
     {

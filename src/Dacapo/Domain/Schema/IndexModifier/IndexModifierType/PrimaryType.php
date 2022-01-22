@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
 
-class PrimaryType implements IndexModifierType
+final class PrimaryType implements IndexModifierType
 {
     public function getUpMethodName(): string
     {

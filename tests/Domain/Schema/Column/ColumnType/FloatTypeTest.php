@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\FloatType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class FloatTypeTest extends TestCase
+final class FloatTypeTest extends TestCase
 {
     /**
      * @param string $expected

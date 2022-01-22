@@ -5,9 +5,9 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier;
 use ArrayIterator;
 use IteratorAggregate;
 
-class IndexModifierList implements IteratorAggregate
+final class IndexModifierList implements IteratorAggregate
 {
-    protected array $attributes = [];
+    private array $attributes = [];
 
     /**
      * @param IndexModifier $index
@@ -33,7 +33,7 @@ class IndexModifierList implements IteratorAggregate
     }
 
     /**
-     * @return IndexModifier[] | ArrayIterator
+     * @return IndexModifier[]|ArrayIterator
      */
     public function getIterator(): ArrayIterator
     {

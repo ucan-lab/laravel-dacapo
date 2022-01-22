@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MacAddressType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class MacAddressTypeTest extends TestCase
+final class MacAddressTypeTest extends TestCase
 {
     public function testResolve(): void
     {

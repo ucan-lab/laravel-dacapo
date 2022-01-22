@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter;
+namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Converter;
 
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
@@ -9,10 +9,10 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
-class SchemaToCreateIndexMigrationConverter
+final class SchemaToCreateIndexMigrationConverter
 {
-    const MIGRATION_COLUMN_INDENT = '            ';
-    protected MigrationUpdateStub $migrationUpdateStub;
+    private const MIGRATION_COLUMN_INDENT = '            ';
+    private MigrationUpdateStub $migrationUpdateStub;
 
     /**
      * @param MigrationUpdateStub $migrationUpdateStub

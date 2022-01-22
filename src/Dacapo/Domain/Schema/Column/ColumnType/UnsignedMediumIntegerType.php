@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-class UnsignedMediumIntegerType extends BaseUnsignedIntegerType
+final class UnsignedMediumIntegerType extends BaseUnsignedIntegerType
 {
     /**
      * @return string
