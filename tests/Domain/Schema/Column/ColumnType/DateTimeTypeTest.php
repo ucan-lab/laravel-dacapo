@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\DateTimeType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class DateTimeTypeTest extends TestCase
+final class DateTimeTypeTest extends TestCase
 {
     /**
      * @param string $expected

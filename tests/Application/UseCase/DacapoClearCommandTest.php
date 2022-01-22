@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Test\Application\UseCase\Console;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class DacapoClearCommandTest extends TestCase
+final class DacapoClearCommandTest extends TestCase
 {
     public function testResolve(): void
     {

@@ -5,8 +5,9 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Migration;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use function count;
 
-class MigrationFileList implements IteratorAggregate, Countable
+final class MigrationFileList implements IteratorAggregate, Countable
 {
     protected array $attributes = [];
 
@@ -72,7 +73,7 @@ class MigrationFileList implements IteratorAggregate, Countable
     }
 
     /**
-     * @return MigrationFile[] | ArrayIterator
+     * @return MigrationFile[]|ArrayIterator
      */
     public function getIterator(): ArrayIterator
     {

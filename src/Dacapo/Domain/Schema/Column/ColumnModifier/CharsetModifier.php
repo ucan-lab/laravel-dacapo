@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-class CharsetModifier implements ColumnModifier
+final class CharsetModifier implements ColumnModifier
 {
     protected string $value;
 

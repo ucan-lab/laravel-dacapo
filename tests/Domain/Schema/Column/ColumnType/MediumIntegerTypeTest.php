@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MediumIntegerType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class MediumIntegerTypeTest extends TestCase
+final class MediumIntegerTypeTest extends TestCase
 {
     public function testResolve(): void
     {

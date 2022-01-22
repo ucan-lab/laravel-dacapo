@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\PolygonType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class PolygonTypeTest extends TestCase
+final class PolygonTypeTest extends TestCase
 {
     public function testResolve(): void
     {

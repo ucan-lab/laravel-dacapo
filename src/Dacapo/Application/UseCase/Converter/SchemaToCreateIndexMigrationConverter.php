@@ -9,7 +9,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
-class SchemaToCreateIndexMigrationConverter
+final class SchemaToCreateIndexMigrationConverter
 {
     const MIGRATION_COLUMN_INDENT = '            ';
     protected MigrationUpdateStub $migrationUpdateStub;

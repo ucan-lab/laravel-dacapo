@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\GeometryType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class GeometryTypeTest extends TestCase
+final class GeometryTypeTest extends TestCase
 {
     public function testResolve(): void
     {

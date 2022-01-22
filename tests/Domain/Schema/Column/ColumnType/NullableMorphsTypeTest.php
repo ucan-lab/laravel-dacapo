@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\NullableMorphsType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class NullableMorphsTypeTest extends TestCase
+final class NullableMorphsTypeTest extends TestCase
 {
     public function testResolve(): void
     {

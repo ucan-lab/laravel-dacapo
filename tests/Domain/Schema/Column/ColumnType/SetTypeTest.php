@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\SetType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class SetTypeTest extends TestCase
+final class SetTypeTest extends TestCase
 {
     public function testResolve(): void
     {

@@ -3,8 +3,11 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
 use Exception;
+use function is_string;
+use function is_int;
+use function is_bool;
 
-class DefaultModifier implements ColumnModifier
+final class DefaultModifier implements ColumnModifier
 {
     protected $value;
 

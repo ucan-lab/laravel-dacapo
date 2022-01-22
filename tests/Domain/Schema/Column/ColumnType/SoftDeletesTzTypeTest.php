@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\SoftDeletesTzType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class SoftDeletesTzTypeTest extends TestCase
+final class SoftDeletesTzTypeTest extends TestCase
 {
     /**
      * @param string $expected

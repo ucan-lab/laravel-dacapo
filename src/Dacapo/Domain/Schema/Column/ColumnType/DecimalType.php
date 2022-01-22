@@ -4,8 +4,12 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
+use function is_array;
+use function is_string;
+use function is_bool;
+use function is_int;
 
-class DecimalType implements ColumnType
+final class DecimalType implements ColumnType
 {
     protected ?int $total = null;
     protected ?int $places = null;

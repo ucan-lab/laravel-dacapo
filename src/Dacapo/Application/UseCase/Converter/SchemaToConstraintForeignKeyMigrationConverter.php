@@ -9,7 +9,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
-class SchemaToConstraintForeignKeyMigrationConverter
+final class SchemaToConstraintForeignKeyMigrationConverter
 {
     const MIGRATION_COLUMN_INDENT = '            ';
     protected MigrationUpdateStub $migrationUpdateStub;

@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\CharType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class CharTypeTest extends TestCase
+final class CharTypeTest extends TestCase
 {
     /**
      * @param string $expected

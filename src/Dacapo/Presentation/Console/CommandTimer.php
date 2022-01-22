@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Console;
 
 use Carbon\Carbon;
 
-class CommandTimer
+final class CommandTimer
 {
     protected const DATE_FORMAT = 'Y-m-d H:i:s.u';
     protected Carbon $startedTime;

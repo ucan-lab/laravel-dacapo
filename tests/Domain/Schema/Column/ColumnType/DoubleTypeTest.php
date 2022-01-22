@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\DoubleType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class DoubleTypeTest extends TestCase
+final class DoubleTypeTest extends TestCase
 {
     /**
      * @param string $expected

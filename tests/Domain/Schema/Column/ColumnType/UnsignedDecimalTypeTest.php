@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UnsignedDecimalType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class UnsignedDecimalTypeTest extends TestCase
+final class UnsignedDecimalTypeTest extends TestCase
 {
     /**
      * @param string $expected

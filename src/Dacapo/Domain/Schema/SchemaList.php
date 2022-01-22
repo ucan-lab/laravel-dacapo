@@ -5,8 +5,9 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema;
 use ArrayIterator;
 use Exception;
 use IteratorAggregate;
+use function in_array;
 
-class SchemaList implements IteratorAggregate
+final class SchemaList implements IteratorAggregate
 {
     /**
      * @var Schema[]
@@ -60,7 +61,7 @@ class SchemaList implements IteratorAggregate
     }
 
     /**
-     * @return Schema[] | ArrayIterator
+     * @return Schema[]|ArrayIterator
      */
     public function getIterator(): ArrayIterator
     {

@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\BigIncrementsType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class BigIncrementsTypeTest extends TestCase
+final class BigIncrementsTypeTest extends TestCase
 {
     public function testResolve(): void
     {

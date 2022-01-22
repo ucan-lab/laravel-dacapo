@@ -8,7 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 /**
  * Class DacapoClearCommand.
  */
-class DacapoClearCommand extends Command
+final class DacapoClearCommand extends Command
 {
     use ConfirmableTrait;
 

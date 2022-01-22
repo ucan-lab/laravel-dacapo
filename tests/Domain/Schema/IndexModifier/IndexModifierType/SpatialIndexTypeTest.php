@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\SpatialIndexType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class SpatialIndexTypeTest extends TestCase
+final class SpatialIndexTypeTest extends TestCase
 {
     /**
      * @param string $expected

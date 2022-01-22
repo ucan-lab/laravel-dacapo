@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column;
 use ArrayIterator;
 use IteratorAggregate;
 
-class ColumnList implements IteratorAggregate
+final class ColumnList implements IteratorAggregate
 {
     protected array $attributes = [];
 

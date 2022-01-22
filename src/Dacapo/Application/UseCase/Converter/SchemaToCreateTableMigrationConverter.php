@@ -10,7 +10,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
-class SchemaToCreateTableMigrationConverter
+final class SchemaToCreateTableMigrationConverter
 {
     const MIGRATION_COLUMN_INDENT = '            ';
 

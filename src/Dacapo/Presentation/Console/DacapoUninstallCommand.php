@@ -7,7 +7,7 @@ use Illuminate\Filesystem\Filesystem;
 /**
  * Class DacapoUninstallCommand
  */
-class DacapoUninstallCommand extends Command
+final class DacapoUninstallCommand extends Command
 {
     /**
      * The name and signature of the console command.

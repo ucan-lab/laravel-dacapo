@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TextType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class TextTypeTest extends TestCase
+final class TextTypeTest extends TestCase
 {
     public function testResolve(): void
     {

@@ -2,6 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
-class Table
+final class Table
 {
 }

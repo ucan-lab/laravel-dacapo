@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierList;
 
-class Column
+final class Column
 {
     protected ColumnName $name;
     protected ColumnType $type;

@@ -14,7 +14,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableComment;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Temporary;
 
-class Schema
+final class Schema
 {
     protected Connection $connection;
     protected TableName $tableName;

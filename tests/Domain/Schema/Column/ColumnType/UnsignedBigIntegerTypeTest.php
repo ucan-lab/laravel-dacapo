@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UnsignedBigIntegerType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class UnsignedBigIntegerTypeTest extends TestCase
+final class UnsignedBigIntegerTypeTest extends TestCase
 {
     public function testResolve(): void
     {

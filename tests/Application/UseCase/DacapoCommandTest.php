@@ -12,8 +12,9 @@ use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsS
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
 use UcanLab\LaravelDacapo\Test\TestCase;
+use function count;
 
-class DacapoCommandTest extends TestCase
+final class DacapoCommandTest extends TestCase
 {
     /**
      * @param string $schemas

@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
-class TableName
+final class TableName
 {
     protected string $name;
 

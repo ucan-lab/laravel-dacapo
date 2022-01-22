@@ -7,7 +7,7 @@ use Exception;
 /**
  * DefaultRawModifier class is original ColumnModifier class
  */
-class DefaultRawModifier implements ColumnModifier
+final class DefaultRawModifier implements ColumnModifier
 {
     protected string $value;
 

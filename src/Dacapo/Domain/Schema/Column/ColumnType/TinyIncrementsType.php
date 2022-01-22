@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-class TinyIncrementsType implements ColumnType
+final class TinyIncrementsType implements ColumnType
 {
     /**
      * @param ColumnName $columnName

@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
 
-class LaravelMigrationUpdateStub implements MigrationUpdateStub
+final class LaravelMigrationUpdateStub implements MigrationUpdateStub
 {
     /**
      * @return string

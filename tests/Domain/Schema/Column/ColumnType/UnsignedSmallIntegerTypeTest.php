@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UnsignedSmallIntegerType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class UnsignedSmallIntegerTypeTest extends TestCase
+final class UnsignedSmallIntegerTypeTest extends TestCase
 {
     public function testResolve(): void
     {

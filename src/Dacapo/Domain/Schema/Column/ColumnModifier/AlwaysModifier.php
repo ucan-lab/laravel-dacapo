@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-class AlwaysModifier implements ColumnModifier
+final class AlwaysModifier implements ColumnModifier
 {
     protected bool $value;
 

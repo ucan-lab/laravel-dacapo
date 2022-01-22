@@ -3,8 +3,9 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier;
 
 use Exception;
+use function is_array;
 
-class IndexModifier
+final class IndexModifier
 {
     /**
      * @var IndexModifierType

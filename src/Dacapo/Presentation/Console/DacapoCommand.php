@@ -9,11 +9,12 @@ use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\DacapoCommandUseCase;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input\DacapoCommandUseCaseInput;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
+use function count;
 
 /**
  * Class DacapoCommand.
  */
-class DacapoCommand extends Command
+final class DacapoCommand extends Command
 {
     use ConfirmableTrait;
 

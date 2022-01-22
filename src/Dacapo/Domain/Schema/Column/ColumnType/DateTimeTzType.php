@@ -4,8 +4,9 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
+use function is_int;
 
-class DateTimeTzType implements ColumnType
+final class DateTimeTzType implements ColumnType
 {
     /**
      * @var int|null

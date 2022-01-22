@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
-class Collation
+final class Collation
 {
     protected ?string $value;
 

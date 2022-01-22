@@ -2,7 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
-class Reference
+use function is_array;
+
+final class Reference
 {
     protected $columns;
     protected $references;

@@ -7,7 +7,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\Reference;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ReferenceAction;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class ForeignKeyTest extends TestCase
+final class ForeignKeyTest extends TestCase
 {
     /**
      * @param string $expectedUp

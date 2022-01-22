@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UuidMorphsType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class UuidMorphsTypeTest extends TestCase
+final class UuidMorphsTypeTest extends TestCase
 {
     public function testResolve(): void
     {

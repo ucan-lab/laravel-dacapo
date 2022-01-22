@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TinyIncrementsType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class TinyIncrementsTypeTest extends TestCase
+final class TinyIncrementsTypeTest extends TestCase
 {
     public function testResolve(): void
     {

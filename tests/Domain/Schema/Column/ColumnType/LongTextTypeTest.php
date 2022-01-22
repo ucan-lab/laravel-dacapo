@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\LongTextType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class LongTextTypeTest extends TestCase
+final class LongTextTypeTest extends TestCase
 {
     public function testResolve(): void
     {

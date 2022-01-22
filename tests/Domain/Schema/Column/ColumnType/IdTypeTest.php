@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\IdType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class IdTypeTest extends TestCase
+final class IdTypeTest extends TestCase
 {
     public function testResolve(): void
     {

@@ -8,7 +8,7 @@ use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter\SchemaToCreateTab
 use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
-class MigrationGenerator
+final class MigrationGenerator
 {
     protected SchemaToCreateTableMigrationConverter $schemaToCreateTableMigrationConverter;
     protected SchemaToCreateIndexMigrationConverter $schemaToCreateIndexMigrationConverter;

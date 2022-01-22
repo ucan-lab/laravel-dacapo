@@ -7,7 +7,7 @@ use Illuminate\Filesystem\Filesystem;
 /**
  * Class DacapoStubPublishCommand
  */
-class DacapoStubPublishCommand extends Command
+final class DacapoStubPublishCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -28,7 +28,7 @@ class DacapoStubPublishCommand extends Command
      */
     public function handle(Filesystem $filesystem): void
     {
-        if (!is_dir($stubsPath = $this->laravel->basePath('stubs'))) {
+        if (! is_dir($stubsPath = $this->laravel->basePath('stubs'))) {
             $filesystem->makeDirectory($stubsPath);
         }
 
@@ -38,7 +38,7 @@ class DacapoStubPublishCommand extends Command
         ];
 
         foreach ($files as $from => $to) {
-            if (!file_exists($to) || $this->option('force')) {
+            if (! file_exists($to) || $this->option('force')) {
                 file_put_contents($to, file_get_contents($from));
             }
         }

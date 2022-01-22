@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-class MediumTextType implements ColumnType
+final class MediumTextType implements ColumnType
 {
     /**
      * @param ColumnName $columnName

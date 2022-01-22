@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MultiLineStringType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class MultiLineStringTypeTest extends TestCase
+final class MultiLineStringTypeTest extends TestCase
 {
     public function testResolve(): void
     {

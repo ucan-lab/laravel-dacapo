@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 
-class SqliteDatabaseBuilder implements DatabaseBuilder
+final class SqliteDatabaseBuilder implements DatabaseBuilder
 {
     /**
      * @return bool

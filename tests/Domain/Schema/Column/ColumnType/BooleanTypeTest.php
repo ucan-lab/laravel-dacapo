@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\BooleanType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class BooleanTypeTest extends TestCase
+final class BooleanTypeTest extends TestCase
 {
     public function testResolve(): void
     {

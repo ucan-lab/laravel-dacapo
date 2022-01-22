@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\UniqueType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class UniqueTypeTest extends TestCase
+final class UniqueTypeTest extends TestCase
 {
     /**
      * @param string $expected

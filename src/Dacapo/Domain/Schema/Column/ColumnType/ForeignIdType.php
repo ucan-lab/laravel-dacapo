@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-class ForeignIdType implements ColumnType
+final class ForeignIdType implements ColumnType
 {
     /**
      * @param ColumnName $columnName

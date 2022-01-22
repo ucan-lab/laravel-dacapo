@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
-class Connection
+final class Connection
 {
     protected ?string $value;
 

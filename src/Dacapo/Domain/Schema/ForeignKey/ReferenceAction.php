@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
-class ReferenceAction
+final class ReferenceAction
 {
     protected ?string $onUpdateAction;
     protected ?string $onDeleteAction;

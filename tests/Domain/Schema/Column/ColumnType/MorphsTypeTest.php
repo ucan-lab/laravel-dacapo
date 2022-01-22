@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MorphsType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class MorphsTypeTest extends TestCase
+final class MorphsTypeTest extends TestCase
 {
     public function testResolve(): void
     {

@@ -7,7 +7,7 @@ use Illuminate\Filesystem\Filesystem;
 /**
  * Class DacapoInitCommand
  */
-class DacapoInitCommand extends Command
+final class DacapoInitCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -33,7 +33,7 @@ class DacapoInitCommand extends Command
      */
     public function handle(Filesystem $filesystem): void
     {
-        if (!is_dir($schemasPath = $this->laravel->databasePath('schemas'))) {
+        if (! is_dir($schemasPath = $this->laravel->databasePath('schemas'))) {
             $filesystem->makeDirectory($schemasPath);
         }
 

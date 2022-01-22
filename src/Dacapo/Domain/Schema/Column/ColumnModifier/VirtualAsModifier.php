@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-class VirtualAsModifier implements ColumnModifier
+final class VirtualAsModifier implements ColumnModifier
 {
     protected string $value;
 

@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-class TinyIntegerType extends BaseIntegerType
+final class TinyIntegerType extends BaseIntegerType
 {
     /**
      * @return string

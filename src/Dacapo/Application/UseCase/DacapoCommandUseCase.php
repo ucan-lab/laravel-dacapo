@@ -28,8 +28,11 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Engine;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableComment;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Temporary;
+use function is_string;
+use function is_bool;
+use function is_array;
 
-class DacapoCommandUseCase
+final class DacapoCommandUseCase
 {
     protected MigrationGenerator $generator;
 

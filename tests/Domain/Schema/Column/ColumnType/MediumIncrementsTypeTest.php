@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MediumIncrementsType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class MediumIncrementsTypeTest extends TestCase
+final class MediumIncrementsTypeTest extends TestCase
 {
     public function testResolve(): void
     {

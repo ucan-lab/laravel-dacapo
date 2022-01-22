@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-class UseCurrentOnUpdateModifier implements ColumnModifier
+final class UseCurrentOnUpdateModifier implements ColumnModifier
 {
     protected bool $value;
 

@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MultiPointType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-class MultiPointTypeTest extends TestCase
+final class MultiPointTypeTest extends TestCase
 {
     public function testResolve(): void
     {

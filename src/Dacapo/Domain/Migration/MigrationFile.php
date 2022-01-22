@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Migration;
 
-class MigrationFile
+final class MigrationFile
 {
     protected string $name;
     protected string $contents;
