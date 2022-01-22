@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Converter;
+namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Converter;
 
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
@@ -9,7 +9,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
-final class SchemaToConstraintForeignKeyMigrationConverter
+final class SchemaToCreateIndexMigrationConverter
 {
     private const MIGRATION_COLUMN_INDENT = '            ';
     private MigrationUpdateStub $migrationUpdateStub;
@@ -31,7 +31,7 @@ final class SchemaToConstraintForeignKeyMigrationConverter
         $fileList = new MigrationFileList();
 
         foreach ($schemaList as $schema) {
-            if ($schema->hasForeignKeyList()) {
+            if ($schema->hasIndexModifierList()) {
                 $fileList->add($this->convert($schema));
             }
         }
@@ -54,7 +54,7 @@ final class SchemaToConstraintForeignKeyMigrationConverter
      */
     protected function makeMigrationFileName(Schema $schema): string
     {
-        return sprintf('1970_01_01_000003_%s.php', $this->makeMigrationName($schema));
+        return sprintf('1970_01_01_000002_%s.php', $this->makeMigrationName($schema));
     }
 
     /**
@@ -63,7 +63,23 @@ final class SchemaToConstraintForeignKeyMigrationConverter
      */
     protected function makeMigrationName(Schema $schema): string
     {
-        return sprintf('constraint_%s_foreign_key', $schema->getTableName());
+        return sprintf('create_%s_index', $schema->getTableName());
+    }
+
+    /**
+     * @param Schema $schema
+     * @return string
+     */
+    protected function makeMigrationContents(Schema $schema): string
+    {
+        $stub = $this->migrationUpdateStub->getStub();
+        $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
+        $stub = str_replace('{{ connection }}', $this->makeMigrationConnection($schema), $stub);
+        $stub = str_replace('{{ table }}', $schema->getTableName(), $stub);
+        $stub = str_replace('{{ up }}', $this->makeMigrationUp($schema), $stub);
+        $stub = str_replace('{{ down }}', $this->makeMigrationDown($schema), $stub);
+
+        return $stub;
     }
 
     /**
@@ -85,22 +101,6 @@ final class SchemaToConstraintForeignKeyMigrationConverter
     }
 
     /**
-     * @return string
-     * @param Schema $schema
-     */
-    protected function makeMigrationContents(Schema $schema): string
-    {
-        $stub = $this->migrationUpdateStub->getStub();
-        $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
-        $stub = str_replace('{{ connection }}', $this->makeMigrationConnection($schema), $stub);
-        $stub = str_replace('{{ table }}', $schema->getTableName(), $stub);
-        $stub = str_replace('{{ up }}', $this->makeMigrationUp($schema), $stub);
-        $stub = str_replace('{{ down }}', $this->makeMigrationDown($schema), $stub);
-
-        return $stub;
-    }
-
-    /**
      * @param Schema $schema
      * @return string
      */
@@ -108,13 +108,13 @@ final class SchemaToConstraintForeignKeyMigrationConverter
     {
         $str = '';
 
-        $foreignKeyListIterator = $schema->getForeignKeyList()->getIterator();
+        $indexListIterator = $schema->getIndexModifierList()->getIterator();
 
-        while ($foreignKeyListIterator->valid()) {
-            $str .= $foreignKeyListIterator->current()->createForeignKeyMigrationUpMethod();
-            $foreignKeyListIterator->next();
+        while ($indexListIterator->valid()) {
+            $str .= $indexListIterator->current()->createIndexMigrationUpMethod();
+            $indexListIterator->next();
 
-            if ($foreignKeyListIterator->valid()) {
+            if ($indexListIterator->valid()) {
                 $str .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
             }
         }
@@ -130,13 +130,13 @@ final class SchemaToConstraintForeignKeyMigrationConverter
     {
         $str = '';
 
-        $foreignKeyListIterator = $schema->getForeignKeyList()->getIterator();
+        $indexListIterator = $schema->getIndexModifierList()->getIterator();
 
-        while ($foreignKeyListIterator->valid()) {
-            $str .= $foreignKeyListIterator->current()->createForeignKeyMigrationDownMethod();
-            $foreignKeyListIterator->next();
+        while ($indexListIterator->valid()) {
+            $str .= $indexListIterator->current()->createIndexMigrationDownMethod($schema->getTableName());
+            $indexListIterator->next();
 
-            if ($foreignKeyListIterator->valid()) {
+            if ($indexListIterator->valid()) {
                 $str .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
             }
         }

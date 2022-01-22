@@ -3,9 +3,9 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase;
 
 use UcanLab\LaravelDacapo\Dacapo\Application\Shared\Exception\UseCase\InvalidArgumentException;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Generator\MigrationGenerator;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input\DacapoCommandUseCaseInput;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output\DacapoCommandUseCaseOutput;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Generator\MigrationGenerator;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\Column;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifier;
