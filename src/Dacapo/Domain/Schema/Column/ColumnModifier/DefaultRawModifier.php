@@ -2,8 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-use Exception;
-
 /**
  * DefaultRawModifier class is original ColumnModifier class
  */
@@ -22,7 +20,6 @@ final class DefaultRawModifier implements ColumnModifier
 
     /**
      * @return string
-     * @throws Exception
      */
     public function createMigrationMethod(): string
     {

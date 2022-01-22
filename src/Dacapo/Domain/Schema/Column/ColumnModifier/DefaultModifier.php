@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-use Exception;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\Column\ColumnModifier\InvalidArgumentException;
 use function is_string;
 use function is_int;
 use function is_bool;
@@ -22,7 +22,7 @@ final class DefaultModifier implements ColumnModifier
 
     /**
      * @return string
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function createMigrationMethod(): string
     {
@@ -38,6 +38,6 @@ final class DefaultModifier implements ColumnModifier
             return '->default(false)';
         }
 
-        throw new Exception('Not support DefaultModifier value');
+        throw new InvalidArgumentException('Not support DefaultModifier value');
     }
 }

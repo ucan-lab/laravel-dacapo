@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase;
 
-use Exception;
+use UcanLab\LaravelDacapo\Dacapo\Application\Shared\Exception\UseCase\InvalidArgumentException;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Generator\MigrationGenerator;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input\DacapoCommandUseCaseInput;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output\DacapoCommandUseCaseOutput;
@@ -29,9 +29,9 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Table;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableComment;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Temporary;
-use function is_string;
-use function is_bool;
 use function is_array;
+use function is_bool;
+use function is_string;
 
 final class DacapoCommandUseCase
 {
@@ -49,7 +49,6 @@ final class DacapoCommandUseCase
     /**
      * @param DacapoCommandUseCaseInput $input
      * @return DacapoCommandUseCaseOutput
-     * @throws Exception
      */
     public function handle(DacapoCommandUseCaseInput $input): DacapoCommandUseCaseOutput
     {
@@ -68,7 +67,6 @@ final class DacapoCommandUseCase
      * @param string $name
      * @param array $attributes
      * @return Schema
-     * @throws Exception
      */
     protected function makeSchema(string $name, array $attributes): Schema
     {
@@ -78,8 +76,8 @@ final class DacapoCommandUseCase
             $columnList = $this->makeColumnList($attributes['columns'] ?? []);
             $sqlIndexList = $this->makeIndexModifierList($attributes['indexes'] ?? []);
             $foreignKeyList = $this->makeForeignKeyList($attributes['foreign_keys'] ?? []);
-        } catch (Exception $exception) {
-            throw new Exception(sprintf('%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
+        } catch (InvalidArgumentException $exception) {
+            throw new InvalidArgumentException(sprintf('%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
         }
 
         $connection = new Connection($attributes['connection'] ?? null);
@@ -110,7 +108,6 @@ final class DacapoCommandUseCase
     /**
      * @param array $columns
      * @return ColumnList
-     * @throws Exception
      */
     protected function makeColumnList(array $columns): ColumnList
     {
@@ -123,25 +120,25 @@ final class DacapoCommandUseCase
             if (is_string($attributes)) {
                 try {
                     $columnType = $this->makeColumnTypeClass($attributes);
-                } catch (Exception $exception) {
-                    throw new Exception(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
+                } catch (InvalidArgumentException $exception) {
+                    throw new InvalidArgumentException(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
                 }
             } elseif (is_bool($attributes) || $attributes === null) {
                 try {
                     $columnName = new ColumnName('');
                     $columnType = $this->makeColumnTypeClass($name);
-                } catch (Exception $exception) {
-                    throw new Exception(sprintf('columns.%s', $exception->getMessage()), $exception->getCode(), $exception);
+                } catch (InvalidArgumentException $exception) {
+                    throw new InvalidArgumentException(sprintf('columns.%s', $exception->getMessage()), $exception->getCode(), $exception);
                 }
             } elseif (is_array($attributes)) {
                 if (isset($attributes['type']) === false) {
-                    throw new Exception(sprintf('columns.%s.type field is required', $name));
+                    throw new InvalidArgumentException(sprintf('columns.%s.type field is required', $name));
                 }
 
                 try {
                     $columnType = $this->makeColumnTypeClass($attributes['type'], $attributes['args'] ?? null);
-                } catch (Exception $exception) {
-                    throw new Exception(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
+                } catch (InvalidArgumentException $exception) {
+                    throw new InvalidArgumentException(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
                 }
 
                 unset($attributes['type'], $attributes['args']);
@@ -150,11 +147,11 @@ final class DacapoCommandUseCase
                     foreach ($attributes as $modifierName => $modifierValue) {
                         $modifierList->add($this->makeColumnModifierClass($modifierName, $modifierValue));
                     }
-                } catch (Exception $exception) {
-                    throw new Exception(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
+                } catch (InvalidArgumentException $exception) {
+                    throw new InvalidArgumentException(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
                 }
             } else {
-                throw new Exception(sprintf('columns.%s field is unsupported format', $name));
+                throw new InvalidArgumentException(sprintf('columns.%s field is unsupported format', $name));
             }
 
             $columnList->add(new Column($columnName, $columnType, $modifierList));
@@ -165,9 +162,8 @@ final class DacapoCommandUseCase
 
     /**
      * @param string $name
-     * @param $args
+     * @param null $args
      * @return ColumnType
-     * @throws Exception
      */
     protected function makeColumnTypeClass(string $name, $args = null): ColumnType
     {
@@ -181,14 +177,13 @@ final class DacapoCommandUseCase
             return new $columnTypeClass();
         }
 
-        throw new Exception(sprintf('%s column type does not exist', $name));
+        throw new InvalidArgumentException(sprintf('%s column type does not exist', $name));
     }
 
     /**
      * @param string $name
      * @param $value
      * @return ColumnModifier
-     * @throws Exception
      */
     protected function makeColumnModifierClass(string $name, $value): ColumnModifier
     {
@@ -198,13 +193,12 @@ final class DacapoCommandUseCase
             return new $columnModifierClass($value);
         }
 
-        throw new Exception(sprintf('%s column modifier does not exist', $name));
+        throw new InvalidArgumentException(sprintf('%s column modifier does not exist', $name));
     }
 
     /**
      * @param array $indexes
      * @return IndexModifierList
-     * @throws Exception
      */
     protected function makeIndexModifierList(array $indexes): IndexModifierList
     {
@@ -212,11 +206,11 @@ final class DacapoCommandUseCase
 
         foreach ($indexes as $indexAttributes) {
             if (isset($indexAttributes['columns']) === false) {
-                throw new Exception('foreign_keys.columns field is required');
+                throw new InvalidArgumentException('foreign_keys.columns field is required');
             }
 
             if (isset($indexAttributes['type']) === false) {
-                throw new Exception('foreign_keys.type field is required');
+                throw new InvalidArgumentException('foreign_keys.type field is required');
             }
 
             $columns = $indexAttributes['columns'];
@@ -235,7 +229,6 @@ final class DacapoCommandUseCase
     /**
      * @param string $name
      * @return IndexModifierType
-     * @throws Exception
      */
     protected function makeIndexModifierTypeClass(string $name): IndexModifierType
     {
@@ -245,13 +238,12 @@ final class DacapoCommandUseCase
             return new $indexTypeClass();
         }
 
-        throw new Exception(sprintf('%s class not found exception.', $indexTypeClass));
+        throw new InvalidArgumentException(sprintf('%s class not found exception.', $indexTypeClass));
     }
 
     /**
      * @param array $foreignKeys
      * @return ForeignKeyList
-     * @throws Exception
      */
     protected function makeForeignKeyList(array $foreignKeys): ForeignKeyList
     {
@@ -259,15 +251,15 @@ final class DacapoCommandUseCase
 
         foreach ($foreignKeys as $foreignKeyAttribute) {
             if (isset($foreignKeyAttribute['columns']) === false) {
-                throw new Exception('foreign_keys.columns field is required');
+                throw new InvalidArgumentException('foreign_keys.columns field is required');
             }
 
             if (isset($foreignKeyAttribute['references']) === false) {
-                throw new Exception('foreign_keys.references field is required');
+                throw new InvalidArgumentException('foreign_keys.references field is required');
             }
 
             if (isset($foreignKeyAttribute['on']) === false) {
-                throw new Exception('foreign_keys.on field is required');
+                throw new InvalidArgumentException('foreign_keys.on field is required');
             }
 
             $reference = new Reference($foreignKeyAttribute['columns'], $foreignKeyAttribute['references'], $foreignKeyAttribute['on'], $foreignKeyAttribute['name'] ?? null);

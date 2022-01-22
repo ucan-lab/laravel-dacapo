@@ -2,11 +2,11 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Console;
 
-use Exception;
 use Illuminate\Console\ConfirmableTrait;
 use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\DacapoCommandUseCase;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input\DacapoCommandUseCaseInput;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Exception\Console\DuplicatedTableNameException;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
 use function count;
@@ -41,7 +41,6 @@ final class DacapoCommand extends Command
      * @param DacapoCommandUseCase $useCase
      * @param DatabaseSchemasStorage $databaseSchemasStorage
      * @param DatabaseMigrationsStorage $databaseMigrationsStorage
-     * @throws Exception
      */
     public function handle(
         DacapoCommandUseCase $useCase,
@@ -78,7 +77,6 @@ final class DacapoCommand extends Command
     /**
      * @param array $ymlFiles
      * @return DacapoCommandUseCaseInput
-     * @throws Exception
      */
     private function makeDacapoCommandUseCaseInput(array $ymlFiles): DacapoCommandUseCaseInput
     {
@@ -90,7 +88,7 @@ final class DacapoCommand extends Command
             $intersectKeys = array_intersect_key($schemaFiles, $parsedYmlFile);
 
             if (count($intersectKeys) > 0) {
-                throw new Exception(sprintf('Duplicate table name for `%s` in the schema YAML', implode(', ', array_keys($intersectKeys))));
+                throw new DuplicatedTableNameException(sprintf('Duplicate table name for `%s` in the schema YAML', implode(', ', array_keys($intersectKeys))));
             }
 
             $schemaFiles = array_merge($schemaFiles, $parsedYmlFile);

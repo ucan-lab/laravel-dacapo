@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier;
 
-use Exception;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\IndexModifier\InvalidArgumentException;
 use function is_array;
 
 final class IndexModifier
@@ -99,7 +99,6 @@ final class IndexModifier
 
     /**
      * @return string
-     * @throws Exception
      */
     protected function makeArgs(): string
     {
@@ -111,6 +110,6 @@ final class IndexModifier
             return sprintf("'%s'", $this->name);
         }
 
-        throw new Exception('Has no args.');
+        throw new InvalidArgumentException('Has no args.');
     }
 }
