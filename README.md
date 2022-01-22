@@ -3,9 +3,7 @@
 [![Build Status](https://travis-ci.org/ucan-lab/laravel-dacapo.svg?branch=master)](https://travis-ci.org/ucan-lab/laravel-dacapo)
 [![Latest Stable Version](https://poser.pugx.org/ucan-lab/laravel-dacapo/v/stable)](https://packagist.org/packages/ucan-lab/laravel-dacapo)
 [![Total Downloads](https://poser.pugx.org/ucan-lab/laravel-dacapo/downloads)](https://packagist.org/packages/ucan-lab/laravel-dacapo)
-[![Monthly Downloads](https://poser.pugx.org/ucan-lab/laravel-dacapo/d/monthly)](https://packagist.org/packages/ucan-lab/laravel-dacapo)
 [![Daily Downloads](https://poser.pugx.org/ucan-lab/laravel-dacapo/d/daily)](https://packagist.org/packages/ucan-lab/laravel-dacapo)
-[![Latest Unstable Version](https://poser.pugx.org/ucan-lab/laravel-dacapo/v/unstable)](https://packagist.org/packages/ucan-lab/laravel-dacapo)
 [![License](https://poser.pugx.org/ucan-lab/laravel-dacapo/license)](https://packagist.org/packages/ucan-lab/laravel-dacapo)
 
 ## Introduction
@@ -84,3 +82,83 @@ $ php artisan dacapo
 - 1970_01_01_000001_create_failed_jobs_table.php
 - 1970_01_01_000001_create_password_resets_table.php
 - 1970_01_01_000001_create_users_table.php
+
+#### Dacapo Option
+
+```
+# Execute migrate and seeding
+$ php artisan dacapo --seed
+```
+
+```
+# Do not execute migrate
+$ php artisan dacapo --no-migrate
+```
+
+### Schema file format
+
+- `{}` any value
+- `database/schemas/*.yml`
+- If it cannot be expressed in YAML, it can be used together with standard migration.
+  - `php artisan make:migration`
+
+```
+# COMMENT
+{TableName}:
+  columns:
+    {ColumnName}: {ColumnType}
+    {ColumnName}:
+      type: {ColumnType}
+    {ColumnName}:
+      unique: true
+      nullable: true
+      default: {DefaultValue}
+      comment: {ColumnName}
+      {ColumnModifier}: {ColumnModifierValue}
+  indexes:
+    - columns: {ColumnName}
+      type: {IndexType}
+    - columns: [{ColumnName}, {ColumnName}]
+      type: {IndexType}
+    - columns: {ColumnName}
+      type: {IndexType}
+      name: {IndexName}
+  foreign_keys:
+    - columns: {ColumnName}
+      references: {ReferenceColumnName}
+      on: {ReferenceTableName}
+    - columns: {ColumnName}
+      references: {ReferenceColumnName}
+      on: {ReferenceTableName}
+      onUpdate: {ConstraintProperty}
+      onDelete: {ConstraintProperty}
+    - columns: [{ColumnName}, {ColumnName}]
+      references: [{ReferenceColumnName}, {ReferenceColumnName}]
+      on: {ReferenceTableName}
+
+{TableName}:
+  columns:
+    {ColumnName}: {ColumnType}
+```
+
+### Dacapo Clear Migrations
+
+```
+$ php artisan dacapo:clear
+$ php artisan dacapo:clear --all
+```
+
+- `--all` Delete including standard migration files.
+
+### Dacapo Stub publish
+
+```
+$ php artisan dacapo:stub:publish
+```
+
+### Dacapo Uninstall
+
+```
+$ php artisan dacapo:uninstall
+$ composer remove --dev ucan-lab/laravel-dacapo
+```
