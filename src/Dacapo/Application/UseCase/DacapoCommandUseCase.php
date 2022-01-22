@@ -6,28 +6,28 @@ use Exception;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Generator\MigrationGenerator;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input\DacapoCommandUseCaseInput;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output\DacapoCommandUseCaseOutput;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\Schema;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Entity\SchemaList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Charset;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Collation;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Column;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ColumnList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ColumnModifier;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ColumnModifierList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ColumnName;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ColumnType;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Connection;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Engine;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ForeignKey;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ForeignKey\Reference;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ForeignKey\ReferenceAction;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\ForeignKeyList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifier;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifierList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\IndexModifierType;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\TableComment;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\TableName;
-use UcanLab\LaravelDacapo\Dacapo\Domain\ValueObject\Schema\Temporary;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\Column;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifier;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKey;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKeyList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\Reference;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ReferenceAction;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Charset;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Collation;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Connection;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Engine;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableComment;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Temporary;
 
 class DacapoCommandUseCase
 {
@@ -163,7 +163,7 @@ class DacapoCommandUseCase
      */
     private function makeColumnTypeClass(string $name, $args = null): ColumnType
     {
-        $columnTypeClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\ValueObject\\Schema\\ColumnType\\' . ucfirst($name) . 'Type';
+        $columnTypeClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\Schema\\Column\\ColumnType\\' . ucfirst($name) . 'Type';
 
         if (class_exists($columnTypeClass)) {
             if ($args !== null) {
@@ -184,7 +184,7 @@ class DacapoCommandUseCase
      */
     private function makeColumnModifierClass(string $name, $value): ColumnModifier
     {
-        $columnModifierClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\ValueObject\\Schema\\ColumnModifier\\' . ucfirst($name) . 'Modifier';
+        $columnModifierClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\Schema\\Column\\ColumnModifier\\' . ucfirst($name) . 'Modifier';
 
         if (class_exists($columnModifierClass)) {
             return new $columnModifierClass($value);
@@ -231,7 +231,7 @@ class DacapoCommandUseCase
      */
     private function makeIndexModifierTypeClass(string $name): IndexModifierType
     {
-        $indexTypeClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\ValueObject\\Schema\\IndexModifierType\\' . ucfirst($name) . 'Type';
+        $indexTypeClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\Schema\\IndexModifier\\IndexModifierType\\' . ucfirst($name) . 'Type';
 
         if (class_exists($indexTypeClass)) {
             return new $indexTypeClass();
