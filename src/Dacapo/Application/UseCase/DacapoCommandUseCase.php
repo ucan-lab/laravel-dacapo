@@ -25,6 +25,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Charset;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Collation;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Connection;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Engine;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Table;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableComment;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Temporary;
@@ -88,17 +89,21 @@ final class DacapoCommandUseCase
         $collation = new Collation($attributes['collation'] ?? null);
         $temporary = new Temporary($attributes['temporary'] ?? false);
 
-        return new Schema(
+        $table = new Table(
             $connection,
             $tableName,
             $tableComment,
-            $columnList,
-            $sqlIndexList,
-            $foreignKeyList,
             $engine,
             $charset,
             $collation,
             $temporary
+        );
+
+        return new Schema(
+            $table,
+            $columnList,
+            $sqlIndexList,
+            $foreignKeyList
         );
     }
 
