@@ -11,8 +11,8 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
 final class SchemaToConstraintForeignKeyMigrationConverter
 {
-    const MIGRATION_COLUMN_INDENT = '            ';
-    protected MigrationUpdateStub $migrationUpdateStub;
+    private const MIGRATION_COLUMN_INDENT = '            ';
+    private MigrationUpdateStub $migrationUpdateStub;
 
     /**
      * @param MigrationUpdateStub $migrationUpdateStub

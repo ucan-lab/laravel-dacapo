@@ -10,7 +10,7 @@ use function is_int;
 
 abstract class BaseUnsignedIntegerType implements ColumnType
 {
-    protected bool $autoIncrement = false;
+    private bool $autoIncrement = false;
 
     public function __construct($args = null)
     {

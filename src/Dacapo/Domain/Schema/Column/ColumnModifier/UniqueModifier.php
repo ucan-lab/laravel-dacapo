@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
 final class UniqueModifier implements ColumnModifier
 {
-    protected bool $value;
+    private bool $value;
 
     /**
      * UniqueModifier constructor.

@@ -4,13 +4,13 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
 final class Table
 {
-    protected Connection $connection;
-    protected TableName $tableName;
-    protected TableComment $tableComment;
-    protected Engine $engine;
-    protected Charset $charset;
-    protected Collation $collation;
-    protected Temporary $temporary;
+    private Connection $connection;
+    private TableName $tableName;
+    private TableComment $tableComment;
+    private Engine $engine;
+    private Charset $charset;
+    private Collation $collation;
+    private Temporary $temporary;
 
     public function __construct(
         Connection $connection,

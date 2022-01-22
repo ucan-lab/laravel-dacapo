@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
 final class AlwaysModifier implements ColumnModifier
 {
-    protected bool $value;
+    private bool $value;
 
     /**
      * AlwaysModifier constructor.

@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
 final class FromModifier implements ColumnModifier
 {
-    protected int $value;
+    private int $value;
 
     /**
      * FromModifier constructor.

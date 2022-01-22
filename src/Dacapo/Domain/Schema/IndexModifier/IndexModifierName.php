@@ -7,7 +7,7 @@ final class IndexModifierName
     /**
      * @var string|array
      */
-    protected $name;
+    private $name;
 
     /**
      * IndexName constructor.

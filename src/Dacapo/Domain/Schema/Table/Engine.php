@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
 final class Engine
 {
-    protected ?string $value;
+    private ?string $value;
 
     /**
      * Engine constructor.

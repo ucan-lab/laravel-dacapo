@@ -10,7 +10,7 @@ final class EnumType implements ColumnType
     /**
      * @var array
      */
-    protected array $args;
+    private array $args;
 
     public function __construct(array $args)
     {

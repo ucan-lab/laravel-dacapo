@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
 final class AutoIncrementModifier implements ColumnModifier
 {
-    protected bool $value;
+    private bool $value;
 
     /**
      * AutoIncrementModifier constructor.

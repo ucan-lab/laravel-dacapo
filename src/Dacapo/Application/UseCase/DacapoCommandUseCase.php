@@ -35,7 +35,7 @@ use function is_array;
 
 final class DacapoCommandUseCase
 {
-    protected MigrationGenerator $generator;
+    private MigrationGenerator $generator;
 
     /**
      * DacapoCommandUseCase constructor.
@@ -70,7 +70,7 @@ final class DacapoCommandUseCase
      * @return Schema
      * @throws Exception
      */
-    private function makeSchema(string $name, array $attributes): Schema
+    protected function makeSchema(string $name, array $attributes): Schema
     {
         $tableName = new TableName($name);
 
@@ -112,7 +112,7 @@ final class DacapoCommandUseCase
      * @return ColumnList
      * @throws Exception
      */
-    private function makeColumnList(array $columns): ColumnList
+    protected function makeColumnList(array $columns): ColumnList
     {
         $columnList = new ColumnList();
 
@@ -169,7 +169,7 @@ final class DacapoCommandUseCase
      * @return ColumnType
      * @throws Exception
      */
-    private function makeColumnTypeClass(string $name, $args = null): ColumnType
+    protected function makeColumnTypeClass(string $name, $args = null): ColumnType
     {
         $columnTypeClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\Schema\\Column\\ColumnType\\' . ucfirst($name) . 'Type';
 
@@ -190,7 +190,7 @@ final class DacapoCommandUseCase
      * @return ColumnModifier
      * @throws Exception
      */
-    private function makeColumnModifierClass(string $name, $value): ColumnModifier
+    protected function makeColumnModifierClass(string $name, $value): ColumnModifier
     {
         $columnModifierClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\Schema\\Column\\ColumnModifier\\' . ucfirst($name) . 'Modifier';
 
@@ -206,7 +206,7 @@ final class DacapoCommandUseCase
      * @return IndexModifierList
      * @throws Exception
      */
-    private function makeIndexModifierList(array $indexes): IndexModifierList
+    protected function makeIndexModifierList(array $indexes): IndexModifierList
     {
         $sqlIndexList = new IndexModifierList();
 
@@ -237,7 +237,7 @@ final class DacapoCommandUseCase
      * @return IndexModifierType
      * @throws Exception
      */
-    private function makeIndexModifierTypeClass(string $name): IndexModifierType
+    protected function makeIndexModifierTypeClass(string $name): IndexModifierType
     {
         $indexTypeClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\Schema\\IndexModifier\\IndexModifierType\\' . ucfirst($name) . 'Type';
 
@@ -253,7 +253,7 @@ final class DacapoCommandUseCase
      * @return ForeignKeyList
      * @throws Exception
      */
-    private function makeForeignKeyList(array $foreignKeys): ForeignKeyList
+    protected function makeForeignKeyList(array $foreignKeys): ForeignKeyList
     {
         $foreignKeyList = new ForeignKeyList();
 

@@ -10,8 +10,8 @@ use function is_int;
 
 abstract class BaseFloatType implements ColumnType
 {
-    protected ?int $total = null;
-    protected ?int $places = null;
+    private ?int $total = null;
+    private ?int $places = null;
 
     public function __construct($args = null)
     {

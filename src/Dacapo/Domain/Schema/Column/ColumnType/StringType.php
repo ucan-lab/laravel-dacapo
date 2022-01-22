@@ -11,7 +11,7 @@ final class StringType implements ColumnType
     /**
      * @var int|null
      */
-    protected ?int $args;
+    private ?int $args;
 
     public function __construct(?int $args = null)
     {

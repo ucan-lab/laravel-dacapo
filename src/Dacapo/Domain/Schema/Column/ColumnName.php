@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column;
 
 final class ColumnName
 {
-    protected string $name;
+    private string $name;
 
     /**
      * ColumnName constructor.

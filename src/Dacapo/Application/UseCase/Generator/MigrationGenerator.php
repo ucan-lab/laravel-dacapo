@@ -10,9 +10,9 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
 final class MigrationGenerator
 {
-    protected SchemaToCreateTableMigrationConverter $schemaToCreateTableMigrationConverter;
-    protected SchemaToCreateIndexMigrationConverter $schemaToCreateIndexMigrationConverter;
-    protected SchemaToConstraintForeignKeyMigrationConverter $schemaToConstraintForeignKeyMigrationConverter;
+    private SchemaToCreateTableMigrationConverter $schemaToCreateTableMigrationConverter;
+    private SchemaToCreateIndexMigrationConverter $schemaToCreateIndexMigrationConverter;
+    private SchemaToConstraintForeignKeyMigrationConverter $schemaToConstraintForeignKeyMigrationConverter;
 
     /**
      * MigrationGenerator constructor.

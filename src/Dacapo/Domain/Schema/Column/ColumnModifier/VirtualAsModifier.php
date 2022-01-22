@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
 final class VirtualAsModifier implements ColumnModifier
 {
-    protected string $value;
+    private string $value;
 
     /**
      * VirtualAsModifier constructor.

@@ -9,7 +9,7 @@ use Exception;
  */
 final class DefaultRawModifier implements ColumnModifier
 {
-    protected string $value;
+    private string $value;
 
     /**
      * DefaultRawModifier constructor.

@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class Command extends BaseCommand
 {
-    protected CommandTimer $timer;
+    private CommandTimer $timer;
 
     /**
      * Command constructor.

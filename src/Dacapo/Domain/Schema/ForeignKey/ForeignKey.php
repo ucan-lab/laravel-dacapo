@@ -4,8 +4,8 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
 final class ForeignKey
 {
-    protected Reference $reference;
-    protected ReferenceAction $referenceAction;
+    private Reference $reference;
+    private ReferenceAction $referenceAction;
 
     /**
      * ForeignKey constructor.

@@ -12,9 +12,9 @@ use function is_int;
 
 abstract class BaseDecimalType implements ColumnType
 {
-    protected ?int $total = null;
-    protected ?int $places = null;
-    protected ?bool $unsigned = null;
+    private ?int $total = null;
+    private ?int $places = null;
+    private ?bool $unsigned = null;
 
     public function __construct($args = null)
     {

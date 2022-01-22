@@ -10,22 +10,22 @@ final class IndexModifier
     /**
      * @var IndexModifierType
      */
-    protected IndexModifierType $type;
+    private IndexModifierType $type;
 
     /**
      * @var string|array
      */
-    protected $columns;
+    private $columns;
 
     /**
      * @var string|null
      */
-    protected ?string $name;
+    private ?string $name;
 
     /**
      * @var string|null
      */
-    protected ?string $algorithm;
+    private ?string $algorithm;
 
     /**
      * Index constructor.

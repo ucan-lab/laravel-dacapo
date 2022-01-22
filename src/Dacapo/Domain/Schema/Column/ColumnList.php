@@ -7,7 +7,7 @@ use IteratorAggregate;
 
 final class ColumnList implements IteratorAggregate
 {
-    protected array $attributes = [];
+    private array $attributes = [];
 
     /**
      * @param Column $column

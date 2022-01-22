@@ -7,7 +7,7 @@ use IteratorAggregate;
 
 final class ForeignKeyList implements IteratorAggregate
 {
-    protected array $attributes = [];
+    private array $attributes = [];
 
     /**
      * @param ForeignKey $foreign

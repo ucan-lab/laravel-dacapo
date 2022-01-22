@@ -12,10 +12,10 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
 final class SchemaToCreateTableMigrationConverter
 {
-    const MIGRATION_COLUMN_INDENT = '            ';
+    private const MIGRATION_COLUMN_INDENT = '            ';
 
-    protected DatabaseBuilder $databaseBuilder;
-    protected MigrationCreateStub $migrationCreateStub;
+    private DatabaseBuilder $databaseBuilder;
+    private MigrationCreateStub $migrationCreateStub;
 
     public function __construct(
         DatabaseBuilder $databaseBuilder,

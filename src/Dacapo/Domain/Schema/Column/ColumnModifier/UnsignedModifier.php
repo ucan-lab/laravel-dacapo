@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
 final class UnsignedModifier implements ColumnModifier
 {
-    protected bool $value;
+    private bool $value;
 
     /**
      * UnsignedModifier constructor.

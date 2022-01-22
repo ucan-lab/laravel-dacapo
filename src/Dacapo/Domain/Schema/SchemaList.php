@@ -12,7 +12,7 @@ final class SchemaList implements IteratorAggregate
     /**
      * @var Schema[]
      */
-    protected array $attributes = [];
+    private array $attributes = [];
 
     /**
      * Schema constructor.

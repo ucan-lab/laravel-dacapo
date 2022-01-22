@@ -8,7 +8,7 @@ use function is_int;
 
 final class SoftDeletesType implements ColumnType
 {
-    protected ?int $precision = null;
+    private ?int $precision = null;
 
     /**
      * SoftDeletesType constructor.

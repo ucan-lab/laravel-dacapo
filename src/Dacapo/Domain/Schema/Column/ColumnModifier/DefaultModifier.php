@@ -9,7 +9,7 @@ use function is_bool;
 
 final class DefaultModifier implements ColumnModifier
 {
-    protected $value;
+    private $value;
 
     /**
      * DefaultModifier constructor.

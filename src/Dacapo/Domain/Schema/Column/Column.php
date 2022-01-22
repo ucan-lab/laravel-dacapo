@@ -6,9 +6,9 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModif
 
 final class Column
 {
-    protected ColumnName $name;
-    protected ColumnType $type;
-    protected ColumnModifierList $modifierList;
+    private ColumnName $name;
+    private ColumnType $type;
+    private ColumnModifierList $modifierList;
 
     /**
      * Column constructor.

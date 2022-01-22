@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
 final class NullableModifier implements ColumnModifier
 {
-    protected bool $value;
+    private bool $value;
 
     /**
      * NullableModifier constructor.

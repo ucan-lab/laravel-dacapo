@@ -6,9 +6,9 @@ use Carbon\Carbon;
 
 final class CommandTimer
 {
-    protected const DATE_FORMAT = 'Y-m-d H:i:s.u';
-    protected Carbon $startedTime;
-    protected Carbon $stoppedTime;
+    private const DATE_FORMAT = 'Y-m-d H:i:s.u';
+    private Carbon $startedTime;
+    private Carbon $stoppedTime;
 
     /**
      * CommandTimer constructor.

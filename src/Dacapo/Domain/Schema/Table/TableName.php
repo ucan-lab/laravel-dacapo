@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
 final class TableName
 {
-    protected string $name;
+    private string $name;
 
     /**
      * TableName constructor.

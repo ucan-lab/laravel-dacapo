@@ -7,7 +7,7 @@ use IteratorAggregate;
 
 final class IndexModifierList implements IteratorAggregate
 {
-    protected array $attributes = [];
+    private array $attributes = [];
 
     /**
      * @param IndexModifier $index

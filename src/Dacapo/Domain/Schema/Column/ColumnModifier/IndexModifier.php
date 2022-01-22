@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
 final class IndexModifier implements ColumnModifier
 {
-    protected bool $value;
+    private bool $value;
 
     /**
      * IndexModifier constructor.

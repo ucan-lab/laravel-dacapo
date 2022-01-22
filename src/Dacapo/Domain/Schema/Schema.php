@@ -15,10 +15,10 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Temporary;
 
 final class Schema
 {
-    protected Table $table;
-    protected ColumnList $columnList;
-    protected IndexModifierList $sqlIndexList;
-    protected ForeignKeyList $foreignKeyList;
+    private Table $table;
+    private ColumnList $columnList;
+    private IndexModifierList $sqlIndexList;
+    private ForeignKeyList $foreignKeyList;
 
     /**
      * Schema constructor.

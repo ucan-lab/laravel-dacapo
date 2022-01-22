@@ -10,7 +10,7 @@ final class MorphsType implements ColumnType
     /**
      * @var string|null
      */
-    protected ?string $args;
+    private ?string $args;
 
     public function __construct(?string $args = null)
     {
