@@ -5,20 +5,20 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase;
 use UcanLab\LaravelDacapo\Dacapo\Application\Shared\Exception\UseCase\InvalidArgumentException;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input\DacapoCommandUseCaseInput;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output\DacapoCommandUseCaseOutput;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Factory\ColumnModifierFactory;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Factory\ColumnTypeFactory;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Factory\IndexModifierTypeFactory;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Generator\MigrationGenerator;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\Column;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifier;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKey;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKeyList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\Reference;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ReferenceAction;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Charset;
@@ -36,14 +36,27 @@ use function is_string;
 final class DacapoCommandUseCase
 {
     private MigrationGenerator $generator;
+    private ColumnTypeFactory $columnTypeFactory;
+    private ColumnModifierFactory $columnModifierFactory;
+    private IndexModifierTypeFactory $indexModifierTypeFactory;
 
     /**
      * DacapoCommandUseCase constructor.
      * @param MigrationGenerator $generator
+     * @param ColumnTypeFactory $columnTypeFactory
+     * @param ColumnModifierFactory $columnModifierFactory
+     * @param IndexModifierTypeFactory $indexModifierTypeFactory
      */
-    public function __construct(MigrationGenerator $generator)
-    {
+    public function __construct(
+        MigrationGenerator $generator,
+        ColumnTypeFactory $columnTypeFactory,
+        ColumnModifierFactory $columnModifierFactory,
+        IndexModifierTypeFactory $indexModifierTypeFactory
+    ) {
         $this->generator = $generator;
+        $this->columnTypeFactory = $columnTypeFactory;
+        $this->columnModifierFactory = $columnModifierFactory;
+        $this->indexModifierTypeFactory = $indexModifierTypeFactory;
     }
 
     /**
@@ -119,14 +132,14 @@ final class DacapoCommandUseCase
 
             if (is_string($attributes)) {
                 try {
-                    $columnType = $this->makeColumnTypeClass($attributes);
+                    $columnType = $this->columnTypeFactory->factory($attributes);
                 } catch (InvalidArgumentException $exception) {
                     throw new InvalidArgumentException(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
                 }
             } elseif (is_bool($attributes) || $attributes === null) {
                 try {
                     $columnName = new ColumnName('');
-                    $columnType = $this->makeColumnTypeClass($name);
+                    $columnType = $this->columnTypeFactory->factory($name);
                 } catch (InvalidArgumentException $exception) {
                     throw new InvalidArgumentException(sprintf('columns.%s', $exception->getMessage()), $exception->getCode(), $exception);
                 }
@@ -136,7 +149,7 @@ final class DacapoCommandUseCase
                 }
 
                 try {
-                    $columnType = $this->makeColumnTypeClass($attributes['type'], $attributes['args'] ?? null);
+                    $columnType = $this->columnTypeFactory->factory($attributes['type'], $attributes['args'] ?? null);
                 } catch (InvalidArgumentException $exception) {
                     throw new InvalidArgumentException(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
                 }
@@ -145,7 +158,7 @@ final class DacapoCommandUseCase
 
                 try {
                     foreach ($attributes as $modifierName => $modifierValue) {
-                        $modifierList->add($this->makeColumnModifierClass($modifierName, $modifierValue));
+                        $modifierList->add($this->columnModifierFactory->factory($modifierName, $modifierValue));
                     }
                 } catch (InvalidArgumentException $exception) {
                     throw new InvalidArgumentException(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
@@ -158,42 +171,6 @@ final class DacapoCommandUseCase
         }
 
         return $columnList;
-    }
-
-    /**
-     * @param string $name
-     * @param null $args
-     * @return ColumnType
-     */
-    protected function makeColumnTypeClass(string $name, $args = null): ColumnType
-    {
-        $columnTypeClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\Schema\\Column\\ColumnType\\' . ucfirst($name) . 'Type';
-
-        if (class_exists($columnTypeClass)) {
-            if ($args !== null) {
-                return new $columnTypeClass($args);
-            }
-
-            return new $columnTypeClass();
-        }
-
-        throw new InvalidArgumentException(sprintf('%s column type does not exist', $name));
-    }
-
-    /**
-     * @param string $name
-     * @param $value
-     * @return ColumnModifier
-     */
-    protected function makeColumnModifierClass(string $name, $value): ColumnModifier
-    {
-        $columnModifierClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\Schema\\Column\\ColumnModifier\\' . ucfirst($name) . 'Modifier';
-
-        if (class_exists($columnModifierClass)) {
-            return new $columnModifierClass($value);
-        }
-
-        throw new InvalidArgumentException(sprintf('%s column modifier does not exist', $name));
     }
 
     /**
@@ -214,7 +191,7 @@ final class DacapoCommandUseCase
             }
 
             $columns = $indexAttributes['columns'];
-            $indexType = $this->makeIndexModifierTypeClass($indexAttributes['type']);
+            $indexType = $this->indexModifierTypeFactory->factory($indexAttributes['type']);
             $name = $indexAttributes['name'] ?? null;
             $algorithm = $indexAttributes['algorithm'] ?? null;
 
@@ -224,21 +201,6 @@ final class DacapoCommandUseCase
         }
 
         return $sqlIndexList;
-    }
-
-    /**
-     * @param string $name
-     * @return IndexModifierType
-     */
-    protected function makeIndexModifierTypeClass(string $name): IndexModifierType
-    {
-        $indexTypeClass = 'UcanLab\\LaravelDacapo\\Dacapo\\Domain\\Schema\\IndexModifier\\IndexModifierType\\' . ucfirst($name) . 'Type';
-
-        if (class_exists($indexTypeClass)) {
-            return new $indexTypeClass();
-        }
-
-        throw new InvalidArgumentException(sprintf('%s class not found exception.', $indexTypeClass));
     }
 
     /**
