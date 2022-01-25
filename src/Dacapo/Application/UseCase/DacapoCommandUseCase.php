@@ -68,7 +68,7 @@ final class DacapoCommandUseCase
         $schemaList = new SchemaList();
 
         foreach ($input->schemaBodies as $tableName => $tableAttributes) {
-            $schemaList->add($this->makeSchema($tableName, $tableAttributes));
+            $schemaList->add($this->makeSchema(new TableName($tableName), $tableAttributes));
         }
 
         $migrationFileList = $this->generator->generate($schemaList);
@@ -77,20 +77,18 @@ final class DacapoCommandUseCase
     }
 
     /**
-     * @param string $name
+     * @param TableName $tableName
      * @param array $attributes
      * @return Schema
      */
-    protected function makeSchema(string $name, array $attributes): Schema
+    protected function makeSchema(TableName $tableName, array $attributes): Schema
     {
-        $tableName = new TableName($name);
-
         try {
             $columnList = $this->makeColumnList($attributes['columns'] ?? []);
             $sqlIndexList = $this->makeIndexModifierList($attributes['indexes'] ?? []);
             $foreignKeyList = $this->makeForeignKeyList($attributes['foreign_keys'] ?? []);
         } catch (InvalidArgumentException $exception) {
-            throw new InvalidArgumentException(sprintf('%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
+            throw new InvalidArgumentException(sprintf('%s.%s', $tableName->getName(), $exception->getMessage()), $exception->getCode(), $exception);
         }
 
         $connection = new Connection($attributes['connection'] ?? null);
