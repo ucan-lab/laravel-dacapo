@@ -81,7 +81,7 @@ final class DacapoCommandUseCase
      * @param array $attributes
      * @return Schema
      */
-    protected function makeSchema(TableName $tableName, array $attributes): Schema
+    private function makeSchema(TableName $tableName, array $attributes): Schema
     {
         try {
             $columnList = $this->makeColumnList($attributes['columns'] ?? []);
@@ -120,7 +120,7 @@ final class DacapoCommandUseCase
      * @param array $columns
      * @return ColumnList
      */
-    protected function makeColumnList(array $columns): ColumnList
+    private function makeColumnList(array $columns): ColumnList
     {
         $columnList = new ColumnList();
 
@@ -175,7 +175,7 @@ final class DacapoCommandUseCase
      * @param array $indexes
      * @return IndexModifierList
      */
-    protected function makeIndexModifierList(array $indexes): IndexModifierList
+    private function makeIndexModifierList(array $indexes): IndexModifierList
     {
         $sqlIndexList = new IndexModifierList();
 
@@ -205,7 +205,7 @@ final class DacapoCommandUseCase
      * @param array $foreignKeys
      * @return ForeignKeyList
      */
-    protected function makeForeignKeyList(array $foreignKeys): ForeignKeyList
+    private function makeForeignKeyList(array $foreignKeys): ForeignKeyList
     {
         $foreignKeyList = new ForeignKeyList();
 
