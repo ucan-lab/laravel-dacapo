@@ -4,13 +4,13 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input;
 
 final class DacapoCommandUseCaseInput
 {
-    public array $schemaFiles;
+    public array $schemaBodies;
 
     /**
-     * @param array $schemaFiles
+     * @param array $schemaBodies
      */
-    public function __construct(array $schemaFiles)
+    public function __construct(array $schemaBodies)
     {
-        $this->schemaFiles = $schemaFiles;
+        $this->schemaBodies = $schemaBodies;
     }
 }

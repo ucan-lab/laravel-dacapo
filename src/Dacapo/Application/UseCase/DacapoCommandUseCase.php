@@ -67,7 +67,7 @@ final class DacapoCommandUseCase
     {
         $schemaList = new SchemaList();
 
-        foreach ($input->schemaFiles as $tableName => $tableAttributes) {
+        foreach ($input->schemaBodies as $tableName => $tableAttributes) {
             $schemaList->add($this->makeSchema($tableName, $tableAttributes));
         }
 

@@ -80,20 +80,20 @@ final class DacapoCommand extends Command
      */
     private function makeDacapoCommandUseCaseInput(array $ymlFiles): DacapoCommandUseCaseInput
     {
-        $schemaFiles = [];
+        $schemaBodies = [];
 
         foreach ($ymlFiles as $ymlFile) {
             $parsedYmlFile = Yaml::parseFile($ymlFile);
 
-            $intersectKeys = array_intersect_key($schemaFiles, $parsedYmlFile);
+            $intersectKeys = array_intersect_key($schemaBodies, $parsedYmlFile);
 
             if (count($intersectKeys) > 0) {
                 throw new DuplicatedTableNameException(sprintf('Duplicate table name for `%s` in the schema YAML', implode(', ', array_keys($intersectKeys))));
             }
 
-            $schemaFiles = array_merge($schemaFiles, $parsedYmlFile);
+            $schemaBodies = array_merge($schemaBodies, $parsedYmlFile);
         }
 
-        return new DacapoCommandUseCaseInput($schemaFiles);
+        return new DacapoCommandUseCaseInput($schemaBodies);
     }
 }
