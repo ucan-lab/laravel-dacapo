@@ -7,17 +7,14 @@ use IteratorAggregate;
 
 final class IndexModifierList implements IteratorAggregate
 {
-    private array $attributes = [];
+    private array $attributes;
 
     /**
-     * @param IndexModifier $index
-     * @return IndexModifierList
+     * @param array $attributes
      */
-    public function add(IndexModifier $index): self
+    public function __construct(array $attributes)
     {
-        $this->attributes[] = $index;
-
-        return $this;
+        $this->attributes = $attributes;
     }
 
     /**

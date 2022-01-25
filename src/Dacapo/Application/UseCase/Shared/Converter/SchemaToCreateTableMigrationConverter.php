@@ -31,15 +31,15 @@ final class SchemaToCreateTableMigrationConverter
      */
     public function convertList(SchemaList $schemaList): MigrationFileList
     {
-        $fileList = new MigrationFileList();
+        $migrationFileList = [];
 
         foreach ($schemaList as $schema) {
             if ($schema->hasColumnList()) {
-                $fileList->add($this->convert($schema));
+                $migrationFileList[] = $this->convert($schema);
             }
         }
 
-        return $fileList;
+        return new MigrationFileList($migrationFileList);
     }
 
     /**

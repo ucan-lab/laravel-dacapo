@@ -12,16 +12,13 @@ final class MigrationFileList implements IteratorAggregate, Countable
     private array $attributes = [];
 
     /**
-     * MigrationFileList constructor.
      * @param array $attributes
      */
-    public function __construct(array $attributes = [])
+    public function __construct(array $attributes)
     {
-        foreach ($attributes as $file) {
-            $this->attributes[$file->getName()] = $file;
+        foreach ($attributes as $migrationFile) {
+            $this->attributes[$migrationFile->getName()] = $migrationFile;
         }
-
-        ksort($this->attributes);
     }
 
     /**
@@ -30,18 +27,6 @@ final class MigrationFileList implements IteratorAggregate, Countable
     public function get(): array
     {
         return $this->attributes;
-    }
-
-    /**
-     * @param MigrationFile $file
-     * @return MigrationFileList
-     */
-    public function add(MigrationFile $file): self
-    {
-        $this->attributes[$file->getName()] = $file;
-        ksort($this->attributes);
-
-        return $this;
     }
 
     /**
@@ -58,18 +43,6 @@ final class MigrationFileList implements IteratorAggregate, Countable
     public function empty(): bool
     {
         return empty($this->attributes);
-    }
-
-    /**
-     * @param MigrationFileList $fileList
-     * @return MigrationFileList
-     */
-    public function merge(self $fileList): self
-    {
-        $this->attributes += $fileList->get();
-        ksort($this->attributes);
-
-        return $this;
     }
 
     /**

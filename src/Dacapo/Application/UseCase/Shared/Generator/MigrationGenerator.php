@@ -40,7 +40,10 @@ final class MigrationGenerator
         $indexFileList = $this->generateCreateIndex($schemaList);
         $foreignKeyFileList = $this->generateConstraintForeignKey($schemaList);
 
-        return $tableFileList->merge($indexFileList)->merge($foreignKeyFileList);
+        $fileList = $tableFileList->get() + $indexFileList->get() + $foreignKeyFileList->get();
+        ksort($fileList);
+
+        return new MigrationFileList($fileList);
     }
 
     /**

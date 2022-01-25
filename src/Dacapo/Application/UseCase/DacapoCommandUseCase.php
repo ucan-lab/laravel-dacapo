@@ -65,12 +65,12 @@ final class DacapoCommandUseCase
      */
     public function handle(DacapoCommandUseCaseInput $input): DacapoCommandUseCaseOutput
     {
-        $schemaList = new SchemaList();
-
+        $list = [];
         foreach ($input->schemaBodies as $tableName => $tableAttributes) {
-            $schemaList->add($this->makeSchema(new TableName($tableName), $tableAttributes));
+            $list[] = $this->makeSchema(new TableName($tableName), $tableAttributes);
         }
 
+        $schemaList = new SchemaList($list);
         $migrationFileList = $this->generator->generate($schemaList);
 
         return new DacapoCommandUseCaseOutput($migrationFileList);
@@ -122,11 +122,11 @@ final class DacapoCommandUseCase
      */
     private function makeColumnList(array $columns): ColumnList
     {
-        $columnList = new ColumnList();
+        $columnList = [];
 
         foreach ($columns as $name => $attributes) {
             $columnName = new ColumnName($name);
-            $modifierList = new ColumnModifierList();
+            $columnModifierList = [];
 
             if (is_string($attributes)) {
                 try {
@@ -156,7 +156,7 @@ final class DacapoCommandUseCase
 
                 try {
                     foreach ($attributes as $modifierName => $modifierValue) {
-                        $modifierList->add($this->columnModifierFactory->factory($modifierName, $modifierValue));
+                        $columnModifierList[] = $this->columnModifierFactory->factory($modifierName, $modifierValue);
                     }
                 } catch (InvalidArgumentException $exception) {
                     throw new InvalidArgumentException(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
@@ -165,10 +165,10 @@ final class DacapoCommandUseCase
                 throw new InvalidArgumentException(sprintf('columns.%s field is unsupported format', $name));
             }
 
-            $columnList->add(new Column($columnName, $columnType, $modifierList));
+            $columnList[] = new Column($columnName, $columnType, new ColumnModifierList($columnModifierList));
         }
 
-        return $columnList;
+        return new ColumnList($columnList);
     }
 
     /**
@@ -177,7 +177,7 @@ final class DacapoCommandUseCase
      */
     private function makeIndexModifierList(array $indexes): IndexModifierList
     {
-        $sqlIndexList = new IndexModifierList();
+        $indexModifierList = [];
 
         foreach ($indexes as $indexAttributes) {
             if (isset($indexAttributes['columns']) === false) {
@@ -193,12 +193,10 @@ final class DacapoCommandUseCase
             $name = $indexAttributes['name'] ?? null;
             $algorithm = $indexAttributes['algorithm'] ?? null;
 
-            $sqlIndex = new IndexModifier($indexType, $columns, $name, $algorithm);
-
-            $sqlIndexList->add($sqlIndex);
+            $indexModifierList[] = new IndexModifier($indexType, $columns, $name, $algorithm);
         }
 
-        return $sqlIndexList;
+        return new IndexModifierList($indexModifierList);
     }
 
     /**
@@ -207,7 +205,7 @@ final class DacapoCommandUseCase
      */
     private function makeForeignKeyList(array $foreignKeys): ForeignKeyList
     {
-        $foreignKeyList = new ForeignKeyList();
+        $foreignKeyList = [];
 
         foreach ($foreignKeys as $foreignKeyAttribute) {
             if (isset($foreignKeyAttribute['columns']) === false) {
@@ -225,10 +223,9 @@ final class DacapoCommandUseCase
             $reference = new Reference($foreignKeyAttribute['columns'], $foreignKeyAttribute['references'], $foreignKeyAttribute['on'], $foreignKeyAttribute['name'] ?? null);
             $referenceAction = new ReferenceAction($foreignKeyAttribute['onUpdate'] ?? null, $foreignKeyAttribute['onDelete'] ?? null);
 
-            $foreign = new ForeignKey($reference, $referenceAction);
-            $foreignKeyList->add($foreign);
+            $foreignKeyList[] = new ForeignKey($reference, $referenceAction);
         }
 
-        return $foreignKeyList;
+        return new ForeignKeyList($foreignKeyList);
     }
 }
