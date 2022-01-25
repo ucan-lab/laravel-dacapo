@@ -33,7 +33,7 @@ final class ColumnModifierFactory
      * @param $value
      * @return ColumnModifier\ColumnModifier
      */
-    public function factory(string $name, $value): ColumnModifier\ColumnModifier
+    public static function factory(string $name, $value): ColumnModifier\ColumnModifier
     {
         if ($class = self::MAPPING_CLASS[$name] ?? null) {
             return new $class($value);

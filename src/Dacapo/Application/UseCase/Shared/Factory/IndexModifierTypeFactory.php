@@ -19,7 +19,7 @@ final class IndexModifierTypeFactory
      * @param null $args
      * @return IndexModifierType
      */
-    public function factory(string $name, $args = null): IndexModifierType
+    public static function factory(string $name, $args = null): IndexModifierType
     {
         if ($class = self::MAPPING_CLASS[$name] ?? null) {
             return new $class($args);

@@ -36,27 +36,15 @@ use function is_string;
 final class DacapoCommandUseCase
 {
     private MigrationGenerator $generator;
-    private ColumnTypeFactory $columnTypeFactory;
-    private ColumnModifierFactory $columnModifierFactory;
-    private IndexModifierTypeFactory $indexModifierTypeFactory;
 
     /**
      * DacapoCommandUseCase constructor.
      * @param MigrationGenerator $generator
-     * @param ColumnTypeFactory $columnTypeFactory
-     * @param ColumnModifierFactory $columnModifierFactory
-     * @param IndexModifierTypeFactory $indexModifierTypeFactory
      */
     public function __construct(
-        MigrationGenerator $generator,
-        ColumnTypeFactory $columnTypeFactory,
-        ColumnModifierFactory $columnModifierFactory,
-        IndexModifierTypeFactory $indexModifierTypeFactory
+        MigrationGenerator $generator
     ) {
         $this->generator = $generator;
-        $this->columnTypeFactory = $columnTypeFactory;
-        $this->columnModifierFactory = $columnModifierFactory;
-        $this->indexModifierTypeFactory = $indexModifierTypeFactory;
     }
 
     /**
@@ -138,14 +126,14 @@ final class DacapoCommandUseCase
 
             if (is_string($attributes)) {
                 try {
-                    $columnType = $this->columnTypeFactory->factory($attributes);
+                    $columnType = ColumnTypeFactory::factory($attributes);
                 } catch (InvalidArgumentException $exception) {
                     throw new InvalidArgumentException(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
                 }
             } elseif (is_bool($attributes) || $attributes === null) {
                 try {
                     $columnName = new ColumnName('');
-                    $columnType = $this->columnTypeFactory->factory($name);
+                    $columnType = ColumnTypeFactory::factory($name);
                 } catch (InvalidArgumentException $exception) {
                     throw new InvalidArgumentException(sprintf('columns.%s', $exception->getMessage()), $exception->getCode(), $exception);
                 }
@@ -155,7 +143,7 @@ final class DacapoCommandUseCase
                 }
 
                 try {
-                    $columnType = $this->columnTypeFactory->factory($attributes['type'], $attributes['args'] ?? null);
+                    $columnType = ColumnTypeFactory::factory($attributes['type'], $attributes['args'] ?? null);
                 } catch (InvalidArgumentException $exception) {
                     throw new InvalidArgumentException(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
                 }
@@ -164,7 +152,7 @@ final class DacapoCommandUseCase
 
                 try {
                     foreach ($attributes as $modifierName => $modifierValue) {
-                        $columnModifierList[] = $this->columnModifierFactory->factory($modifierName, $modifierValue);
+                        $columnModifierList[] = ColumnModifierFactory::factory($modifierName, $modifierValue);
                     }
                 } catch (InvalidArgumentException $exception) {
                     throw new InvalidArgumentException(sprintf('columns.%s.%s', $name, $exception->getMessage()), $exception->getCode(), $exception);
@@ -197,7 +185,7 @@ final class DacapoCommandUseCase
             }
 
             $columns = $indexAttributes['columns'];
-            $indexType = $this->indexModifierTypeFactory->factory($indexAttributes['type']);
+            $indexType = IndexModifierTypeFactory::factory($indexAttributes['type']);
             $name = $indexAttributes['name'] ?? null;
             $algorithm = $indexAttributes['algorithm'] ?? null;
 

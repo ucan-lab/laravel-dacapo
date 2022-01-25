@@ -76,7 +76,7 @@ final class ColumnTypeFactory
      * @param null $args
      * @return ColumnType
      */
-    public function factory(string $name, $args = null): ColumnType
+    public static function factory(string $name, $args = null): ColumnType
     {
         if ($class = self::MAPPING_CLASS[$name] ?? null) {
             return new $class($args);
