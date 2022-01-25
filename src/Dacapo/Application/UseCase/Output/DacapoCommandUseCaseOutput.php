@@ -2,17 +2,15 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
-
 final class DacapoCommandUseCaseOutput
 {
-    public MigrationFileList $migrationFileList;
+    public array $migrationBodies;
 
     /**
-     * @param MigrationFileList $migrationFileList
+     * @param array $migrationBodies
      */
-    public function __construct(MigrationFileList $migrationFileList)
+    public function __construct(array $migrationBodies)
     {
-        $this->migrationFileList = $migrationFileList;
+        $this->migrationBodies = $migrationBodies;
     }
 }

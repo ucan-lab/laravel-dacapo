@@ -73,7 +73,15 @@ final class DacapoCommandUseCase
         $schemaList = new SchemaList($list);
         $migrationFileList = $this->generator->generate($schemaList);
 
-        return new DacapoCommandUseCaseOutput($migrationFileList);
+        $migrationBodies = [];
+        foreach ($migrationFileList as $migrationFile) {
+            $migrationBodies[] = [
+                'name' => $migrationFile->getName(),
+                'contents' => $migrationFile->getContents(),
+            ];
+        }
+
+        return new DacapoCommandUseCaseOutput($migrationBodies);
     }
 
     /**
