@@ -73,7 +73,7 @@ final class Reference
     /**
      * @return string
      */
-    protected function makeColumnsMigration(): string
+    private function makeColumnsMigration(): string
     {
         if (is_array($this->columns)) {
             return sprintf("['%s']", implode("', '", $this->columns));
@@ -85,7 +85,7 @@ final class Reference
     /**
      * @return string
      */
-    protected function makeReferencesMigration(): string
+    private function makeReferencesMigration(): string
     {
         if (is_array($this->references)) {
             return sprintf("['%s']", implode("', '", $this->references));

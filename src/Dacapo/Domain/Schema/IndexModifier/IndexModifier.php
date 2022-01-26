@@ -73,7 +73,7 @@ final class IndexModifier
     /**
      * @return string
      */
-    protected function getColumns(): string
+    private function getColumns(): string
     {
         if (is_array($this->columns)) {
             return sprintf("['%s']", implode("', '", $this->columns));
@@ -85,7 +85,7 @@ final class IndexModifier
     /**
      * @return bool
      */
-    protected function hasArgs(): bool
+    private function hasArgs(): bool
     {
         if ($this->name) {
             return true;
@@ -101,7 +101,7 @@ final class IndexModifier
     /**
      * @return string
      */
-    protected function makeArgs(): string
+    private function makeArgs(): string
     {
         if ($this->name && $this->algorithm) {
             return sprintf("'%s', '%s'", $this->name, $this->algorithm);

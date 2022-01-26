@@ -36,7 +36,7 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
         DatabaseMigrationsStorage::class => LaravelDatabaseMigrationsStorage::class,
     ];
 
-    protected array $commands = [
+    private array $commands = [
         DacapoInitCommand::class,
         DacapoCommand::class,
         DacapoClearCommand::class,
@@ -44,7 +44,7 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
         DacapoUninstallCommand::class,
     ];
 
-    protected array $databaseBuilders = [
+    private array $databaseBuilders = [
         'mysql' => MysqlDatabaseBuilder::class,
         'pgsql' => PostgresqlDatabaseBuilder::class,
         'sqlsrv' => SqlsrvDatabaseBuilder::class,
@@ -90,7 +90,7 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
      * @return string
      * @throws Exception
      */
-    protected function concreteDatabaseBuilder(): string
+    private function concreteDatabaseBuilder(): string
     {
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");

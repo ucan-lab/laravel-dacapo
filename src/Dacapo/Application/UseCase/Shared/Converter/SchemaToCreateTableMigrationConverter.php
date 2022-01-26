@@ -55,7 +55,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationFileName(Schema $schema): string
+    private function makeMigrationFileName(Schema $schema): string
     {
         return sprintf('1970_01_01_000001_%s.php', $this->makeMigrationName($schema));
     }
@@ -64,7 +64,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationName(Schema $schema): string
+    private function makeMigrationName(Schema $schema): string
     {
         return sprintf('create_%s_table', $schema->getTableName());
     }
@@ -73,7 +73,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationContents(Schema $schema): string
+    private function makeMigrationContents(Schema $schema): string
     {
         $stub = $this->migrationCreateStub->getStub();
         $stub = str_replace('{{ namespace }}', $this->makeMigrationNamespace($schema), $stub);
@@ -90,7 +90,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationNamespace(Schema $schema): string
+    private function makeMigrationNamespace(Schema $schema): string
     {
         if ($schema->isDbFacadeUsing()) {
             $str = <<< 'EOF'
@@ -114,7 +114,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationTableComment(Schema $schema): string
+    private function makeMigrationTableComment(Schema $schema): string
     {
         if ($schema->hasTableComment() && $this->databaseBuilder->hasTableComment()) {
             return $this->databaseBuilder->makeTableComment($schema);
@@ -127,7 +127,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationClassName(Schema $schema): string
+    private function makeMigrationClassName(Schema $schema): string
     {
         return Str::studly($this->makeMigrationName($schema));
     }
@@ -136,7 +136,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationConnection(Schema $schema): string
+    private function makeMigrationConnection(Schema $schema): string
     {
         return $schema->getConnection()->makeMigration();
     }
@@ -145,7 +145,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationUp(Schema $schema): string
+    private function makeMigrationUp(Schema $schema): string
     {
         $str = '';
 

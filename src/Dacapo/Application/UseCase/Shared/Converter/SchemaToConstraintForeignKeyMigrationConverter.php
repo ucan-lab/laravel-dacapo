@@ -52,7 +52,7 @@ final class SchemaToConstraintForeignKeyMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationFileName(Schema $schema): string
+    private function makeMigrationFileName(Schema $schema): string
     {
         return sprintf('1970_01_01_000003_%s.php', $this->makeMigrationName($schema));
     }
@@ -61,7 +61,7 @@ final class SchemaToConstraintForeignKeyMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationName(Schema $schema): string
+    private function makeMigrationName(Schema $schema): string
     {
         return sprintf('constraint_%s_foreign_key', $schema->getTableName());
     }
@@ -70,7 +70,7 @@ final class SchemaToConstraintForeignKeyMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationClassName(Schema $schema): string
+    private function makeMigrationClassName(Schema $schema): string
     {
         return Str::studly($this->makeMigrationName($schema));
     }
@@ -79,7 +79,7 @@ final class SchemaToConstraintForeignKeyMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationConnection(Schema $schema): string
+    private function makeMigrationConnection(Schema $schema): string
     {
         return $schema->getConnection()->makeMigration();
     }
@@ -88,7 +88,7 @@ final class SchemaToConstraintForeignKeyMigrationConverter
      * @return string
      * @param Schema $schema
      */
-    protected function makeMigrationContents(Schema $schema): string
+    private function makeMigrationContents(Schema $schema): string
     {
         $stub = $this->migrationUpdateStub->getStub();
         $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
@@ -104,7 +104,7 @@ final class SchemaToConstraintForeignKeyMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationUp(Schema $schema): string
+    private function makeMigrationUp(Schema $schema): string
     {
         $str = '';
 
@@ -126,7 +126,7 @@ final class SchemaToConstraintForeignKeyMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationDown(Schema $schema): string
+    private function makeMigrationDown(Schema $schema): string
     {
         $str = '';
 
