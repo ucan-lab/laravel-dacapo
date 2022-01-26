@@ -3,15 +3,19 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Factory;
 
 use UcanLab\LaravelDacapo\Dacapo\Application\Shared\Exception\UseCase\InvalidArgumentException;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\IndexModifierType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\IndexType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\PrimaryType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\SpatialIndexType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\UniqueType;
 
 final class IndexModifierTypeFactory
 {
     private const MAPPING_CLASS = [
-        'index' => IndexModifierType\IndexType::class,
-        'primary' => IndexModifierType\PrimaryType::class,
-        'spatialIndex' => IndexModifierType\SpatialIndexType::class,
-        'unique' => IndexModifierType\UniqueType::class,
+        'index' => IndexType::class,
+        'primary' => PrimaryType::class,
+        'spatialIndex' => SpatialIndexType::class,
+        'unique' => UniqueType::class,
     ];
 
     /**

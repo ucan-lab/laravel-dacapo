@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier;
 
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\IndexModifierType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\IndexModifier\InvalidArgumentException;
 use function is_array;
 

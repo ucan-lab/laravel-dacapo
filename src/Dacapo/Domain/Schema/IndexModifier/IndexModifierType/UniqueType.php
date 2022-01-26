@@ -2,8 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
-
 final class UniqueType implements IndexModifierType
 {
     public function getUpMethodName(): string
