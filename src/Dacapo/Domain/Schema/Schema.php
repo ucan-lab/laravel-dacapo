@@ -3,7 +3,6 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\DefaultRawModifier;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKeyList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Charset;
@@ -154,17 +153,15 @@ final class Schema
     /**
      * @return bool
      */
-    public function useDbFacade(): bool
+    public function isDbFacadeUsing(): bool
     {
         if ($this->table->getTableComment()->exists()) {
             return true;
         }
 
         foreach ($this->columnList as $column) {
-            foreach ($column->getColumnModifierList() as $columnModifier) {
-                if ($columnModifier instanceof DefaultRawModifier) {
-                    return true;
-                }
+            if ($column->isDbFacadeUsing()) {
+                return true;
             }
         }
 

@@ -92,7 +92,7 @@ final class SchemaToCreateTableMigrationConverter
      */
     protected function makeMigrationNamespace(Schema $schema): string
     {
-        if ($schema->useDbFacade()) {
+        if ($schema->isDbFacadeUsing()) {
             $str = <<< 'EOF'
             use Illuminate\Database\Migrations\Migration;
             use Illuminate\Database\Schema\Blueprint;

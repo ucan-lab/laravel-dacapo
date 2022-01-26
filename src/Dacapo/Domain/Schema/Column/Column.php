@@ -3,6 +3,7 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\DbFacadeUsing;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\ColumnType;
 
 final class Column
@@ -44,10 +45,16 @@ final class Column
     }
 
     /**
-     * @return ColumnModifierList
+     * @return bool
      */
-    public function getColumnModifierList(): ColumnModifierList
+    public function isDbFacadeUsing(): bool
     {
-        return $this->modifierList;
+        foreach ($this->modifierList as $modifier) {
+            if ($modifier instanceof DbFacadeUsing) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
