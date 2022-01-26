@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Domain\Migration;
+namespace UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile;
 
 final class MigrationFile
 {

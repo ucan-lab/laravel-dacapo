@@ -4,8 +4,8 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Converter;
 
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFile;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
