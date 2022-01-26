@@ -3,72 +3,133 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Factory;
 
 use UcanLab\LaravelDacapo\Dacapo\Application\Shared\Exception\UseCase\InvalidArgumentException;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\BigIncrementsType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\BigIntegerType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\BinaryType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\BooleanType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\CharType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\ColumnType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\DateTimeType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\DateTimeTzType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\DateType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\DecimalType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\DoubleType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\EnumType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\FloatType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\ForeignIdType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\GeometryCollectionType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\GeometryType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\IdType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\IncrementsType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\IntegerType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\IpAddressType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\JsonbType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\JsonType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\LineStringType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\LongTextType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MacAddressType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MediumIncrementsType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MediumIntegerType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MediumTextType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MorphsType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MultiLineStringType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MultiPointType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\MultiPolygonType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\NullableMorphsType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\NullableTimestampsType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\NullableUuidMorphsType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\PointType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\PolygonType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\RememberTokenType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\SetType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\SmallIncrementsType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\SmallIntegerType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\SoftDeletesType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\SoftDeletesTzType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\StringType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TextType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TimestampsType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TimestampsTzType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TimestampType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TimestampTzType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TimeType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TimeTzType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TinyIncrementsType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\TinyIntegerType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UnsignedBigIntegerType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UnsignedDecimalType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UnsignedIntegerType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UnsignedMediumIntegerType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UnsignedSmallIntegerType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UnsignedTinyIntegerType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UuidMorphsType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\UuidType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\YearType;
 
 final class ColumnTypeFactory
 {
     private const MAPPING_CLASS = [
-        'bigIncrements' => ColumnType\BigIncrementsType::class,
-        'bigInteger' => ColumnType\BigIntegerType::class,
-        'binary' => ColumnType\BinaryType::class,
-        'boolean' => ColumnType\BooleanType::class,
-        'char' => ColumnType\CharType::class,
-        'dateTime' => ColumnType\DateTimeType::class,
-        'dateTimeTz' => ColumnType\DateTimeTzType::class,
-        'date' => ColumnType\DateType::class,
-        'decimal' => ColumnType\DecimalType::class,
-        'double' => ColumnType\DoubleType::class,
-        'enum' => ColumnType\EnumType::class,
-        'float' => ColumnType\FloatType::class,
-        'foreignId' => ColumnType\ForeignIdType::class,
-        'geometryCollection' => ColumnType\GeometryCollectionType::class,
-        'geometry' => ColumnType\GeometryType::class,
-        'id' => ColumnType\IdType::class,
-        'increments' => ColumnType\IncrementsType::class,
-        'integer' => ColumnType\IntegerType::class,
-        'ipAddress' => ColumnType\IpAddressType::class,
-        'jsonb' => ColumnType\JsonbType::class,
-        'json' => ColumnType\JsonType::class,
-        'lineString' => ColumnType\LineStringType::class,
-        'longText' => ColumnType\LongTextType::class,
-        'macAddress' => ColumnType\MacAddressType::class,
-        'mediumIncrements' => ColumnType\MediumIncrementsType::class,
-        'mediumInteger' => ColumnType\MediumIntegerType::class,
-        'mediumText' => ColumnType\MediumTextType::class,
-        'morphs' => ColumnType\MorphsType::class,
-        'multiLineString' => ColumnType\MultiLineStringType::class,
-        'multiPoint' => ColumnType\MultiPointType::class,
-        'multiPolygon' => ColumnType\MultiPolygonType::class,
-        'nullableMorphs' => ColumnType\NullableMorphsType::class,
-        'nullableTimestamps' => ColumnType\NullableTimestampsType::class,
-        'nullableUuidMorphs' => ColumnType\NullableUuidMorphsType::class,
-        'point' => ColumnType\PointType::class,
-        'polygon' => ColumnType\PolygonType::class,
-        'rememberToken' => ColumnType\RememberTokenType::class,
-        'set' => ColumnType\SetType::class,
-        'smallIncrements' => ColumnType\SmallIncrementsType::class,
-        'smallInteger' => ColumnType\SmallIntegerType::class,
-        'softDeletes' => ColumnType\SoftDeletesType::class,
-        'softDeletesTz' => ColumnType\SoftDeletesTzType::class,
-        'string' => ColumnType\StringType::class,
-        'text' => ColumnType\TextType::class,
-        'timestamps' => ColumnType\TimestampsType::class,
-        'timestampsTz' => ColumnType\TimestampsTzType::class,
-        'timestamp' => ColumnType\TimestampType::class,
-        'timestampTz' => ColumnType\TimestampTzType::class,
-        'time' => ColumnType\TimeType::class,
-        'timeTz' => ColumnType\TimeTzType::class,
-        'tinyIncrements' => ColumnType\TinyIncrementsType::class,
-        'tinyInteger' => ColumnType\TinyIntegerType::class,
-        'unsignedBigInteger' => ColumnType\UnsignedBigIntegerType::class,
-        'unsignedDecimal' => ColumnType\UnsignedDecimalType::class,
-        'unsignedInteger' => ColumnType\UnsignedIntegerType::class,
-        'unsignedMediumInteger' => ColumnType\UnsignedMediumIntegerType::class,
-        'unsignedSmallInteger' => ColumnType\UnsignedSmallIntegerType::class,
-        'unsignedTinyInteger' => ColumnType\UnsignedTinyIntegerType::class,
-        'uuidMorphs' => ColumnType\UuidMorphsType::class,
-        'uuid' => ColumnType\UuidType::class,
-        'year' => ColumnType\YearType::class,
+        'bigIncrements' => BigIncrementsType::class,
+        'bigInteger' => BigIntegerType::class,
+        'binary' => BinaryType::class,
+        'boolean' => BooleanType::class,
+        'char' => CharType::class,
+        'dateTime' => DateTimeType::class,
+        'dateTimeTz' => DateTimeTzType::class,
+        'date' => DateType::class,
+        'decimal' => DecimalType::class,
+        'double' => DoubleType::class,
+        'enum' => EnumType::class,
+        'float' => FloatType::class,
+        'foreignId' => ForeignIdType::class,
+        'geometryCollection' => GeometryCollectionType::class,
+        'geometry' => GeometryType::class,
+        'id' => IdType::class,
+        'increments' => IncrementsType::class,
+        'integer' => IntegerType::class,
+        'ipAddress' => IpAddressType::class,
+        'jsonb' => JsonbType::class,
+        'json' => JsonType::class,
+        'lineString' => LineStringType::class,
+        'longText' => LongTextType::class,
+        'macAddress' => MacAddressType::class,
+        'mediumIncrements' => MediumIncrementsType::class,
+        'mediumInteger' => MediumIntegerType::class,
+        'mediumText' => MediumTextType::class,
+        'morphs' => MorphsType::class,
+        'multiLineString' => MultiLineStringType::class,
+        'multiPoint' => MultiPointType::class,
+        'multiPolygon' => MultiPolygonType::class,
+        'nullableMorphs' => NullableMorphsType::class,
+        'nullableTimestamps' => NullableTimestampsType::class,
+        'nullableUuidMorphs' => NullableUuidMorphsType::class,
+        'point' => PointType::class,
+        'polygon' => PolygonType::class,
+        'rememberToken' => RememberTokenType::class,
+        'set' => SetType::class,
+        'smallIncrements' => SmallIncrementsType::class,
+        'smallInteger' => SmallIntegerType::class,
+        'softDeletes' => SoftDeletesType::class,
+        'softDeletesTz' => SoftDeletesTzType::class,
+        'string' => StringType::class,
+        'text' => TextType::class,
+        'timestamps' => TimestampsType::class,
+        'timestampsTz' => TimestampsTzType::class,
+        'timestamp' => TimestampType::class,
+        'timestampTz' => TimestampTzType::class,
+        'time' => TimeType::class,
+        'timeTz' => TimeTzType::class,
+        'tinyIncrements' => TinyIncrementsType::class,
+        'tinyInteger' => TinyIntegerType::class,
+        'unsignedBigInteger' => UnsignedBigIntegerType::class,
+        'unsignedDecimal' => UnsignedDecimalType::class,
+        'unsignedInteger' => UnsignedIntegerType::class,
+        'unsignedMediumInteger' => UnsignedMediumIntegerType::class,
+        'unsignedSmallInteger' => UnsignedSmallIntegerType::class,
+        'unsignedTinyInteger' => UnsignedTinyIntegerType::class,
+        'uuidMorphs' => UuidMorphsType::class,
+        'uuid' => UuidType::class,
+        'year' => YearType::class,
     ];
 
     /**

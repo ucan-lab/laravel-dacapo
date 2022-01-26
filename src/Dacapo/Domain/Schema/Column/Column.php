@@ -3,6 +3,7 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\ColumnType;
 
 final class Column
 {
@@ -16,8 +17,11 @@ final class Column
      * @param ColumnType $type
      * @param ColumnModifierList $modifierList
      */
-    public function __construct(ColumnName $name, ColumnType $type, ColumnModifierList $modifierList)
-    {
+    public function __construct(
+        ColumnName $name,
+        ColumnType $type,
+        ColumnModifierList $modifierList
+    ) {
         $this->name = $name;
         $this->type = $type;
         $this->modifierList = $modifierList;
