@@ -1,4 +1,4 @@
-name: php-cs-fixer
+name: PHP-CS-Fixer
 
 on: [pull_request]
 
@@ -7,8 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: php-cs-version
-        run: |
-          make composer-install-tools
-          make php-cs-version
-          make php-cs-dry
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --prefer-dist --working-dir=tools/php-cs-fixer
+
+      - name: PHP-CS-Fixer Version
+        run: ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --version
+
+      - name: PHP-CS-Fixer Dry Run
+        run: ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --dry-run

@@ -1,0 +1,20 @@
+name: PHPStan
+
+on: [pull_request]
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --prefer-dist --working-dir=tools/phpstan
+          composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --prefer-dist
+
+      - name: PHPStan Version
+        run: ./tools/phpstan/vendor/bin/phpstan --version
+
+      - name: PHPStan Analyse
+        run: ./tools/phpstan/vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=1G
