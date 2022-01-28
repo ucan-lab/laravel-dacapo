@@ -1,4 +1,4 @@
-name: dacapo-testing
+name: Dacapo Testing
 
 on: [pull_request]
 
