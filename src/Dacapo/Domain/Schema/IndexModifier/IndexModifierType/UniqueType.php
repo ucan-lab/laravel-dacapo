@@ -4,6 +4,10 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier
 
 final class UniqueType implements IndexModifierType
 {
+    public function __construct()
+    {
+    }
+
     public function getUpMethodName(): string
     {
         return 'unique';

@@ -6,6 +6,10 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 
 final class IncrementsType implements ColumnType
 {
+    public function __construct()
+    {
+    }
+
     /**
      * @param ColumnName $columnName
      * @return string
