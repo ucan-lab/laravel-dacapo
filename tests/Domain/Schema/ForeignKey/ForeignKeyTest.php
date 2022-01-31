@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Test\Domain\Schema\ForeignKey;
 
+use UcanLab\LaravelDacapo\Dacapo\Application\Shared\Exception\UseCase\InvalidArgumentException;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKey;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\Reference;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ReferenceAction;
@@ -22,9 +23,14 @@ final class ForeignKeyTest extends TestCase
      */
     public function testResolve(string $expectedUp, string $expectedDown, $columns, $references, string $on, ?string $name, ?string $onUpdate, ?string $onDelete): void
     {
-        $reference = new Reference($columns, $references, $on, $name);
-        $referenceAction = new ReferenceAction($onUpdate, $onDelete);
-        $foreignKey = new ForeignKey($reference, $referenceAction);
+        $foreignKey = ForeignKey::factory([
+            'columns' => $columns,
+            'references' => $references,
+            'on' => $on,
+            'name' => $name,
+            'onUpdate' => $onUpdate,
+            'onDelete' => $onDelete,
+        ]);
 
         $this->assertSame($expectedUp, $foreignKey->createForeignKeyMigrationUpMethod());
         $this->assertSame($expectedDown, $foreignKey->createForeignKeyMigrationDownMethod());

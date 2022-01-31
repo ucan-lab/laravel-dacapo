@@ -3,6 +3,7 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\IndexModifierType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\IndexModifierTypeFactory;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\IndexModifier\InvalidArgumentException;
 use function is_array;
 
@@ -35,12 +36,38 @@ final class IndexModifier
      * @param string|null $name = null
      * @param string|null $algorithm = null
      */
-    public function __construct(IndexModifierType $type, $columns, ?string $name = null, ?string $algorithm = null)
-    {
+    private function __construct(
+        IndexModifierType $type,
+        $columns,
+        ?string $name = null,
+        ?string $algorithm = null
+    ) {
         $this->type = $type;
         $this->columns = $columns;
         $this->name = $name;
         $this->algorithm = $algorithm;
+    }
+
+    /**
+     * @param array $attributes
+     * @return static
+     */
+    public static function factory(array $attributes): self
+    {
+        if (isset($attributes['type']) === false) {
+            throw new InvalidArgumentException('index_modifier .type field is required');
+        }
+
+        if (isset($attributes['columns']) === false) {
+            throw new InvalidArgumentException('foreign_keys.columns field is required');
+        }
+
+        $indexType = IndexModifierTypeFactory::factory($attributes['type']);
+        $columns = $attributes['columns'];
+        $name = $attributes['name'] ?? null;
+        $algorithm = $attributes['algorithm'] ?? null;
+
+        return new self($indexType, $columns, $name, $algorithm);
     }
 
     /**

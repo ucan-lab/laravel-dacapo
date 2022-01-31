@@ -12,12 +12,24 @@ final class ForeignKey
      * @param Reference $reference
      * @param ReferenceAction $referenceAction
      */
-    public function __construct(
+    private function __construct(
         Reference $reference,
         ReferenceAction $referenceAction
     ) {
         $this->reference = $reference;
         $this->referenceAction = $referenceAction;
+    }
+
+    /**
+     * @param array $attributes
+     * @return static
+     */
+    public static function factory(array $attributes): self
+    {
+        return new self(
+            Reference::factory($attributes),
+            ReferenceAction::factory($attributes)
+        );
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace UcanLab\LaravelDacapo\Test\Domain\Schema\IndexModifier\IndexModifierType;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\SpatialIndexType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
 final class SpatialIndexTypeTest extends TestCase
@@ -17,9 +16,14 @@ final class SpatialIndexTypeTest extends TestCase
      */
     public function testResolve(string $expected, $columns, ?string $name, ?string $algorithm): void
     {
-        $indexType = new SpatialIndexType();
-        $index = new IndexModifier($indexType, $columns, $name, $algorithm);
-        $this->assertSame($expected, $index->createIndexMigrationUpMethod());
+        $indexModifier = IndexModifier::factory([
+            'type' => 'spatialIndex',
+            'columns' => $columns,
+            'name' => $name,
+            'algorithm' => $algorithm,
+        ]);
+
+        $this->assertSame($expected, $indexModifier->createIndexMigrationUpMethod());
     }
 
     /**
@@ -57,9 +61,12 @@ final class SpatialIndexTypeTest extends TestCase
      */
     public function testCreateIndexMigrationDownMethod(string $expected, $columns, ?string $name): void
     {
-        $indexType = new SpatialIndexType();
-        $index = new IndexModifier($indexType, $columns, $name);
-        $this->assertSame($expected, $index->createIndexMigrationDownMethod());
+        $indexModifier = IndexModifier::factory([
+            'type' => 'spatialIndex',
+            'columns' => $columns,
+            'name' => $name,
+        ]);
+        $this->assertSame($expected, $indexModifier->createIndexMigrationDownMethod());
     }
 
     /**

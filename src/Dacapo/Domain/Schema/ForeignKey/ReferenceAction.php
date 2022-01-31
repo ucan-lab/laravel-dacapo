@@ -12,10 +12,22 @@ final class ReferenceAction
      * @param string|null $onUpdateAction
      * @param string|null $onDeleteAction
      */
-    public function __construct(?string $onUpdateAction, ?string $onDeleteAction)
+    private function __construct(?string $onUpdateAction, ?string $onDeleteAction)
     {
         $this->onUpdateAction = $onUpdateAction;
         $this->onDeleteAction = $onDeleteAction;
+    }
+
+    /**
+     * @param array $attributes
+     * @return static
+     */
+    public static function factory(array $attributes): self
+    {
+        return new self(
+            $attributes['onUpdate'] ?? null,
+            $attributes['onDelete'] ?? null
+        );
     }
 
     /**

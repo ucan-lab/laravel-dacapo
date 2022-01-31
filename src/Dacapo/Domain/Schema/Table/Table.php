@@ -12,7 +12,7 @@ final class Table
     private Collation $collation;
     private Temporary $temporary;
 
-    public function __construct(
+    private function __construct(
         Connection $connection,
         TableName $tableName,
         TableComment $tableComment,
@@ -28,6 +28,31 @@ final class Table
         $this->charset = $charset;
         $this->collation = $collation;
         $this->temporary = $temporary;
+    }
+
+    /**
+     * @param TableName $tableName
+     * @param array $attributes
+     * @return $this
+     */
+    public static function factory(TableName $tableName, array $attributes): self
+    {
+        $connection = new Connection($attributes['connection'] ?? null);
+        $tableComment = new TableComment($attributes['comment'] ?? null);
+        $engine = new Engine($attributes['engine'] ?? null);
+        $charset = new Charset($attributes['charset'] ?? null);
+        $collation = new Collation($attributes['collation'] ?? null);
+        $temporary = new Temporary($attributes['temporary'] ?? false);
+
+        return new self(
+            $connection,
+            $tableName,
+            $tableComment,
+            $engine,
+            $charset,
+            $collation,
+            $temporary
+        );
     }
 
     /**
