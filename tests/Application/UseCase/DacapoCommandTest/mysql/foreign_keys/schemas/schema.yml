@@ -1,0 +1,13 @@
+# Foreign keys
+parent:
+  columns:
+    id: increments
+
+child:
+  columns:
+    id: increments
+    parent_id: unsignedInteger
+  foreign_keys:
+    - columns: parent_id
+      references: id
+      table: parent
