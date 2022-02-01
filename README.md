@@ -126,15 +126,15 @@ $ php artisan dacapo --no-migrate
   foreign_keys:
     - columns: {ColumnName}
       references: {ReferenceColumnName}
-      on: {ReferenceTableName}
+      table: {ReferenceTableName}
     - columns: {ColumnName}
       references: {ReferenceColumnName}
-      on: {ReferenceTableName}
+      table: {ReferenceTableName}
       onUpdate: {ConstraintProperty}
       onDelete: {ConstraintProperty}
     - columns: [{ColumnName}, {ColumnName}]
       references: [{ReferenceColumnName}, {ReferenceColumnName}]
-      on: {ReferenceTableName}
+      table: {ReferenceTableName}
 
 {TableName}:
   columns:
