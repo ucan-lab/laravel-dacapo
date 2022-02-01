@@ -34,14 +34,14 @@ abstract class Command extends BaseCommand
         return $code;
     }
 
-    protected function beforeHandle(): void
+    private function beforeHandle(): void
     {
         $this->timer->start();
         $message = sprintf('<fg=yellow>Starting:</> laravel artisan <fg=magenta>%s</> command', $this->name);
         $this->line($message);
     }
 
-    protected function afterHandle(): void
+    private function afterHandle(): void
     {
         $this->timer->stop();
         $message = sprintf('<fg=green>Finished:</> laravel artisan <fg=magenta>%s</> command, <fg=magenta>%s</> seconds, max memory: <fg=magenta>%s</> MB.', $this->name, $this->timer->getTotalSeconds(), $this->getMaxMemory());

@@ -52,9 +52,9 @@ final class DacapoCommand extends Command
         $input = $this->makeDacapoCommandUseCaseInput($databaseSchemasStorage->getFilePathList());
         $output = $useCase->handle($input);
 
-        foreach ($output->migrationFileList as $migrationFile) {
-            $databaseMigrationsStorage->saveFile($migrationFile->getName(), $migrationFile->getContents());
-            $this->line(sprintf('<fg=green>Generated:</> %s', $migrationFile->getName()));
+        foreach ($output->migrationBodies as $migrationBody) {
+            $databaseMigrationsStorage->saveFile($migrationBody['name'], $migrationBody['contents']);
+            $this->line(sprintf('<fg=green>Generated:</> %s', $migrationBody['name']));
         }
 
         if ($this->option('no-migrate')) {
@@ -80,20 +80,20 @@ final class DacapoCommand extends Command
      */
     private function makeDacapoCommandUseCaseInput(array $ymlFiles): DacapoCommandUseCaseInput
     {
-        $schemaFiles = [];
+        $schemaBodies = [];
 
         foreach ($ymlFiles as $ymlFile) {
             $parsedYmlFile = Yaml::parseFile($ymlFile);
 
-            $intersectKeys = array_intersect_key($schemaFiles, $parsedYmlFile);
+            $intersectKeys = array_intersect_key($schemaBodies, $parsedYmlFile);
 
             if (count($intersectKeys) > 0) {
                 throw new DuplicatedTableNameException(sprintf('Duplicate table name for `%s` in the schema YAML', implode(', ', array_keys($intersectKeys))));
             }
 
-            $schemaFiles = array_merge($schemaFiles, $parsedYmlFile);
+            $schemaBodies = array_merge($schemaBodies, $parsedYmlFile);
         }
 
-        return new DacapoCommandUseCaseInput($schemaFiles);
+        return new DacapoCommandUseCaseInput($schemaBodies);
     }
 }

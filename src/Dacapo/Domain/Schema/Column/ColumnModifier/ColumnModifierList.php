@@ -7,17 +7,14 @@ use IteratorAggregate;
 
 final class ColumnModifierList implements IteratorAggregate
 {
-    private array $attributes = [];
+    private array $attributes;
 
     /**
-     * @param ColumnModifier $columnModifier
-     * @return ColumnModifierList
+     * @param array $attributes
      */
-    public function add(ColumnModifier $columnModifier): self
+    public function __construct(array $attributes)
     {
-        $this->attributes[] = $columnModifier;
-
-        return $this;
+        $this->attributes = $attributes;
     }
 
     /**

@@ -5,8 +5,8 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Converter;
 use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFile;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
@@ -31,15 +31,15 @@ final class SchemaToCreateTableMigrationConverter
      */
     public function convertList(SchemaList $schemaList): MigrationFileList
     {
-        $fileList = new MigrationFileList();
+        $migrationFileList = [];
 
         foreach ($schemaList as $schema) {
             if ($schema->hasColumnList()) {
-                $fileList->add($this->convert($schema));
+                $migrationFileList[] = $this->convert($schema);
             }
         }
 
-        return $fileList;
+        return new MigrationFileList($migrationFileList);
     }
 
     /**
@@ -55,7 +55,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationFileName(Schema $schema): string
+    private function makeMigrationFileName(Schema $schema): string
     {
         return sprintf('1970_01_01_000001_%s.php', $this->makeMigrationName($schema));
     }
@@ -64,7 +64,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationName(Schema $schema): string
+    private function makeMigrationName(Schema $schema): string
     {
         return sprintf('create_%s_table', $schema->getTableName());
     }
@@ -73,7 +73,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationContents(Schema $schema): string
+    private function makeMigrationContents(Schema $schema): string
     {
         $stub = $this->migrationCreateStub->getStub();
         $stub = str_replace('{{ namespace }}', $this->makeMigrationNamespace($schema), $stub);
@@ -90,9 +90,9 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationNamespace(Schema $schema): string
+    private function makeMigrationNamespace(Schema $schema): string
     {
-        if ($schema->useDbFacade()) {
+        if ($schema->isDbFacadeUsing()) {
             $str = <<< 'EOF'
             use Illuminate\Database\Migrations\Migration;
             use Illuminate\Database\Schema\Blueprint;
@@ -114,7 +114,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationTableComment(Schema $schema): string
+    private function makeMigrationTableComment(Schema $schema): string
     {
         if ($schema->hasTableComment() && $this->databaseBuilder->hasTableComment()) {
             return $this->databaseBuilder->makeTableComment($schema);
@@ -127,7 +127,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationClassName(Schema $schema): string
+    private function makeMigrationClassName(Schema $schema): string
     {
         return Str::studly($this->makeMigrationName($schema));
     }
@@ -136,7 +136,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationConnection(Schema $schema): string
+    private function makeMigrationConnection(Schema $schema): string
     {
         return $schema->getConnection()->makeMigration();
     }
@@ -145,7 +145,7 @@ final class SchemaToCreateTableMigrationConverter
      * @param Schema $schema
      * @return string
      */
-    protected function makeMigrationUp(Schema $schema): string
+    private function makeMigrationUp(Schema $schema): string
     {
         $str = '';
 

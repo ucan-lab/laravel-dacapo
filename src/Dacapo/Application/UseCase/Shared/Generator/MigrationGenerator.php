@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Generator;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Converter\SchemaToConstraintForeignKeyMigrationConverter;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Converter\SchemaToCreateIndexMigrationConverter;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Converter\SchemaToCreateTableMigrationConverter;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Migration\MigrationFileList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFileList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
 final class MigrationGenerator
@@ -40,7 +40,10 @@ final class MigrationGenerator
         $indexFileList = $this->generateCreateIndex($schemaList);
         $foreignKeyFileList = $this->generateConstraintForeignKey($schemaList);
 
-        return $tableFileList->merge($indexFileList)->merge($foreignKeyFileList);
+        $fileList = $tableFileList->get() + $indexFileList->get() + $foreignKeyFileList->get();
+        ksort($fileList);
+
+        return new MigrationFileList($fileList);
     }
 
     /**

@@ -2,10 +2,12 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
-
 final class IndexType implements IndexModifierType
 {
+    public function __construct()
+    {
+    }
+
     /**
      * @return string
      */

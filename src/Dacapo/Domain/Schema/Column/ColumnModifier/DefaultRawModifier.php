@@ -5,7 +5,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 /**
  * DefaultRawModifier class is original ColumnModifier class
  */
-final class DefaultRawModifier implements ColumnModifier
+final class DefaultRawModifier implements ColumnModifier, DbFacadeUsing
 {
     private string $value;
 

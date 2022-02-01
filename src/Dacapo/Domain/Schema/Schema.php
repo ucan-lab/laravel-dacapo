@@ -2,15 +2,19 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema;
 
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\Column;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\DefaultRawModifier;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKey;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKeyList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Charset;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Collation;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Connection;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Engine;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Table;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Temporary;
 
 final class Schema
@@ -27,7 +31,7 @@ final class Schema
      * @param IndexModifierList $sqlIndexList
      * @param ForeignKeyList $foreignKeyList
      */
-    public function __construct(
+    private function __construct(
         Table $table,
         ColumnList $columnList,
         IndexModifierList $sqlIndexList,
@@ -37,6 +41,36 @@ final class Schema
         $this->columnList = $columnList;
         $this->sqlIndexList = $sqlIndexList;
         $this->foreignKeyList = $foreignKeyList;
+    }
+
+    /**
+     * @param TableName $tableName
+     * @param array $attributes
+     * @return $this
+     */
+    public static function factory(TableName $tableName, array $attributes): self
+    {
+        $columnList = [];
+        foreach ($attributes['columns'] ?? [] as $columnName => $columnAttributes) {
+            $columnList[] = Column::factory(new ColumnName($columnName), $columnAttributes);
+        }
+
+        $indexModifierList = [];
+        foreach ($attributes['indexes'] ?? [] as $indexModifierAttributes) {
+            $indexModifierList[] = IndexModifier::factory($indexModifierAttributes);
+        }
+
+        $foreignKeyList = [];
+        foreach ($attributes['foreign_keys'] ?? [] as $foreignKeyAttributes) {
+            $foreignKeyList[] = ForeignKey::factory($foreignKeyAttributes);
+        }
+
+        return new self(
+            Table::factory($tableName, $attributes),
+            new ColumnList($columnList),
+            new IndexModifierList($indexModifierList),
+            new ForeignKeyList($foreignKeyList),
+        );
     }
 
     /**
@@ -154,17 +188,15 @@ final class Schema
     /**
      * @return bool
      */
-    public function useDbFacade(): bool
+    public function isDbFacadeUsing(): bool
     {
         if ($this->table->getTableComment()->exists()) {
             return true;
         }
 
         foreach ($this->columnList as $column) {
-            foreach ($column->getColumnModifierList() as $columnModifier) {
-                if ($columnModifier instanceof DefaultRawModifier) {
-                    return true;
-                }
+            if ($column->isDbFacadeUsing()) {
+                return true;
             }
         }
 

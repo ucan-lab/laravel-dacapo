@@ -12,26 +12,14 @@ final class SchemaList implements IteratorAggregate
     /**
      * @var Schema[]
      */
-    private array $attributes = [];
+    private array $attributes;
 
     /**
-     * Schema constructor.
      * @param array $attributes
      */
-    public function __construct(array $attributes = [])
+    public function __construct(array $attributes)
     {
         $this->attributes = $attributes;
-    }
-
-    /**
-     * @param Schema $schema
-     * @return SchemaList
-     */
-    public function add(Schema $schema): self
-    {
-        $this->attributes[] = $schema;
-
-        return $this;
     }
 
     /**

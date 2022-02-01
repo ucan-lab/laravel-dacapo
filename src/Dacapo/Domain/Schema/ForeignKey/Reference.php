@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
+use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\ForeignKey\InvalidArgumentException;
 use function is_array;
 
 final class Reference
@@ -18,12 +19,37 @@ final class Reference
      * @param string $on
      * @param string|null $name
      */
-    public function __construct($columns, $references, string $on, ?string $name)
-    {
+    private function __construct(
+        $columns,
+        $references,
+        string $on,
+        ?string $name
+    ) {
         $this->columns = $columns;
         $this->references = $references;
         $this->on = $on;
         $this->name = $name;
+    }
+
+    /**
+     * @param array $attributes
+     * @return static
+     */
+    public static function factory(array $attributes): self
+    {
+        if (isset($attributes['columns']) === false) {
+            throw new InvalidArgumentException('foreign_keys.columns field is required');
+        }
+
+        if (isset($attributes['references']) === false) {
+            throw new InvalidArgumentException('foreign_keys.references field is required');
+        }
+
+        if (isset($attributes['on']) === false) {
+            throw new InvalidArgumentException('foreign_keys.on field is required');
+        }
+
+        return new self($attributes['columns'], $attributes['references'], $attributes['on'], $attributes['name'] ?? null);
     }
 
     /**
@@ -73,7 +99,7 @@ final class Reference
     /**
      * @return string
      */
-    protected function makeColumnsMigration(): string
+    private function makeColumnsMigration(): string
     {
         if (is_array($this->columns)) {
             return sprintf("['%s']", implode("', '", $this->columns));
@@ -85,7 +111,7 @@ final class Reference
     /**
      * @return string
      */
-    protected function makeReferencesMigration(): string
+    private function makeReferencesMigration(): string
     {
         if (is_array($this->references)) {
             return sprintf("['%s']", implode("', '", $this->references));

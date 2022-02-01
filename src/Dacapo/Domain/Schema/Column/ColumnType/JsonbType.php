@@ -3,10 +3,13 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
 final class JsonbType implements ColumnType
 {
+    public function __construct()
+    {
+    }
+
     /**
      * @param ColumnName $columnName
      * @return string

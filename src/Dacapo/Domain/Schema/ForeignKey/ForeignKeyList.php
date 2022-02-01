@@ -7,17 +7,14 @@ use IteratorAggregate;
 
 final class ForeignKeyList implements IteratorAggregate
 {
-    private array $attributes = [];
+    private array $attributes;
 
     /**
-     * @param ForeignKey $foreign
-     * @return ForeignKeyList
+     * @param array $attributes
      */
-    public function add(ForeignKey $foreign): self
+    public function __construct(array $attributes)
     {
-        $this->attributes[] = $foreign;
-
-        return $this;
+        $this->attributes = $attributes;
     }
 
     /**

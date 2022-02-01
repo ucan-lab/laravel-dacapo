@@ -3,7 +3,6 @@
 namespace UcanLab\LaravelDacapo\Test\Domain\ValueObject\Schema\IndexModifierType;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\IndexType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
 final class IndexTypeTest extends TestCase
@@ -17,8 +16,13 @@ final class IndexTypeTest extends TestCase
      */
     public function testResolve(string $expected, $columns, ?string $name, ?string $algorithm): void
     {
-        $indexType = new IndexType();
-        $index = new IndexModifier($indexType, $columns, $name, $algorithm);
+        $index = IndexModifier::factory([
+            'type' => 'index',
+            'columns' => $columns,
+            'name' => $name,
+            'algorithm' => $algorithm,
+        ]);
+
         $this->assertSame($expected, $index->createIndexMigrationUpMethod());
     }
 
@@ -57,8 +61,12 @@ final class IndexTypeTest extends TestCase
      */
     public function testCreateIndexMigrationDownMethod(string $expected, $columns, ?string $name): void
     {
-        $indexType = new IndexType();
-        $index = new IndexModifier($indexType, $columns, $name);
+        $index = IndexModifier::factory([
+            'type' => 'index',
+            'columns' => $columns,
+            'name' => $name,
+        ]);
+
         $this->assertSame($expected, $index->createIndexMigrationDownMethod());
     }
 

@@ -2,10 +2,12 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
-
 final class PrimaryType implements IndexModifierType
 {
+    public function __construct()
+    {
+    }
+
     public function getUpMethodName(): string
     {
         return 'primary';
