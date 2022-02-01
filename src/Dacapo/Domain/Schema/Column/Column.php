@@ -2,12 +2,12 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column;
 
-use UcanLab\LaravelDacapo\Dacapo\Application\Shared\Exception\UseCase\InvalidArgumentException;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierFactory;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\DbFacadeUsing;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\ColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\ColumnTypeFactory;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\Column\InvalidArgumentException;
 use function is_string;
 use function is_bool;
 use function is_array;

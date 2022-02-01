@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Application\Shared\Exception\UseCase;
+namespace UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\Column\ColumnType;
 
 use InvalidArgumentException as BaseException;
 

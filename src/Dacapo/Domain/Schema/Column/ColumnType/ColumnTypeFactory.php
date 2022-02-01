@@ -2,7 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-use UcanLab\LaravelDacapo\Dacapo\Application\Shared\Exception\UseCase\InvalidArgumentException;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\Column\ColumnType\InvalidArgumentException;
 
 final class ColumnTypeFactory
 {

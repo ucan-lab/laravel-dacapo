@@ -2,10 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Test\Domain\Schema\ForeignKey;
 
-use UcanLab\LaravelDacapo\Dacapo\Application\Shared\Exception\UseCase\InvalidArgumentException;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKey;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\Reference;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ReferenceAction;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
 final class ForeignKeyTest extends TestCase
