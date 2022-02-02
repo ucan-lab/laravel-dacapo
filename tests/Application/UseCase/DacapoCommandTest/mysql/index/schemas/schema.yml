@@ -25,3 +25,13 @@ example3:
     - columns: [name, email]
       type: index
       name: users_name_index
+
+example4:
+  columns:
+    id: bigIncrements
+    name: string
+    email: string
+  indexes:
+    - columns: name, email
+      type: index
+      name: users_name_index
