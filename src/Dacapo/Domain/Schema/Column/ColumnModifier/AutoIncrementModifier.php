@@ -12,7 +12,7 @@ final class AutoIncrementModifier implements ColumnModifier
      */
     public function __construct(bool $value)
     {
-        $this->value = $value ?? true;
+        $this->value = $value;
     }
 
     /**
