@@ -6,6 +6,8 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\I
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\IndexModifierTypeFactory;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\IndexModifier\InvalidArgumentException;
 use function is_array;
+use function is_string;
+use function count;
 
 final class IndexModifier
 {
@@ -15,9 +17,9 @@ final class IndexModifier
     private IndexModifierType $type;
 
     /**
-     * @var string|array
+     * @var array
      */
-    private $columns;
+    private array $columns;
 
     /**
      * @var string|null
@@ -30,15 +32,15 @@ final class IndexModifier
     private ?string $algorithm;
 
     /**
-     * Index constructor.
-     * @param string|array $columns
+     * IndexModifier constructor.
+     * @param array $columns
      * @param IndexModifierType $type
      * @param string|null $name = null
      * @param string|null $algorithm = null
      */
     private function __construct(
         IndexModifierType $type,
-        $columns,
+        array $columns,
         ?string $name = null,
         ?string $algorithm = null
     ) {
@@ -55,19 +57,24 @@ final class IndexModifier
     public static function factory(array $attributes): self
     {
         if (isset($attributes['type']) === false) {
-            throw new InvalidArgumentException('index_modifier .type field is required');
+            throw new InvalidArgumentException('IndexModifier type field is required');
         }
 
         if (isset($attributes['columns']) === false) {
-            throw new InvalidArgumentException('foreign_keys.columns field is required');
+            throw new InvalidArgumentException('IndexModifier columns field is required');
         }
 
         $indexType = IndexModifierTypeFactory::factory($attributes['type']);
-        $columns = $attributes['columns'];
+        $columns = is_string($attributes['columns']) ? self::parse($attributes['columns']) : $attributes['columns'];
         $name = $attributes['name'] ?? null;
         $algorithm = $attributes['algorithm'] ?? null;
 
-        return new self($indexType, $columns, $name, $algorithm);
+        return new self(
+            $indexType,
+            $columns,
+            $name,
+            $algorithm
+        );
     }
 
     /**
@@ -102,11 +109,11 @@ final class IndexModifier
      */
     private function getColumns(): string
     {
-        if (is_array($this->columns)) {
+        if (count($this->columns) > 1) {
             return sprintf("['%s']", implode("', '", $this->columns));
         }
 
-        return sprintf("'%s'", $this->columns);
+        return sprintf("'%s'", implode('', $this->columns));
     }
 
     /**
@@ -139,5 +146,14 @@ final class IndexModifier
         }
 
         throw new InvalidArgumentException('Has no args.');
+    }
+
+    /**
+     * @param string $columns
+     * @return array
+     */
+    private static function parse(string $columns): array
+    {
+        return array_map(fn($column) => trim($column), explode(',', $columns));
     }
 }

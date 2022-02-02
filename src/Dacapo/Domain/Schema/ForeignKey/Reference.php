@@ -4,24 +4,26 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\ForeignKey\InvalidArgumentException;
 use function is_array;
+use function is_string;
+use function count;
 
 final class Reference
 {
-    private $columns;
-    private $references;
+    private array $columns;
+    private array $references;
     private string $table;
     private ?string $name;
 
     /**
      * Reference constructor.
-     * @param string|array $columns
-     * @param string|array $references
+     * @param array $columns
+     * @param array $references
      * @param string $table
      * @param string|null $name
      */
     private function __construct(
-        $columns,
-        $references,
+        array $columns,
+        array $references,
         string $table,
         ?string $name
     ) {
@@ -54,7 +56,12 @@ final class Reference
             throw new InvalidArgumentException('foreign_keys.table field is required');
         }
 
-        return new self($attributes['columns'], $attributes['references'], $table, $attributes['name'] ?? null);
+        return new self(
+            is_string($attributes['columns']) ? self::parse($attributes['columns']) : $attributes['columns'],
+            is_string($attributes['references']) ? self::parse($attributes['references']) : $attributes['references'],
+            $table,
+            $attributes['name'] ?? null
+        );
     }
 
     /**
@@ -106,11 +113,11 @@ final class Reference
      */
     private function makeColumnsMigration(): string
     {
-        if (is_array($this->columns)) {
+        if (count($this->columns) > 1) {
             return sprintf("['%s']", implode("', '", $this->columns));
         }
 
-        return sprintf("'%s'", $this->columns);
+        return sprintf("'%s'", implode('', $this->columns));
     }
 
     /**
@@ -118,10 +125,19 @@ final class Reference
      */
     private function makeReferencesMigration(): string
     {
-        if (is_array($this->references)) {
+        if (count($this->references) > 1) {
             return sprintf("['%s']", implode("', '", $this->references));
         }
 
-        return sprintf("'%s'", $this->references);
+        return sprintf("'%s'", implode('', $this->references));
+    }
+
+    /**
+     * @param string $columns
+     * @return array
+     */
+    private static function parse(string $columns): array
+    {
+        return array_map(fn($column) => trim($column), explode(',', $columns));
     }
 }
