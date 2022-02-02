@@ -15,13 +15,12 @@ final class IndexModifierTypeFactory
 
     /**
      * @param string $name
-     * @param null $args
      * @return IndexModifierType
      */
-    public static function factory(string $name, $args = null): IndexModifierType
+    public static function factory(string $name): IndexModifierType
     {
         if ($class = self::MAPPING_CLASS[$name] ?? null) {
-            return new $class($args);
+            return new $class();
         }
 
         throw new InvalidArgumentException(sprintf('%s index modifier type does not exist', $name));
