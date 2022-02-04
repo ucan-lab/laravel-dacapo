@@ -2,12 +2,16 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-final class BigIntegerType extends BaseIntegerType
+final class BigIntegerType implements ColumnType, BooleanArgsColumnType
 {
+    public function __construct()
+    {
+    }
+
     /**
      * @return string
      */
-    protected function getName(): string
+    public function columnType(): string
     {
         return 'bigInteger';
     }

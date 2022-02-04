@@ -2,12 +2,16 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-final class IntegerType extends BaseIntegerType
+final class IntegerType implements ColumnType, BooleanArgsColumnType
 {
+    public function __construct()
+    {
+    }
+
     /**
      * @return string
      */
-    protected function getName(): string
+    public function columnType(): string
     {
         return 'integer';
     }

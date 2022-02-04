@@ -2,8 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
-
 final class YearType implements ColumnType
 {
     public function __construct()
@@ -11,11 +9,10 @@ final class YearType implements ColumnType
     }
 
     /**
-     * @param ColumnName $columnName
      * @return string
      */
-    public function createMigrationMethod(ColumnName $columnName): string
+    public function columnType(): string
     {
-        return sprintf("->year('%s')", $columnName->getName());
+        return 'year';
     }
 }

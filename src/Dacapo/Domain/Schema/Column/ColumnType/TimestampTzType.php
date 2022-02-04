@@ -2,31 +2,17 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
-use function is_int;
-
 final class TimestampTzType implements ColumnType
 {
-    /**
-     * @var int|null
-     */
-    private ?int $args;
-
-    public function __construct(?int $args = null)
+    public function __construct()
     {
-        $this->args = $args;
     }
 
     /**
-     * @param ColumnName $columnName
      * @return string
      */
-    public function createMigrationMethod(ColumnName $columnName): string
+    public function columnType(): string
     {
-        if (is_int($this->args)) {
-            return sprintf("->timestampTz('%s', %d)", $columnName->getName(), $this->args);
-        }
-
-        return sprintf("->timestampTz('%s')", $columnName->getName());
+        return 'timestampTz';
     }
 }

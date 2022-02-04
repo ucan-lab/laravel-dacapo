@@ -2,30 +2,17 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
-
-final class NullableUuidMorphsType implements ColumnType
+final class NullableUuidMorphsType implements ColumnType, StringArgsColumnType
 {
-    /**
-     * @var string|null
-     */
-    private ?string $args;
-
-    public function __construct(?string $args = null)
+    public function __construct()
     {
-        $this->args = $args;
     }
 
     /**
-     * @param ColumnName $columnName
      * @return string
      */
-    public function createMigrationMethod(ColumnName $columnName): string
+    public function columnType(): string
     {
-        if ($this->args) {
-            return sprintf("->nullableUuidMorphs('%s', '%s')", $columnName->getName(), $this->args);
-        }
-
-        return sprintf("->nullableUuidMorphs('%s')", $columnName->getName());
+        return 'nullableUuidMorphs';
     }
 }

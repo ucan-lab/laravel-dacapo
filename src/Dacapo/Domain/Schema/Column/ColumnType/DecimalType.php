@@ -2,54 +2,17 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
-use function is_array;
-use function is_string;
-use function is_bool;
-use function is_int;
-
-final class DecimalType implements ColumnType
+final class DecimalType implements ColumnType, NumericArgsColumnType
 {
-    private ?int $total = null;
-    private ?int $places = null;
-    private ?bool $unsigned = null;
-
-    public function __construct($args = null)
+    public function __construct()
     {
-        if (is_string($args) && $args !== '') {
-            $args = array_map('trim', explode(',', $args));
-        }
-
-        if (is_array($args)) {
-            $this->total = isset($args[0]) ? (int) $args[0] : null;
-            $this->places = isset($args[1]) ? (int) $args[1] : null;
-
-            if (isset($args[2])) {
-                if (is_string($args[2])) {
-                    $this->unsigned = $args[2] === 'true';
-                } else {
-                    $this->unsigned = $args[2];
-                }
-            }
-        } elseif (is_int($args)) {
-            $this->total = $args;
-        }
     }
 
     /**
-     * @param ColumnName $columnName
      * @return string
      */
-    public function createMigrationMethod(ColumnName $columnName): string
+    public function columnType(): string
     {
-        if (is_int($this->total) && is_int($this->places) && is_bool($this->unsigned)) {
-            return sprintf("->decimal('%s', %d, %d, %s)", $columnName->getName(), $this->total, $this->places, $this->unsigned ? 'true' : 'false');
-        } elseif (is_int($this->total) && is_int($this->places)) {
-            return sprintf("->decimal('%s', %d, %d)", $columnName->getName(), $this->total, $this->places);
-        } elseif (is_int($this->total) && is_int($this->places) === false) {
-            return sprintf("->decimal('%s', %d)", $columnName->getName(), $this->total);
-        }
-
-        return sprintf("->decimal('%s')", $columnName->getName());
+        return 'decimal';
     }
 }

@@ -2,8 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
-
 final class LongTextType implements ColumnType
 {
     public function __construct()
@@ -11,11 +9,10 @@ final class LongTextType implements ColumnType
     }
 
     /**
-     * @param ColumnName $columnName
      * @return string
      */
-    public function createMigrationMethod(ColumnName $columnName): string
+    public function columnType(): string
     {
-        return sprintf("->longText('%s')", $columnName->getName());
+        return 'longText';
     }
 }

@@ -2,7 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-interface ColumnType
+interface NumericArgsColumnType
 {
-    public function columnType(): string;
 }
