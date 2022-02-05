@@ -29,7 +29,7 @@ final class DacapoCommandTest extends TestCase
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
 
         $this->mock(DatabaseSchemasStorage::class, function (MockInterface $mock) use ($schemas): void {
-            $mock->shouldReceive('getFilePathList')->once()->andReturn(
+            $mock->shouldReceive('getFilePathList')->andReturn(
                 array_map(fn ($f) => $f->getRealPath(), File::files($schemas))
             );
         });
@@ -74,7 +74,7 @@ final class DacapoCommandTest extends TestCase
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
 
         $this->mock(DatabaseSchemasStorage::class, function (MockInterface $mock) use ($schemas): void {
-            $mock->shouldReceive('getFilePathList')->once()->andReturn(
+            $mock->shouldReceive('getFilePathList')->andReturn(
                 array_map(fn ($f) => $f->getRealPath(), File::files($schemas))
             );
         });

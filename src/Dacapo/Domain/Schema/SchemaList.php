@@ -24,8 +24,7 @@ final class SchemaList implements IteratorAggregate
 
     /**
      * @param SchemaList $schemaList
-     * @return SchemaList
-     * @throws
+     * @return $this
      */
     public function merge(self $schemaList): self
     {

@@ -26,6 +26,9 @@ column_args1:
     price7:
       type: decimal
       args: 8
+    price8:
+      type: decimal
+      args: 8, 2
     timestamps:
     softDeletes:
 

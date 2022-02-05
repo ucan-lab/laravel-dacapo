@@ -45,7 +45,7 @@ final class Column
 
     /**
      * @param ColumnName $columnName
-     * @param $attributes
+     * @param string|bool|array $attributes
      * @return static
      */
     public static function factory(ColumnName $columnName, $attributes): self

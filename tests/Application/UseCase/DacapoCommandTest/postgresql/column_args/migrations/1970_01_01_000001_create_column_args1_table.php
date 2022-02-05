@@ -25,6 +25,7 @@ class CreateColumnArgs1Table extends Migration
             $table->decimal('price5', 8);
             $table->decimal('price6', 8, 2);
             $table->decimal('price7', 8);
+            $table->decimal('price8', 8, 2);
             $table->timestamps();
             $table->softDeletes();
         });
