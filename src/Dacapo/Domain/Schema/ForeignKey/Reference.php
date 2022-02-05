@@ -9,20 +9,20 @@ use function count;
 
 final class Reference
 {
-    private array $columns;
+    private $columns;
     private array $references;
     private string $table;
     private ?string $name;
 
     /**
      * Reference constructor.
-     * @param array $columns
+     * @param array|string $columns
      * @param array $references
      * @param string $table
      * @param string|null $name
      */
     private function __construct(
-        array $columns,
+        $columns,
         array $references,
         string $table,
         ?string $name
