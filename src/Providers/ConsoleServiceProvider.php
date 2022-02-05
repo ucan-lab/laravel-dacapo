@@ -53,7 +53,6 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
 
     /**
      * {@inheritdoc}
-     * @throws
      */
     public function register(): void
     {
@@ -74,9 +73,6 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
         $this->commands($this->commands);
     }
 
-    /**
-     * @throws Exception
-     */
     protected function registerBindings(): void
     {
         foreach ($this->bindings as $abstract => $concrete) {

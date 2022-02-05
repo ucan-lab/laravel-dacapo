@@ -33,8 +33,8 @@ final class IndexModifier
 
     /**
      * IndexModifier constructor.
-     * @param array $columns
      * @param IndexModifierType $type
+     * @param array $columns
      * @param string|null $name = null
      * @param string|null $algorithm = null
      */
@@ -79,7 +79,6 @@ final class IndexModifier
 
     /**
      * @return string
-     * @throws
      */
     public function createIndexMigrationUpMethod(): string
     {

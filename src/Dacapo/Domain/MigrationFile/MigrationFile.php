@@ -11,7 +11,6 @@ final class MigrationFile
      * MigrationFile constructor.
      * @param string $name
      * @param string $contents
-     * @throws
      */
     public function __construct(string $name, string $contents)
     {
