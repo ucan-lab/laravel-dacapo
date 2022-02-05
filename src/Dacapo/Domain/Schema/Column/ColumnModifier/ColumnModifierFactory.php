@@ -28,7 +28,7 @@ final class ColumnModifierFactory
 
     /**
      * @param string $name
-     * @param $value
+     * @param array|string|int|null $value
      * @return ColumnModifier
      */
     public static function factory(string $name, $value): ColumnModifier
