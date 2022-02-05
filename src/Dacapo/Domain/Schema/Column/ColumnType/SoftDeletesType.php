@@ -2,36 +2,17 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
-use function is_int;
-
 final class SoftDeletesType implements ColumnType
 {
-    private ?int $precision = null;
-
-    /**
-     * SoftDeletesType constructor.
-     * @param int|null $args
-     */
-    public function __construct(?int $args = null)
+    public function __construct()
     {
-        $this->precision = $args;
     }
 
     /**
-     * @param ColumnName $columnName
      * @return string
      */
-    public function createMigrationMethod(ColumnName $columnName): string
+    public function columnType(): string
     {
-        if ($columnName->getName() === '') {
-            return '->softDeletes()';
-        }
-
-        if (is_int($this->precision)) {
-            return sprintf("->softDeletes('%s', %d)", $columnName->getName(), $this->precision);
-        }
-
-        return sprintf("->softDeletes('%s')", $columnName->getName());
+        return 'softDeletes';
     }
 }

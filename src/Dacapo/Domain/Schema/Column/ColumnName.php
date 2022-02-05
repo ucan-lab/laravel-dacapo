@@ -4,15 +4,23 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column;
 
 final class ColumnName
 {
-    private string $name;
+    private ?string $name;
 
     /**
      * ColumnName constructor.
-     * @param string $name
+     * @param string|null $name
      */
-    public function __construct(string $name)
+    public function __construct(?string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasName(): bool
+    {
+        return $this->name !== null;
     }
 
     /**
@@ -20,6 +28,6 @@ final class ColumnName
      */
     public function getName(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 }

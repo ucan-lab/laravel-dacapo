@@ -5,32 +5,41 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierFactory;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\DbFacadeUsing;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\AliasColumnType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\ArrayArgsColumnType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\BooleanArgsColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\ColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\ColumnTypeFactory;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\NumericArgsColumnType;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\StringArgsColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\Column\InvalidArgumentException;
-use function is_string;
-use function is_bool;
 use function is_array;
+use function is_bool;
+use function is_string;
 
 final class Column
 {
     private ColumnName $name;
     private ColumnType $type;
+    private ColumnTypeArgs $typeArgs;
     private ColumnModifierList $modifierList;
 
     /**
      * Column constructor.
      * @param ColumnName $name
      * @param ColumnType $type
+     * @param ColumnTypeArgs $typeArgs
      * @param ColumnModifierList $modifierList
      */
     public function __construct(
         ColumnName $name,
         ColumnType $type,
+        ColumnTypeArgs $typeArgs,
         ColumnModifierList $modifierList
     ) {
         $this->name = $name;
         $this->type = $type;
+        $this->typeArgs = $typeArgs;
         $this->modifierList = $modifierList;
     }
 
@@ -41,50 +50,72 @@ final class Column
      */
     public static function factory(ColumnName $columnName, $attributes): self
     {
-        $columnModifierList = [];
-
         if (is_string($attributes)) {
-            try {
-                $columnType = ColumnTypeFactory::factory($attributes);
-            } catch (InvalidArgumentException $exception) {
-                throw new InvalidArgumentException(sprintf('columns.%s.%s', $columnName->getName(), $exception->getMessage()), $exception->getCode(), $exception);
-            }
+            $columnType = ColumnTypeFactory::factory($attributes);
+
+            return new self(
+                $columnName,
+                $columnType,
+                ColumnTypeArgs::factory(null),
+                new ColumnModifierList([])
+            );
         } elseif (is_bool($attributes) || $attributes === null) {
-            try {
-                $columnType = ColumnTypeFactory::factory($columnName->getName());
-                $columnName = new ColumnName('');
-            } catch (InvalidArgumentException $exception) {
-                throw new InvalidArgumentException(sprintf('columns.%s', $exception->getMessage()), $exception->getCode(), $exception);
-            }
+            $columnType = ColumnTypeFactory::factory($columnName->getName());
+
+            return new self(
+                new ColumnName(null),
+                $columnType,
+                ColumnTypeArgs::factory(null),
+                new ColumnModifierList([])
+            );
         } elseif (is_array($attributes)) {
             if (isset($attributes['type']) === false) {
                 throw new InvalidArgumentException(sprintf('columns.%s.type field is required', $columnName->getName()));
             }
 
-            try {
-                $columnType = ColumnTypeFactory::factory($attributes['type'], $attributes['args'] ?? null);
-            } catch (InvalidArgumentException $exception) {
-                throw new InvalidArgumentException(sprintf('columns.%s.%s', $columnName->getName(), $exception->getMessage()), $exception->getCode(), $exception);
+            $columnType = ColumnTypeFactory::factory($attributes['type']);
+
+            if ($columnType instanceof BooleanArgsColumnType) {
+                if (isset($attributes['args'])) {
+                    $args = array_map(fn ($args) => var_export($args, true), $attributes['args'] ?? []);
+                    $columnTypeArgs = ColumnTypeArgs::factory($args);
+                } else {
+                    $columnTypeArgs = ColumnTypeArgs::factory(null);
+                }
+            } else {
+                $columnTypeArgs = ColumnTypeArgs::factory(
+                    $attributes['args'] ?? null,
+                    $columnType instanceof ArrayArgsColumnType,
+                    $columnType instanceof StringArgsColumnType,
+                    $columnType instanceof NumericArgsColumnType
+                );
             }
 
             unset($attributes['type'], $attributes['args']);
 
-            try {
-                foreach ($attributes as $modifierName => $modifierValue) {
-                    $columnModifierList[] = ColumnModifierFactory::factory($modifierName, $modifierValue);
-                }
-            } catch (InvalidArgumentException $exception) {
-                throw new InvalidArgumentException(sprintf('columns.%s.%s', $columnName->getName(), $exception->getMessage()), $exception->getCode(), $exception);
+            $columnModifierList = [];
+            foreach ($attributes as $modifierName => $modifierValue) {
+                $columnModifierList[] = ColumnModifierFactory::factory($modifierName, $modifierValue);
             }
-        } else {
-            throw new InvalidArgumentException(sprintf('columns.%s field is unsupported format', $columnName->getName()));
+
+            if ($columnType instanceof AliasColumnType) {
+                return new self(
+                    new ColumnName(null),
+                    $columnType,
+                    $columnTypeArgs,
+                    new ColumnModifierList($columnModifierList)
+                );
+            }
+
+            return new self(
+                $columnName,
+                $columnType,
+                $columnTypeArgs,
+                new ColumnModifierList($columnModifierList)
+            );
         }
 
-        return new self(
-            $columnName,
-            $columnType,
-            new ColumnModifierList($columnModifierList)
-        );
+        throw new InvalidArgumentException(sprintf('columns.%s field is unsupported format', $columnName->getName()));
     }
 
     /**
@@ -92,15 +123,20 @@ final class Column
      */
     public function createColumnMigration(): string
     {
-        $typeMethod = $this->type->createMigrationMethod($this->name);
-
         $modifierMethod = '';
-
         foreach ($this->modifierList as $modifier) {
             $modifierMethod .= $modifier->createMigrationMethod();
         }
 
-        return sprintf('$table%s%s;', $typeMethod, $modifierMethod);
+        if ($this->name->hasName() && $this->typeArgs->hasArgs()) {
+            return '$table->' . sprintf("%s('%s', %s)%s;", $this->type->columnType(), $this->name->getName(), $this->typeArgs->typeArgs(), $modifierMethod);
+        } elseif ($this->name->hasName() && ! $this->typeArgs->hasArgs()) {
+            return '$table->' . sprintf("%s('%s')%s;", $this->type->columnType(), $this->name->getName(), $modifierMethod);
+        } elseif (! $this->name->hasName() && $this->typeArgs->hasArgs()) {
+            return '$table->' . sprintf("%s(%s);", $this->type->columnType(), $this->typeArgs->typeArgs());
+        }
+
+        return '$table->' . sprintf("%s();", $this->type->columnType());
     }
 
     /**

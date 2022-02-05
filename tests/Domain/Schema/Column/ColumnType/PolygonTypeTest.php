@@ -2,7 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Test\Domain\Schema\Column\ColumnType;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType\PolygonType;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
@@ -10,8 +9,6 @@ final class PolygonTypeTest extends TestCase
 {
     public function testResolve(): void
     {
-        $columnName = new ColumnName('test');
-        $columnType = new PolygonType();
-        $this->assertSame("->polygon('test')", $columnType->createMigrationMethod($columnName));
+        $this->assertSame('polygon', (new PolygonType())->columnType());
     }
 }

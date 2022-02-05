@@ -2,12 +2,16 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnType;
 
-final class DoubleType extends BaseFloatType
+final class DoubleType implements ColumnType
 {
+    public function __construct()
+    {
+    }
+
     /**
      * @return string
      */
-    protected function getName(): string
+    public function columnType(): string
     {
         return 'double';
     }
