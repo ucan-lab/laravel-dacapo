@@ -2,24 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class AlwaysModifier implements ColumnModifier
+final class AlwaysModifier extends ColumnModifier
 {
-    private bool $value;
-
-    /**
-     * AlwaysModifier constructor.
-     * @param bool|null $value
-     */
-    public function __construct(?bool $value)
-    {
-        $this->value = $value ?? true;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return '->always()';
+        return 'always';
     }
 }

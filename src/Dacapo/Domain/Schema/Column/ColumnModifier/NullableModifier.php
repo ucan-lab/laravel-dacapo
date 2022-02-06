@@ -2,28 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class NullableModifier implements ColumnModifier
+final class NullableModifier extends ColumnModifier
 {
-    private bool $value;
-
-    /**
-     * NullableModifier constructor.
-     * @param bool|null $value
-     */
-    public function __construct(?bool $value)
-    {
-        $this->value = $value ?? true;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        if ($this->value) {
-            return '->nullable()';
-        }
-
-        return '->nullable(false)';
+        return 'nullable';
     }
 }

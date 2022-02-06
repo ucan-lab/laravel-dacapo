@@ -2,24 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class CharsetModifier implements ColumnModifier
+final class CharsetModifier extends ColumnModifier
 {
-    private string $value;
-
-    /**
-     * CharsetModifier constructor.
-     * @param string $value
-     */
-    public function __construct(string $value)
-    {
-        $this->value = $value;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return sprintf("->charset('%s')", $this->value);
+        return 'charset';
     }
 }

@@ -2,24 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class UseCurrentModifier implements ColumnModifier
+final class UseCurrentModifier extends ColumnModifier
 {
-    private bool $value;
-
-    /**
-     * UseCurrentModifier constructor.
-     * @param bool|null $value
-     */
-    public function __construct(?bool $value)
-    {
-        $this->value = $value ?? true;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return '->useCurrent()';
+        return 'useCurrent';
     }
 }

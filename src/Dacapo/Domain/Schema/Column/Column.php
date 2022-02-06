@@ -132,7 +132,15 @@ final class Column
     {
         $modifierMethod = '';
         foreach ($this->modifierList as $modifier) {
-            $modifierMethod .= $modifier->createMigrationMethod();
+            if ($modifier->hasColumnModifierArgs()) {
+                if ($modifier instanceof DbFacadeUsing) {
+                    $modifierMethod .= sprintf('->%s(DB::raw(%s))', $modifier->getName(), $modifier->columnModifierArgs());
+                } else {
+                    $modifierMethod .= sprintf('->%s(%s)', $modifier->getName(), $modifier->columnModifierArgs());
+                }
+            } else {
+                $modifierMethod .= sprintf('->%s()', $modifier->getName());
+            }
         }
 
         if ($this->name->hasName() && $this->typeArgs->hasArgs()) {
