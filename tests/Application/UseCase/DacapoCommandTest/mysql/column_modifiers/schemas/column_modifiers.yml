@@ -2,20 +2,20 @@ column_modifiers1:
   columns:
     id:
       type: integer
-      autoIncrement: true
+      autoIncrement:
     name:
       type: string
       charset: utf8
       collation: utf8_unicode_ci
       comment: my comment
       default: test value
-      nullable: true
+      nullable:
     price:
       type: integer
-      unsigned: true
+      unsigned:
     count:
       type: integer
-      unsigned: true
+      unsigned:
     total_stored:
       type: integer
       storedAs: price * count
@@ -27,7 +27,7 @@ column_modifiers1:
       generatedAs: price * count
     created_at:
       type: timestamp
-      useCurrent: true
+      useCurrent:
     seq:
       type: integer
-      always: true
+      always:
