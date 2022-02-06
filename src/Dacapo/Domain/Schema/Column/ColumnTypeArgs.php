@@ -13,7 +13,7 @@ final class ColumnTypeArgs
     private bool $isNumeric;
 
     /**
-     * @param array|string|int $args
+     * @param array|string|int|null $args
      * @param bool $isArray
      * @param bool $isString
      * @param bool $isNumeric
@@ -27,7 +27,7 @@ final class ColumnTypeArgs
     }
 
     /**
-     * @param array|string|int $args
+     * @param array|string|int|null $args
      * @param bool $isArray
      * @param bool $isString
      * @param bool $isNumeric
