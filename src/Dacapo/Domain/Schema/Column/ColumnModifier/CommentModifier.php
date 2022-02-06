@@ -2,24 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class CommentModifier implements ColumnModifier
+final class CommentModifier extends ColumnModifier
 {
-    private string $value;
-
-    /**
-     * CommentModifier constructor.
-     * @param string $value
-     */
-    public function __construct(string $value)
-    {
-        $this->value = $value;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return sprintf("->comment('%s')", $this->value);
+        return 'comment';
     }
 }

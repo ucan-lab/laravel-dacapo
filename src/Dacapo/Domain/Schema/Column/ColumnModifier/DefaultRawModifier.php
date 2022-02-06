@@ -5,24 +5,13 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 /**
  * DefaultRawModifier class is original ColumnModifier class
  */
-final class DefaultRawModifier implements ColumnModifier, DbFacadeUsing
+final class DefaultRawModifier extends ColumnModifier implements DbFacadeUsing
 {
-    private string $value;
-
-    /**
-     * DefaultRawModifier constructor.
-     * @param string $value
-     */
-    public function __construct(string $value)
-    {
-        $this->value = $value;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return sprintf("->default(DB::raw('%s'))", $this->value);
+        return 'default';
     }
 }

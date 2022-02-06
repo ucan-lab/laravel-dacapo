@@ -2,24 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class UnsignedModifier implements ColumnModifier
+final class UnsignedModifier extends ColumnModifier
 {
-    private bool $value;
-
-    /**
-     * UnsignedModifier constructor.
-     * @param bool|null $value
-     */
-    public function __construct(?bool $value)
-    {
-        $this->value = $value ?? true;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return '->unsigned()';
+        return 'unsigned';
     }
 }

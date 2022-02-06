@@ -2,24 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class CollationModifier implements ColumnModifier
+final class CollationModifier extends ColumnModifier
 {
-    private string $value;
-
-    /**
-     * CollationModifier constructor.
-     * @param string $value
-     */
-    public function __construct(string $value)
-    {
-        $this->value = $value;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return sprintf("->collation('%s')", $this->value);
+        return 'collation';
     }
 }

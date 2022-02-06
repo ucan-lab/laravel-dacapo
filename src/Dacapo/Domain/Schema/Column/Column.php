@@ -45,7 +45,7 @@ final class Column
 
     /**
      * @param ColumnName $columnName
-     * @param string|bool|array $attributes
+     * @param string|bool|array|null $attributes
      * @return static
      */
     public static function factory(ColumnName $columnName, $attributes): self
@@ -59,7 +59,7 @@ final class Column
                 ColumnTypeArgs::factory(null),
                 new ColumnModifierList([])
             );
-        } elseif (is_bool($attributes) || $attributes === null) {
+        } elseif (is_bool($attributes)) {
             $columnType = ColumnTypeFactory::factory($columnName->getName());
 
             return new self(
@@ -115,7 +115,14 @@ final class Column
             );
         }
 
-        throw new InvalidArgumentException(sprintf('columns.%s field is unsupported format', $columnName->getName()));
+        $columnType = ColumnTypeFactory::factory($columnName->getName());
+
+        return new self(
+            new ColumnName(null),
+            $columnType,
+            ColumnTypeArgs::factory(null),
+            new ColumnModifierList([])
+        );
     }
 
     /**
@@ -125,7 +132,15 @@ final class Column
     {
         $modifierMethod = '';
         foreach ($this->modifierList as $modifier) {
-            $modifierMethod .= $modifier->createMigrationMethod();
+            if ($modifier->hasColumnModifierArgs()) {
+                if ($modifier instanceof DbFacadeUsing) {
+                    $modifierMethod .= sprintf('->%s(DB::raw(%s))', $modifier->getName(), $modifier->columnModifierArgs());
+                } else {
+                    $modifierMethod .= sprintf('->%s(%s)', $modifier->getName(), $modifier->columnModifierArgs());
+                }
+            } else {
+                $modifierMethod .= sprintf('->%s()', $modifier->getName());
+            }
         }
 
         if ($this->name->hasName() && $this->typeArgs->hasArgs()) {

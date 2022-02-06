@@ -2,24 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class FromModifier implements ColumnModifier
+final class FromModifier extends ColumnModifier
 {
-    private int $value;
-
-    /**
-     * FromModifier constructor.
-     * @param int $value
-     */
-    public function __construct(int $value)
-    {
-        $this->value = $value;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return sprintf('->from(%d)', $this->value);
+        return 'from';
     }
 }

@@ -2,24 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class GeneratedAsModifier implements ColumnModifier
+final class GeneratedAsModifier extends ColumnModifier
 {
-    private string $value;
-
-    /**
-     * GeneratedAsModifier constructor.
-     * @param string $value
-     */
-    public function __construct(string $value)
-    {
-        $this->value = $value;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return sprintf("->generatedAs('%s')", $this->value);
+        return 'generatedAs';
     }
 }

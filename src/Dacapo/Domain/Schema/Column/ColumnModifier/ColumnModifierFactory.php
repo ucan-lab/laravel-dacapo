@@ -2,7 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierArgs\BooleanColumnModifierArgs;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierArgs\IntColumnModifierArgs;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModifierArgs\StringColumnModifierArgs;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\Column\ColumnModifier\InvalidArgumentException;
+use function is_string;
+use function is_bool;
+use function is_int;
 
 final class ColumnModifierFactory
 {
@@ -28,12 +34,20 @@ final class ColumnModifierFactory
 
     /**
      * @param string $name
-     * @param array|string|int|null $value
+     * @param array|string|bool|int|null $value
      * @return ColumnModifier
      */
     public static function factory(string $name, $value): ColumnModifier
     {
         if ($class = self::MAPPING_CLASS[$name] ?? null) {
+            if (is_string($value)) {
+                return new $class(new StringColumnModifierArgs($value));
+            } elseif (is_bool($value)) {
+                return new $class(new BooleanColumnModifierArgs($value));
+            } elseif (is_int($value)) {
+                return new $class(new IntColumnModifierArgs($value));
+            }
+
             return new $class($value);
         }
 

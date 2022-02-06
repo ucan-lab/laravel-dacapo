@@ -2,24 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class UniqueModifier implements ColumnModifier
+final class UniqueModifier extends ColumnModifier
 {
-    private bool $value;
-
-    /**
-     * UniqueModifier constructor.
-     * @param bool|null $value
-     */
-    public function __construct(?bool $value)
-    {
-        $this->value = $value ?? true;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return '->unique()';
+        return 'unique';
     }
 }

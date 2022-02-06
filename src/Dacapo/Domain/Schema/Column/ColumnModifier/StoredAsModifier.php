@@ -2,24 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class StoredAsModifier implements ColumnModifier
+final class StoredAsModifier extends ColumnModifier
 {
-    private string $value;
-
-    /**
-     * StoredAsModifier constructor.
-     * @param string $value
-     */
-    public function __construct(string $value)
-    {
-        $this->value = $value;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return sprintf("->storedAs('%s')", $this->value);
+        return 'storedAs';
     }
 }

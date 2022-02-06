@@ -2,24 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 
-final class AutoIncrementModifier implements ColumnModifier
+final class AutoIncrementModifier extends ColumnModifier
 {
-    private ?bool $value;
-
-    /**
-     * AutoIncrementModifier constructor.
-     * @param ?bool $value
-     */
-    public function __construct(?bool $value)
-    {
-        $this->value = $value;
-    }
-
     /**
      * @return string
      */
-    public function createMigrationMethod(): string
+    public function getName(): string
     {
-        return '->autoIncrement()';
+        return 'autoIncrement';
     }
 }
