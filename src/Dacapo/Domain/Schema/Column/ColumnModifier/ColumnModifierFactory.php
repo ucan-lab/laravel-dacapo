@@ -34,7 +34,7 @@ final class ColumnModifierFactory
 
     /**
      * @param string $name
-     * @param array|string|bool|int|null $value
+     * @param string|bool|int|null $value
      * @return ColumnModifier
      */
     public static function factory(string $name, $value): ColumnModifier
@@ -48,7 +48,7 @@ final class ColumnModifierFactory
                 return new $class(new IntColumnModifierArgs($value));
             }
 
-            return new $class($value);
+            return new $class(null);
         }
 
         throw new InvalidArgumentException(sprintf('%s column modifier does not exist', $name));
