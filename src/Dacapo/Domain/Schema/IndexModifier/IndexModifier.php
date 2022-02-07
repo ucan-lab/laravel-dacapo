@@ -149,7 +149,7 @@ final class IndexModifier
 
     /**
      * @param string $columns
-     * @return array
+     * @return array<int, string>
      */
     private static function parse(string $columns): array
     {

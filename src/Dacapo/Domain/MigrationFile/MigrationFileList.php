@@ -25,7 +25,7 @@ final class MigrationFileList implements IteratorAggregate, Countable
     }
 
     /**
-     * @return array
+     * @return array<string, MigrationFile>
      */
     public function get(): array
     {

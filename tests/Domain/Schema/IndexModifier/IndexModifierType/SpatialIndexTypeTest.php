@@ -27,7 +27,7 @@ final class SpatialIndexTypeTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function dataResolve(): array
     {
@@ -70,7 +70,7 @@ final class SpatialIndexTypeTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function dataCreateIndexMigrationDownMethod(): array
     {

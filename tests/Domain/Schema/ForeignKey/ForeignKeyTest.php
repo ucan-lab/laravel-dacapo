@@ -34,7 +34,7 @@ final class ForeignKeyTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function dataResolve(): array
     {
