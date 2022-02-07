@@ -12,7 +12,7 @@ final class Reference
     /**
      * @var array<int, string>|string
      */
-    private array|string $columns;
+    private $columns;
 
     /**
      * @var array<int, string>

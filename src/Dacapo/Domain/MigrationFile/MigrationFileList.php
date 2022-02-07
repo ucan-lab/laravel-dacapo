@@ -13,12 +13,12 @@ use function count;
 final class MigrationFileList implements IteratorAggregate, Countable
 {
     /**
-     * @var array<int, MigrationFile>
+     * @var array<string, MigrationFile>
      */
-    private array $attributes;
+    private array $attributes = [];
 
     /**
-     * @param array<int, MigrationFile> $attributes
+     * @param array<mixed, MigrationFile> $attributes
      */
     public function __construct(array $attributes)
     {
@@ -28,7 +28,7 @@ final class MigrationFileList implements IteratorAggregate, Countable
     }
 
     /**
-     * @return array<int, MigrationFile>
+     * @return array<string, MigrationFile>
      */
     public function get(): array
     {
@@ -52,7 +52,7 @@ final class MigrationFileList implements IteratorAggregate, Countable
     }
 
     /**
-     * @return ArrayIterator<int, MigrationFile>
+     * @return ArrayIterator<string, MigrationFile>
      */
     public function getIterator(): ArrayIterator
     {

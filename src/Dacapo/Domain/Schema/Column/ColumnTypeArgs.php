@@ -8,9 +8,9 @@ use function is_array;
 final class ColumnTypeArgs
 {
     /**
-     * @var array<int, mixed>|null
+     * @var mixed
      */
-    private ?array $args;
+    private $args;
 
     /**
      * @var bool
@@ -28,12 +28,12 @@ final class ColumnTypeArgs
     private bool $isNumeric;
 
     /**
-     * @param array<int, mixed>|null $args
+     * @param mixed $args
      * @param bool $isArray
      * @param bool $isString
      * @param bool $isNumeric
      */
-    private function __construct(?array $args, bool $isArray, bool $isString = false, bool $isNumeric = false)
+    private function __construct($args, bool $isArray, bool $isString = false, bool $isNumeric = false)
     {
         $this->args = $args;
         $this->isArray = $isArray;
