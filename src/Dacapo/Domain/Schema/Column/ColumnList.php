@@ -36,7 +36,7 @@ final class ColumnList implements IteratorAggregate
     }
 
     /**
-     * @return Column[]|ArrayIterator
+     * @return ArrayIterator<int, Column>
      */
     public function getIterator(): ArrayIterator
     {

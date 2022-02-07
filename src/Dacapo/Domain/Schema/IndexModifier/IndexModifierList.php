@@ -36,7 +36,7 @@ final class IndexModifierList implements IteratorAggregate
     }
 
     /**
-     * @return IndexModifier[]|ArrayIterator
+     * @return ArrayIterator<int, IndexModifier>
      */
     public function getIterator(): ArrayIterator
     {

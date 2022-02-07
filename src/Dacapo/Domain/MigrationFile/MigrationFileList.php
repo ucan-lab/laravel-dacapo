@@ -52,7 +52,7 @@ final class MigrationFileList implements IteratorAggregate, Countable
     }
 
     /**
-     * @return MigrationFile[]|ArrayIterator
+     * @return ArrayIterator<int, MigrationFile>
      */
     public function getIterator(): ArrayIterator
     {

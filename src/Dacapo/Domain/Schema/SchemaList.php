@@ -51,7 +51,7 @@ final class SchemaList implements IteratorAggregate
     }
 
     /**
-     * @return Schema[]|ArrayIterator
+     * @return ArrayIterator<int, Schema>
      */
     public function getIterator(): ArrayIterator
     {

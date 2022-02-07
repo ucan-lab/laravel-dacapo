@@ -24,7 +24,7 @@ final class ColumnModifierList implements IteratorAggregate
     }
 
     /**
-     * @return ColumnModifier[]|ArrayIterator
+     * @return ArrayIterator<int, ColumnModifier>
      */
     public function getIterator(): ArrayIterator
     {
