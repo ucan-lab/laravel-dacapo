@@ -35,3 +35,20 @@ failed_jobs:
     failed_at:
       type: timestamp
       useCurrent:
+
+personal_access_tokens:
+  columns:
+    id:
+    tokenable: morphs
+    name: string
+    token:
+      type: string
+      args: 64
+      unique:
+    abilities:
+      type: text
+      nullable:
+    last_used_at:
+      type: timestamp
+      nullable
+    timestamps:
