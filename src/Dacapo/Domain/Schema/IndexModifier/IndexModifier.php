@@ -17,7 +17,7 @@ final class IndexModifier
     private IndexModifierType $type;
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     private array $columns;
 
@@ -34,7 +34,7 @@ final class IndexModifier
     /**
      * IndexModifier constructor.
      * @param IndexModifierType $type
-     * @param array $columns
+     * @param array<int, string> $columns
      * @param string|null $name = null
      * @param string|null $algorithm = null
      */
@@ -51,7 +51,7 @@ final class IndexModifier
     }
 
     /**
-     * @param array $attributes
+     * @param array<string, mixed> $attributes
      * @return static
      */
     public static function factory(array $attributes): self
@@ -149,7 +149,7 @@ final class IndexModifier
 
     /**
      * @param string $columns
-     * @return array
+     * @return array<int, string>
      */
     private static function parse(string $columns): array
     {

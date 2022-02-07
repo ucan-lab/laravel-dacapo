@@ -9,7 +9,7 @@ final class UniqueTypeTest extends TestCase
 {
     /**
      * @param string $expected
-     * @param string|array $columns
+     * @param string|array<int, string> $columns
      * @param string|null $name
      * @param string|null $algorithm
      * @dataProvider dataResolve
@@ -27,7 +27,7 @@ final class UniqueTypeTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function dataResolve(): array
     {
@@ -55,7 +55,7 @@ final class UniqueTypeTest extends TestCase
 
     /**
      * @param string $expected
-     * @param string|array $columns
+     * @param string|array<int, string> $columns
      * @param string|null $name
      * @dataProvider dataCreateIndexMigrationDownMethod
      */
@@ -70,7 +70,7 @@ final class UniqueTypeTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function dataCreateIndexMigrationDownMethod(): array
     {

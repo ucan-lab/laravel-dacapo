@@ -18,7 +18,7 @@ final class LaravelDatabaseSchemasStorage implements DatabaseSchemasStorage
     }
 
     /**
-     * @return array
+     * @return array<int, string>
      */
     public function getFilePathList(): array
     {

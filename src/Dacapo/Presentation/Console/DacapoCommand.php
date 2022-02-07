@@ -75,7 +75,7 @@ final class DacapoCommand extends Command
     }
 
     /**
-     * @param array $ymlFiles
+     * @param array<int, string> $ymlFiles
      * @return DacapoCommandUseCaseInput
      */
     private function makeDacapoCommandUseCaseInput(array $ymlFiles): DacapoCommandUseCaseInput

@@ -7,12 +7,18 @@ use Countable;
 use IteratorAggregate;
 use function count;
 
+/**
+ * @implements IteratorAggregate<MigrationFile>
+ */
 final class MigrationFileList implements IteratorAggregate, Countable
 {
+    /**
+     * @var array<string, MigrationFile>
+     */
     private array $attributes = [];
 
     /**
-     * @param array $attributes
+     * @param array<mixed, MigrationFile> $attributes
      */
     public function __construct(array $attributes)
     {
@@ -22,7 +28,7 @@ final class MigrationFileList implements IteratorAggregate, Countable
     }
 
     /**
-     * @return array
+     * @return array<string, MigrationFile>
      */
     public function get(): array
     {
@@ -46,7 +52,7 @@ final class MigrationFileList implements IteratorAggregate, Countable
     }
 
     /**
-     * @return MigrationFile[]|ArrayIterator
+     * @return ArrayIterator<string, MigrationFile>
      */
     public function getIterator(): ArrayIterator
     {

@@ -9,15 +9,30 @@ use function count;
 
 final class Reference
 {
+    /**
+     * @var array<int, string>|string
+     */
     private $columns;
+
+    /**
+     * @var array<int, string>
+     */
     private array $references;
+
+    /**
+     * @var string
+     */
     private string $table;
+
+    /**
+     * @var string|null
+     */
     private ?string $name;
 
     /**
      * Reference constructor.
-     * @param array|string $columns
-     * @param array $references
+     * @param array<int, string>|string $columns
+     * @param array<int, string> $references
      * @param string $table
      * @param string|null $name
      */
@@ -34,7 +49,7 @@ final class Reference
     }
 
     /**
-     * @param array $attributes
+     * @param array<string, mixed> $attributes
      * @return static
      */
     public static function factory(array $attributes): self
@@ -134,7 +149,7 @@ final class Reference
 
     /**
      * @param string $columns
-     * @return array
+     * @return array<int, string>
      */
     private static function parse(string $columns): array
     {

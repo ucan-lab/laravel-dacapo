@@ -133,7 +133,7 @@ final class SchemaToCreateIndexMigrationConverter
         $indexListIterator = $schema->getIndexModifierList()->getIterator();
 
         while ($indexListIterator->valid()) {
-            $str .= $indexListIterator->current()->createIndexMigrationDownMethod($schema->getTableName());
+            $str .= $indexListIterator->current()->createIndexMigrationDownMethod();
             $indexListIterator->next();
 
             if ($indexListIterator->valid()) {

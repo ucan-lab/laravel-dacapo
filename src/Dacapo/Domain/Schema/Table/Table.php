@@ -32,7 +32,7 @@ final class Table
 
     /**
      * @param TableName $tableName
-     * @param array $attributes
+     * @param array<string, mixed> $attributes
      * @return $this
      */
     public static function factory(TableName $tableName, array $attributes): self

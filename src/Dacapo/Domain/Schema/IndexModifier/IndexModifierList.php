@@ -5,12 +5,18 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier;
 use ArrayIterator;
 use IteratorAggregate;
 
+/**
+ * @implements IteratorAggregate<IndexModifier>
+ */
 final class IndexModifierList implements IteratorAggregate
 {
+    /**
+     * @var array<int, IndexModifier>
+     */
     private array $attributes;
 
     /**
-     * @param array $attributes
+     * @param array<int, IndexModifier> $attributes
      */
     public function __construct(array $attributes)
     {
@@ -30,7 +36,7 @@ final class IndexModifierList implements IteratorAggregate
     }
 
     /**
-     * @return IndexModifier[]|ArrayIterator
+     * @return ArrayIterator<int, IndexModifier>
      */
     public function getIterator(): ArrayIterator
     {

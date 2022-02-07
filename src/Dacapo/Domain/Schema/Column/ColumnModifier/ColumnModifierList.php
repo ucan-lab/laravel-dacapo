@@ -5,12 +5,18 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 use ArrayIterator;
 use IteratorAggregate;
 
+/**
+ * @implements IteratorAggregate<ColumnModifier>
+ */
 final class ColumnModifierList implements IteratorAggregate
 {
+    /**
+     * @var array<int, ColumnModifier>
+     */
     private array $attributes;
 
     /**
-     * @param array $attributes
+     * @param array<int, ColumnModifier> $attributes
      */
     public function __construct(array $attributes)
     {
@@ -18,7 +24,7 @@ final class ColumnModifierList implements IteratorAggregate
     }
 
     /**
-     * @return ColumnModifier[]|ArrayIterator
+     * @return ArrayIterator<int, ColumnModifier>
      */
     public function getIterator(): ArrayIterator
     {

@@ -7,13 +7,28 @@ use function is_array;
 
 final class ColumnTypeArgs
 {
+    /**
+     * @var mixed
+     */
     private $args;
+
+    /**
+     * @var bool
+     */
     private bool $isArray;
+
+    /**
+     * @var bool
+     */
     private bool $isString;
+
+    /**
+     * @var bool
+     */
     private bool $isNumeric;
 
     /**
-     * @param array|string|int|null $args
+     * @param mixed $args
      * @param bool $isArray
      * @param bool $isString
      * @param bool $isNumeric
@@ -27,7 +42,7 @@ final class ColumnTypeArgs
     }
 
     /**
-     * @param array|string|int|null $args
+     * @param array<int, mixed>|string|int|null $args
      * @param bool $isArray
      * @param bool $isString
      * @param bool $isNumeric

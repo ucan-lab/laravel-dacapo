@@ -6,6 +6,9 @@ use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsS
 
 final class InMemoryDatabaseMigrationsStorage implements DatabaseMigrationsStorage
 {
+    /**
+     * @var array<int, array<string, string>>
+     */
     public array $fileList = [];
 
     /**

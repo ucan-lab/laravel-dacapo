@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Test\Domain\ValueObject\Schema\IndexModifierType;
+namespace UcanLab\LaravelDacapo\Test\Domain\Schema\IndexModifier\IndexModifierType;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier;
 use UcanLab\LaravelDacapo\Test\TestCase;
@@ -9,7 +9,7 @@ final class IndexTypeTest extends TestCase
 {
     /**
      * @param string $expected
-     * @param string|array $columns
+     * @param string|array<int, string> $columns
      * @param string|null $name
      * @param string|null $algorithm
      * @dataProvider dataResolve
@@ -27,7 +27,7 @@ final class IndexTypeTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function dataResolve(): array
     {
@@ -55,7 +55,7 @@ final class IndexTypeTest extends TestCase
 
     /**
      * @param string $expected
-     * @param string|array $columns
+     * @param string|array<int, string> $columns
      * @param string|null $name
      * @dataProvider dataCreateIndexMigrationDownMethod
      */
@@ -71,7 +71,7 @@ final class IndexTypeTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function dataCreateIndexMigrationDownMethod(): array
     {

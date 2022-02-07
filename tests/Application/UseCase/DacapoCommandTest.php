@@ -40,7 +40,7 @@ final class DacapoCommandTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, string>>
      */
     public function dataMysql(): array
     {
@@ -85,7 +85,7 @@ final class DacapoCommandTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, string>>
      */
     public function dataPostgresql(): array
     {

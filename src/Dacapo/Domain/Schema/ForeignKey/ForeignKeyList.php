@@ -5,12 +5,18 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 use ArrayIterator;
 use IteratorAggregate;
 
+/**
+ * @implements IteratorAggregate<ForeignKey>
+ */
 final class ForeignKeyList implements IteratorAggregate
 {
+    /**
+     * @var array<int, ForeignKey>
+     */
     private array $attributes;
 
     /**
-     * @param array $attributes
+     * @param array<int, ForeignKey> $attributes
      */
     public function __construct(array $attributes)
     {
@@ -30,7 +36,7 @@ final class ForeignKeyList implements IteratorAggregate
     }
 
     /**
-     * @return ForeignKey[]|ArrayIterator
+     * @return ArrayIterator<int, ForeignKey>
      */
     public function getIterator(): ArrayIterator
     {

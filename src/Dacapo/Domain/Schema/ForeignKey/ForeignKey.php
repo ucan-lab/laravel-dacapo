@@ -21,7 +21,7 @@ final class ForeignKey
     }
 
     /**
-     * @param array $attributes
+     * @param array<string, mixed> $attributes
      * @return static
      */
     public static function factory(array $attributes): self

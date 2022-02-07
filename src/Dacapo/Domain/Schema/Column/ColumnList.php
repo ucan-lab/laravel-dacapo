@@ -5,12 +5,18 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column;
 use ArrayIterator;
 use IteratorAggregate;
 
+/**
+ * @implements IteratorAggregate<Column>
+ */
 final class ColumnList implements IteratorAggregate
 {
+    /**
+     * @var array<int, Column>
+     */
     private array $attributes;
 
     /**
-     * @param array $attributes
+     * @param array<int, Column> $attributes
      */
     public function __construct(array $attributes)
     {
@@ -30,7 +36,7 @@ final class ColumnList implements IteratorAggregate
     }
 
     /**
-     * @return Column[]|ArrayIterator
+     * @return ArrayIterator<int, Column>
      */
     public function getIterator(): ArrayIterator
     {

@@ -29,6 +29,9 @@ use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStor
  */
 final class ConsoleServiceProvider extends ServiceProvider implements DeferrableProvider
 {
+    /**
+     * @var array<string, string>
+     */
     public array $bindings = [
         MigrationCreateStub::class => LaravelMigrationCreateStub::class,
         MigrationUpdateStub::class => LaravelMigrationUpdateStub::class,
@@ -36,6 +39,9 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
         DatabaseMigrationsStorage::class => LaravelDatabaseMigrationsStorage::class,
     ];
 
+    /**
+     * @var array<int, string>
+     */
     private array $commands = [
         DacapoInitCommand::class,
         DacapoCommand::class,
@@ -44,6 +50,9 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
         DacapoUninstallCommand::class,
     ];
 
+    /**
+     * @var array<string, string>
+     */
     private array $databaseBuilders = [
         'mysql' => MysqlDatabaseBuilder::class,
         'pgsql' => PostgresqlDatabaseBuilder::class,
@@ -61,7 +70,7 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<int, string>
      */
     public function provides()
     {
