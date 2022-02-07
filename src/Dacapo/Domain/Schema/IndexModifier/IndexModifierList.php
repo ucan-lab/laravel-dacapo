@@ -13,7 +13,7 @@ final class IndexModifierList implements IteratorAggregate
     private array $attributes;
 
     /**
-     * @param array $attributes
+     * @param array<int, IndexModifier> $attributes
      */
     public function __construct(array $attributes)
     {

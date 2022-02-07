@@ -5,12 +5,12 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output;
 final class DacapoCommandUseCaseOutput
 {
     /**
-     * @var array<string, string>
+     * @var array<int, array<string, string>>
      */
     public array $migrationBodies;
 
     /**
-     * @param array $migrationBodies
+     * @param array<int, array<string, string>> $migrationBodies
      */
     public function __construct(array $migrationBodies)
     {

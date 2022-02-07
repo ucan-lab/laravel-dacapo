@@ -10,12 +10,12 @@ use function count;
 final class MigrationFileList implements IteratorAggregate, Countable
 {
     /**
-     * @var array<string, MigrationFile>
+     * @var array<int, MigrationFile>
      */
     private array $attributes;
 
     /**
-     * @param array $attributes
+     * @param array<int, MigrationFile> $attributes
      */
     public function __construct(array $attributes)
     {
@@ -25,7 +25,7 @@ final class MigrationFileList implements IteratorAggregate, Countable
     }
 
     /**
-     * @return array<string, MigrationFile>
+     * @return array<int, MigrationFile>
      */
     public function get(): array
     {

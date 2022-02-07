@@ -10,7 +10,7 @@ final class DacapoCommandUseCaseInput
     public array $schemaBodies;
 
     /**
-     * @param array $schemaBodies
+     * @param array<string, mixed> $schemaBodies
      */
     public function __construct(array $schemaBodies)
     {

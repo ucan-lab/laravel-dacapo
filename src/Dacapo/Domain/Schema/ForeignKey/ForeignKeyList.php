@@ -13,7 +13,7 @@ final class ForeignKeyList implements IteratorAggregate
     private array $attributes;
 
     /**
-     * @param array $attributes
+     * @param array<int, ForeignKey> $attributes
      */
     public function __construct(array $attributes)
     {

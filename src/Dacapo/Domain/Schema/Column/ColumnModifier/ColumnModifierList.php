@@ -13,7 +13,7 @@ final class ColumnModifierList implements IteratorAggregate
     private array $attributes;
 
     /**
-     * @param array $attributes
+     * @param array<int, ColumnModifier> $attributes
      */
     public function __construct(array $attributes)
     {

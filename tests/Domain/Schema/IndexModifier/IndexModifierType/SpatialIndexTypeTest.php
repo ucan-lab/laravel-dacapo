@@ -9,7 +9,7 @@ final class SpatialIndexTypeTest extends TestCase
 {
     /**
      * @param string $expected
-     * @param string|array $columns
+     * @param string|array<int, string> $columns
      * @param string|null $name
      * @param string|null $algorithm
      * @dataProvider dataResolve
@@ -55,7 +55,7 @@ final class SpatialIndexTypeTest extends TestCase
 
     /**
      * @param string $expected
-     * @param string|array $columns
+     * @param string|array<int, string> $columns
      * @param string|null $name
      * @dataProvider dataCreateIndexMigrationDownMethod
      */

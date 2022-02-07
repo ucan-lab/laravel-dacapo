@@ -7,18 +7,33 @@ use function is_array;
 
 final class ColumnTypeArgs
 {
-    private $args;
+    /**
+     * @var array<int, mixed>|null
+     */
+    private ?array $args;
+
+    /**
+     * @var bool
+     */
     private bool $isArray;
+
+    /**
+     * @var bool
+     */
     private bool $isString;
+
+    /**
+     * @var bool
+     */
     private bool $isNumeric;
 
     /**
-     * @param array|string|int|null $args
+     * @param array<int, mixed>|null $args
      * @param bool $isArray
      * @param bool $isString
      * @param bool $isNumeric
      */
-    private function __construct($args, bool $isArray, bool $isString = false, bool $isNumeric = false)
+    private function __construct(?array $args, bool $isArray, bool $isString = false, bool $isNumeric = false)
     {
         $this->args = $args;
         $this->isArray = $isArray;
@@ -27,7 +42,7 @@ final class ColumnTypeArgs
     }
 
     /**
-     * @param array|string|int|null $args
+     * @param array<int, mixed>|string|int|null $args
      * @param bool $isArray
      * @param bool $isString
      * @param bool $isNumeric

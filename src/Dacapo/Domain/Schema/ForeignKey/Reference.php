@@ -31,8 +31,8 @@ final class Reference
 
     /**
      * Reference constructor.
-     * @param array|string $columns
-     * @param array $references
+     * @param array<int, string>|string $columns
+     * @param array<int, string> $references
      * @param string $table
      * @param string|null $name
      */
@@ -49,7 +49,7 @@ final class Reference
     }
 
     /**
-     * @param array $attributes
+     * @param array<string, mixed> $attributes
      * @return static
      */
     public static function factory(array $attributes): self

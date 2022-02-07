@@ -10,8 +10,8 @@ final class ForeignKeyTest extends TestCase
     /**
      * @param string $expectedUp
      * @param string $expectedDown
-     * @param string|array $columns
-     * @param string|array $references
+     * @param string|array<int, string> $columns
+     * @param string|array<int, string> $references
      * @param string $on
      * @param string|null $name
      * @param string|null $onUpdate
