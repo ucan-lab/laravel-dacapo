@@ -5,6 +5,9 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier;
 use ArrayIterator;
 use IteratorAggregate;
 
+/**
+ * @implements IteratorAggregate<ColumnModifier>
+ */
 final class ColumnModifierList implements IteratorAggregate
 {
     /**

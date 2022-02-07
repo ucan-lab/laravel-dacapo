@@ -5,6 +5,9 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier;
 use ArrayIterator;
 use IteratorAggregate;
 
+/**
+ * @implements IteratorAggregate<IndexModifier>
+ */
 final class IndexModifierList implements IteratorAggregate
 {
     /**

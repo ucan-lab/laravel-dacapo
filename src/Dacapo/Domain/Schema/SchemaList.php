@@ -7,6 +7,9 @@ use IteratorAggregate;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\DuplicatedTableNameException;
 use function in_array;
 
+/**
+ * @implements IteratorAggregate<Schema>
+ */
 final class SchemaList implements IteratorAggregate
 {
     /**

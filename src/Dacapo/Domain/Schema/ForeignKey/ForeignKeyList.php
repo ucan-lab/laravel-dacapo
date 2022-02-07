@@ -5,6 +5,9 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 use ArrayIterator;
 use IteratorAggregate;
 
+/**
+ * @implements IteratorAggregate<ForeignKey>
+ */
 final class ForeignKeyList implements IteratorAggregate
 {
     /**

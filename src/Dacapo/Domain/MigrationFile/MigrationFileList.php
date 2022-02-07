@@ -7,6 +7,9 @@ use Countable;
 use IteratorAggregate;
 use function count;
 
+/**
+ * @implements IteratorAggregate<MigrationFile>
+ */
 final class MigrationFileList implements IteratorAggregate, Countable
 {
     /**

@@ -5,6 +5,9 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column;
 use ArrayIterator;
 use IteratorAggregate;
 
+/**
+ * @implements IteratorAggregate<Column>
+ */
 final class ColumnList implements IteratorAggregate
 {
     /**
