@@ -7,6 +7,9 @@ use IteratorAggregate;
 
 final class ColumnModifierList implements IteratorAggregate
 {
+    /**
+     * @var array<int, ColumnModifier>
+     */
     private array $attributes;
 
     /**

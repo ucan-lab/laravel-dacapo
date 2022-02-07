@@ -7,6 +7,9 @@ use IteratorAggregate;
 
 final class ForeignKeyList implements IteratorAggregate
 {
+    /**
+     * @var array<int, ForeignKey>
+     */
     private array $attributes;
 
     /**

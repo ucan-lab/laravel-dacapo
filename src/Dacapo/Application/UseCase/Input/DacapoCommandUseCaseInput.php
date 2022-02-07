@@ -4,6 +4,9 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input;
 
 final class DacapoCommandUseCaseInput
 {
+    /**
+     * @var array<string, mixed>
+     */
     public array $schemaBodies;
 
     /**

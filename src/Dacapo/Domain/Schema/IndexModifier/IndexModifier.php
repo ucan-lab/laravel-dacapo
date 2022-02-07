@@ -17,7 +17,7 @@ final class IndexModifier
     private IndexModifierType $type;
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     private array $columns;
 

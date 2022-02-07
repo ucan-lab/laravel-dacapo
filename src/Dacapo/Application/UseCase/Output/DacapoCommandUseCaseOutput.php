@@ -4,6 +4,9 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output;
 
 final class DacapoCommandUseCaseOutput
 {
+    /**
+     * @var array<string, string>
+     */
     public array $migrationBodies;
 
     /**

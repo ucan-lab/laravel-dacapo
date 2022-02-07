@@ -9,9 +9,24 @@ use function count;
 
 final class Reference
 {
-    private $columns;
+    /**
+     * @var array<int, string>|string
+     */
+    private array|string $columns;
+
+    /**
+     * @var array<int, string>
+     */
     private array $references;
+
+    /**
+     * @var string
+     */
     private string $table;
+
+    /**
+     * @var string|null
+     */
     private ?string $name;
 
     /**

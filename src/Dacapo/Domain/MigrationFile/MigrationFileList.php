@@ -9,7 +9,10 @@ use function count;
 
 final class MigrationFileList implements IteratorAggregate, Countable
 {
-    private array $attributes = [];
+    /**
+     * @var array<string, MigrationFile>
+     */
+    private array $attributes;
 
     /**
      * @param array $attributes

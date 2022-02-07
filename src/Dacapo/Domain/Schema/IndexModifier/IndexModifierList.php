@@ -7,6 +7,9 @@ use IteratorAggregate;
 
 final class IndexModifierList implements IteratorAggregate
 {
+    /**
+     * @var array<int, IndexModifier>
+     */
     private array $attributes;
 
     /**
