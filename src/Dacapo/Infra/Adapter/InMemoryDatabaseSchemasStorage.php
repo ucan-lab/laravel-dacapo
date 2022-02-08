@@ -12,7 +12,7 @@ final class InMemoryDatabaseSchemasStorage implements DatabaseSchemasStorage
     private array $filePathList;
 
     /**
-     * @param array<string|false> $filePathList
+     * @param array<int, string> $filePathList
      */
     public function __construct(array $filePathList)
     {

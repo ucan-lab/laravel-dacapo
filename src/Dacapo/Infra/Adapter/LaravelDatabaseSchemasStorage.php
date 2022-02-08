@@ -23,6 +23,6 @@ final class LaravelDatabaseSchemasStorage implements DatabaseSchemasStorage
     public function getFilePathList(): array
     {
         $schemasPath = database_path('schemas');
-        return array_map(fn ($f) => $f->getRealPath(), $this->filesystem->files($schemasPath));
+        return array_map(fn ($f) => (string) $f->getRealPath(), $this->filesystem->files($schemasPath));
     }
 }

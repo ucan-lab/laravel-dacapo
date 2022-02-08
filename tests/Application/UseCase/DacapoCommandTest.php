@@ -27,7 +27,7 @@ final class DacapoCommandTest extends TestCase
 
         $this->instance(DatabaseBuilder::class, new MysqlDatabaseBuilder());
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
-        $this->instance(DatabaseSchemasStorage::class, new InMemoryDatabaseSchemasStorage(array_map(fn ($f) => $f->getRealPath(), File::files($schemas))));
+        $this->instance(DatabaseSchemasStorage::class, new InMemoryDatabaseSchemasStorage(array_map(fn ($f) => (string) $f->getRealPath(), File::files($schemas))));
 
         $this->artisan('dacapo --no-migrate')->assertExitCode(0);
 
@@ -67,7 +67,7 @@ final class DacapoCommandTest extends TestCase
 
         $this->instance(DatabaseBuilder::class, new PostgresqlDatabaseBuilder());
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
-        $this->instance(DatabaseSchemasStorage::class, new InMemoryDatabaseSchemasStorage(array_map(fn ($f) => $f->getRealPath(), File::files($schemas))));
+        $this->instance(DatabaseSchemasStorage::class, new InMemoryDatabaseSchemasStorage(array_map(fn ($f) => (string) $f->getRealPath(), File::files($schemas))));
 
         $this->artisan('dacapo --no-migrate')->assertExitCode(0);
 
@@ -111,8 +111,8 @@ final class DacapoCommandTest extends TestCase
             $expectedFile = $expectedMigrationFileList[$i];
             $actualFile = $actualMigrationFileList[$i];
 
-            $this->assertSame(basename($expectedFile), $actualFile['fileName']);
-            $this->assertSame(file_get_contents($expectedFile), $actualFile['fileContents']);
+            $this->assertSame(basename((string) $expectedFile), $actualFile['fileName']);
+            $this->assertSame(file_get_contents((string) $expectedFile), $actualFile['fileContents']);
         }
     }
 }
