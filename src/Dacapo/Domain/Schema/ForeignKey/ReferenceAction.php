@@ -24,9 +24,30 @@ final class ReferenceAction
      */
     public static function factory(array $attributes): self
     {
+        $onUpdateAction = null;
+        $onDeleteAction = null;
+
+        if (isset($attributes['onUpdate'])) {
+            $onUpdateAction = $attributes['onUpdate']; // @deprecated
+            echo 'Deprecated: foreign_keys.*.onUpdate to foreign_keys.*.onUpdateAction' . PHP_EOL;
+        }
+
+        if (isset($attributes['onDelete'])) {
+            $onDeleteAction = $attributes['onDelete']; // @deprecated
+            echo 'Deprecated: foreign_keys.*.onDelete to foreign_keys.*.onDeleteAction' . PHP_EOL;
+        }
+
+        if (isset($attributes['onUpdateAction'])) {
+            $onUpdateAction = $attributes['onUpdateAction'];
+        }
+
+        if (isset($attributes['onDeleteAction'])) {
+            $onDeleteAction = $attributes['onDeleteAction'];
+        }
+
         return new self(
-            $attributes['onUpdate'] ?? null,
-            $attributes['onDelete'] ?? null
+            $onUpdateAction,
+            $onDeleteAction
         );
     }
 
