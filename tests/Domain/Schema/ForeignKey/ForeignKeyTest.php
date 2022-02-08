@@ -14,19 +14,26 @@ final class ForeignKeyTest extends TestCase
      * @param string|array<int, string> $references
      * @param string $on
      * @param string|null $name
-     * @param string|null $onUpdate
-     * @param string|null $onDelete
+     * @param string|null $onUpdateAction
+     * @param string|null $onDeleteAction
      * @dataProvider dataResolve
      */
-    public function testResolve(string $expectedUp, string $expectedDown, $columns, $references, string $on, ?string $name, ?string $onUpdate, ?string $onDelete): void
-    {
+    public function testResolve(
+        string $expectedUp,
+        string $expectedDown,
+        $columns, $references,
+        string $on,
+        ?string $name,
+        ?string $onUpdateAction,
+        ?string $onDeleteAction
+    ): void {
         $foreignKey = ForeignKey::factory([
             'columns' => $columns,
             'references' => $references,
             'on' => $on,
             'name' => $name,
-            'onUpdate' => $onUpdate,
-            'onDelete' => $onDelete,
+            'onUpdateAction' => $onUpdateAction,
+            'onDeleteAction' => $onDeleteAction,
         ]);
 
         $this->assertSame($expectedUp, $foreignKey->createForeignKeyMigrationUpMethod());
@@ -46,8 +53,8 @@ final class ForeignKeyTest extends TestCase
                 'references' => 'id',
                 'on' => 'users',
                 'name' => null,
-                'onUpdate' => null,
-                'onDelete' => null,
+                'onUpdateAction' => null,
+                'onDeleteAction' => null,
             ],
             'columns:two' => [
                 'expectedUp' => '$table' . "->foreign(['product_category', 'product_id'])->references(['category', 'id'])->on('product');",
@@ -56,8 +63,8 @@ final class ForeignKeyTest extends TestCase
                 'references' => ['category', 'id'],
                 'on' => 'product',
                 'name' => null,
-                'onUpdate' => null,
-                'onDelete' => null,
+                'onUpdateAction' => null,
+                'onDeleteAction' => null,
             ],
             'name:alias' => [
                 'expectedUp' => '$table' . "->foreign('user_id', 'sample_foreign_key')->references('id')->on('users');",
@@ -66,8 +73,8 @@ final class ForeignKeyTest extends TestCase
                 'references' => 'id',
                 'on' => 'users',
                 'name' => 'sample_foreign_key',
-                'onUpdate' => null,
-                'onDelete' => null,
+                'onUpdateAction' => null,
+                'onDeleteAction' => null,
             ],
             'action:cascade' => [
                 'expectedUp' => '$table' . "->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');",
@@ -76,8 +83,8 @@ final class ForeignKeyTest extends TestCase
                 'references' => 'id',
                 'on' => 'users',
                 'name' => null,
-                'onUpdate' => 'cascade',
-                'onDelete' => 'cascade',
+                'onUpdateAction' => 'cascade',
+                'onDeleteAction' => 'cascade',
             ],
         ];
     }

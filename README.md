@@ -130,8 +130,8 @@ $ php artisan dacapo --no-migrate
     - columns: {ColumnName}
       references: {ReferenceColumnName}
       table: {ReferenceTableName}
-      onUpdate: {ConstraintProperty}
-      onDelete: {ConstraintProperty}
+      onUpdateAction: {ConstraintProperty}
+      onDeleteAction: {ConstraintProperty}
     - columns: [{ColumnName}, {ColumnName}]
       references: [{ReferenceColumnName}, {ReferenceColumnName}]
       table: {ReferenceTableName}
