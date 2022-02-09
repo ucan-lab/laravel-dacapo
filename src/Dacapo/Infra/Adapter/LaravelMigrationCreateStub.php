@@ -14,9 +14,9 @@ final class LaravelMigrationCreateStub implements MigrationCreateStub
         $filename = base_path('stubs/dacapo.migration.create.stub');
 
         if (file_exists($filename)) {
-            return file_get_contents($filename);
+            return (string) file_get_contents($filename);
         }
 
-        return file_get_contents(__DIR__ . '/Stub/dacapo.migration.create.stub');
+        return (string) file_get_contents(__DIR__ . '/Stub/dacapo.migration.create.stub');
     }
 }
