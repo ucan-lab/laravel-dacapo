@@ -3,6 +3,7 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Filesystem\Filesystem;
 
 /**
@@ -10,6 +11,8 @@ use Illuminate\Filesystem\Filesystem;
  */
 final class DacapoUninstallCommand extends Command
 {
+    use ConfirmableTrait;
+
     /**
      * The name and signature of the console command.
      *
