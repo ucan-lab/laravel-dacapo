@@ -11,7 +11,7 @@ abstract class TestCase extends OrchestraTestCase
      * Call artisan command and return code.
      *
      * @param string $command
-     * @param array<string> $parameters
+     * @param array<string, mixed> $parameters
      * @return PendingCommand
      */
     public function artisan($command, $parameters = []): PendingCommand
