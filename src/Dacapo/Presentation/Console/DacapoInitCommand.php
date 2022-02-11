@@ -19,7 +19,7 @@ final class DacapoInitCommand extends Command
      * @var string
      */
     protected $signature = 'dacapo:init
-        {--no-clear : Do not execute the dacapo:clear command}
+        {--no-migrate : Do not migrate}
         {--laravel6 : Laravel 6.x default schema}
         {--laravel7 : Laravel 7.x default schema}
         {--laravel8 : Laravel 8.x default schema}
@@ -41,10 +41,6 @@ final class DacapoInitCommand extends Command
             $filesystem->makeDirectory($schemasPath);
         }
 
-        if ($this->option('no-clear') === false) {
-            $this->call('dacapo:clear', ['--force' => true, '--all' => true]);
-        }
-
         $version = 'laravel8';
 
         if ($this->option('laravel8')) {
@@ -60,5 +56,6 @@ final class DacapoInitCommand extends Command
         file_put_contents($to, file_get_contents($from));
 
         $this->line('<fg=green>Generated:</> database/schemas/default.yml');
+        $this->call('dacapo', ['--no-migrate' => $this->option('no-migrate')]);
     }
 }
