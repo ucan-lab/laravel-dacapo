@@ -1,6 +1,6 @@
 users:
   columns:
-    id: increments
+    id: bigIncrements
     name: string
     email:
       type: string
