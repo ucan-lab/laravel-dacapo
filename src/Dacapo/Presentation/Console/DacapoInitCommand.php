@@ -20,9 +20,6 @@ final class DacapoInitCommand extends Command
      */
     protected $signature = 'dacapo:init
         {--no-migrate : Do not migrate}
-        {--laravel6 : Laravel 6.x default schema}
-        {--laravel7 : Laravel 7.x default schema}
-        {--laravel8 : Laravel 8.x default schema}
     ';
 
     /**
@@ -41,15 +38,7 @@ final class DacapoInitCommand extends Command
             $filesystem->makeDirectory($schemasPath);
         }
 
-        $version = 'laravel8';
-
-        if ($this->option('laravel8')) {
-            $version = 'laravel8';
-        } elseif ($this->option('laravel7')) {
-            $version = 'laravel7';
-        } elseif ($this->option('laravel6')) {
-            $version = 'laravel6';
-        }
+        $version = 'laravel9';
 
         $from = __DIR__ . '/DacapoInitCommand/' . $version . '.yml';
         $to = $this->laravel->databasePath('schemas/default.yml');
