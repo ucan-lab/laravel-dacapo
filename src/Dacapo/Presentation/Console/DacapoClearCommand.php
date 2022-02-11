@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Console;
 
+use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Filesystem\Filesystem;
 
