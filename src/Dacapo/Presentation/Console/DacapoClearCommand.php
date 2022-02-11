@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Console;
 
+use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Filesystem\Filesystem;
 
@@ -35,7 +36,7 @@ final class DacapoClearCommand extends Command
     public function handle(Filesystem $filesystem): void
     {
         $migrationsPath = $this->laravel->databasePath('migrations');
-        $files = array_map(fn ($f) => $f->getRealPath(), $filesystem->files($migrationsPath));
+        $files = array_map(fn ($f) => (string) $f->getRealPath(), $filesystem->files($migrationsPath));
 
         if ($this->option('all') === false) {
             $files = array_filter($files, fn ($f) => str_contains($f, '1970_01_01'));

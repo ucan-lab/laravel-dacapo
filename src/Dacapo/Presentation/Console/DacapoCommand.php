@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Console;
 
+use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\DacapoCommandUseCase;

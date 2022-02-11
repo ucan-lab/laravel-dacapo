@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Console;
 
+use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 
 /**
@@ -33,8 +34,8 @@ final class DacapoStubPublishCommand extends Command
         }
 
         $files = [
-            realpath(__DIR__ . '/../Dacapo/Infra/Adapter/Stub/dacapo.migration.create.stub') => $stubsPath . '/dacapo.migration.create.stub',
-            realpath(__DIR__ . '/../Dacapo/Infra/Adapter/Stub/dacapo.migration.update.stub') => $stubsPath . '/dacapo.migration.update.stub',
+            (string) realpath(__DIR__ . '/../Dacapo/Infra/Adapter/Stub/dacapo.migration.create.stub') => $stubsPath . '/dacapo.migration.create.stub',
+            (string) realpath(__DIR__ . '/../Dacapo/Infra/Adapter/Stub/dacapo.migration.update.stub') => $stubsPath . '/dacapo.migration.update.stub',
         ];
 
         foreach ($files as $from => $to) {
