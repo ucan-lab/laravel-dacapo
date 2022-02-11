@@ -3,16 +3,15 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\ForeignKey\InvalidArgumentException;
-use function is_array;
-use function is_string;
 use function count;
+use function is_string;
 
 final class Reference
 {
     /**
-     * @var array<int, string>|string
+     * @var array<int, string>
      */
-    private $columns;
+    private array $columns;
 
     /**
      * @var array<int, string>
@@ -31,13 +30,13 @@ final class Reference
 
     /**
      * Reference constructor.
-     * @param array<int, string>|string $columns
+     * @param array<int, string> $columns
      * @param array<int, string> $references
      * @param string $table
      * @param string|null $name
      */
     private function __construct(
-        $columns,
+        array $columns,
         array $references,
         string $table,
         ?string $name
@@ -100,11 +99,7 @@ final class Reference
             return sprintf("->dropForeign('%s')", $this->name);
         }
 
-        if (is_array($this->columns)) {
-            return sprintf("->dropForeign(['%s'])", implode("', '", $this->columns));
-        }
-
-        return sprintf("->dropForeign(['%s'])", $this->columns);
+        return sprintf("->dropForeign(['%s'])", implode("', '", $this->columns));
     }
 
     /**
