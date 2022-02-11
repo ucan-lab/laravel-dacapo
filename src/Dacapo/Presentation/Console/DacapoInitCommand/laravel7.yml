@@ -1,6 +1,6 @@
 users:
   columns:
-    id: true
+    id:
     name: string
     email:
       type: string

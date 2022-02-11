@@ -57,6 +57,5 @@ final class DacapoInitCommand extends Command
         file_put_contents($to, file_get_contents($from));
 
         $this->line('<fg=green>Generated:</> database/schemas/default.yml');
-        $this->line('Run: <fg=magenta>php artisan dacapo</> command');
     }
 }
