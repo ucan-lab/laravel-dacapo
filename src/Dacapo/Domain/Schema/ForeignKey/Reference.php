@@ -61,19 +61,14 @@ final class Reference
             throw new InvalidArgumentException('foreign_keys.references field is required');
         }
 
-        if (isset($attributes['table'])) {
-            $table = $attributes['table'];
-        } elseif (isset($attributes['on'])) {
-            $table = $attributes['on']; // @deprecated
-            echo 'Deprecated: foreign_keys.*.on to foreign_keys.*.table' . PHP_EOL;
-        } else {
+        if (isset($attributes['table']) === false) {
             throw new InvalidArgumentException('foreign_keys.table field is required');
         }
 
         return new self(
             is_string($attributes['columns']) ? self::parse($attributes['columns']) : $attributes['columns'],
             is_string($attributes['references']) ? self::parse($attributes['references']) : $attributes['references'],
-            $table,
+            $attributes['table'],
             $attributes['name'] ?? null
         );
     }

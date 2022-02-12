@@ -16,4 +16,4 @@ tasks:
   foreign_keys:
     - columns: user_id
       references: id
-      on: users
+      table: users

@@ -34,10 +34,10 @@ product_order:
     # Reference 2-column index
     - columns: [product_category, product_id]
       references: [category, id]
-      on: product
-      onUpdate: cascade
-      onDelete: restrict
+      table: product
+      onUpdateAction: cascade
+      onDeleteAction: restrict
     # Reference 1-column index
     - columns: customer_id
       references: id
-      on: customer
+      table: customer
