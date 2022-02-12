@@ -36,10 +36,10 @@ final class Column
 
     /**
      * @param ColumnName $columnName
-     * @param string|bool|array<string, mixed>|null $attributes
+     * @param array<string, mixed>|bool|string|null $attributes
      * @return static
      */
-    public static function factory(ColumnName $columnName, $attributes): self
+    public static function factory(ColumnName $columnName, array|bool|string|null $attributes): self
     {
         if (is_string($attributes)) {
             $columnType = ColumnTypeFactory::factory($attributes);
