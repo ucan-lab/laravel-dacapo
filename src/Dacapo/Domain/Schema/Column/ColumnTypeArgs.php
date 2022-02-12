@@ -14,7 +14,7 @@ final class ColumnTypeArgs
      * @param bool $isNumeric
      */
     private function __construct(
-        private $args,
+        private mixed $args,
         private bool $isArray,
         private bool $isString = false,
         private bool $isNumeric = false
@@ -22,14 +22,18 @@ final class ColumnTypeArgs
     }
 
     /**
-     * @param array<int, mixed>|string|int|null $args
+     * @param mixed $args
      * @param bool $isArray
      * @param bool $isString
      * @param bool $isNumeric
      * @return static
      */
-    public static function factory($args, bool $isArray = false, bool $isString = false, bool $isNumeric = false): self
-    {
+    public static function factory(
+        mixed $args,
+        bool $isArray = false,
+        bool $isString = false,
+        bool $isNumeric = false
+    ): self {
         if ($isNumeric && is_string($args)) {
             $args = array_map(fn ($args) => trim($args), explode(',', $args));
         }
