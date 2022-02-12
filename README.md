@@ -34,41 +34,41 @@ By default, a schema file for Laravel8 is generated.
 ```yaml
 users:
   columns:
-    id: bigIncrements
+    id:
     name: string
     email:
       type: string
-      unique: true
+      unique:
     email_verified_at:
       type: timestamp
-      nullable: true
+      nullable:
     password: string
-    rememberToken: true
-    timestamps: true
+    rememberToken:
+    timestamps:
 
 password_resets:
   columns:
     email:
       type: string
-      index: true
+      index:
     token: string
     created_at:
       type: timestamp
-      nullable: true
+      nullable:
 
 failed_jobs:
   columns:
-    id: true
+    id:
     uuid:
       type: string
-      unique: true
+      unique:
     connection: text
     queue: text
     payload: longText
     exception: longText
     failed_at:
       type: timestamp
-      useCurrent: true
+      useCurrent:
 ```
 
 ### Generate migration files
