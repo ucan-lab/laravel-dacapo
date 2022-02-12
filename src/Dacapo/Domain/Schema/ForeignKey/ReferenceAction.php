@@ -27,16 +27,6 @@ final class ReferenceAction
         $onUpdateAction = null;
         $onDeleteAction = null;
 
-        if (isset($attributes['onUpdate'])) {
-            $onUpdateAction = $attributes['onUpdate']; // @deprecated
-            echo 'Deprecated: foreign_keys.*.onUpdate to foreign_keys.*.onUpdateAction' . PHP_EOL;
-        }
-
-        if (isset($attributes['onDelete'])) {
-            $onDeleteAction = $attributes['onDelete']; // @deprecated
-            echo 'Deprecated: foreign_keys.*.onDelete to foreign_keys.*.onDeleteAction' . PHP_EOL;
-        }
-
         if (isset($attributes['onUpdateAction'])) {
             $onUpdateAction = $attributes['onUpdateAction'];
         }
