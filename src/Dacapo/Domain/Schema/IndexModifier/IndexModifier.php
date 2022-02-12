@@ -124,11 +124,7 @@ final class IndexModifier
             return true;
         }
 
-        if ($this->algorithm) {
-            return true;
-        }
-
-        return false;
+        return (bool) ($this->algorithm);
     }
 
     /**
