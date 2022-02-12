@@ -2,7 +2,6 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Converter;
 
-use Illuminate\Support\Str;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
@@ -77,7 +76,6 @@ final class SchemaToCreateTableMigrationConverter
     {
         $stub = $this->migrationCreateStub->getStub();
         $stub = str_replace('{{ namespace }}', $this->makeMigrationNamespace($schema), $stub);
-        $stub = str_replace('{{ class }}', $this->makeMigrationClassName($schema), $stub);
         $stub = str_replace('{{ connection }}', $this->makeMigrationConnection($schema), $stub);
         $stub = str_replace('{{ tableName }}', $schema->getTableName(), $stub);
         $stub = str_replace('{{ tableComment }}', $this->makeMigrationTableComment($schema), $stub);
@@ -121,15 +119,6 @@ final class SchemaToCreateTableMigrationConverter
         }
 
         return '';
-    }
-
-    /**
-     * @param Schema $schema
-     * @return string
-     */
-    private function makeMigrationClassName(Schema $schema): string
-    {
-        return Str::studly($this->makeMigrationName($schema));
     }
 
     /**

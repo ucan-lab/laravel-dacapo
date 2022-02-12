@@ -2,7 +2,7 @@
 
 {{ namespace }}
 
-class {{ class }} extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -25,4 +25,4 @@ class {{ class }} extends Migration
     {
         Schema::{{ connection }}dropIfExists('{{ tableName }}');
     }
-}
+};
