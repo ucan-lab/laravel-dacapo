@@ -14,7 +14,7 @@ abstract class TestCase extends OrchestraTestCase
      * @param array<string, mixed> $parameters
      * @return PendingCommand
      */
-    public function artisan($command, $parameters = []): PendingCommand
+    final public function artisan($command, $parameters = []): PendingCommand
     {
         return new PendingCommand($this, $this->app, $command, $parameters);
     }
