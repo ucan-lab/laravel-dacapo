@@ -39,5 +39,11 @@ return $config
         'not_operator_with_successor_space' => true,
         'blank_line_after_namespace' => true,
         'final_class' => true,
+        'date_time_immutable' => true,
+        'declare_parentheses' => true,
+        'final_public_method_for_abstract_class' => true,
+        'mb_str_functions' => true,
+        'simplified_if_return' => true,
+        'simplified_null_return' => true,
     ])
     ->setFinder($finder);
