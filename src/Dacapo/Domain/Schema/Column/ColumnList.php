@@ -28,11 +28,7 @@ final class ColumnList implements IteratorAggregate
      */
     public function exists(): bool
     {
-        if (empty($this->attributes)) {
-            return false;
-        }
-
-        return true;
+        return ! (empty($this->attributes));
     }
 
     /**

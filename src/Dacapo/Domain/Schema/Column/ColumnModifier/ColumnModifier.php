@@ -21,7 +21,7 @@ abstract class ColumnModifier
     /**
      * @return bool
      */
-    public function hasColumnModifierArgs(): bool
+    final public function hasColumnModifierArgs(): bool
     {
         return $this->columnModifierArgs !== null;
     }
@@ -29,7 +29,7 @@ abstract class ColumnModifier
     /**
      * @return string
      */
-    public function columnModifierArgs(): string
+    final public function columnModifierArgs(): string
     {
         return $this->columnModifierArgs ? $this->columnModifierArgs->columnModifierArgs() : '';
     }
