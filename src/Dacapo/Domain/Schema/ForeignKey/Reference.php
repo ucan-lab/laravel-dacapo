@@ -19,7 +19,7 @@ final class Reference
         private array $columns,
         private array $references,
         private string $table,
-        private ?string $name
+        private ?string $name,
     ) {
     }
 

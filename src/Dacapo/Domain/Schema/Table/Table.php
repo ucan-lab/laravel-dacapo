@@ -11,7 +11,7 @@ final class Table
         private Engine $engine,
         private Charset $charset,
         private Collation $collation,
-        private Temporary $temporary
+        private Temporary $temporary,
     ) {
     }
 

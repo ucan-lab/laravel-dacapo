@@ -11,7 +11,7 @@ final class MigrationFile
      */
     public function __construct(
         private string $name,
-        private string $contents
+        private string $contents,
     ) {
     }
 

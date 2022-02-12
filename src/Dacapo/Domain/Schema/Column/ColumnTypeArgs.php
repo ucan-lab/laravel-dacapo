@@ -17,7 +17,7 @@ final class ColumnTypeArgs
         private mixed $args,
         private bool $isArray,
         private bool $isString = false,
-        private bool $isNumeric = false
+        private bool $isNumeric = false,
     ) {
     }
 
@@ -32,7 +32,7 @@ final class ColumnTypeArgs
         mixed $args,
         bool $isArray = false,
         bool $isString = false,
-        bool $isNumeric = false
+        bool $isNumeric = false,
     ): self {
         if ($isNumeric && is_string($args)) {
             $args = array_map(fn ($args) => trim($args), explode(',', $args));

@@ -16,7 +16,7 @@ final class DacapoCommandUseCase
      * @param MigrationGenerator $generator
      */
     public function __construct(
-        private MigrationGenerator $generator
+        private MigrationGenerator $generator,
     ) {
     }
 

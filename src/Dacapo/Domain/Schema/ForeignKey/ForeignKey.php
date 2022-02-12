@@ -11,7 +11,7 @@ final class ForeignKey
      */
     private function __construct(
         private Reference $reference,
-        private ReferenceAction $referenceAction
+        private ReferenceAction $referenceAction,
     ) {
     }
 

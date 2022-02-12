@@ -18,7 +18,7 @@ final class SpatialIndexTypeTest extends TestCase
         string $expected,
         string|array $columns,
         ?string $name,
-        ?string $algorithm
+        ?string $algorithm,
     ): void {
         $indexModifier = IndexModifier::factory([
             'type' => 'spatialIndex',
@@ -66,7 +66,7 @@ final class SpatialIndexTypeTest extends TestCase
     public function testCreateIndexMigrationDownMethod(
         string $expected,
         array|string $columns,
-        ?string $name
+        ?string $name,
     ): void {
         $indexModifier = IndexModifier::factory([
             'type' => 'spatialIndex',

@@ -22,7 +22,7 @@ final class IndexModifier
         private IndexModifierType $type,
         private array $columns,
         private ?string $name = null,
-        private ?string $algorithm = null
+        private ?string $algorithm = null,
     ) {
     }
 

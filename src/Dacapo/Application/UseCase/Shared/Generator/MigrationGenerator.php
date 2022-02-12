@@ -19,7 +19,7 @@ final class MigrationGenerator
     public function __construct(
         private SchemaToCreateTableMigrationConverter $schemaToCreateTableMigrationConverter,
         private SchemaToCreateIndexMigrationConverter $schemaToCreateIndexMigrationConverter,
-        private SchemaToConstraintForeignKeyMigrationConverter $schemaToConstraintForeignKeyMigrationConverter
+        private SchemaToConstraintForeignKeyMigrationConverter $schemaToConstraintForeignKeyMigrationConverter,
     ) {
     }
 

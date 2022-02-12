@@ -18,7 +18,7 @@ final class IndexTypeTest extends TestCase
         string $expected,
         string|array $columns,
         ?string $name,
-        ?string $algorithm
+        ?string $algorithm,
     ): void {
         $index = IndexModifier::factory([
             'type' => 'index',
@@ -66,7 +66,7 @@ final class IndexTypeTest extends TestCase
     public function testCreateIndexMigrationDownMethod(
         string $expected,
         array|string $columns,
-        ?string $name
+        ?string $name,
     ): void {
         $index = IndexModifier::factory([
             'type' => 'index',

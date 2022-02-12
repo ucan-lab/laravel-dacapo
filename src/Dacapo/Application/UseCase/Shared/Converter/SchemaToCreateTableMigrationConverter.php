@@ -15,7 +15,7 @@ final class SchemaToCreateTableMigrationConverter
 
     public function __construct(
         private DatabaseBuilder $databaseBuilder,
-        private MigrationCreateStub $migrationCreateStub
+        private MigrationCreateStub $migrationCreateStub,
     ) {
     }
 

@@ -26,7 +26,7 @@ final class ForeignKeyTest extends TestCase
         string $on,
         ?string $name,
         ?string $onUpdateAction,
-        ?string $onDeleteAction
+        ?string $onDeleteAction,
     ): void {
         $foreignKey = ForeignKey::factory([
             'columns' => $columns,

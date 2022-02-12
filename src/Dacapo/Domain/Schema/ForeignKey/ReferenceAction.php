@@ -11,7 +11,7 @@ final class ReferenceAction
      */
     private function __construct(
         private ?string $onUpdateAction,
-        private ?string $onDeleteAction
+        private ?string $onDeleteAction,
     ) {
     }
 
