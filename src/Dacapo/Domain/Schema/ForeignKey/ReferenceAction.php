@@ -4,18 +4,15 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
 final class ReferenceAction
 {
-    private ?string $onUpdateAction;
-    private ?string $onDeleteAction;
-
     /**
      * Reference constructor.
      * @param string|null $onUpdateAction
      * @param string|null $onDeleteAction
      */
-    private function __construct(?string $onUpdateAction, ?string $onDeleteAction)
-    {
-        $this->onUpdateAction = $onUpdateAction;
-        $this->onDeleteAction = $onDeleteAction;
+    private function __construct(
+        private ?string $onUpdateAction,
+        private ?string $onDeleteAction
+    ) {
     }
 
     /**

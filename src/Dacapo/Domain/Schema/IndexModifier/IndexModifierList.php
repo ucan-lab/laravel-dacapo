@@ -11,16 +11,10 @@ use IteratorAggregate;
 final class IndexModifierList implements IteratorAggregate
 {
     /**
-     * @var array<int, IndexModifier>
-     */
-    private array $attributes;
-
-    /**
      * @param array<int, IndexModifier> $attributes
      */
-    public function __construct(array $attributes)
+    public function __construct(private array $attributes)
     {
-        $this->attributes = $attributes;
     }
 
     /**

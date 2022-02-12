@@ -11,16 +11,10 @@ use IteratorAggregate;
 final class ForeignKeyList implements IteratorAggregate
 {
     /**
-     * @var array<int, ForeignKey>
-     */
-    private array $attributes;
-
-    /**
      * @param array<int, ForeignKey> $attributes
      */
-    public function __construct(array $attributes)
+    public function __construct(private array $attributes)
     {
-        $this->attributes = $attributes;
     }
 
     /**

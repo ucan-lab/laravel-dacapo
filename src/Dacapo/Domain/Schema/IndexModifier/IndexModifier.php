@@ -12,26 +12,6 @@ use function count;
 final class IndexModifier
 {
     /**
-     * @var IndexModifierType
-     */
-    private IndexModifierType $type;
-
-    /**
-     * @var array<int, string>
-     */
-    private array $columns;
-
-    /**
-     * @var string|null
-     */
-    private ?string $name;
-
-    /**
-     * @var string|null
-     */
-    private ?string $algorithm;
-
-    /**
      * IndexModifier constructor.
      * @param IndexModifierType $type
      * @param array<int, string> $columns
@@ -39,15 +19,11 @@ final class IndexModifier
      * @param string|null $algorithm = null
      */
     private function __construct(
-        IndexModifierType $type,
-        array $columns,
-        ?string $name = null,
-        ?string $algorithm = null
+        private IndexModifierType $type,
+        private array $columns,
+        private ?string $name = null,
+        private ?string $algorithm = null
     ) {
-        $this->type = $type;
-        $this->columns = $columns;
-        $this->name = $name;
-        $this->algorithm = $algorithm;
     }
 
     /**

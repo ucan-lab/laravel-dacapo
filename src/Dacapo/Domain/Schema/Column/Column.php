@@ -19,11 +19,6 @@ use function is_string;
 
 final class Column
 {
-    private ColumnName $name;
-    private ColumnType $type;
-    private ColumnTypeArgs $typeArgs;
-    private ColumnModifierList $modifierList;
-
     /**
      * Column constructor.
      * @param ColumnName $name
@@ -32,15 +27,11 @@ final class Column
      * @param ColumnModifierList $modifierList
      */
     public function __construct(
-        ColumnName $name,
-        ColumnType $type,
-        ColumnTypeArgs $typeArgs,
-        ColumnModifierList $modifierList
+        private ColumnName $name,
+        private ColumnType $type,
+        private ColumnTypeArgs $typeArgs,
+        private ColumnModifierList $modifierList
     ) {
-        $this->name = $name;
-        $this->type = $type;
-        $this->typeArgs = $typeArgs;
-        $this->modifierList = $modifierList;
     }
 
     /**

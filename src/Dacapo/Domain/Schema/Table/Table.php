@@ -4,30 +4,15 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
 final class Table
 {
-    private Connection $connection;
-    private TableName $tableName;
-    private TableComment $tableComment;
-    private Engine $engine;
-    private Charset $charset;
-    private Collation $collation;
-    private Temporary $temporary;
-
     private function __construct(
-        Connection $connection,
-        TableName $tableName,
-        TableComment $tableComment,
-        Engine $engine,
-        Charset $charset,
-        Collation $collation,
-        Temporary $temporary
+        private Connection $connection,
+        private TableName $tableName,
+        private TableComment $tableComment,
+        private Engine $engine,
+        private Charset $charset,
+        private Collation $collation,
+        private Temporary $temporary
     ) {
-        $this->connection = $connection;
-        $this->tableName = $tableName;
-        $this->tableComment = $tableComment;
-        $this->engine = $engine;
-        $this->charset = $charset;
-        $this->collation = $collation;
-        $this->temporary = $temporary;
     }
 
     /**

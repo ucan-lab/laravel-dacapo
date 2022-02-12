@@ -13,16 +13,10 @@ use function in_array;
 final class SchemaList implements IteratorAggregate
 {
     /**
-     * @var array<int, Schema>
-     */
-    private array $attributes;
-
-    /**
      * @param array<int, Schema> $attributes
      */
-    public function __construct(array $attributes)
+    public function __construct(private array $attributes)
     {
-        $this->attributes = $attributes;
     }
 
     /**

@@ -9,26 +9,6 @@ use function is_string;
 final class Reference
 {
     /**
-     * @var array<int, string>
-     */
-    private array $columns;
-
-    /**
-     * @var array<int, string>
-     */
-    private array $references;
-
-    /**
-     * @var string
-     */
-    private string $table;
-
-    /**
-     * @var string|null
-     */
-    private ?string $name;
-
-    /**
      * Reference constructor.
      * @param array<int, string> $columns
      * @param array<int, string> $references
@@ -36,15 +16,11 @@ final class Reference
      * @param string|null $name
      */
     private function __construct(
-        array $columns,
-        array $references,
-        string $table,
-        ?string $name
+        private array $columns,
+        private array $references,
+        private string $table,
+        private ?string $name
     ) {
-        $this->columns = $columns;
-        $this->references = $references;
-        $this->table = $table;
-        $this->name = $name;
     }
 
     /**

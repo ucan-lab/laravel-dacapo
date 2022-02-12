@@ -8,37 +8,17 @@ use function is_array;
 final class ColumnTypeArgs
 {
     /**
-     * @var mixed
-     */
-    private $args;
-
-    /**
-     * @var bool
-     */
-    private bool $isArray;
-
-    /**
-     * @var bool
-     */
-    private bool $isString;
-
-    /**
-     * @var bool
-     */
-    private bool $isNumeric;
-
-    /**
      * @param mixed $args
      * @param bool $isArray
      * @param bool $isString
      * @param bool $isNumeric
      */
-    private function __construct($args, bool $isArray, bool $isString = false, bool $isNumeric = false)
-    {
-        $this->args = $args;
-        $this->isArray = $isArray;
-        $this->isString = $isString;
-        $this->isNumeric = $isNumeric;
+    private function __construct(
+        private $args,
+        private bool $isArray,
+        private bool $isString = false,
+        private bool $isNumeric = false
+    ) {
     }
 
     /**
