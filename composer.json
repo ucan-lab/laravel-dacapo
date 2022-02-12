@@ -15,13 +15,13 @@
         "migration"
     ],
     "require": {
-        "php": "^7.4|^8.0",
-        "laravel/framework": ">=6",
-        "symfony/yaml": "^5.3"
+        "php": "^8.0.2",
+        "laravel/framework": ">=9",
+        "symfony/yaml": "^6.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.5",
-        "orchestra/testbench": "^6.24"
+        "phpunit/phpunit": "^9.5",
+        "orchestra/testbench": "^7.0"
     },
     "autoload": {
         "psr-4": {
