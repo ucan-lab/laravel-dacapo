@@ -4,15 +4,12 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
 final class Engine
 {
-    private ?string $value;
-
     /**
      * Engine constructor.
      * @param string|null $value
      */
-    public function __construct(?string $value)
+    public function __construct(private ?string $value)
     {
-        $this->value = $value;
     }
 
     /**

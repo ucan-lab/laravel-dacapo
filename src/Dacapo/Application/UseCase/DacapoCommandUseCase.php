@@ -11,16 +11,13 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
 
 final class DacapoCommandUseCase
 {
-    private MigrationGenerator $generator;
-
     /**
      * DacapoCommandUseCase constructor.
      * @param MigrationGenerator $generator
      */
     public function __construct(
-        MigrationGenerator $generator
+        private MigrationGenerator $generator,
     ) {
-        $this->generator = $generator;
     }
 
     /**

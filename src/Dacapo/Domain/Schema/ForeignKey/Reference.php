@@ -9,26 +9,6 @@ use function is_string;
 final class Reference
 {
     /**
-     * @var array<int, string>
-     */
-    private array $columns;
-
-    /**
-     * @var array<int, string>
-     */
-    private array $references;
-
-    /**
-     * @var string
-     */
-    private string $table;
-
-    /**
-     * @var string|null
-     */
-    private ?string $name;
-
-    /**
      * Reference constructor.
      * @param array<int, string> $columns
      * @param array<int, string> $references
@@ -36,15 +16,11 @@ final class Reference
      * @param string|null $name
      */
     private function __construct(
-        array $columns,
-        array $references,
-        string $table,
-        ?string $name
+        private array $columns,
+        private array $references,
+        private string $table,
+        private ?string $name,
     ) {
-        $this->columns = $columns;
-        $this->references = $references;
-        $this->table = $table;
-        $this->name = $name;
     }
 
     /**
@@ -53,17 +29,9 @@ final class Reference
      */
     public static function factory(array $attributes): self
     {
-        if (isset($attributes['columns']) === false) {
-            throw new InvalidArgumentException('foreign_keys.columns field is required');
-        }
-
-        if (isset($attributes['references']) === false) {
-            throw new InvalidArgumentException('foreign_keys.references field is required');
-        }
-
-        if (isset($attributes['table']) === false) {
-            throw new InvalidArgumentException('foreign_keys.table field is required');
-        }
+        $attributes['columns'] ?? throw new InvalidArgumentException('foreign_keys.columns field is required');
+        $attributes['references'] ?? throw new InvalidArgumentException('foreign_keys.references field is required');
+        $attributes['table'] ?? throw new InvalidArgumentException('foreign_keys.table field is required');
 
         return new self(
             is_string($attributes['columns']) ? self::parse($attributes['columns']) : $attributes['columns'],

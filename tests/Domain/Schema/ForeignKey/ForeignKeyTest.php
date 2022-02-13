@@ -21,12 +21,12 @@ final class ForeignKeyTest extends TestCase
     public function testResolve(
         string $expectedUp,
         string $expectedDown,
-        $columns,
-        $references,
+        string|array $columns,
+        string|array $references,
         string $on,
         ?string $name,
         ?string $onUpdateAction,
-        ?string $onDeleteAction
+        ?string $onDeleteAction,
     ): void {
         $foreignKey = ForeignKey::factory([
             'columns' => $columns,

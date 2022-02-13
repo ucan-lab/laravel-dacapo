@@ -100,9 +100,7 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
 
-        if (isset($this->databaseBuilders[$driver]) === false) {
-            throw new Exception(sprintf('driver %s is not found.', $driver));
-        }
+        $this->databaseBuilders[$driver] ?? throw new Exception(sprintf('driver %s is not found.', $driver));
 
         return $this->databaseBuilders[$driver];
     }

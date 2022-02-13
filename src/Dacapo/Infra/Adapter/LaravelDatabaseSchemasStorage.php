@@ -7,14 +7,11 @@ use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStor
 
 final class LaravelDatabaseSchemasStorage implements DatabaseSchemasStorage
 {
-    private Filesystem $filesystem;
-
     /**
      * @param Filesystem $filesystem
      */
-    public function __construct(Filesystem $filesystem)
+    public function __construct(private Filesystem $filesystem)
     {
-        $this->filesystem = $filesystem;
     }
 
     /**

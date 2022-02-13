@@ -4,14 +4,11 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\Colum
 
 final class StringColumnModifierArgs implements ColumnModifierArgs
 {
-    private string $value;
-
     /**
      * @param string $value
      */
-    public function __construct(string $value)
+    public function __construct(private string $value)
     {
-        $this->value = $value;
     }
 
     /**

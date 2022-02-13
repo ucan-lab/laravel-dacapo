@@ -4,15 +4,12 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
 final class Charset
 {
-    private ?string $value;
-
     /**
      * Charset constructor.
      * @param string|null $value
      */
-    public function __construct(?string $value)
+    public function __construct(private ?string $value)
     {
-        $this->value = $value;
     }
 
     /**

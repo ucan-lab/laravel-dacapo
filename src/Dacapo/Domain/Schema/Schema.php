@@ -35,7 +35,7 @@ final class Schema
         Table $table,
         ColumnList $columnList,
         IndexModifierList $sqlIndexList,
-        ForeignKeyList $foreignKeyList
+        ForeignKeyList $foreignKeyList,
     ) {
         $this->table = $table;
         $this->columnList = $columnList;

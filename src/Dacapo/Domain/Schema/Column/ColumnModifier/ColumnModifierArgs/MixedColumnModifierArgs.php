@@ -7,14 +7,11 @@ use function is_bool;
 
 final class MixedColumnModifierArgs implements ColumnModifierArgs
 {
-    private mixed $value;
-
     /**
      * @param mixed $value
      */
-    public function __construct(mixed $value)
+    public function __construct(private mixed $value)
     {
-        $this->value = $value;
     }
 
     /**

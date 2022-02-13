@@ -37,20 +37,18 @@ final class ColumnModifierFactory
      * @param string|bool|int|null $value
      * @return ColumnModifier
      */
-    public static function factory(string $name, $value): ColumnModifier
+    public static function factory(string $name, string|bool|int|null $value): ColumnModifier
     {
-        if ($class = self::MAPPING_CLASS[$name] ?? null) {
-            if (is_string($value)) {
-                return new $class(new StringColumnModifierArgs($value));
-            } elseif (is_bool($value)) {
-                return new $class(new BooleanColumnModifierArgs($value));
-            } elseif (is_int($value)) {
-                return new $class(new IntColumnModifierArgs($value));
-            }
+        $class = self::MAPPING_CLASS[$name] ?? throw new InvalidArgumentException(sprintf('%s column modifier does not exist', $name));
 
-            return new $class(null);
+        if (is_string($value)) {
+            return new $class(new StringColumnModifierArgs($value));
+        } elseif (is_bool($value)) {
+            return new $class(new BooleanColumnModifierArgs($value));
+        } elseif (is_int($value)) {
+            return new $class(new IntColumnModifierArgs($value));
         }
 
-        throw new InvalidArgumentException(sprintf('%s column modifier does not exist', $name));
+        return new $class(null);
     }
 }

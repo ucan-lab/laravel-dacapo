@@ -14,8 +14,12 @@ final class IndexTypeTest extends TestCase
      * @param string|null $algorithm
      * @dataProvider dataResolve
      */
-    public function testResolve(string $expected, $columns, ?string $name, ?string $algorithm): void
-    {
+    public function testResolve(
+        string $expected,
+        string|array $columns,
+        ?string $name,
+        ?string $algorithm,
+    ): void {
         $index = IndexModifier::factory([
             'type' => 'index',
             'columns' => $columns,
@@ -55,12 +59,15 @@ final class IndexTypeTest extends TestCase
 
     /**
      * @param string $expected
-     * @param string|array<int, string> $columns
+     * @param array<int, string>|string $columns
      * @param string|null $name
      * @dataProvider dataCreateIndexMigrationDownMethod
      */
-    public function testCreateIndexMigrationDownMethod(string $expected, $columns, ?string $name): void
-    {
+    public function testCreateIndexMigrationDownMethod(
+        string $expected,
+        array|string $columns,
+        ?string $name,
+    ): void {
         $index = IndexModifier::factory([
             'type' => 'index',
             'columns' => $columns,

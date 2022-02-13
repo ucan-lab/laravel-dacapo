@@ -6,14 +6,11 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\ColumnModif
 
 abstract class ColumnModifier
 {
-    private ?ColumnModifierArgs $columnModifierArgs;
-
     /**
      * @param ?ColumnModifierArgs $columnModifierArgs
      */
-    public function __construct(?ColumnModifierArgs $columnModifierArgs)
+    public function __construct(private ?ColumnModifierArgs $columnModifierArgs)
     {
-        $this->columnModifierArgs = $columnModifierArgs;
     }
 
     abstract public function getName(): string;

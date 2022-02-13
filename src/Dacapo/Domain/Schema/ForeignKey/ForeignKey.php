@@ -4,20 +4,15 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
 final class ForeignKey
 {
-    private Reference $reference;
-    private ReferenceAction $referenceAction;
-
     /**
      * ForeignKey constructor.
      * @param Reference $reference
      * @param ReferenceAction $referenceAction
      */
     private function __construct(
-        Reference $reference,
-        ReferenceAction $referenceAction
+        private Reference $reference,
+        private ReferenceAction $referenceAction,
     ) {
-        $this->reference = $reference;
-        $this->referenceAction = $referenceAction;
     }
 
     /**

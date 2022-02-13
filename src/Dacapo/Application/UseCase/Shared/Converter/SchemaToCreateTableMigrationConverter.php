@@ -13,15 +13,10 @@ final class SchemaToCreateTableMigrationConverter
 {
     private const MIGRATION_COLUMN_INDENT = '            ';
 
-    private DatabaseBuilder $databaseBuilder;
-    private MigrationCreateStub $migrationCreateStub;
-
     public function __construct(
-        DatabaseBuilder $databaseBuilder,
-        MigrationCreateStub $migrationCreateStub
+        private DatabaseBuilder $databaseBuilder,
+        private MigrationCreateStub $migrationCreateStub,
     ) {
-        $this->databaseBuilder = $databaseBuilder;
-        $this->migrationCreateStub = $migrationCreateStub;
     }
 
     /**

@@ -4,15 +4,12 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
 final class TableComment
 {
-    private ?string $value;
-
     /**
      * TableComment constructor.
      * @param string|null $value
      */
-    public function __construct(?string $value = null)
+    public function __construct(private ?string $value = null)
     {
-        $this->value = $value;
     }
 
     /**

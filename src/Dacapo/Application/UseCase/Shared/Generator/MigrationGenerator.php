@@ -10,10 +10,6 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 
 final class MigrationGenerator
 {
-    private SchemaToCreateTableMigrationConverter $schemaToCreateTableMigrationConverter;
-    private SchemaToCreateIndexMigrationConverter $schemaToCreateIndexMigrationConverter;
-    private SchemaToConstraintForeignKeyMigrationConverter $schemaToConstraintForeignKeyMigrationConverter;
-
     /**
      * MigrationGenerator constructor.
      * @param SchemaToCreateTableMigrationConverter $schemaToCreateTableMigrationConverter
@@ -21,13 +17,10 @@ final class MigrationGenerator
      * @param SchemaToConstraintForeignKeyMigrationConverter $schemaToConstraintForeignKeyMigrationConverter
      */
     public function __construct(
-        SchemaToCreateTableMigrationConverter $schemaToCreateTableMigrationConverter,
-        SchemaToCreateIndexMigrationConverter $schemaToCreateIndexMigrationConverter,
-        SchemaToConstraintForeignKeyMigrationConverter $schemaToConstraintForeignKeyMigrationConverter
+        private SchemaToCreateTableMigrationConverter $schemaToCreateTableMigrationConverter,
+        private SchemaToCreateIndexMigrationConverter $schemaToCreateIndexMigrationConverter,
+        private SchemaToConstraintForeignKeyMigrationConverter $schemaToConstraintForeignKeyMigrationConverter,
     ) {
-        $this->schemaToCreateTableMigrationConverter = $schemaToCreateTableMigrationConverter;
-        $this->schemaToCreateIndexMigrationConverter = $schemaToCreateIndexMigrationConverter;
-        $this->schemaToConstraintForeignKeyMigrationConverter = $schemaToConstraintForeignKeyMigrationConverter;
     }
 
     /**

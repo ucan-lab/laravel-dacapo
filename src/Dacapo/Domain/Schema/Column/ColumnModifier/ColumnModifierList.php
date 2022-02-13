@@ -11,16 +11,10 @@ use IteratorAggregate;
 final class ColumnModifierList implements IteratorAggregate
 {
     /**
-     * @var array<int, ColumnModifier>
-     */
-    private array $attributes;
-
-    /**
      * @param array<int, ColumnModifier> $attributes
      */
-    public function __construct(array $attributes)
+    public function __construct(private array $attributes)
     {
-        $this->attributes = $attributes;
     }
 
     /**

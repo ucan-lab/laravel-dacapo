@@ -11,14 +11,12 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 final class SchemaToCreateIndexMigrationConverter
 {
     private const MIGRATION_COLUMN_INDENT = '            ';
-    private MigrationUpdateStub $migrationUpdateStub;
 
     /**
      * @param MigrationUpdateStub $migrationUpdateStub
      */
-    public function __construct(MigrationUpdateStub $migrationUpdateStub)
+    public function __construct(private MigrationUpdateStub $migrationUpdateStub)
     {
-        $this->migrationUpdateStub = $migrationUpdateStub;
     }
 
     /**

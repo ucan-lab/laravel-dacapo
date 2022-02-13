@@ -8,48 +8,32 @@ use function is_array;
 final class ColumnTypeArgs
 {
     /**
-     * @var mixed
+     * @param mixed $args
+     * @param bool $isArray
+     * @param bool $isString
+     * @param bool $isNumeric
      */
-    private $args;
-
-    /**
-     * @var bool
-     */
-    private bool $isArray;
-
-    /**
-     * @var bool
-     */
-    private bool $isString;
-
-    /**
-     * @var bool
-     */
-    private bool $isNumeric;
+    private function __construct(
+        private mixed $args,
+        private bool $isArray,
+        private bool $isString = false,
+        private bool $isNumeric = false,
+    ) {
+    }
 
     /**
      * @param mixed $args
      * @param bool $isArray
      * @param bool $isString
      * @param bool $isNumeric
-     */
-    private function __construct($args, bool $isArray, bool $isString = false, bool $isNumeric = false)
-    {
-        $this->args = $args;
-        $this->isArray = $isArray;
-        $this->isString = $isString;
-        $this->isNumeric = $isNumeric;
-    }
-
-    /**
-     * @param array<int, mixed>|string|int|null $args
-     * @param bool $isArray
-     * @param bool $isString
-     * @param bool $isNumeric
      * @return static
      */
-    public static function factory($args, bool $isArray = false, bool $isString = false, bool $isNumeric = false): self
-    {
+    public static function factory(
+        mixed $args,
+        bool $isArray = false,
+        bool $isString = false,
+        bool $isNumeric = false,
+    ): self {
         if ($isNumeric && is_string($args)) {
             $args = array_map(fn ($args) => trim($args), explode(',', $args));
         }

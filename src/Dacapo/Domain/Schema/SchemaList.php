@@ -13,16 +13,10 @@ use function in_array;
 final class SchemaList implements IteratorAggregate
 {
     /**
-     * @var array<int, Schema>
-     */
-    private array $attributes;
-
-    /**
      * @param array<int, Schema> $attributes
      */
-    public function __construct(array $attributes)
+    public function __construct(private array $attributes)
     {
-        $this->attributes = $attributes;
     }
 
     /**
@@ -40,9 +34,7 @@ final class SchemaList implements IteratorAggregate
         foreach ($schemaList as $schema) {
             $schema->getTableName();
 
-            if (in_array($schema->getTableName(), $tableNames, true)) {
-                throw new DuplicatedTableNameException(sprintf('[%s] table name is already in use', $schema->getTableName()));
-            }
+            in_array($schema->getTableName(), $tableNames, true) ?: throw new DuplicatedTableNameException(sprintf('[%s] table name is already in use', $schema->getTableName()));
 
             $this->attributes[] = $schema;
         }

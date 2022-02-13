@@ -4,14 +4,11 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnModifier\Colum
 
 final class BooleanColumnModifierArgs implements ColumnModifierArgs
 {
-    private bool $value;
-
     /**
      * @param bool $value
      */
-    public function __construct(bool $value)
+    public function __construct(private bool $value)
     {
-        $this->value = $value;
     }
 
     /**

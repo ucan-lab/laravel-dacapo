@@ -7,14 +7,11 @@ use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsS
 
 final class LaravelDatabaseMigrationsStorage implements DatabaseMigrationsStorage
 {
-    private Filesystem $filesystem;
-
     /**
      * @param Filesystem $filesystem
      */
-    public function __construct(Filesystem $filesystem)
+    public function __construct(private Filesystem $filesystem)
     {
-        $this->filesystem = $filesystem;
     }
 
     /**

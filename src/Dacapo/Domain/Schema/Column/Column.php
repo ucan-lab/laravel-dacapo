@@ -19,11 +19,6 @@ use function is_string;
 
 final class Column
 {
-    private ColumnName $name;
-    private ColumnType $type;
-    private ColumnTypeArgs $typeArgs;
-    private ColumnModifierList $modifierList;
-
     /**
      * Column constructor.
      * @param ColumnName $name
@@ -32,24 +27,22 @@ final class Column
      * @param ColumnModifierList $modifierList
      */
     public function __construct(
-        ColumnName $name,
-        ColumnType $type,
-        ColumnTypeArgs $typeArgs,
-        ColumnModifierList $modifierList
+        private ColumnName $name,
+        private ColumnType $type,
+        private ColumnTypeArgs $typeArgs,
+        private ColumnModifierList $modifierList,
     ) {
-        $this->name = $name;
-        $this->type = $type;
-        $this->typeArgs = $typeArgs;
-        $this->modifierList = $modifierList;
     }
 
     /**
      * @param ColumnName $columnName
-     * @param string|bool|array<string, mixed>|null $attributes
+     * @param array<string, mixed>|bool|string|null $attributes
      * @return static
      */
-    public static function factory(ColumnName $columnName, $attributes): self
-    {
+    public static function factory(
+        ColumnName $columnName,
+        array|bool|string|null $attributes,
+    ): self {
         if (is_string($attributes)) {
             $columnType = ColumnTypeFactory::factory($attributes);
 
@@ -69,9 +62,7 @@ final class Column
                 new ColumnModifierList([])
             );
         } elseif (is_array($attributes)) {
-            if (isset($attributes['type']) === false) {
-                throw new InvalidArgumentException(sprintf('columns.%s.type field is required', $columnName->getName()));
-            }
+            $attributes['type'] ?? throw new InvalidArgumentException(sprintf('columns.%s.type field is required', $columnName->getName()));
 
             $columnType = ColumnTypeFactory::factory($attributes['type']);
 

@@ -7,16 +7,10 @@ use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStor
 final class InMemoryDatabaseSchemasStorage implements DatabaseSchemasStorage
 {
     /**
-     * @var array<int, string>
-     */
-    private array $filePathList;
-
-    /**
      * @param array<int, string> $filePathList
      */
-    public function __construct(array $filePathList)
+    public function __construct(private array $filePathList)
     {
-        $this->filePathList = $filePathList;
     }
 
     /**

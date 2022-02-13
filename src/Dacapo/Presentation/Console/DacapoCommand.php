@@ -46,7 +46,7 @@ final class DacapoCommand extends Command
     public function handle(
         DacapoCommandUseCase $useCase,
         DatabaseSchemasStorage $databaseSchemasStorage,
-        DatabaseMigrationsStorage $databaseMigrationsStorage
+        DatabaseMigrationsStorage $databaseMigrationsStorage,
     ): void {
         $this->call('dacapo:clear', ['--force' => true]);
 
