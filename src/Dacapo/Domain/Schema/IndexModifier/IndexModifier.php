@@ -32,13 +32,8 @@ final class IndexModifier
      */
     public static function factory(array $attributes): self
     {
-        if (isset($attributes['type']) === false) {
-            throw new InvalidArgumentException('IndexModifier type field is required');
-        }
-
-        if (isset($attributes['columns']) === false) {
-            throw new InvalidArgumentException('IndexModifier columns field is required');
-        }
+        $attributes['type'] ?? throw new InvalidArgumentException('IndexModifier type field is required');
+        $attributes['columns'] ?? throw new InvalidArgumentException('IndexModifier columns field is required');
 
         $indexType = IndexModifierTypeFactory::factory($attributes['type']);
         $columns = is_string($attributes['columns']) ? self::parse($attributes['columns']) : $attributes['columns'];

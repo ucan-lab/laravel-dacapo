@@ -29,17 +29,9 @@ final class Reference
      */
     public static function factory(array $attributes): self
     {
-        if (isset($attributes['columns']) === false) {
-            throw new InvalidArgumentException('foreign_keys.columns field is required');
-        }
-
-        if (isset($attributes['references']) === false) {
-            throw new InvalidArgumentException('foreign_keys.references field is required');
-        }
-
-        if (isset($attributes['table']) === false) {
-            throw new InvalidArgumentException('foreign_keys.table field is required');
-        }
+        $attributes['columns'] ?? throw new InvalidArgumentException('foreign_keys.columns field is required');
+        $attributes['references'] ?? throw new InvalidArgumentException('foreign_keys.references field is required');
+        $attributes['table'] ?? throw new InvalidArgumentException('foreign_keys.table field is required');
 
         return new self(
             is_string($attributes['columns']) ? self::parse($attributes['columns']) : $attributes['columns'],

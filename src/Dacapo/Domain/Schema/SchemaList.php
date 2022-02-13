@@ -34,9 +34,7 @@ final class SchemaList implements IteratorAggregate
         foreach ($schemaList as $schema) {
             $schema->getTableName();
 
-            if (in_array($schema->getTableName(), $tableNames, true)) {
-                throw new DuplicatedTableNameException(sprintf('[%s] table name is already in use', $schema->getTableName()));
-            }
+            in_array($schema->getTableName(), $tableNames, true) ?: throw new DuplicatedTableNameException(sprintf('[%s] table name is already in use', $schema->getTableName()));
 
             $this->attributes[] = $schema;
         }

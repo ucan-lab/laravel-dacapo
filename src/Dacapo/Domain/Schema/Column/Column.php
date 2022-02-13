@@ -62,9 +62,7 @@ final class Column
                 new ColumnModifierList([])
             );
         } elseif (is_array($attributes)) {
-            if (isset($attributes['type']) === false) {
-                throw new InvalidArgumentException(sprintf('columns.%s.type field is required', $columnName->getName()));
-            }
+            $attributes['type'] ?? throw new InvalidArgumentException(sprintf('columns.%s.type field is required', $columnName->getName()));
 
             $columnType = ColumnTypeFactory::factory($attributes['type']);
 

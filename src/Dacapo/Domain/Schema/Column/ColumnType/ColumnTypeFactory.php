@@ -76,10 +76,8 @@ final class ColumnTypeFactory
      */
     public static function factory(string $name): ColumnType
     {
-        if ($class = self::MAPPING_CLASS[$name] ?? null) {
-            return new $class();
-        }
+        $class = self::MAPPING_CLASS[$name] ?? throw new InvalidArgumentException(sprintf('%s column type does not exist', $name));
 
-        throw new InvalidArgumentException(sprintf('%s column type does not exist', $name));
+        return new $class();
     }
 }
