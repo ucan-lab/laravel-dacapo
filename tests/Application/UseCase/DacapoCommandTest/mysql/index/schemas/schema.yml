@@ -35,3 +35,15 @@ example4:
     - columns: name, email
       type: index
       name: users_name_index
+
+example5:
+  columns:
+    id: bigIncrements
+    body1: longText
+    body2: longText
+  indexes:
+    - columns: body1
+      type: fullText
+    - columns: body2
+      type: fullText
+      name: example5_body2_fullText
