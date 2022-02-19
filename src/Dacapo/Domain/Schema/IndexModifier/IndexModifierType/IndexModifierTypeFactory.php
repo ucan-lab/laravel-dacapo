@@ -11,6 +11,7 @@ final class IndexModifierTypeFactory
         'primary' => PrimaryType::class,
         'spatialIndex' => SpatialIndexType::class,
         'unique' => UniqueType::class,
+        'fullText' => FullTextType::class,
     ];
 
     /**
