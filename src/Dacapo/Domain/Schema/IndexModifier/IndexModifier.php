@@ -17,12 +17,14 @@ final class IndexModifier
      * @param array<int, string> $columns
      * @param string|null $name = null
      * @param string|null $algorithm = null
+     * @param string|null $language = null
      */
     private function __construct(
         private IndexModifierType $type,
         private array $columns,
         private ?string $name = null,
         private ?string $algorithm = null,
+        private ?string $language = null,
     ) {
     }
 
@@ -39,12 +41,14 @@ final class IndexModifier
         $columns = is_string($attributes['columns']) ? self::parse($attributes['columns']) : $attributes['columns'];
         $name = $attributes['name'] ?? null;
         $algorithm = $attributes['algorithm'] ?? null;
+        $language = $attributes['language'] ?? null;
 
         return new self(
             $indexType,
             $columns,
             $name,
-            $algorithm
+            $algorithm,
+            $language
         );
     }
 
@@ -54,10 +58,10 @@ final class IndexModifier
     public function createIndexMigrationUpMethod(): string
     {
         if ($this->hasArgs()) {
-            return '$table->' . sprintf('%s(%s, %s);', $this->type->getUpMethodName(), $this->getColumns(), $this->makeArgs());
+            return '$table->' . sprintf('%s(%s, %s)%s;', $this->type->getUpMethodName(), $this->getColumns(), $this->makeArgs(), $this->makeLanguage());
         }
 
-        return '$table->' . sprintf('%s(%s);', $this->type->getUpMethodName(), $this->getColumns());
+        return '$table->' . sprintf('%s(%s)%s;', $this->type->getUpMethodName(), $this->getColumns(), $this->makeLanguage());
     }
 
     /**
@@ -112,6 +116,18 @@ final class IndexModifier
         }
 
         throw new InvalidArgumentException('Has no args.');
+    }
+
+    /**
+     * @return string
+     */
+    private function makeLanguage(): string
+    {
+        if ($this->language === null) {
+            return '';
+        }
+
+        return sprintf("->language('%s')", $this->language);
     }
 
     /**
