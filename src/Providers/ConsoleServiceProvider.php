@@ -4,6 +4,8 @@ namespace UcanLab\LaravelDacapo\Providers;
 
 use Exception;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Database\Connection;
+use Illuminate\Database\ConnectionInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
@@ -100,8 +102,9 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
      */
     private function concreteDatabaseBuilder(): string
     {
-        $connection = config('database.default');
-        $driver = config("database.connections.{$connection}.driver");
+        /** @var Connection $connection */
+        $connection = $this->app->make(ConnectionInterface::class);
+        $driver = $connection->getDriverName();
 
         $this->databaseBuilders[$driver] ?? throw new Exception(sprintf('driver %s is not found.', $driver));
 
