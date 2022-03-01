@@ -17,6 +17,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->longText('body1');
             $table->longText('body2');
+            $table->longText('body3');
+            $table->longText('body4');
         });
     }
 

@@ -41,9 +41,18 @@ example5:
     id: bigIncrements
     body1: longText
     body2: longText
+    body3: longText
+    body4: longText
   indexes:
     - columns: body1
       type: fullText
     - columns: body2
       type: fullText
       name: example5_body2_fullText
+    - columns: body3
+      type: fullText
+      language: english
+    - columns: body4
+      type: fullText
+      language: english
+      name: example5_body4_fullText
