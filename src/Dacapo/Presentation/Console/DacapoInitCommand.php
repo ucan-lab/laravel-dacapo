@@ -43,8 +43,9 @@ final class DacapoInitCommand extends Command
         $from = __DIR__ . '/DacapoInitCommand/' . $version . '.yml';
         $to = $this->laravel->databasePath('schemas/default.yml');
         file_put_contents($to, file_get_contents($from));
-
         $this->line('<fg=green>Generated:</> database/schemas/default.yml');
+
+        $this->call('dacapo:clear', ['--all']);
         $this->call('dacapo', ['--no-migrate' => $this->option('no-migrate')]);
     }
 }
