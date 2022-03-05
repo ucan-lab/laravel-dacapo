@@ -2,36 +2,28 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase;
 
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Input\DacapoCommandUseCaseInput;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output\DacapoCommandUseCaseOutput;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Generator\MigrationGenerator;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
 
 final class DacapoCommandUseCase
 {
     /**
-     * DacapoCommandUseCase constructor.
      * @param MigrationGenerator $generator
+     * @param DatabaseSchemasStorage $databaseSchemasStorage
      */
     public function __construct(
         private MigrationGenerator $generator,
+        private DatabaseSchemasStorage $databaseSchemasStorage,
     ) {
     }
 
     /**
-     * @param DacapoCommandUseCaseInput $input
      * @return DacapoCommandUseCaseOutput
      */
-    public function handle(DacapoCommandUseCaseInput $input): DacapoCommandUseCaseOutput
+    public function handle(): DacapoCommandUseCaseOutput
     {
-        $list = [];
-        foreach ($input->schemaBodies as $tableName => $tableAttributes) {
-            $list[] = Schema::factory(new TableName($tableName), $tableAttributes);
-        }
-
-        $schemaList = new SchemaList($list);
+        $schemaList = $this->databaseSchemasStorage->getSchemaList();
         $migrationFileList = $this->generator->generate($schemaList);
 
         $migrationBodies = [];

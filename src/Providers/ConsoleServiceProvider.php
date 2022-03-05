@@ -4,6 +4,7 @@ namespace UcanLab\LaravelDacapo\Providers;
 
 use Exception;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
@@ -35,7 +36,6 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
     public array $bindings = [
         MigrationCreateStub::class => LaravelMigrationCreateStub::class,
         MigrationUpdateStub::class => LaravelMigrationUpdateStub::class,
-        DatabaseSchemasStorage::class => LaravelDatabaseSchemasStorage::class,
         DatabaseMigrationsStorage::class => LaravelDatabaseMigrationsStorage::class,
     ];
 
@@ -89,6 +89,9 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
         }
 
         $this->app->bind(DatabaseBuilder::class, $this->concreteDatabaseBuilder());
+        $this->app->bind(DatabaseSchemasStorage::class, function ($app) {
+            return new LaravelDatabaseSchemasStorage($app->make(Filesystem::class), $app->databasePath('schemas'));
+        });
     }
 
     /**

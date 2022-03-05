@@ -2,12 +2,13 @@
 
 namespace UcanLab\LaravelDacapo\Test\Application\UseCase\Console;
 
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\MysqlDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\PostgresqlDatabaseBuilder;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemoryDatabaseMigrationsStorage;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemoryDatabaseSchemasStorage;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelDatabaseSchemasStorage;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
@@ -27,7 +28,7 @@ final class DacapoCommandTest extends TestCase
 
         $this->instance(DatabaseBuilder::class, new MysqlDatabaseBuilder());
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
-        $this->instance(DatabaseSchemasStorage::class, new InMemoryDatabaseSchemasStorage(array_map(fn ($f) => (string) $f->getRealPath(), File::files($schemas))));
+        $this->instance(DatabaseSchemasStorage::class, new LaravelDatabaseSchemasStorage($this->app->make(Filesystem::class), $schemas));
 
         $this->artisan('dacapo --no-migrate')->assertExitCode(0);
 
@@ -67,7 +68,7 @@ final class DacapoCommandTest extends TestCase
 
         $this->instance(DatabaseBuilder::class, new PostgresqlDatabaseBuilder());
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
-        $this->instance(DatabaseSchemasStorage::class, new InMemoryDatabaseSchemasStorage(array_map(fn ($f) => (string) $f->getRealPath(), File::files($schemas))));
+        $this->instance(DatabaseSchemasStorage::class, new LaravelDatabaseSchemasStorage($this->app->make(Filesystem::class), $schemas));
 
         $this->artisan('dacapo --no-migrate')->assertExitCode(0);
 
