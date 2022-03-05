@@ -2,10 +2,12 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage;
 
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
+
 interface DatabaseSchemasStorage
 {
     /**
-     * @return array<int, string>
+     * @return SchemaList
      */
-    public function getFilePathList(): array;
+    public function getSchemaList(): SchemaList;
 }
