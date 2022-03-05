@@ -6,4 +6,4 @@ parameters:
   ignoreErrors:
     -
       message: '#Call to an undefined method [a-zA-Z0-9\\_]+::language\(\)#'
-      path: tests/Application/UseCase/DacapoCommandTest/mysql/index/migrations/1970_01_01_000002_create_example5_index.php
+      path: tests/Presentation/Console/DacapoCommandTest/mysql/index/migrations/1970_01_01_000002_create_example5_index.php

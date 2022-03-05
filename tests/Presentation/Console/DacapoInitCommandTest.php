@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Test\Application\UseCase\Console;
+namespace UcanLab\LaravelDacapo\Test\Presentation\Console;
 
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
 use UcanLab\LaravelDacapo\Test\TestCase;
 
-final class DacapoUninstallCommandTest extends TestCase
+final class DacapoInitCommandTest extends TestCase
 {
     public function testResolve(): void
     {
         $this->app->register(ConsoleServiceProvider::class);
-        $this->artisan('dacapo:uninstall')->assertExitCode(0);
+        $this->artisan('dacapo:init', ['--no-migrate' => true])->assertExitCode(0);
     }
 }
