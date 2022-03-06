@@ -6,7 +6,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 
 interface DatabaseBuilder
 {
-    public function hasTableComment(): bool;
+    public function isEnabledTableComment(): bool;
 
     public function makeTableComment(Schema $schema): string;
 }

@@ -10,7 +10,7 @@ final class MysqlDatabaseBuilder implements DatabaseBuilder
     /**
      * @return bool
      */
-    public function hasTableComment(): bool
+    public function isEnabledTableComment(): bool
     {
         return true;
     }
