@@ -49,11 +49,11 @@ final class Table
     }
 
     /**
-     * @return TableName
+     * @return string
      */
-    public function getTableName(): TableName
+    public function getTableName(): string
     {
-        return $this->tableName;
+        return $this->tableName->getName();
     }
 
     /**

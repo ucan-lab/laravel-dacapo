@@ -79,18 +79,10 @@ final class Schema
         DatabaseBuilder $databaseBuilder,
         MigrationCreateStub $migrationCreateStub
     ): MigrationFile {
-        $name = sprintf('1970_01_01_000001_create_%s_table.php', $this->getTableName());
-        $contents = $migrationCreateStub->getStub();
-        $contents = str_replace('{{ namespace }}', $this->makeMigrationNamespace(), $contents);
-        $contents = str_replace('{{ connection }}', $this->getConnection()->makeMigration(), $contents);
-        $contents = str_replace('{{ tableName }}', $this->getTableName(), $contents);
-
         $tableComment = '';
         if ($this->hasTableComment() && $databaseBuilder->hasTableComment()) {
             $tableComment = $databaseBuilder->makeTableComment($this);
         }
-
-        $contents = str_replace('{{ tableComment }}', $tableComment, $contents);
 
         $str = '';
 
@@ -114,9 +106,12 @@ final class Schema
             $str .= $column->createColumnMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
         }
 
-        $contents = str_replace('{{ up }}', trim($str), $contents);
-
-        return new MigrationFile($name, $contents);
+        return MigrationFile::factory($this->makeCreateTableMigrationFileName(), $migrationCreateStub->getStub())
+            ->replace('{{ namespace }}', $this->makeMigrationNamespace())
+            ->replace('{{ connection }}', $this->getConnection()->makeMigration())
+            ->replace('{{ tableName }}', $this->getTableName())
+            ->replace('{{ tableComment }}', $tableComment)
+            ->replace('{{ up }}', trim($str));
     }
 
     /**
@@ -128,11 +123,6 @@ final class Schema
         if ($this->hasIndexModifierList() === false) {
             return null;
         }
-
-        $name = sprintf('1970_01_01_000002_create_%s_index.php', $this->getTableName());
-        $contents = $migrationUpdateStub->getStub();
-        $contents = str_replace('{{ connection }}', $this->getConnection()->makeMigration(), $contents);
-        $contents = str_replace('{{ table }}', $this->getTableName(), $contents);
 
         $up = '';
 
@@ -147,8 +137,6 @@ final class Schema
             }
         }
 
-        $contents = str_replace('{{ up }}', $up, $contents);
-
         $down = '';
 
         $indexListIterator = $this->getIndexModifierList()->getIterator();
@@ -162,9 +150,11 @@ final class Schema
             }
         }
 
-        $contents = str_replace('{{ down }}', $down, $contents);
-
-        return new MigrationFile($name, $contents);
+        return MigrationFile::factory($this->makeCreateIndexMigrationFileName(), $migrationUpdateStub->getStub())
+            ->replace('{{ connection }}', $this->getConnection()->makeMigration())
+            ->replace('{{ table }}', $this->getTableName())
+            ->replace('{{ up }}', $up)
+            ->replace('{{ down }}', $down);
     }
 
     /**
@@ -176,11 +166,6 @@ final class Schema
         if ($this->hasForeignKeyList() === false) {
             return null;
         }
-
-        $name = sprintf('1970_01_01_000003_constraint_%s_foreign_key.php', $this->getTableName());
-        $contents = $migrationUpdateStub->getStub();
-        $contents = str_replace('{{ connection }}', $this->getConnection()->makeMigration(), $contents);
-        $contents = str_replace('{{ table }}', $this->getTableName(), $contents);
 
         $up = '';
 
@@ -195,8 +180,6 @@ final class Schema
             }
         }
 
-        $contents = str_replace('{{ up }}', $up, $contents);
-
         $down = '';
 
         $foreignKeyListIterator = $this->getForeignKeyList()->getIterator();
@@ -210,9 +193,35 @@ final class Schema
             }
         }
 
-        $contents = str_replace('{{ down }}', $down, $contents);
+        return MigrationFile::factory($this->makeConstraintForeignKeyMigrationFileName(), $migrationUpdateStub->getStub())
+            ->replace('{{ connection }}', $this->getConnection()->makeMigration())
+            ->replace('{{ table }}', $this->getTableName())
+            ->replace('{{ up }}', $up)
+            ->replace('{{ down }}', $down);
+    }
 
-        return new MigrationFile($name, $contents);
+    /**
+     * @return string
+     */
+    private function makeCreateTableMigrationFileName(): string
+    {
+        return sprintf('1970_01_01_000001_create_%s_table.php', $this->getTableName());
+    }
+
+    /**
+     * @return string
+     */
+    private function makeCreateIndexMigrationFileName(): string
+    {
+        return sprintf('1970_01_01_000002_create_%s_index.php', $this->getTableName());
+    }
+
+    /**
+     * @return string
+     */
+    private function makeConstraintForeignKeyMigrationFileName(): string
+    {
+        return sprintf('1970_01_01_000003_constraint_%s_foreign_key.php', $this->getTableName());
     }
 
     /**
@@ -220,7 +229,7 @@ final class Schema
      */
     public function getTableName(): string
     {
-        return $this->table->getTableName()->getName();
+        return $this->getTableName();
     }
 
     /**
