@@ -35,19 +35,16 @@ final class DacapoCommand extends Command
 
     /**
      * @param DacapoCommandUseCase $useCase
-     * @param DatabaseMigrationsStorage $databaseMigrationsStorage
      */
     public function handle(
         DacapoCommandUseCase $useCase,
-        DatabaseMigrationsStorage $databaseMigrationsStorage,
     ): void {
         $this->call('dacapo:clear', ['--force' => true]);
 
         $output = $useCase->handle();
 
-        foreach ($output->migrationBodies as $migrationBody) {
-            $databaseMigrationsStorage->saveFile($migrationBody['name'], $migrationBody['contents']);
-            $this->line(sprintf('<fg=green>Generated:</> %s', $migrationBody['name']));
+        foreach ($output->generatedFileNameList as $generatedFileName) {
+            $this->line(sprintf('<fg=green>Generated:</> %s', $generatedFileName));
         }
 
         if ($this->option('no-migrate')) {

@@ -104,7 +104,10 @@ final class DacapoCommandTest extends TestCase
     private function assertMigrationFileList(string $migrations, InMemoryDatabaseMigrationsStorage $databaseMigrationsStorage): void
     {
         $expectedMigrationFileList = array_map(fn ($f) => $f->getRealPath(), File::files($migrations));
+
         $actualMigrationFileList = $databaseMigrationsStorage->fileList;
+        $ids = array_column($actualMigrationFileList, 'fileName');
+        array_multisort($ids, SORT_ASC, $actualMigrationFileList);
 
         $this->assertSame(count($expectedMigrationFileList), count($actualMigrationFileList));
 
