@@ -9,10 +9,32 @@ final class MigrationFile
      * @param string $name
      * @param string $contents
      */
-    public function __construct(
+    private function __construct(
         private string $name,
         private string $contents,
     ) {
+    }
+
+    /**
+     * @param string $name
+     * @param string $contents
+     * @return $this
+     */
+    public static function factory(string $name, string $contents): self
+    {
+        return new self($name, $contents);
+    }
+
+    /**
+     * @param string $placeholder
+     * @param string $value
+     * @return $this
+     */
+    public function replace(string $placeholder, string $value): self
+    {
+        $this->contents = str_replace($placeholder, $value, $this->contents);
+
+        return $this;
     }
 
     /**
