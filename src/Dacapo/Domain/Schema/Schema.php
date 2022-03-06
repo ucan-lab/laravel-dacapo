@@ -2,6 +2,10 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema;
 
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
+use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\Column;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
@@ -19,10 +23,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Temporary;
 
 final class Schema
 {
-    private Table $table;
-    private ColumnList $columnList;
-    private IndexModifierList $sqlIndexList;
-    private ForeignKeyList $foreignKeyList;
+    private const MIGRATION_COLUMN_INDENT = '            ';
 
     /**
      * Schema constructor.
@@ -32,15 +33,11 @@ final class Schema
      * @param ForeignKeyList $foreignKeyList
      */
     private function __construct(
-        Table $table,
-        ColumnList $columnList,
-        IndexModifierList $sqlIndexList,
-        ForeignKeyList $foreignKeyList,
+        private Table $table,
+        private ColumnList $columnList,
+        private IndexModifierList $sqlIndexList,
+        private ForeignKeyList $foreignKeyList,
     ) {
-        $this->table = $table;
-        $this->columnList = $columnList;
-        $this->sqlIndexList = $sqlIndexList;
-        $this->foreignKeyList = $foreignKeyList;
     }
 
     /**
@@ -71,6 +68,151 @@ final class Schema
             new IndexModifierList($indexModifierList),
             new ForeignKeyList($foreignKeyList),
         );
+    }
+
+    /**
+     * @param DatabaseBuilder $databaseBuilder
+     * @param MigrationCreateStub $migrationCreateStub
+     * @return MigrationFile
+     */
+    public function makeCreateTableMigrationFile(
+        DatabaseBuilder $databaseBuilder,
+        MigrationCreateStub $migrationCreateStub
+    ): MigrationFile {
+        $name = sprintf('1970_01_01_000001_create_%s_table.php', $this->getTableName());
+        $contents = $migrationCreateStub->getStub();
+        $contents = str_replace('{{ namespace }}', $this->makeMigrationNamespace(), $contents);
+        $contents = str_replace('{{ connection }}', $this->getConnection()->makeMigration(), $contents);
+        $contents = str_replace('{{ tableName }}', $this->getTableName(), $contents);
+
+        $tableComment = '';
+        if ($this->hasTableComment() && $databaseBuilder->hasTableComment()) {
+            $tableComment = $databaseBuilder->makeTableComment($this);
+        }
+
+        $contents = str_replace('{{ tableComment }}', $tableComment, $contents);
+
+        $str = '';
+
+        if ($this->getEngine()->hasValue()) {
+            $str .= $this->getEngine()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        if ($this->getCharset()->hasValue()) {
+            $str .= $this->getCharset()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        if ($this->getCollation()->hasValue()) {
+            $str .= $this->getCollation()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        if ($this->getTemporary()->isEnable()) {
+            $str .= $this->getTemporary()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        foreach ($this->getColumnList() as $column) {
+            $str .= $column->createColumnMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        $contents = str_replace('{{ up }}', trim($str), $contents);
+
+        return new MigrationFile($name, $contents);
+    }
+
+    /**
+     * @param MigrationUpdateStub $migrationUpdateStub
+     * @return MigrationFile|null
+     */
+    public function makeCreateIndexMigrationFile(MigrationUpdateStub $migrationUpdateStub): ?MigrationFile
+    {
+        if ($this->hasIndexModifierList() === false) {
+            return null;
+        }
+
+        $name = sprintf('1970_01_01_000002_create_%s_index.php', $this->getTableName());
+        $contents = $migrationUpdateStub->getStub();
+        $contents = str_replace('{{ connection }}', $this->getConnection()->makeMigration(), $contents);
+        $contents = str_replace('{{ table }}', $this->getTableName(), $contents);
+
+        $up = '';
+
+        $indexListIterator = $this->getIndexModifierList()->getIterator();
+
+        while ($indexListIterator->valid()) {
+            $up .= $indexListIterator->current()->createIndexMigrationUpMethod();
+            $indexListIterator->next();
+
+            if ($indexListIterator->valid()) {
+                $up .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+            }
+        }
+
+        $contents = str_replace('{{ up }}', $up, $contents);
+
+        $down = '';
+
+        $indexListIterator = $this->getIndexModifierList()->getIterator();
+
+        while ($indexListIterator->valid()) {
+            $down .= $indexListIterator->current()->createIndexMigrationDownMethod();
+            $indexListIterator->next();
+
+            if ($indexListIterator->valid()) {
+                $down .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+            }
+        }
+
+        $contents = str_replace('{{ down }}', $down, $contents);
+
+        return new MigrationFile($name, $contents);
+    }
+
+    /**
+     * @param MigrationUpdateStub $migrationUpdateStub
+     * @return MigrationFile|null
+     */
+    public function makeConstraintForeignKeyMigrationFile(MigrationUpdateStub $migrationUpdateStub): ?MigrationFile
+    {
+        if ($this->hasForeignKeyList() === false) {
+            return null;
+        }
+
+        $name = sprintf('1970_01_01_000003_constraint_%s_foreign_key.php', $this->getTableName());
+        $contents = $migrationUpdateStub->getStub();
+        $contents = str_replace('{{ connection }}', $this->getConnection()->makeMigration(), $contents);
+        $contents = str_replace('{{ table }}', $this->getTableName(), $contents);
+
+        $up = '';
+
+        $foreignKeyListIterator = $this->getForeignKeyList()->getIterator();
+
+        while ($foreignKeyListIterator->valid()) {
+            $up .= $foreignKeyListIterator->current()->createForeignKeyMigrationUpMethod();
+            $foreignKeyListIterator->next();
+
+            if ($foreignKeyListIterator->valid()) {
+                $up .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+            }
+        }
+
+        $contents = str_replace('{{ up }}', $up, $contents);
+
+        $down = '';
+
+        $foreignKeyListIterator = $this->getForeignKeyList()->getIterator();
+
+        while ($foreignKeyListIterator->valid()) {
+            $down .= $foreignKeyListIterator->current()->createForeignKeyMigrationDownMethod();
+            $foreignKeyListIterator->next();
+
+            if ($foreignKeyListIterator->valid()) {
+                $down .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+            }
+        }
+
+        $contents = str_replace('{{ down }}', $down, $contents);
+
+        return new MigrationFile($name, $contents);
     }
 
     /**
@@ -201,5 +343,26 @@ final class Schema
         }
 
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    private function makeMigrationNamespace(): string
+    {
+        if ($this->isDbFacadeUsing()) {
+            return <<< 'EOF'
+            use Illuminate\Database\Migrations\Migration;
+            use Illuminate\Database\Schema\Blueprint;
+            use Illuminate\Support\Facades\DB;
+            use Illuminate\Support\Facades\Schema;
+            EOF;
+        }
+
+        return <<< 'EOF'
+        use Illuminate\Database\Migrations\Migration;
+        use Illuminate\Database\Schema\Blueprint;
+        use Illuminate\Support\Facades\Schema;
+        EOF;
     }
 }

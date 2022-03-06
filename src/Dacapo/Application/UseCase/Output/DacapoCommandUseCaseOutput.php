@@ -5,9 +5,9 @@ namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output;
 final class DacapoCommandUseCaseOutput
 {
     /**
-     * @param array<int, array<string, string>> $migrationBodies
+     * @param array<int, string> $generatedFileNameList
      */
-    public function __construct(public array $migrationBodies)
+    public function __construct(public array $generatedFileNameList)
     {
     }
 }
