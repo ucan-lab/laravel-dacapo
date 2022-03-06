@@ -80,7 +80,7 @@ final class Schema
         MigrationCreateStub $migrationCreateStub
     ): MigrationFile {
         $tableComment = '';
-        if ($this->hasTableComment() && $databaseBuilder->hasTableComment()) {
+        if ($this->hasTableComment() && $databaseBuilder->isEnabledTableComment()) {
             $tableComment = $databaseBuilder->makeTableComment($this);
         }
 
@@ -229,7 +229,7 @@ final class Schema
      */
     public function getTableName(): string
     {
-        return $this->getTableName();
+        return $this->table->getTableName();
     }
 
     /**
