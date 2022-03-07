@@ -6,20 +6,15 @@ use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuil
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\Column;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKey;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKeyList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierList;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Charset;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Collation;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Connection;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Engine;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\Column;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnList;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnName;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Table;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
-use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Temporary;
 
 final class Schema
 {
@@ -28,13 +23,11 @@ final class Schema
     /**
      * Schema constructor.
      * @param Table $table
-     * @param ColumnList $columnList
      * @param IndexModifierList $sqlIndexList
      * @param ForeignKeyList $foreignKeyList
      */
     private function __construct(
         private Table $table,
-        private ColumnList $columnList,
         private IndexModifierList $sqlIndexList,
         private ForeignKeyList $foreignKeyList,
     ) {
@@ -63,8 +56,7 @@ final class Schema
         }
 
         return new self(
-            Table::factory($tableName, $attributes),
-            new ColumnList($columnList),
+            Table::factory($tableName, new ColumnList($columnList), $attributes),
             new IndexModifierList($indexModifierList),
             new ForeignKeyList($foreignKeyList),
         );
@@ -84,34 +76,12 @@ final class Schema
             $tableComment = $databaseBuilder->makeTableComment($this);
         }
 
-        $str = '';
-
-        if ($this->getEngine()->hasValue()) {
-            $str .= $this->getEngine()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
-        }
-
-        if ($this->getCharset()->hasValue()) {
-            $str .= $this->getCharset()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
-        }
-
-        if ($this->getCollation()->hasValue()) {
-            $str .= $this->getCollation()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
-        }
-
-        if ($this->getTemporary()->isEnable()) {
-            $str .= $this->getTemporary()->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
-        }
-
-        foreach ($this->getColumnList() as $column) {
-            $str .= $column->createColumnMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
-        }
-
         return MigrationFile::factory($this->makeCreateTableMigrationFileName(), $migrationCreateStub->getStub())
             ->replace('{{ namespace }}', $this->makeMigrationNamespace())
-            ->replace('{{ connection }}', $this->getConnection()->makeMigration())
+            ->replace('{{ connection }}', $this->table->getConnection()->makeMigration())
             ->replace('{{ tableName }}', $this->getTableName())
             ->replace('{{ tableComment }}', $tableComment)
-            ->replace('{{ up }}', trim($str));
+            ->replace('{{ up }}', $this->table->makeCreateTableUpContents());
     }
 
     /**
@@ -151,7 +121,7 @@ final class Schema
         }
 
         return MigrationFile::factory($this->makeCreateIndexMigrationFileName(), $migrationUpdateStub->getStub())
-            ->replace('{{ connection }}', $this->getConnection()->makeMigration())
+            ->replace('{{ connection }}', $this->table->getConnection()->makeMigration())
             ->replace('{{ table }}', $this->getTableName())
             ->replace('{{ up }}', $up)
             ->replace('{{ down }}', $down);
@@ -194,7 +164,7 @@ final class Schema
         }
 
         return MigrationFile::factory($this->makeConstraintForeignKeyMigrationFileName(), $migrationUpdateStub->getStub())
-            ->replace('{{ connection }}', $this->getConnection()->makeMigration())
+            ->replace('{{ connection }}', $this->table->getConnection()->makeMigration())
             ->replace('{{ table }}', $this->getTableName())
             ->replace('{{ up }}', $up)
             ->replace('{{ down }}', $down);
@@ -251,14 +221,6 @@ final class Schema
     /**
      * @return bool
      */
-    public function hasColumnList(): bool
-    {
-        return $this->columnList->exists();
-    }
-
-    /**
-     * @return bool
-     */
     public function hasIndexModifierList(): bool
     {
         return $this->sqlIndexList->exists();
@@ -270,14 +232,6 @@ final class Schema
     public function hasForeignKeyList(): bool
     {
         return $this->foreignKeyList->exists();
-    }
-
-    /**
-     * @return ColumnList
-     */
-    public function getColumnList(): ColumnList
-    {
-        return $this->columnList;
     }
 
     /**
@@ -297,46 +251,6 @@ final class Schema
     }
 
     /**
-     * @return Connection
-     */
-    public function getConnection(): Connection
-    {
-        return $this->table->getConnection();
-    }
-
-    /**
-     * @return Engine
-     */
-    public function getEngine(): Engine
-    {
-        return $this->table->getEngine();
-    }
-
-    /**
-     * @return Charset
-     */
-    public function getCharset(): Charset
-    {
-        return $this->table->getCharset();
-    }
-
-    /**
-     * @return Collation
-     */
-    public function getCollation(): Collation
-    {
-        return $this->table->getCollation();
-    }
-
-    /**
-     * @return Temporary
-     */
-    public function getTemporary(): Temporary
-    {
-        return $this->table->getTemporary();
-    }
-
-    /**
      * @return bool
      */
     public function isDbFacadeUsing(): bool
@@ -345,7 +259,7 @@ final class Schema
             return true;
         }
 
-        foreach ($this->columnList as $column) {
+        foreach ($this->table->getColumnList() as $column) {
             if ($column->isDbFacadeUsing()) {
                 return true;
             }
