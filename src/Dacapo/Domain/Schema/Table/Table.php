@@ -2,11 +2,16 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnList;
+
 final class Table
 {
+    private const MIGRATION_COLUMN_INDENT = '            ';
+
     private function __construct(
         private Connection $connection,
         private TableName $tableName,
+        private ColumnList $columnList,
         private TableComment $tableComment,
         private Engine $engine,
         private Charset $charset,
@@ -17,10 +22,11 @@ final class Table
 
     /**
      * @param TableName $tableName
+     * @param ColumnList $columnList
      * @param array<string, mixed> $attributes
      * @return $this
      */
-    public static function factory(TableName $tableName, array $attributes): self
+    public static function factory(TableName $tableName, ColumnList $columnList, array $attributes): self
     {
         $connection = new Connection($attributes['connection'] ?? null);
         $tableComment = new TableComment($attributes['comment'] ?? null);
@@ -32,12 +38,43 @@ final class Table
         return new self(
             $connection,
             $tableName,
+            $columnList,
             $tableComment,
             $engine,
             $charset,
             $collation,
             $temporary
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function makeCreateTableUpContents(): string
+    {
+        $str = '';
+
+        if ($this->engine->hasValue()) {
+            $str .= $this->engine->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        if ($this->charset->hasValue()) {
+            $str .= $this->charset->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        if ($this->collation->hasValue()) {
+            $str .= $this->collation->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        if ($this->temporary->isEnable()) {
+            $str .= $this->temporary->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        foreach ($this->columnList as $column) {
+            $str .= $column->createColumnMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+        }
+
+        return trim($str);
     }
 
     /**
@@ -54,6 +91,14 @@ final class Table
     public function getTableName(): string
     {
         return $this->tableName->getName();
+    }
+
+    /**
+     * @return ColumnList
+     */
+    public function getColumnList(): ColumnList
+    {
+        return $this->columnList;
     }
 
     /**
