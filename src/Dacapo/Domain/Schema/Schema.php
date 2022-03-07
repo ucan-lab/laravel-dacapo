@@ -83,7 +83,7 @@ final class Schema
             ->replace('{{ connection }}', $this->connection->makeMigration())
             ->replace('{{ tableName }}', $this->getTableName())
             ->replace('{{ tableComment }}', $tableComment)
-            ->replace('{{ up }}', $this->table->makeCreateTableUpMigration());
+            ->replace('{{ up }}', $this->table->makeMigration());
     }
 
     /**

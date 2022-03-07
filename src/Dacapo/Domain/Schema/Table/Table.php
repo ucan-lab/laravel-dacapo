@@ -45,7 +45,7 @@ final class Table
     /**
      * @return string
      */
-    public function makeCreateTableUpMigration(): string
+    public function makeMigration(): string
     {
         return trim(
             $this->engine->makeMigration()
