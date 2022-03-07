@@ -3,6 +3,7 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
 use Illuminate\Filesystem\Filesystem;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
 
 final class LaravelDatabaseMigrationsStorage implements DatabaseMigrationsStorage
@@ -15,11 +16,10 @@ final class LaravelDatabaseMigrationsStorage implements DatabaseMigrationsStorag
     }
 
     /**
-     * @param string $fileName
-     * @param string $fileContents
+     * @param MigrationFile $migrationFile
      */
-    public function saveFile(string $fileName, string $fileContents): void
+    public function save(MigrationFile $migrationFile): void
     {
-        $this->filesystem->put(database_path('migrations/' . $fileName), $fileContents);
+        $this->filesystem->put(database_path('migrations/' . $migrationFile->getName()), $migrationFile->getContents());
     }
 }

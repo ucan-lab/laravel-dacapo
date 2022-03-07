@@ -2,7 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage;
 
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
+
 interface DatabaseMigrationsStorage
 {
-    public function saveFile(string $fileName, string $fileContents): void;
+    public function save(MigrationFile $migrationFile): void;
 }
