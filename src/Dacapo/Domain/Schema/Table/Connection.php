@@ -13,27 +13,11 @@ final class Connection
     }
 
     /**
-     * @return bool
-     */
-    public function hasValue(): bool
-    {
-        return $this->value !== null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getValue(): string
-    {
-        return (string) $this->value;
-    }
-
-    /**
      * @return string
      */
     public function makeMigration(): string
     {
-        if ($this->hasValue()) {
+        if ($this->value !== null) {
             return sprintf("connection('%s')->", $this->value);
         }
 

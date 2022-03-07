@@ -2,6 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
+
 final class Charset
 {
     /**
@@ -13,26 +15,14 @@ final class Charset
     }
 
     /**
-     * @return bool
-     */
-    public function hasValue(): bool
-    {
-        return $this->value !== null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getValue(): string
-    {
-        return (string) $this->value;
-    }
-
-    /**
      * @return string
      */
     public function makeMigration(): string
     {
-        return sprintf("\$table->charset = '%s';", $this->getValue());
+        if ($this->value !== null) {
+            return sprintf("\$table->charset = '%s';", $this->value) . PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
+        }
+
+        return '';
     }
 }

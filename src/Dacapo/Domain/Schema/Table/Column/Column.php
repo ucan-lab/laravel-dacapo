@@ -119,7 +119,7 @@ final class Column
     /**
      * @return string
      */
-    public function createColumnMigration(): string
+    public function makeMigration(): string
     {
         $modifierMethod = '';
         foreach ($this->modifierList as $modifier) {

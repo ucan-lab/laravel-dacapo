@@ -6,8 +6,6 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnList;
 
 final class Table
 {
-    private const MIGRATION_COLUMN_INDENT = '            ';
-
     private function __construct(
         private Connection $connection,
         private TableName $tableName,
@@ -50,31 +48,15 @@ final class Table
     /**
      * @return string
      */
-    public function makeCreateTableUpContents(): string
+    public function makeCreateTableUpMigration(): string
     {
-        $str = '';
-
-        if ($this->engine->hasValue()) {
-            $str .= $this->engine->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
-        }
-
-        if ($this->charset->hasValue()) {
-            $str .= $this->charset->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
-        }
-
-        if ($this->collation->hasValue()) {
-            $str .= $this->collation->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
-        }
-
-        if ($this->temporary->isEnable()) {
-            $str .= $this->temporary->makeMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
-        }
-
-        foreach ($this->columnList as $column) {
-            $str .= $column->createColumnMigration() . PHP_EOL . self::MIGRATION_COLUMN_INDENT;
-        }
-
-        return trim($str);
+        return trim(
+            $this->engine->makeMigration()
+            . $this->charset->makeMigration()
+            . $this->collation->makeMigration()
+            . $this->temporary->makeMigration()
+            . $this->columnList->makeMigration()
+        );
     }
 
     /**

@@ -4,6 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column;
 
 use ArrayIterator;
 use IteratorAggregate;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
 
 /**
  * @implements IteratorAggregate<Column>
@@ -31,5 +32,19 @@ final class ColumnList implements IteratorAggregate
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->attributes);
+    }
+
+    /**
+     * @return string
+     */
+    public function makeMigration(): string
+    {
+        $str = '';
+
+        foreach ($this->attributes as $column) {
+            $str .= $column->makeMigration() . PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
+        }
+
+        return $str;
     }
 }

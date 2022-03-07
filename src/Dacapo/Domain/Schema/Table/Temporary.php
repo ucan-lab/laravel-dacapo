@@ -2,6 +2,8 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
+
 final class Temporary
 {
     /**
@@ -13,18 +15,14 @@ final class Temporary
     }
 
     /**
-     * @return bool
-     */
-    public function isEnable(): bool
-    {
-        return $this->enable;
-    }
-
-    /**
      * @return string
      */
     public function makeMigration(): string
     {
-        return '$table->temporary();';
+        if ($this->enable) {
+            return '$table->temporary();' . PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
+        }
+
+        return '';
     }
 }
