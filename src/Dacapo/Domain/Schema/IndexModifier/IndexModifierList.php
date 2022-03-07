@@ -2,13 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier;
 
-use ArrayIterator;
-use IteratorAggregate;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
 
-/**
- * @implements IteratorAggregate<IndexModifier>
- */
-final class IndexModifierList implements IteratorAggregate
+final class IndexModifierList
 {
     /**
      * @param array<int, IndexModifier> $attributes
@@ -26,10 +22,30 @@ final class IndexModifierList implements IteratorAggregate
     }
 
     /**
-     * @return ArrayIterator<int, IndexModifier>
+     * @return string
      */
-    public function getIterator(): ArrayIterator
+    public function makeUpMigration(): string
     {
-        return new ArrayIterator($this->attributes);
+        $str = '';
+
+        foreach ($this->attributes as $indexModifier) {
+            $str .= $indexModifier->makeUpMigration() . PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
+        }
+
+        return trim($str);
+    }
+
+    /**
+     * @return string
+     */
+    public function makeDownMigration(): string
+    {
+        $str = '';
+
+        foreach ($this->attributes as $indexModifier) {
+            $str .= $indexModifier->makeDownMigration() . PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
+        }
+
+        return trim($str);
     }
 }

@@ -27,7 +27,7 @@ final class IndexTypeTest extends TestCase
             'algorithm' => $algorithm,
         ]);
 
-        $this->assertSame($expected, $index->createIndexMigrationUpMethod());
+        $this->assertSame($expected, $index->makeUpMigration());
     }
 
     /**
@@ -74,7 +74,7 @@ final class IndexTypeTest extends TestCase
             'name' => $name,
         ]);
 
-        $this->assertSame($expected, $index->createIndexMigrationDownMethod());
+        $this->assertSame($expected, $index->makeDownMigration());
     }
 
     /**

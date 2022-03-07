@@ -30,7 +30,7 @@ final class ForeignKey
     /**
      * @return string
      */
-    public function createForeignKeyMigrationUpMethod(): string
+    public function makeUpMigration(): string
     {
         return sprintf('$table%s%s;', $this->reference->makeForeignMigration(), $this->referenceAction->makeForeignMigration());
     }
@@ -38,7 +38,7 @@ final class ForeignKey
     /**
      * @return string
      */
-    public function createForeignKeyMigrationDownMethod(): string
+    public function makeDownMigration(): string
     {
         return sprintf('$table%s;', $this->reference->makeDropForeignMigration());
     }

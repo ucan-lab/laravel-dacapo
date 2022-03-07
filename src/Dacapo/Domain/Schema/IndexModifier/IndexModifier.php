@@ -55,7 +55,7 @@ final class IndexModifier
     /**
      * @return string
      */
-    public function createIndexMigrationUpMethod(): string
+    public function makeUpMigration(): string
     {
         if ($this->hasArgs()) {
             return '$table->' . sprintf('%s(%s, %s)%s;', $this->type->getUpMethodName(), $this->getColumns(), $this->makeArgs(), $this->makeLanguage());
@@ -67,7 +67,7 @@ final class IndexModifier
     /**
      * @return string
      */
-    public function createIndexMigrationDownMethod(): string
+    public function makeDownMigration(): string
     {
         if ($this->name) {
             return '$table->' . sprintf("%s('%s');", $this->type->getDownMethodName(), $this->name);

@@ -23,13 +23,13 @@ final class Schema
      * Schema constructor.
      * @param Table $table
      * @param Connection $connection
-     * @param IndexModifierList $sqlIndexList
+     * @param IndexModifierList $indexModifierList
      * @param ForeignKeyList $foreignKeyList
      */
     private function __construct(
         private Table $table,
         private Connection $connection,
-        private IndexModifierList $sqlIndexList,
+        private IndexModifierList $indexModifierList,
         private ForeignKeyList $foreignKeyList,
     ) {
     }
@@ -92,41 +92,15 @@ final class Schema
      */
     public function makeCreateIndexMigrationFile(MigrationUpdateStub $migrationUpdateStub): ?MigrationFile
     {
-        if ($this->hasIndexModifierList() === false) {
+        if ($this->indexModifierList->exists() === false) {
             return null;
-        }
-
-        $up = '';
-
-        $indexListIterator = $this->getIndexModifierList()->getIterator();
-
-        while ($indexListIterator->valid()) {
-            $up .= $indexListIterator->current()->createIndexMigrationUpMethod();
-            $indexListIterator->next();
-
-            if ($indexListIterator->valid()) {
-                $up .= PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
-            }
-        }
-
-        $down = '';
-
-        $indexListIterator = $this->getIndexModifierList()->getIterator();
-
-        while ($indexListIterator->valid()) {
-            $down .= $indexListIterator->current()->createIndexMigrationDownMethod();
-            $indexListIterator->next();
-
-            if ($indexListIterator->valid()) {
-                $down .= PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
-            }
         }
 
         return MigrationFile::factory($this->makeCreateIndexMigrationFileName(), $migrationUpdateStub->getStub())
             ->replace('{{ connection }}', $this->connection->makeMigration())
             ->replace('{{ table }}', $this->getTableName())
-            ->replace('{{ up }}', $up)
-            ->replace('{{ down }}', $down);
+            ->replace('{{ up }}', $this->indexModifierList->makeUpMigration())
+            ->replace('{{ down }}', $this->indexModifierList->makeDownMigration());
     }
 
     /**
@@ -135,41 +109,15 @@ final class Schema
      */
     public function makeConstraintForeignKeyMigrationFile(MigrationUpdateStub $migrationUpdateStub): ?MigrationFile
     {
-        if ($this->hasForeignKeyList() === false) {
+        if ($this->foreignKeyList->exists() === false) {
             return null;
-        }
-
-        $up = '';
-
-        $foreignKeyListIterator = $this->getForeignKeyList()->getIterator();
-
-        while ($foreignKeyListIterator->valid()) {
-            $up .= $foreignKeyListIterator->current()->createForeignKeyMigrationUpMethod();
-            $foreignKeyListIterator->next();
-
-            if ($foreignKeyListIterator->valid()) {
-                $up .= PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
-            }
-        }
-
-        $down = '';
-
-        $foreignKeyListIterator = $this->getForeignKeyList()->getIterator();
-
-        while ($foreignKeyListIterator->valid()) {
-            $down .= $foreignKeyListIterator->current()->createForeignKeyMigrationDownMethod();
-            $foreignKeyListIterator->next();
-
-            if ($foreignKeyListIterator->valid()) {
-                $down .= PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
-            }
         }
 
         return MigrationFile::factory($this->makeConstraintForeignKeyMigrationFileName(), $migrationUpdateStub->getStub())
             ->replace('{{ connection }}', $this->connection->makeMigration())
             ->replace('{{ table }}', $this->getTableName())
-            ->replace('{{ up }}', $up)
-            ->replace('{{ down }}', $down);
+            ->replace('{{ up }}', $this->foreignKeyList->makeUpMigration())
+            ->replace('{{ down }}', $this->foreignKeyList->makeDownMigration());
     }
 
     /**
@@ -218,38 +166,6 @@ final class Schema
     public function hasTableComment(): bool
     {
         return $this->table->getTableComment()->exists();
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasIndexModifierList(): bool
-    {
-        return $this->sqlIndexList->exists();
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasForeignKeyList(): bool
-    {
-        return $this->foreignKeyList->exists();
-    }
-
-    /**
-     * @return IndexModifierList
-     */
-    public function getIndexModifierList(): IndexModifierList
-    {
-        return $this->sqlIndexList;
-    }
-
-    /**
-     * @return ForeignKeyList
-     */
-    public function getForeignKeyList(): ForeignKeyList
-    {
-        return $this->foreignKeyList;
     }
 
     /**

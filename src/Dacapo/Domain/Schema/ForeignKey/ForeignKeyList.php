@@ -2,13 +2,9 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
-use ArrayIterator;
-use IteratorAggregate;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
 
-/**
- * @implements IteratorAggregate<ForeignKey>
- */
-final class ForeignKeyList implements IteratorAggregate
+final class ForeignKeyList
 {
     /**
      * @param array<int, ForeignKey> $attributes
@@ -26,10 +22,30 @@ final class ForeignKeyList implements IteratorAggregate
     }
 
     /**
-     * @return ArrayIterator<int, ForeignKey>
+     * @return string
      */
-    public function getIterator(): ArrayIterator
+    public function makeUpMigration(): string
     {
-        return new ArrayIterator($this->attributes);
+        $str = '';
+
+        foreach ($this->attributes as $foreignKey) {
+            $str .= $foreignKey->makeUpMigration() . PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
+        }
+
+        return trim($str);
+    }
+
+    /**
+     * @return string
+     */
+    public function makeDownMigration(): string
+    {
+        $str = '';
+
+        foreach ($this->attributes as $foreignKey) {
+            $str .= $foreignKey->makeDownMigration() . PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
+        }
+
+        return trim($str);
     }
 }
