@@ -37,8 +37,8 @@ final class ForeignKeyTest extends TestCase
             'onDeleteAction' => $onDeleteAction,
         ]);
 
-        $this->assertSame($expectedUp, $foreignKey->createForeignKeyMigrationUpMethod());
-        $this->assertSame($expectedDown, $foreignKey->createForeignKeyMigrationDownMethod());
+        $this->assertSame($expectedUp, $foreignKey->makeUpMigration());
+        $this->assertSame($expectedDown, $foreignKey->makeDownMigration());
     }
 
     /**

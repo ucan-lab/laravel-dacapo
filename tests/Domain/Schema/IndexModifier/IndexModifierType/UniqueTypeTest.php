@@ -27,7 +27,7 @@ final class UniqueTypeTest extends TestCase
             'algorithm' => $algorithm,
         ]);
 
-        $this->assertSame($expected, $indexModifier->createIndexMigrationUpMethod());
+        $this->assertSame($expected, $indexModifier->makeUpMigration());
     }
 
     /**
@@ -73,7 +73,7 @@ final class UniqueTypeTest extends TestCase
             'columns' => $columns,
             'name' => $name,
         ]);
-        $this->assertSame($expected, $indexModifier->createIndexMigrationDownMethod());
+        $this->assertSame($expected, $indexModifier->makeDownMigration());
     }
 
     /**
