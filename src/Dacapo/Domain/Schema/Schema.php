@@ -13,6 +13,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\Column;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnName;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Connection;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Table;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
 
@@ -21,11 +22,13 @@ final class Schema
     /**
      * Schema constructor.
      * @param Table $table
+     * @param Connection $connection
      * @param IndexModifierList $sqlIndexList
      * @param ForeignKeyList $foreignKeyList
      */
     private function __construct(
         private Table $table,
+        private Connection $connection,
         private IndexModifierList $sqlIndexList,
         private ForeignKeyList $foreignKeyList,
     ) {
@@ -55,6 +58,7 @@ final class Schema
 
         return new self(
             Table::factory($tableName, new ColumnList($columnList), $attributes),
+            new Connection($attributes['connection'] ?? null),
             new IndexModifierList($indexModifierList),
             new ForeignKeyList($foreignKeyList),
         );
@@ -76,7 +80,7 @@ final class Schema
 
         return MigrationFile::factory($this->makeCreateTableMigrationFileName(), $migrationCreateStub->getStub())
             ->replace('{{ namespace }}', $this->makeMigrationNamespace())
-            ->replace('{{ connection }}', $this->table->getConnection()->makeMigration())
+            ->replace('{{ connection }}', $this->connection->makeMigration())
             ->replace('{{ tableName }}', $this->getTableName())
             ->replace('{{ tableComment }}', $tableComment)
             ->replace('{{ up }}', $this->table->makeCreateTableUpMigration());
@@ -119,7 +123,7 @@ final class Schema
         }
 
         return MigrationFile::factory($this->makeCreateIndexMigrationFileName(), $migrationUpdateStub->getStub())
-            ->replace('{{ connection }}', $this->table->getConnection()->makeMigration())
+            ->replace('{{ connection }}', $this->connection->makeMigration())
             ->replace('{{ table }}', $this->getTableName())
             ->replace('{{ up }}', $up)
             ->replace('{{ down }}', $down);
@@ -162,7 +166,7 @@ final class Schema
         }
 
         return MigrationFile::factory($this->makeConstraintForeignKeyMigrationFileName(), $migrationUpdateStub->getStub())
-            ->replace('{{ connection }}', $this->table->getConnection()->makeMigration())
+            ->replace('{{ connection }}', $this->connection->makeMigration())
             ->replace('{{ table }}', $this->getTableName())
             ->replace('{{ up }}', $up)
             ->replace('{{ down }}', $down);
