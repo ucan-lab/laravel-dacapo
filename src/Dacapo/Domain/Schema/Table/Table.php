@@ -7,7 +7,6 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnList;
 final class Table
 {
     private function __construct(
-        private Connection $connection,
         private TableName $tableName,
         private ColumnList $columnList,
         private TableComment $tableComment,
@@ -26,7 +25,6 @@ final class Table
      */
     public static function factory(TableName $tableName, ColumnList $columnList, array $attributes): self
     {
-        $connection = new Connection($attributes['connection'] ?? null);
         $tableComment = new TableComment($attributes['comment'] ?? null);
         $engine = new Engine($attributes['engine'] ?? null);
         $charset = new Charset($attributes['charset'] ?? null);
@@ -34,7 +32,6 @@ final class Table
         $temporary = new Temporary($attributes['temporary'] ?? false);
 
         return new self(
-            $connection,
             $tableName,
             $columnList,
             $tableComment,
@@ -57,14 +54,6 @@ final class Table
             . $this->temporary->makeMigration()
             . $this->columnList->makeMigration()
         );
-    }
-
-    /**
-     * @return Connection
-     */
-    public function getConnection(): Connection
-    {
-        return $this->connection;
     }
 
     /**
