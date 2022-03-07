@@ -4,6 +4,8 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile;
 
 final class MigrationFile
 {
+    public const MIGRATION_COLUMN_INDENT = '            ';
+
     /**
      * MigrationFile constructor.
      * @param string $name

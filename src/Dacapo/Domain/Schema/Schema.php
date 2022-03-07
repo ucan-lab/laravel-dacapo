@@ -18,8 +18,6 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
 
 final class Schema
 {
-    private const MIGRATION_COLUMN_INDENT = '            ';
-
     /**
      * Schema constructor.
      * @param Table $table
@@ -81,7 +79,7 @@ final class Schema
             ->replace('{{ connection }}', $this->table->getConnection()->makeMigration())
             ->replace('{{ tableName }}', $this->getTableName())
             ->replace('{{ tableComment }}', $tableComment)
-            ->replace('{{ up }}', $this->table->makeCreateTableUpContents());
+            ->replace('{{ up }}', $this->table->makeCreateTableUpMigration());
     }
 
     /**
@@ -103,7 +101,7 @@ final class Schema
             $indexListIterator->next();
 
             if ($indexListIterator->valid()) {
-                $up .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+                $up .= PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
             }
         }
 
@@ -116,7 +114,7 @@ final class Schema
             $indexListIterator->next();
 
             if ($indexListIterator->valid()) {
-                $down .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+                $down .= PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
             }
         }
 
@@ -146,7 +144,7 @@ final class Schema
             $foreignKeyListIterator->next();
 
             if ($foreignKeyListIterator->valid()) {
-                $up .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+                $up .= PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
             }
         }
 
@@ -159,7 +157,7 @@ final class Schema
             $foreignKeyListIterator->next();
 
             if ($foreignKeyListIterator->valid()) {
-                $down .= PHP_EOL . self::MIGRATION_COLUMN_INDENT;
+                $down .= PHP_EOL . MigrationFile::MIGRATION_COLUMN_INDENT;
             }
         }
 
