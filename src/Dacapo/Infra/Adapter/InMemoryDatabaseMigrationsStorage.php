@@ -2,6 +2,7 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
 
 final class InMemoryDatabaseMigrationsStorage implements DatabaseMigrationsStorage
@@ -12,11 +13,10 @@ final class InMemoryDatabaseMigrationsStorage implements DatabaseMigrationsStora
     public array $fileList = [];
 
     /**
-     * @param string $fileName
-     * @param string $fileContents
+     * @param MigrationFile $migrationFile
      */
-    public function saveFile(string $fileName, string $fileContents): void
+    public function save(MigrationFile $migrationFile): void
     {
-        $this->fileList[] = ['fileName' => $fileName, 'fileContents' => $fileContents];
+        $this->fileList[] = ['fileName' => $migrationFile->getName(), 'fileContents' => $migrationFile->getContents()];
     }
 }

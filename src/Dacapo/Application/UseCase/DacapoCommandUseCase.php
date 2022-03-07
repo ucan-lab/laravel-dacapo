@@ -56,7 +56,7 @@ final class DacapoCommandUseCase
         /** @var Schema $schema */
         foreach ($schemaList as $schema) {
             $migrationFile = $schema->makeCreateTableMigrationFile($this->databaseBuilder, $this->migrationCreateStub);
-            $this->databaseMigrationsStorage->saveFile($migrationFile->getName(), $migrationFile->getContents());
+            $this->databaseMigrationsStorage->save($migrationFile);
             $fileNameList[] = $migrationFile->getName();
         }
 
@@ -75,7 +75,7 @@ final class DacapoCommandUseCase
         foreach ($schemaList as $schema) {
             $migrationFile = $schema->makeCreateIndexMigrationFile($this->migrationUpdateStub);
             if ($migrationFile) {
-                $this->databaseMigrationsStorage->saveFile($migrationFile->getName(), $migrationFile->getContents());
+                $this->databaseMigrationsStorage->save($migrationFile);
                 $fileNameList[] = $migrationFile->getName();
             }
         }
@@ -95,7 +95,7 @@ final class DacapoCommandUseCase
         foreach ($schemaList as $schema) {
             $migrationFile = $schema->makeConstraintForeignKeyMigrationFile($this->migrationUpdateStub);
             if ($migrationFile) {
-                $this->databaseMigrationsStorage->saveFile($migrationFile->getName(), $migrationFile->getContents());
+                $this->databaseMigrationsStorage->save($migrationFile);
                 $fileNameList[] = $migrationFile->getName();
             }
         }

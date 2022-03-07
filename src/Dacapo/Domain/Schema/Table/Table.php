@@ -79,36 +79,4 @@ final class Table
     {
         return $this->tableComment;
     }
-
-    /**
-     * @return Engine
-     */
-    public function getEngine(): Engine
-    {
-        return $this->engine;
-    }
-
-    /**
-     * @return Charset
-     */
-    public function getCharset(): Charset
-    {
-        return $this->charset;
-    }
-
-    /**
-     * @return Collation
-     */
-    public function getCollation(): Collation
-    {
-        return $this->collation;
-    }
-
-    /**
-     * @return Temporary
-     */
-    public function getTemporary(): Temporary
-    {
-        return $this->temporary;
-    }
 }
