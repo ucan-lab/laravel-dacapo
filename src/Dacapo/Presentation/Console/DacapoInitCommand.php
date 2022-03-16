@@ -45,7 +45,7 @@ final class DacapoInitCommand extends Command
         file_put_contents($to, file_get_contents($from));
         $this->line('<fg=green>Generated:</> database/schemas/default.yml');
 
-        $this->call('dacapo:clear', ['--all']);
+        $this->call('dacapo:clear', ['--all' => true]);
         $this->call('dacapo', ['--no-migrate' => $this->option('no-migrate')]);
     }
 }
