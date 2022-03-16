@@ -8,6 +8,7 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Exception\Console\DuplicatedTableNameException;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Exception\Console\SchemaFileEmptyException;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
 use function count;
 
@@ -34,6 +35,10 @@ final class LaravelDatabaseSchemasStorage implements DatabaseSchemasStorage
 
         foreach ($ymlFiles as $ymlFile) {
             $parsedYmlFile = Yaml::parseFile($ymlFile);
+
+            if ($parsedYmlFile === null) {
+                throw new SchemaFileEmptyException(sprintf('%s file is empty.', $ymlFile));
+            }
 
             $intersectKeys = array_intersect_key($schemaBodies, $parsedYmlFile);
 
