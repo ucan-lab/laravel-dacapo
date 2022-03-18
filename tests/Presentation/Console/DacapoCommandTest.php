@@ -28,7 +28,7 @@ final class DacapoCommandTest extends TestCase
 
         $this->instance(DatabaseBuilder::class, new MysqlDatabaseBuilder());
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
-        $this->instance(DatabaseSchemasStorage::class, new LaravelDatabaseSchemasStorage($this->app->make(Filesystem::class), $schemas));
+        $this->instance(DatabaseSchemasStorage::class, new LaravelDatabaseSchemasStorage(new Filesystem(), $schemas));
 
         $this->artisan('dacapo --no-migrate')->assertExitCode(0);
 
@@ -68,7 +68,7 @@ final class DacapoCommandTest extends TestCase
 
         $this->instance(DatabaseBuilder::class, new PostgresqlDatabaseBuilder());
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
-        $this->instance(DatabaseSchemasStorage::class, new LaravelDatabaseSchemasStorage($this->app->make(Filesystem::class), $schemas));
+        $this->instance(DatabaseSchemasStorage::class, new LaravelDatabaseSchemasStorage(new Filesystem(), $schemas));
 
         $this->artisan('dacapo --no-migrate')->assertExitCode(0);
 
