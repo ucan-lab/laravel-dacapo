@@ -16,25 +16,14 @@ final class ReferenceAction
     }
 
     /**
-     * @param array<string, mixed> $attributes
+     * @param array<string, string> $attributes
      * @return static
      */
     public static function factory(array $attributes): self
     {
-        $onUpdateAction = null;
-        $onDeleteAction = null;
-
-        if (isset($attributes['onUpdateAction'])) {
-            $onUpdateAction = $attributes['onUpdateAction'];
-        }
-
-        if (isset($attributes['onDeleteAction'])) {
-            $onDeleteAction = $attributes['onDeleteAction'];
-        }
-
         return new self(
-            $onUpdateAction,
-            $onDeleteAction
+            $attributes['onUpdateAction'] ?? null,
+            $attributes['onDeleteAction'] ?? null,
         );
     }
 
