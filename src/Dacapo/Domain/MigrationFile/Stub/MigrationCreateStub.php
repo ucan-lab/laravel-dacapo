@@ -4,5 +4,13 @@ namespace UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub;
 
 interface MigrationCreateStub
 {
+    /**
+     * @return string
+     */
     public function getStub(): string;
+
+    /**
+     * @return array<int, string>
+     */
+    public function getNamespaces(): array;
 }
