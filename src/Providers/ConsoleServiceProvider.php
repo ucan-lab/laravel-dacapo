@@ -8,17 +8,17 @@ use Illuminate\Database\Connection;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\MysqlDatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\PostgresqlDatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\SqliteDatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\SqlsrvDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Driver\DatabaseDriver;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationCreateStub;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationUpdateStub;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Driver\MysqlDatabaseDriver;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Driver\PostgresqlDatabaseDriver;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Driver\SqliteDatabaseDriver;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Driver\SqlsrvDatabaseDriver;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelDatabaseMigrationsStorage;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelDatabaseSchemasStorage;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelMigrationCreateStub;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelMigrationUpdateStub;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Stub\LaravelMigrationCreateStub;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Stub\LaravelMigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoClearCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoInitCommand;
@@ -55,11 +55,11 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
     /**
      * @var array<string, string>
      */
-    private array $databaseBuilders = [
-        'mysql' => MysqlDatabaseBuilder::class,
-        'pgsql' => PostgresqlDatabaseBuilder::class,
-        'sqlsrv' => SqlsrvDatabaseBuilder::class,
-        'sqlite' => SqliteDatabaseBuilder::class,
+    private array $databaseDrivers = [
+        'mysql' => MysqlDatabaseDriver::class,
+        'pgsql' => PostgresqlDatabaseDriver::class,
+        'sqlsrv' => SqlsrvDatabaseDriver::class,
+        'sqlite' => SqliteDatabaseDriver::class,
     ];
 
     /**
@@ -84,13 +84,16 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
         $this->commands($this->commands);
     }
 
+    /**
+     * @throws Exception
+     */
     private function registerBindings(): void
     {
         foreach ($this->bindings as $abstract => $concrete) {
             $this->app->bind($abstract, $concrete);
         }
 
-        $this->app->bind(DatabaseBuilder::class, $this->concreteDatabaseBuilder());
+        $this->app->bind(DatabaseDriver::class, $this->concreteDatabaseDriver());
         $this->app->bind(DatabaseSchemasStorage::class, function ($app) {
             return new LaravelDatabaseSchemasStorage($app->make(Filesystem::class), $app->databasePath('schemas'));
         });
@@ -100,14 +103,14 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
      * @return string
      * @throws Exception
      */
-    private function concreteDatabaseBuilder(): string
+    private function concreteDatabaseDriver(): string
     {
         /** @var Connection $connection */
         $connection = $this->app->make(ConnectionInterface::class);
         $driver = $connection->getDriverName();
 
-        $this->databaseBuilders[$driver] ?? throw new Exception(sprintf('driver %s is not found.', $driver));
+        $this->databaseDrivers[$driver] ?? throw new Exception(sprintf('driver %s is not found.', $driver));
 
-        return $this->databaseBuilders[$driver];
+        return $this->databaseDrivers[$driver];
     }
 }

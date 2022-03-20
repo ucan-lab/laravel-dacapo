@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
+namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Stub;
 
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationCreateStub;
 
 final class LaravelMigrationCreateStub implements MigrationCreateStub
 {
@@ -17,6 +17,6 @@ final class LaravelMigrationCreateStub implements MigrationCreateStub
             return (string) file_get_contents($filename);
         }
 
-        return (string) file_get_contents(__DIR__ . '/Stub/dacapo.migration.create.stub');
+        return (string) file_get_contents(__DIR__ . '/dacapo.migration.create.stub');
     }
 }

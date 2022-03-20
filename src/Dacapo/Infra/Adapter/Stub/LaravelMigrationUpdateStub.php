@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
+namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Stub;
 
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationUpdateStub;
 
 final class LaravelMigrationUpdateStub implements MigrationUpdateStub
 {
@@ -17,6 +17,6 @@ final class LaravelMigrationUpdateStub implements MigrationUpdateStub
             return (string) file_get_contents($filename);
         }
 
-        return (string) file_get_contents(__DIR__ . '/Stub/dacapo.migration.update.stub');
+        return (string) file_get_contents(__DIR__ . '/dacapo.migration.update.stub');
     }
 }

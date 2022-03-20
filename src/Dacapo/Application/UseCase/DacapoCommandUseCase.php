@@ -3,9 +3,9 @@
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase;
 
 use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Output\DacapoCommandUseCaseOutput;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Driver\DatabaseDriver;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationCreateStub;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
@@ -16,14 +16,14 @@ final class DacapoCommandUseCase
     /**
      * @param DatabaseSchemasStorage $databaseSchemasStorage
      * @param DatabaseMigrationsStorage $databaseMigrationsStorage
-     * @param DatabaseBuilder $databaseBuilder
+     * @param DatabaseDriver $databaseBuilder
      * @param MigrationCreateStub $migrationCreateStub
      * @param MigrationUpdateStub $migrationUpdateStub
      */
     public function __construct(
         private DatabaseSchemasStorage $databaseSchemasStorage,
         private DatabaseMigrationsStorage $databaseMigrationsStorage,
-        private DatabaseBuilder $databaseBuilder,
+        private DatabaseDriver $databaseBuilder,
         private MigrationCreateStub $migrationCreateStub,
         private MigrationUpdateStub $migrationUpdateStub,
     ) {

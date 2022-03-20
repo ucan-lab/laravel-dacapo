@@ -2,10 +2,10 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema;
 
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Driver\DatabaseDriver;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationCreateStub;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKey;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKeyList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier;
@@ -65,12 +65,12 @@ final class Schema
     }
 
     /**
-     * @param DatabaseBuilder $databaseBuilder
+     * @param DatabaseDriver $databaseBuilder
      * @param MigrationCreateStub $migrationCreateStub
      * @return MigrationFile
      */
     public function makeCreateTableMigrationFile(
-        DatabaseBuilder $databaseBuilder,
+        DatabaseDriver $databaseBuilder,
         MigrationCreateStub $migrationCreateStub
     ): MigrationFile {
         $tableComment = '';
