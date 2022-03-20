@@ -2,10 +2,10 @@
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema;
 
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationCreateStub;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Stub\MigrationUpdateStub;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Driver\DatabaseDriver;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationCreateStub;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKey;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey\ForeignKeyList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifier;
@@ -65,12 +65,12 @@ final class Schema
     }
 
     /**
-     * @param DatabaseBuilder $databaseBuilder
+     * @param DatabaseDriver $databaseBuilder
      * @param MigrationCreateStub $migrationCreateStub
      * @return MigrationFile
      */
     public function makeCreateTableMigrationFile(
-        DatabaseBuilder $databaseBuilder,
+        DatabaseDriver $databaseBuilder,
         MigrationCreateStub $migrationCreateStub
     ): MigrationFile {
         $tableComment = '';
@@ -79,7 +79,7 @@ final class Schema
         }
 
         return MigrationFile::factory($this->makeCreateTableMigrationFileName(), $migrationCreateStub->getStub())
-            ->replace('{{ namespace }}', $this->makeMigrationNamespace())
+            ->replace('{{ namespace }}', $this->makeMigrationCreateNamespace($migrationCreateStub->getNamespaces()))
             ->replace('{{ connection }}', $this->connection->makeMigration())
             ->replace('{{ tableName }}', $this->getTableName())
             ->replace('{{ tableComment }}', $tableComment)
@@ -97,6 +97,7 @@ final class Schema
         }
 
         return MigrationFile::factory($this->makeCreateIndexMigrationFileName(), $migrationUpdateStub->getStub())
+            ->replace('{{ namespace }}', $this->makeMigrationUpdateNamespace($migrationUpdateStub->getNamespaces()))
             ->replace('{{ connection }}', $this->connection->makeMigration())
             ->replace('{{ table }}', $this->getTableName())
             ->replace('{{ up }}', $this->indexModifierList->makeUpMigration())
@@ -114,6 +115,7 @@ final class Schema
         }
 
         return MigrationFile::factory($this->makeConstraintForeignKeyMigrationFileName(), $migrationUpdateStub->getStub())
+            ->replace('{{ namespace }}', $this->makeMigrationUpdateNamespace($migrationUpdateStub->getNamespaces()))
             ->replace('{{ connection }}', $this->connection->makeMigration())
             ->replace('{{ table }}', $this->getTableName())
             ->replace('{{ up }}', $this->foreignKeyList->makeUpMigration())
@@ -177,6 +179,7 @@ final class Schema
             return true;
         }
 
+        /** @var Column $column */
         foreach ($this->table->getColumnList() as $column) {
             if ($column->isDbFacadeUsing()) {
                 return true;
@@ -187,23 +190,26 @@ final class Schema
     }
 
     /**
+     * @param array<int, string> $namespaces
      * @return string
      */
-    private function makeMigrationNamespace(): string
+    private function makeMigrationCreateNamespace(array $namespaces): string
     {
         if ($this->isDbFacadeUsing()) {
-            return <<< 'EOF'
-            use Illuminate\Database\Migrations\Migration;
-            use Illuminate\Database\Schema\Blueprint;
-            use Illuminate\Support\Facades\DB;
-            use Illuminate\Support\Facades\Schema;
-            EOF;
+            $namespaces[] = 'use Illuminate\Support\Facades\DB;';
         }
 
-        return <<< 'EOF'
-        use Illuminate\Database\Migrations\Migration;
-        use Illuminate\Database\Schema\Blueprint;
-        use Illuminate\Support\Facades\Schema;
-        EOF;
+        sort($namespaces);
+        return implode(PHP_EOL, array_unique($namespaces));
+    }
+
+    /**
+     * @param array<int, string> $namespaces
+     * @return string
+     */
+    private function makeMigrationUpdateNamespace(array $namespaces): string
+    {
+        sort($namespaces);
+        return implode(PHP_EOL, array_unique($namespaces));
     }
 }

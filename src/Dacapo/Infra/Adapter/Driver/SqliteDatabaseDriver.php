@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder;
+namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Driver;
 
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Driver\DatabaseDriver;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 
-final class SqliteDatabaseBuilder implements DatabaseBuilder
+final class SqliteDatabaseDriver implements DatabaseDriver
 {
     /**
      * @return bool

@@ -4,9 +4,9 @@ namespace UcanLab\LaravelDacapo\Test\Presentation\Console;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\MysqlDatabaseBuilder;
-use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder\PostgresqlDatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Driver\DatabaseDriver;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Driver\MysqlDatabaseDriver;
+use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Driver\PostgresqlDatabaseDriver;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemoryDatabaseMigrationsStorage;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelDatabaseSchemasStorage;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
@@ -26,7 +26,7 @@ final class DacapoCommandTest extends TestCase
     {
         $this->app->register(ConsoleServiceProvider::class);
 
-        $this->instance(DatabaseBuilder::class, new MysqlDatabaseBuilder());
+        $this->instance(DatabaseDriver::class, new MysqlDatabaseDriver());
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
         $this->instance(DatabaseSchemasStorage::class, new LaravelDatabaseSchemasStorage(new Filesystem(), $schemas));
 
@@ -66,7 +66,7 @@ final class DacapoCommandTest extends TestCase
     {
         $this->app->register(ConsoleServiceProvider::class);
 
-        $this->instance(DatabaseBuilder::class, new PostgresqlDatabaseBuilder());
+        $this->instance(DatabaseDriver::class, new PostgresqlDatabaseDriver());
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
         $this->instance(DatabaseSchemasStorage::class, new LaravelDatabaseSchemasStorage(new Filesystem(), $schemas));
 

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Builder;
+namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Driver;
 
-use UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder\DatabaseBuilder;
+use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Driver\DatabaseDriver;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 
-final class MysqlDatabaseBuilder implements DatabaseBuilder
+final class PostgresqlDatabaseDriver implements DatabaseDriver
 {
     /**
      * @return bool
@@ -22,7 +22,7 @@ final class MysqlDatabaseBuilder implements DatabaseBuilder
     public function makeTableComment(Schema $schema): string
     {
         $str = PHP_EOL . PHP_EOL . '        ';
-        $str .= sprintf('DB::statement("ALTER TABLE %s COMMENT \'%s\'");', $schema->getTableName(), $schema->getTableComment());
+        $str .= sprintf('DB::statement("COMMENT ON TABLE %s IS \'%s\';");', $schema->getTableName(), $schema->getTableComment());
 
         return $str;
     }

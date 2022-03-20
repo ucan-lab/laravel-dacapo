@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase\Shared\Builder;
+namespace UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Driver;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 
-interface DatabaseBuilder
+interface DatabaseDriver
 {
     public function isEnabledTableComment(): bool;
 
