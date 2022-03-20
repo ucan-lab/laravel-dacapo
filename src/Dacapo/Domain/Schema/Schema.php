@@ -177,6 +177,7 @@ final class Schema
             return true;
         }
 
+        /** @var Column $column */
         foreach ($this->table->getColumnList() as $column) {
             if ($column->isDbFacadeUsing()) {
                 return true;
