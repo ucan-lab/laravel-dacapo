@@ -125,6 +125,19 @@ final class Schema
     /**
      * @return string
      */
+    public function modelName(): string
+    {
+        $tableName = $this->getTableName();
+        $tableName = mb_strtolower($tableName);
+        $tableName = str_replace('_', ' ', $tableName);
+        $tableName = ucwords($tableName);
+
+        return str_replace(' ', '', $tableName);
+    }
+
+    /**
+     * @return string
+     */
     private function makeCreateTableMigrationFileName(): string
     {
         return sprintf('1970_01_01_000001_create_%s_table.php', $this->getTableName());
