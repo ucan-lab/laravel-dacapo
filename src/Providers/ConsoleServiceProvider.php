@@ -21,6 +21,7 @@ use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Stub\LaravelMigrationCreateStub;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Stub\LaravelMigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoClearCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoCommand;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoConfigPublishCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoInitCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoMakeModelsCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoStubPublishCommand;
@@ -46,10 +47,11 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
      * @var array<int, string>
      */
     private array $commands = [
-        DacapoInitCommand::class,
-        DacapoCommand::class,
-        DacapoMakeModelsCommand::class,
         DacapoClearCommand::class,
+        DacapoCommand::class,
+        DacapoConfigPublishCommand::class,
+        DacapoInitCommand::class,
+        DacapoMakeModelsCommand::class,
         DacapoStubPublishCommand::class,
         DacapoUninstallCommand::class,
     ];
@@ -66,6 +68,7 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
 
     /**
      * {@inheritdoc}
+     * @throws Exception
      */
     public function register(): void
     {

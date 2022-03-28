@@ -6,6 +6,7 @@ $finder = PhpCsFixer\Finder::create()
         __DIR__ . '/tests',
     ])
     ->exclude([
+        'Dacapo/Presentation/Console/DacapoConfigPublishCommand',
         'Presentation/Console/DacapoCommandTest',
     ])
 ;
