@@ -97,11 +97,12 @@ final class DacapoMakeModelsCommand extends Command
      */
     private function removeIgnoreTableNames(array $tableNameList): array
     {
-        $ignoreTableNameList = [
+        $ignoreTableNameList = config('dacapo.ignore_tables', [
             'users',
             'password_resets',
             'failed_jobs',
-        ];
+            'personal_access_tokens',
+        ]);
 
         return array_diff($tableNameList, $ignoreTableNameList);
     }
