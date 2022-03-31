@@ -24,6 +24,7 @@ final class ColumnModifierFactory
         'generatedAs' => GeneratedAsModifier::class,
         'index' => IndexModifier::class,
         'nullable' => NullableModifier::class,
+        'primary' => PrimaryModifier::class,
         'storedAs' => StoredAsModifier::class,
         'unique' => UniqueModifier::class,
         'unsigned' => UnsignedModifier::class,
