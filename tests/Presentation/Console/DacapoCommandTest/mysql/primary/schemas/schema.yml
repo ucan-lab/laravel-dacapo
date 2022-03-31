@@ -21,3 +21,9 @@ example3:
     - columns: [no, joined_year]
       type: primary
       name: example_primary
+
+example4:
+  columns:
+    id:
+      type: string
+      primary:
