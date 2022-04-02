@@ -23,6 +23,7 @@ use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoClearCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoConfigPublishCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoInitCommand;
+use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoMakeFactoriesCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoMakeModelsCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoStubPublishCommand;
 use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoUninstallCommand;
@@ -51,6 +52,7 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
         DacapoCommand::class,
         DacapoConfigPublishCommand::class,
         DacapoInitCommand::class,
+        DacapoMakeFactoriesCommand::class,
         DacapoMakeModelsCommand::class,
         DacapoStubPublishCommand::class,
         DacapoUninstallCommand::class,
