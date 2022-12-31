@@ -20,6 +20,7 @@
         "symfony/yaml": "^6.0"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "phpunit/phpunit": "9.5.27",
         "orchestra/testbench": "7.17.0"
     },
