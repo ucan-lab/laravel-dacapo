@@ -9,7 +9,7 @@ final class DacapoUninstallCommandTest extends TestCase
 {
     public function testResolve(): void
     {
-        $this->app->register(ConsoleServiceProvider::class);
+        $this->register(ConsoleServiceProvider::class);
         $this->artisan('dacapo:uninstall')->assertExitCode(0);
     }
 }

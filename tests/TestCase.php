@@ -4,6 +4,7 @@ namespace UcanLab\LaravelDacapo\Test;
 
 use Illuminate\Testing\PendingCommand;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use RuntimeException;
 
 abstract class TestCase extends OrchestraTestCase
 {
@@ -16,6 +17,27 @@ abstract class TestCase extends OrchestraTestCase
      */
     final public function artisan($command, $parameters = []): PendingCommand
     {
+        if ($this->app === null) {
+            throw new RuntimeException('Application is null');
+        }
+
         return new PendingCommand($this, $this->app, $command, $parameters);
+    }
+
+    /**
+     * Register a service provider with the application.
+     *
+     * @param string $provider
+     * @param bool $force
+     * @return void
+     * @throws RuntimeException
+     */
+    final public function register(string $provider, bool $force = false): void
+    {
+        if ($this->app === null) {
+            throw new RuntimeException('Application is null');
+        }
+
+        $this->app->register($provider, $force);
     }
 }

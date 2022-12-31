@@ -9,7 +9,7 @@ final class DacapoInitCommandTest extends TestCase
 {
     public function testResolve(): void
     {
-        $this->app->register(ConsoleServiceProvider::class);
+        $this->register(ConsoleServiceProvider::class);
         $this->artisan('dacapo:init', ['--no-migrate' => true])->assertExitCode(0);
     }
 }

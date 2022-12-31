@@ -24,7 +24,7 @@ final class DacapoCommandTest extends TestCase
      */
     public function testMysql(string $schemas, string $migrations): void
     {
-        $this->app->register(ConsoleServiceProvider::class);
+        $this->register(ConsoleServiceProvider::class);
 
         $this->instance(DatabaseDriver::class, new MysqlDatabaseDriver());
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());
@@ -64,7 +64,7 @@ final class DacapoCommandTest extends TestCase
      */
     public function testPostgresql(string $schemas, string $migrations): void
     {
-        $this->app->register(ConsoleServiceProvider::class);
+        $this->register(ConsoleServiceProvider::class);
 
         $this->instance(DatabaseDriver::class, new PostgresqlDatabaseDriver());
         $this->instance(DatabaseMigrationsStorage::class, $databaseMigrationsStorage = new InMemoryDatabaseMigrationsStorage());

@@ -41,10 +41,13 @@ final class DacapoCommand extends Command
     ): void {
         $this->call('dacapo:clear', ['--force' => true]);
 
+        $this->newLine();
+        $this->components->info( 'Generating migration files.');
+
         $output = $useCase->handle();
 
         foreach ($output->generatedFileNameList as $generatedFileName) {
-            $this->line(sprintf('<fg=green>Generated:</> %s', $generatedFileName));
+            $this->components->task($generatedFileName);
         }
 
         if ($this->option('no-migrate')) {
