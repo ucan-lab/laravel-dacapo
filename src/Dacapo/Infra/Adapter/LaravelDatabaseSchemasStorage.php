@@ -7,9 +7,9 @@ use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Exception\Console\DuplicatedTableNameException;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Exception\Console\SchemaFileEmptyException;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
+use UcanLab\LaravelDacapo\Dacapo\Exception\Console\DuplicatedTableNameException;
+use UcanLab\LaravelDacapo\Dacapo\Exception\Console\SchemaFileEmptyException;
+use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseSchemasStorage;
 use function count;
 
 final class LaravelDatabaseSchemasStorage implements DatabaseSchemasStorage

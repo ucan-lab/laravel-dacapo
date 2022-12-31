@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Test\Presentation\Console;
+namespace UcanLab\LaravelDacapo\Test\Console;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
@@ -9,8 +9,8 @@ use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Driver\MysqlDatabaseDriver;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Driver\PostgresqlDatabaseDriver;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\InMemoryDatabaseMigrationsStorage;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelDatabaseSchemasStorage;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
+use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseMigrationsStorage;
+use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseSchemasStorage;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
 use UcanLab\LaravelDacapo\Test\TestCase;
 use function count;

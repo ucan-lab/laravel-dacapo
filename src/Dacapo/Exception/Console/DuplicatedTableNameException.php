@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Exception\Console;
+namespace UcanLab\LaravelDacapo\Dacapo\Exception\Console;
 
 use DomainException;
 
