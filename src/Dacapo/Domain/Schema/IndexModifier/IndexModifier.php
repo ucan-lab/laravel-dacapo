@@ -1,19 +1,20 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier;
 
+use function count;
+use function is_array;
+use function is_string;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\IndexModifierType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType\IndexModifierTypeFactory;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\IndexModifier\InvalidArgumentException;
-use function is_array;
-use function is_string;
-use function count;
 
 final class IndexModifier
 {
     /**
      * IndexModifier constructor.
-     * @param IndexModifierType $type
      * @param array<int, string> $columns
      * @param string|null $name = null
      * @param string|null $algorithm = null
@@ -52,9 +53,6 @@ final class IndexModifier
         );
     }
 
-    /**
-     * @return string
-     */
     public function makeUpMigration(): string
     {
         if ($this->hasArgs()) {
@@ -64,9 +62,6 @@ final class IndexModifier
         return '$table->' . sprintf('%s(%s)%s;', $this->type->getUpMethodName(), $this->getColumns(), $this->makeLanguage());
     }
 
-    /**
-     * @return string
-     */
     public function makeDownMigration(): string
     {
         if ($this->name) {
@@ -78,9 +73,6 @@ final class IndexModifier
         return '$table->' . sprintf("%s(['%s']);", $this->type->getDownMethodName(), $this->columns);
     }
 
-    /**
-     * @return string
-     */
     private function getColumns(): string
     {
         if (count($this->columns) > 1) {
@@ -90,9 +82,6 @@ final class IndexModifier
         return sprintf("'%s'", implode('', $this->columns));
     }
 
-    /**
-     * @return bool
-     */
     private function hasArgs(): bool
     {
         if ($this->name) {
@@ -102,9 +91,6 @@ final class IndexModifier
         return (bool) ($this->algorithm);
     }
 
-    /**
-     * @return string
-     */
     private function makeArgs(): string
     {
         if ($this->name && $this->algorithm) {
@@ -118,9 +104,6 @@ final class IndexModifier
         throw new InvalidArgumentException('Has no args.');
     }
 
-    /**
-     * @return string
-     */
     private function makeLanguage(): string
     {
         if ($this->language === null) {
@@ -131,11 +114,10 @@ final class IndexModifier
     }
 
     /**
-     * @param string $columns
      * @return array<int, string>
      */
     private static function parse(string $columns): array
     {
-        return array_map(fn($column) => trim($column), explode(',', $columns));
+        return array_map(fn ($column) => trim($column), explode(',', $columns));
     }
 }

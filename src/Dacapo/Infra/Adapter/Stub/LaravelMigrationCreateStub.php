@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Stub;
 
@@ -6,9 +8,6 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationCreateStub;
 
 final class LaravelMigrationCreateStub implements MigrationCreateStub
 {
-    /**
-     * @return string
-     */
     public function getStub(): string
     {
         $filename = base_path('stubs/dacapo.migration.create.stub');

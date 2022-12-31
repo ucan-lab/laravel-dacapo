@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnType;
 
@@ -70,10 +72,6 @@ final class ColumnTypeFactory
         'year' => YearType::class,
     ];
 
-    /**
-     * @param string $name
-     * @return ColumnType
-     */
     public static function factory(string $name): ColumnType
     {
         $class = self::MAPPING_CLASS[$name] ?? throw new InvalidArgumentException(sprintf('%s column type does not exist', $name));

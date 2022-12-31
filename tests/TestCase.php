@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Test;
 
@@ -13,7 +15,6 @@ abstract class TestCase extends OrchestraTestCase
      *
      * @param string $command
      * @param array<string, mixed> $parameters
-     * @return PendingCommand
      */
     final public function artisan($command, $parameters = []): PendingCommand
     {
@@ -27,9 +28,6 @@ abstract class TestCase extends OrchestraTestCase
     /**
      * Register a service provider with the application.
      *
-     * @param string $provider
-     * @param bool $force
-     * @return void
      * @throws RuntimeException
      */
     final public function register(string $provider, bool $force = false): void

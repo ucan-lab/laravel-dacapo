@@ -1,14 +1,16 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnModifier;
 
+use function is_bool;
+use function is_int;
+use function is_string;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnModifier\ColumnModifierArgs\BooleanColumnModifierArgs;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnModifier\ColumnModifierArgs\IntColumnModifierArgs;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnModifier\ColumnModifierArgs\StringColumnModifierArgs;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\Column\ColumnModifier\InvalidArgumentException;
-use function is_bool;
-use function is_int;
-use function is_string;
 
 final class ColumnModifierFactory
 {
@@ -32,11 +34,6 @@ final class ColumnModifierFactory
         'virtualAs' => VirtualAsModifier::class,
     ];
 
-    /**
-     * @param string $name
-     * @param string|bool|int|null $value
-     * @return ColumnModifier
-     */
     public static function factory(string $name, string|bool|int|null $value): ColumnModifier
     {
         $class = self::MAPPING_CLASS[$name] ?? throw new InvalidArgumentException(sprintf('%s column modifier does not exist', $name));

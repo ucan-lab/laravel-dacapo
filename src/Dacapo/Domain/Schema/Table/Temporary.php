@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
@@ -8,15 +10,11 @@ final class Temporary
 {
     /**
      * Temporary constructor.
-     * @param bool $enable
      */
     public function __construct(private bool $enable)
     {
     }
 
-    /**
-     * @return string
-     */
     public function makeMigration(): string
     {
         if ($this->enable) {

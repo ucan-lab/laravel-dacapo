@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
@@ -6,8 +8,6 @@ final class ReferenceAction
 {
     /**
      * Reference constructor.
-     * @param string|null $onUpdateAction
-     * @param string|null $onDeleteAction
      */
     private function __construct(
         private ?string $onUpdateAction,
@@ -27,9 +27,6 @@ final class ReferenceAction
         );
     }
 
-    /**
-     * @return string
-     */
     public function makeForeignMigration(): string
     {
         $str = '';

@@ -1,12 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub;
 
 interface MigrationCreateStub
 {
-    /**
-     * @return string
-     */
     public function getStub(): string;
 
     /**

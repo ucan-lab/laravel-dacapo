@@ -1,7 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
+use function count;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
@@ -10,23 +13,15 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\TableName;
 use UcanLab\LaravelDacapo\Dacapo\Exception\Console\DuplicatedTableNameException;
 use UcanLab\LaravelDacapo\Dacapo\Exception\Console\SchemaFileEmptyException;
 use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseSchemasStorage;
-use function count;
 
 final class LaravelDatabaseSchemasStorage implements DatabaseSchemasStorage
 {
-    /**
-     * @param Filesystem $filesystem
-     * @param string $filePath
-     */
     public function __construct(
         private Filesystem $filesystem,
         private string $filePath,
     ) {
     }
 
-    /**
-     * @return SchemaList
-     */
     public function getSchemaList(): SchemaList
     {
         $ymlFiles = array_map(fn ($f) => (string) $f->getRealPath(), $this->filesystem->files($this->filePath));

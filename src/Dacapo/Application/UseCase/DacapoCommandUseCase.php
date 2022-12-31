@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Application\UseCase;
 
@@ -13,13 +15,6 @@ use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseSchemasStorage;
 
 final class DacapoCommandUseCase
 {
-    /**
-     * @param DatabaseSchemasStorage $databaseSchemasStorage
-     * @param DatabaseMigrationsStorage $databaseMigrationsStorage
-     * @param DatabaseDriver $databaseBuilder
-     * @param MigrationCreateStub $migrationCreateStub
-     * @param MigrationUpdateStub $migrationUpdateStub
-     */
     public function __construct(
         private DatabaseSchemasStorage $databaseSchemasStorage,
         private DatabaseMigrationsStorage $databaseMigrationsStorage,
@@ -29,9 +24,6 @@ final class DacapoCommandUseCase
     ) {
     }
 
-    /**
-     * @return DacapoCommandUseCaseOutput
-     */
     public function handle(): DacapoCommandUseCaseOutput
     {
         $schemaList = $this->databaseSchemasStorage->getSchemaList();
@@ -46,7 +38,6 @@ final class DacapoCommandUseCase
     }
 
     /**
-     * @param SchemaList $schemaList
      * @return array<int, string>
      */
     private function generateCreateTableMigrationFile(SchemaList $schemaList): array
@@ -64,7 +55,6 @@ final class DacapoCommandUseCase
     }
 
     /**
-     * @param SchemaList $schemaList
      * @return array<int, string>
      */
     private function generateCreateIndexMigrationFile(SchemaList $schemaList): array
@@ -84,7 +74,6 @@ final class DacapoCommandUseCase
     }
 
     /**
-     * @param SchemaList $schemaList
      * @return array<int, string>
      */
     private function generateConstraintForeignKeyMigrationFile(SchemaList $schemaList): array

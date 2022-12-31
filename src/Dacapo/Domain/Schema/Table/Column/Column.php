@@ -1,7 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column;
 
+use function is_array;
+use function is_bool;
+use function is_string;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnModifier\ColumnModifierFactory;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnModifier\ColumnModifierList;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnModifier\DbFacadeUsing;
@@ -13,18 +18,11 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnType\ColumnTyp
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnType\NumericArgsColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnType\StringArgsColumnType;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\Column\InvalidArgumentException;
-use function is_array;
-use function is_bool;
-use function is_string;
 
 final class Column
 {
     /**
      * Column constructor.
-     * @param ColumnName $name
-     * @param ColumnType $type
-     * @param ColumnTypeArgs $typeArgs
-     * @param ColumnModifierList $modifierList
      */
     public function __construct(
         private ColumnName $name,
@@ -35,7 +33,6 @@ final class Column
     }
 
     /**
-     * @param ColumnName $columnName
      * @param array<string, mixed>|bool|string|null $attributes
      * @return static
      */
@@ -116,9 +113,6 @@ final class Column
         );
     }
 
-    /**
-     * @return string
-     */
     public function makeMigration(): string
     {
         $modifierMethod = '';
@@ -139,15 +133,12 @@ final class Column
         } elseif ($this->name->hasName() && ! $this->typeArgs->hasArgs()) {
             return '$table->' . sprintf("%s('%s')%s;", $this->type->columnType(), $this->name->getName(), $modifierMethod);
         } elseif (! $this->name->hasName() && $this->typeArgs->hasArgs()) {
-            return '$table->' . sprintf("%s(%s);", $this->type->columnType(), $this->typeArgs->typeArgs());
+            return '$table->' . sprintf('%s(%s);', $this->type->columnType(), $this->typeArgs->typeArgs());
         }
 
-        return '$table->' . sprintf("%s();", $this->type->columnType());
+        return '$table->' . sprintf('%s();', $this->type->columnType());
     }
 
-    /**
-     * @return bool
-     */
     public function isDbFacadeUsing(): bool
     {
         foreach ($this->modifierList as $modifier) {

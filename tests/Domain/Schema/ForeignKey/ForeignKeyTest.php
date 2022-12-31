@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Test\Domain\Schema\ForeignKey;
 
@@ -8,14 +10,8 @@ use UcanLab\LaravelDacapo\Test\TestCase;
 final class ForeignKeyTest extends TestCase
 {
     /**
-     * @param string $expectedUp
-     * @param string $expectedDown
      * @param string|array<int, string> $columns
      * @param string|array<int, string> $references
-     * @param string $on
-     * @param string|null $name
-     * @param string|null $onUpdateAction
-     * @param string|null $onDeleteAction
      * @dataProvider dataResolve
      */
     public function testResolve(

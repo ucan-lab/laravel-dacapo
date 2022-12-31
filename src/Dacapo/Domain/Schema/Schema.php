@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema;
 
@@ -21,10 +23,6 @@ final class Schema
 {
     /**
      * Schema constructor.
-     * @param Table $table
-     * @param Connection $connection
-     * @param IndexModifierList $indexModifierList
-     * @param ForeignKeyList $foreignKeyList
      */
     private function __construct(
         private Table $table,
@@ -35,7 +33,6 @@ final class Schema
     }
 
     /**
-     * @param TableName $tableName
      * @param array<string, mixed> $attributes
      * @return $this
      */
@@ -64,11 +61,6 @@ final class Schema
         );
     }
 
-    /**
-     * @param DatabaseDriver $databaseBuilder
-     * @param MigrationCreateStub $migrationCreateStub
-     * @return MigrationFile
-     */
     public function makeCreateTableMigrationFile(
         DatabaseDriver $databaseBuilder,
         MigrationCreateStub $migrationCreateStub
@@ -86,10 +78,6 @@ final class Schema
             ->replace('{{ up }}', $this->table->makeMigration());
     }
 
-    /**
-     * @param MigrationUpdateStub $migrationUpdateStub
-     * @return MigrationFile|null
-     */
     public function makeCreateIndexMigrationFile(MigrationUpdateStub $migrationUpdateStub): ?MigrationFile
     {
         if ($this->indexModifierList->exists() === false) {
@@ -104,10 +92,6 @@ final class Schema
             ->replace('{{ down }}', $this->indexModifierList->makeDownMigration());
     }
 
-    /**
-     * @param MigrationUpdateStub $migrationUpdateStub
-     * @return MigrationFile|null
-     */
     public function makeConstraintForeignKeyMigrationFile(MigrationUpdateStub $migrationUpdateStub): ?MigrationFile
     {
         if ($this->foreignKeyList->exists() === false) {
@@ -122,57 +106,36 @@ final class Schema
             ->replace('{{ down }}', $this->foreignKeyList->makeDownMigration());
     }
 
-    /**
-     * @return string
-     */
     private function makeCreateTableMigrationFileName(): string
     {
         return sprintf('1970_01_01_000001_create_%s_table.php', $this->getTableName());
     }
 
-    /**
-     * @return string
-     */
     private function makeCreateIndexMigrationFileName(): string
     {
         return sprintf('1970_01_01_000002_create_%s_index.php', $this->getTableName());
     }
 
-    /**
-     * @return string
-     */
     private function makeConstraintForeignKeyMigrationFileName(): string
     {
         return sprintf('1970_01_01_000003_constraint_%s_foreign_key.php', $this->getTableName());
     }
 
-    /**
-     * @return string
-     */
     public function getTableName(): string
     {
         return $this->table->getTableName();
     }
 
-    /**
-     * @return string
-     */
     public function getTableComment(): string
     {
         return $this->table->getTableComment()->get();
     }
 
-    /**
-     * @return bool
-     */
     public function hasTableComment(): bool
     {
         return $this->table->getTableComment()->exists();
     }
 
-    /**
-     * @return bool
-     */
     public function isDbFacadeUsing(): bool
     {
         if ($this->table->getTableComment()->exists()) {
@@ -191,7 +154,6 @@ final class Schema
 
     /**
      * @param array<int, string> $namespaces
-     * @return string
      */
     private function makeMigrationCreateNamespace(array $namespaces): string
     {
@@ -200,16 +162,17 @@ final class Schema
         }
 
         sort($namespaces);
+
         return implode(PHP_EOL, array_unique($namespaces));
     }
 
     /**
      * @param array<int, string> $namespaces
-     * @return string
      */
     private function makeMigrationUpdateNamespace(array $namespaces): string
     {
         sort($namespaces);
+
         return implode(PHP_EOL, array_unique($namespaces));
     }
 }

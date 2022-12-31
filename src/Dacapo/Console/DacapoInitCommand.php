@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Console;
 
@@ -29,9 +31,6 @@ final class DacapoInitCommand extends Command
      */
     protected $description = 'Init dacapo default schema.';
 
-    /**
-     * @param Filesystem $filesystem
-     */
     public function handle(Filesystem $filesystem): void
     {
         if (! is_dir($schemasPath = $this->laravel->databasePath('schemas'))) {

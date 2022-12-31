@@ -1,18 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column;
 
-use function is_string;
 use function is_array;
+use function is_string;
 
 final class ColumnTypeArgs
 {
-    /**
-     * @param mixed $args
-     * @param bool $isArray
-     * @param bool $isString
-     * @param bool $isNumeric
-     */
     private function __construct(
         private mixed $args,
         private bool $isArray,
@@ -22,10 +18,6 @@ final class ColumnTypeArgs
     }
 
     /**
-     * @param mixed $args
-     * @param bool $isArray
-     * @param bool $isString
-     * @param bool $isNumeric
      * @return static
      */
     public static function factory(
@@ -41,17 +33,11 @@ final class ColumnTypeArgs
         return new self($args, $isArray, $isString, $isNumeric);
     }
 
-    /**
-     * @return bool
-     */
     public function hasArgs(): bool
     {
         return $this->args !== null;
     }
 
-    /**
-     * @return string
-     */
     public function typeArgs(): string
     {
         if (is_array($this->args) && $this->isArray) {

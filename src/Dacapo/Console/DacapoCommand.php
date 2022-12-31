@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Console;
 
@@ -32,16 +34,13 @@ final class DacapoCommand extends Command
      */
     protected $description = 'Generate migrations from schemas and migrate:fresh command.';
 
-    /**
-     * @param DacapoCommandUseCase $useCase
-     */
     public function handle(
         DacapoCommandUseCase $useCase,
     ): void {
         $this->call('dacapo:clear', ['--force' => true]);
 
         $this->newLine();
-        $this->components->info( 'Generating migration files.');
+        $this->components->info('Generating migration files.');
 
         $output = $useCase->handle();
 

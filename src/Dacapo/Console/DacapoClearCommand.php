@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Console;
 
@@ -30,9 +32,6 @@ final class DacapoClearCommand extends Command
      */
     protected $description = 'Clear migration directory.';
 
-    /**
-     * @param Filesystem $filesystem
-     */
     public function handle(Filesystem $filesystem): void
     {
         $this->newLine();

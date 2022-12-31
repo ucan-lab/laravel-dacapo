@@ -1,7 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Test\Console;
 
+use function count;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Driver\DatabaseDriver;
@@ -13,13 +16,10 @@ use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseMigrationsStorage;
 use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseSchemasStorage;
 use UcanLab\LaravelDacapo\Providers\ConsoleServiceProvider;
 use UcanLab\LaravelDacapo\Test\TestCase;
-use function count;
 
 final class DacapoCommandTest extends TestCase
 {
     /**
-     * @param string $schemas
-     * @param string $migrations
      * @dataProvider dataMysql
      */
     public function testMysql(string $schemas, string $migrations): void
@@ -58,8 +58,6 @@ final class DacapoCommandTest extends TestCase
     }
 
     /**
-     * @param string $schemas
-     * @param string $migrations
      * @dataProvider dataPostgresql
      */
     public function testPostgresql(string $schemas, string $migrations): void
@@ -97,10 +95,6 @@ final class DacapoCommandTest extends TestCase
         return $data;
     }
 
-    /**
-     * @param string $migrations
-     * @param InMemoryDatabaseMigrationsStorage $databaseMigrationsStorage
-     */
     private function assertMigrationFileList(string $migrations, InMemoryDatabaseMigrationsStorage $databaseMigrationsStorage): void
     {
         $expectedMigrationFileList = array_map(fn ($f) => $f->getRealPath(), File::files($migrations));

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Providers;
 
@@ -100,7 +102,6 @@ final class ConsoleServiceProvider extends ServiceProvider implements Deferrable
     }
 
     /**
-     * @return string
      * @throws Exception
      */
     private function concreteDatabaseDriver(): string
