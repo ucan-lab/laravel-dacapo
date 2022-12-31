@@ -32,12 +32,14 @@ final class DacapoUninstallCommand extends Command
      */
     public function handle(Filesystem $filesystem): void
     {
+        $this->newLine();
+        $this->components->info('Uninstalling dacapo');
         if (is_dir($schemasPath = $this->laravel->databasePath('schemas'))) {
             $filesystem->deleteDirectory($schemasPath);
         }
 
-        $this->info('Deleted schemas directory.');
-        $this->info('Please delete dacapo composer package.');
+        $this->components->info('Deleted schemas directory.');
+        $this->components->info('Please dacapo composer remove package.');
         $this->comment('composer remove --dev ucan-lab/laravel-dacapo');
     }
 }
