@@ -3,7 +3,7 @@ composer-install-tools:
 	composer install --working-dir=tools/phpstan
 pint:
 	./tools/pint/vendor/bin/pint -v
-phpstan:
+stan:
 	./tools/phpstan/vendor/bin/phpstan analyse -c phpstan.neon
 test:
 	./vendor/bin/phpunit
