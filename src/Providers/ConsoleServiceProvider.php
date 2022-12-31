@@ -8,6 +8,11 @@ use Illuminate\Database\Connection;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
+use UcanLab\LaravelDacapo\Dacapo\Console\DacapoClearCommand;
+use UcanLab\LaravelDacapo\Dacapo\Console\DacapoCommand;
+use UcanLab\LaravelDacapo\Dacapo\Console\DacapoInitCommand;
+use UcanLab\LaravelDacapo\Dacapo\Console\DacapoStubPublishCommand;
+use UcanLab\LaravelDacapo\Dacapo\Console\DacapoUninstallCommand;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Driver\DatabaseDriver;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationCreateStub;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationUpdateStub;
@@ -19,13 +24,8 @@ use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelDatabaseMigrationsStorage;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\LaravelDatabaseSchemasStorage;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Stub\LaravelMigrationCreateStub;
 use UcanLab\LaravelDacapo\Dacapo\Infra\Adapter\Stub\LaravelMigrationUpdateStub;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoClearCommand;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoCommand;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoInitCommand;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoStubPublishCommand;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Console\DacapoUninstallCommand;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
+use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseMigrationsStorage;
+use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseSchemasStorage;
 
 /**
  * Class ConsoleServiceProvider.

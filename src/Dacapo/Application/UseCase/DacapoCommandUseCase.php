@@ -8,8 +8,8 @@ use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationCreateStub;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\Stub\MigrationUpdateStub;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Schema;
 use UcanLab\LaravelDacapo\Dacapo\Domain\Schema\SchemaList;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseSchemasStorage;
+use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseMigrationsStorage;
+use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseSchemasStorage;
 
 final class DacapoCommandUseCase
 {

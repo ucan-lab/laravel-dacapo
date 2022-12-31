@@ -4,7 +4,7 @@ namespace UcanLab\LaravelDacapo\Dacapo\Infra\Adapter;
 
 use Illuminate\Filesystem\Filesystem;
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
-use UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage\DatabaseMigrationsStorage;
+use UcanLab\LaravelDacapo\Dacapo\Storage\DatabaseMigrationsStorage;
 
 final class LaravelDatabaseMigrationsStorage implements DatabaseMigrationsStorage
 {

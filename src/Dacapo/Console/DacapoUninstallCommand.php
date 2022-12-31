@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Console;
+namespace UcanLab\LaravelDacapo\Dacapo\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;

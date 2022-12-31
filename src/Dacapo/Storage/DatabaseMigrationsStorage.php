@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace UcanLab\LaravelDacapo\Dacapo\Presentation\Shared\Storage;
+namespace UcanLab\LaravelDacapo\Dacapo\Storage;
 
 use UcanLab\LaravelDacapo\Dacapo\Domain\MigrationFile\MigrationFile;
 
