@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Console;
 
@@ -27,9 +29,6 @@ final class DacapoStubPublishCommand extends Command
      */
     protected $description = 'Publish dacapo stubs that are available for customization.';
 
-    /**
-     * @param Filesystem $filesystem
-     */
     public function handle(Filesystem $filesystem): void
     {
         if (! is_dir($stubsPath = $this->laravel->basePath('stubs'))) {

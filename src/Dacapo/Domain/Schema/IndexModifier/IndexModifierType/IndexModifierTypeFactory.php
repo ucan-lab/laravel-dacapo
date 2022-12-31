@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\IndexModifier\IndexModifierType;
 
@@ -14,10 +16,6 @@ final class IndexModifierTypeFactory
         'fullText' => FullTextType::class,
     ];
 
-    /**
-     * @param string $name
-     * @return IndexModifierType
-     */
     public static function factory(string $name): IndexModifierType
     {
         $class = self::MAPPING_CLASS[$name] ?? throw new InvalidArgumentException(sprintf('%s index modifier type does not exist', $name));

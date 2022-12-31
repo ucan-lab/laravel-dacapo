@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Console;
 
@@ -27,9 +29,6 @@ final class DacapoUninstallCommand extends Command
      */
     protected $description = 'Uninstall dacapo.';
 
-    /**
-     * @param Filesystem $filesystem
-     */
     public function handle(Filesystem $filesystem): void
     {
         $this->newLine();

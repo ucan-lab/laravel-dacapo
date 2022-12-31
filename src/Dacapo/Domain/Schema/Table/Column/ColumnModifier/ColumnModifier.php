@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column\ColumnModifier;
 
@@ -15,17 +17,11 @@ abstract class ColumnModifier
 
     abstract public function getName(): string;
 
-    /**
-     * @return bool
-     */
     final public function hasColumnModifierArgs(): bool
     {
         return $this->columnModifierArgs !== null;
     }
 
-    /**
-     * @return string
-     */
     final public function columnModifierArgs(): string
     {
         return $this->columnModifierArgs ? $this->columnModifierArgs->columnModifierArgs() : '';

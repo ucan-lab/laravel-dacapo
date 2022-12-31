@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
-use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\ForeignKey\InvalidArgumentException;
 use function count;
 use function is_string;
+use UcanLab\LaravelDacapo\Dacapo\Domain\Shared\Exception\Schema\ForeignKey\InvalidArgumentException;
 
 final class Reference
 {
@@ -12,8 +14,6 @@ final class Reference
      * Reference constructor.
      * @param array<int, string> $columns
      * @param array<int, string> $references
-     * @param string $table
-     * @param string|null $name
      */
     private function __construct(
         private array $columns,
@@ -41,9 +41,6 @@ final class Reference
         );
     }
 
-    /**
-     * @return string
-     */
     public function makeForeignMigration(): string
     {
         if ($this->name) {
@@ -53,9 +50,6 @@ final class Reference
         return sprintf("->foreign(%s)->references(%s)->on('%s')", $this->makeColumnsMigration(), $this->makeReferencesMigration(), $this->table);
     }
 
-    /**
-     * @return string
-     */
     public function makeDropForeignMigration(): string
     {
         if ($this->name) {
@@ -65,25 +59,16 @@ final class Reference
         return sprintf("->dropForeign(['%s'])", implode("', '", $this->columns));
     }
 
-    /**
-     * @return bool
-     */
     public function hasName(): bool
     {
         return $this->name !== null;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     private function makeColumnsMigration(): string
     {
         if (count($this->columns) > 1) {
@@ -93,9 +78,6 @@ final class Reference
         return sprintf("'%s'", implode('', $this->columns));
     }
 
-    /**
-     * @return string
-     */
     private function makeReferencesMigration(): string
     {
         if (count($this->references) > 1) {
@@ -106,11 +88,10 @@ final class Reference
     }
 
     /**
-     * @param string $columns
      * @return array<int, string>
      */
     private static function parse(string $columns): array
     {
-        return array_map(fn($column) => trim($column), explode(',', $columns));
+        return array_map(fn ($column) => trim($column), explode(',', $columns));
     }
 }

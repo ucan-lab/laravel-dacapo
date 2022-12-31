@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table;
 
@@ -18,8 +20,6 @@ final class Table
     }
 
     /**
-     * @param TableName $tableName
-     * @param ColumnList $columnList
      * @param array<string, mixed> $attributes
      * @return $this
      */
@@ -42,9 +42,6 @@ final class Table
         );
     }
 
-    /**
-     * @return string
-     */
     public function makeMigration(): string
     {
         return trim(
@@ -56,25 +53,16 @@ final class Table
         );
     }
 
-    /**
-     * @return string
-     */
     public function getTableName(): string
     {
         return $this->tableName->getName();
     }
 
-    /**
-     * @return ColumnList
-     */
     public function getColumnList(): ColumnList
     {
         return $this->columnList;
     }
 
-    /**
-     * @return TableComment
-     */
     public function getTableComment(): TableComment
     {
         return $this->tableComment;

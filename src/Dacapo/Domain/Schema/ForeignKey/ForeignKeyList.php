@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\ForeignKey;
 
@@ -13,17 +15,11 @@ final class ForeignKeyList
     {
     }
 
-    /**
-     * @return bool
-     */
     public function exists(): bool
     {
         return ! (empty($this->attributes));
     }
 
-    /**
-     * @return string
-     */
     public function makeUpMigration(): string
     {
         $str = '';
@@ -35,9 +31,6 @@ final class ForeignKeyList
         return trim($str);
     }
 
-    /**
-     * @return string
-     */
     public function makeDownMigration(): string
     {
         $str = '';

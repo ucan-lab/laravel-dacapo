@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace UcanLab\LaravelDacapo\Dacapo\Domain\Schema\Table\Column;
 
@@ -18,9 +20,6 @@ final class ColumnList implements IteratorAggregate
     {
     }
 
-    /**
-     * @return bool
-     */
     public function exists(): bool
     {
         return ! (empty($this->attributes));
@@ -34,9 +33,6 @@ final class ColumnList implements IteratorAggregate
         return new ArrayIterator($this->attributes);
     }
 
-    /**
-     * @return string
-     */
     public function makeMigration(): string
     {
         $str = '';
