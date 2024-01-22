@@ -21,7 +21,7 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "phpunit/phpunit": "9.5.27",
+        "phpunit/phpunit": "10.5.9",
         "orchestra/testbench": "7.17.0"
     },
     "autoload": {
