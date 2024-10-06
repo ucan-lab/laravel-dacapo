@@ -22,7 +22,7 @@
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "phpunit/phpunit": "9.5.27",
-        "orchestra/testbench": "7.17.0"
+        "orchestra/testbench": "7.46.2"
     },
     "autoload": {
         "psr-4": {
